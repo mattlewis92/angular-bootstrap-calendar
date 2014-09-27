@@ -39,8 +39,12 @@ angular.module('mwl.calendar')
 
         function updateView() {
           $timeout(function() {
-            scope.title = scope.subControls[scope.view].getTitle();
-            scope.subControls[scope.view].updateView();
+            if (scope.subControls[scope.view]) {
+              scope.title = scope.subControls[scope.view].getTitle();
+              scope.subControls[scope.view].updateView();
+            } else {
+              updateView();
+            }
           });
         }
 
