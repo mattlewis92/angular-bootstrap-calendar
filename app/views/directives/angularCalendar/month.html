@@ -1,0 +1,47 @@
+<div class="cal-row-fluid cal-row-head">
+
+  <div class="cal-cell1" ng-repeat="day in weekDays">{{ day }}</div>
+
+</div>
+
+<div class="cal-month-box">
+
+  <div ng-repeat="week in view">
+    <div class="cal-row-fluid cal-before-eventlist">
+      <div class="cal-cell1 cal-cell" ng-repeat="day in week track by $index" ng-click="dayClicked($parent.$index, $index)" ng-class="{pointer: day.events.length > 0}">
+        <div class="cal-month-day" ng-class="{'cal-day-outmonth': !day.inMonth, 'cal-day-inmonth': day.inMonth, 'cal-day-weekend': $index == 5 || $index == 6}">
+          <span class="pull-right" data-cal-date>{{ day.label }}</span>
+          <div class="cal-day-tick" ng-show="day.isOpened"><i class="icon-chevron-down glyphicon glyphicon-chevron-down"></i></div>
+          <div class="events-list" ng-show="day.events.length > 0">
+            <a
+              href="javascript:;"
+              ng-click="eventClick({$event: event})"
+              ng-repeat="event in day.events"
+              class="pull-left event event-{{ event.type }}"
+              tooltip-append-to-body="true"
+              tooltip="{{ event.title }}"
+              ></a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="cal-slide-box" ng-show="week.isOpened">
+      <div class="cal-slide-content cal-event-list">
+        <ul class="unstyled list-unstyled">
+
+          <li ng-repeat="event in openEvents">
+            <span class="pull-left event event-{{ event.type }}"></span>
+            &nbsp;
+            <a href="javascript:;" class="event-item" ng-click="eventClick({$event: event})">
+              {{ event.title }}
+            </a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>

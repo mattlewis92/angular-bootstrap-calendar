@@ -1,0 +1,10 @@
+{
+  "name": "angular-bootstrap-calendar",
+  "version": "0.0.0",
+  "dependencies": {
+    "angular": "1.2.16",
+    "bootstrap": "~3.2.0",
+    "angular-bootstrap": "~0.11.0",
+    "moment": "~2.8.3"
+  }
+}

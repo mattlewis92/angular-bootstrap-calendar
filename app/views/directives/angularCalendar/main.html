@@ -1,0 +1,34 @@
+<div class="cal-context" style="width: 100%;">
+
+  <mwl-calendar-year
+    calendar-events="events"
+    calendar-current-day="currentDay"
+    calendar-control="subControls.year"
+    calendar-event-click="eventClickHandler($event)"
+    ng-show="view == 'year'"
+  ></mwl-calendar-year>
+
+  <mwl-calendar-month
+    calendar-events="events"
+    calendar-current-day="currentDay"
+    calendar-control="subControls.month"
+    calendar-event-click="eventClickHandler($event)"
+    ng-show="view == 'month'"
+    ></mwl-calendar-month>
+
+  <mwl-calendar-week
+    calendar-events="events"
+    calendar-current-day="currentDay"
+    calendar-control="subControls.week"
+    calendar-event-click="eventClickHandler($event)"
+    ng-show="view == 'week'"
+    ></mwl-calendar-week>
+
+  <mwl-calendar-day
+    calendar-events="events"
+    calendar-current-day="currentDay"
+    calendar-control="subControls.day"
+    calendar-event-click="eventClickHandler($event)"
+    ng-show="view == 'day'"
+    ></mwl-calendar-day>
+</div>
