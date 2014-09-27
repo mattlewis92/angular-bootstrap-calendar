@@ -10,5 +10,5 @@
  */
 angular
   .module('mwl.calendar', [
-    'ui.bootstrap'
+    'ui.bootstrap.tooltip'
   ]);
