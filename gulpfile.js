@@ -28,8 +28,10 @@ gulp.task('css-unmin', function() {
 gulp.task('css-min', function() {
 
   return gulp.src('src/**/*.css')
+    .pipe(gp.sourcemaps.init())
     .pipe(gp.concat('angular-bootstrap-calendar.min.css'))
     .pipe(gp.minifyCss())
+    .pipe(gp.sourcemaps.write('.'))
     .pipe(gulp.dest('dist/css'));
 
 });
@@ -69,10 +71,16 @@ gulp.task('js-unmin', function() {
 gulp.task('js-min', function() {
 
   return getJsBase()
+    .pipe(gp.sourcemaps.init())
     .pipe(gp.concat('angular-bootstrap-calendar.min.js'))
     .pipe(gp.uglify())
+    .pipe(gp.sourcemaps.write('.'))
     .pipe(gulp.dest('dist/js'));
 
 });
 
 gulp.task('js', ['js-min', 'js-unmin'], function() {});
+
+gulp.task('build', ['js', 'css'], function() {});
+
+gulp.task('default', ['build'], function() {});
