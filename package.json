@@ -15,7 +15,9 @@
     "gulp-minify-html": "^0.1.5",
     "gulp-ng-annotate": "^0.3.3",
     "gulp-rename": "^1.2.0",
+    "gulp-sourcemaps": "^1.2.2",
     "gulp-uglify": "^1.0.1",
+    "open": "0.0.5",
     "streamqueue": "^0.1.1"
   },
   "engines": {
