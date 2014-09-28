@@ -1,17 +1,78 @@
 var gulp = require('gulp');
-var connect = require('gulp-connect');
-var livereload = require('gulp-livereload');
+var gp = require('gulp-load-plugins')();
+var streamqueue = require('streamqueue');
 
 gulp.task('watch', ['server'], function() {
-  livereload.listen();
-  gulp.watch(['./index.html', './docs/**', './src/**']).on('change', livereload.changed);
+  gp.livereload.listen();
+  gulp.watch(['./index.html', './docs/**', './src/**']).on('change', gp.livereload.changed);
 });
 
 gulp.task('server', function() {
-  connect.server({
+  gp.connect.server({
     root: ['./'],
     port: 4242,
     livereload: false
   });
 });
 
+//optionallity minify, move to dist
+
+gulp.task('css-unmin', function() {
+
+  return gulp.src('src/**/*.css')
+    .pipe(gp.concat('angular-bootstrap-calendar.css'))
+    .pipe(gulp.dest('dist/css'));
+
+});
+
+gulp.task('css-min', function() {
+
+  return gulp.src('src/**/*.css')
+    .pipe(gp.concat('angular-bootstrap-calendar.min.css'))
+    .pipe(gp.minifyCss())
+    .pipe(gulp.dest('dist/css'));
+
+});
+
+gulp.task('css', ['css-min', 'css-unmin'], function() {});
+
+var getTemplates = function() {
+
+  return gulp
+    .src('templates/**/*.html')
+    .pipe(gp.minifyHtml({empty: true, conditionals: true, spare: true, quotes: true}))
+    .pipe(gp.angularTemplatecache({standalone: false, module: 'mwl.calendar', root: 'templates/'}));
+
+};
+
+var mergeStreams = function(stream1, stream2) {
+  return streamqueue({ objectMode: true }, stream1, stream2);
+};
+
+var getJsBase = function() {
+
+  return mergeStreams(
+    gulp.src('src/**/*.js'),
+    getTemplates()
+  ).pipe(gp.angularFilesort())
+   .pipe(gp.ngAnnotate());
+};
+
+gulp.task('js-unmin', function() {
+
+  return getJsBase()
+    .pipe(gp.concat('angular-bootstrap-calendar.js'))
+    .pipe(gulp.dest('dist/js'));
+
+});
+
+gulp.task('js-min', function() {
+
+  return getJsBase()
+    .pipe(gp.concat('angular-bootstrap-calendar.min.js'))
+    .pipe(gp.uglify())
+    .pipe(gulp.dest('dist/js'));
+
+});
+
+gulp.task('js', ['js-min', 'js-unmin'], function() {});
