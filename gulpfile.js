@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 var gp = require('gulp-load-plugins')();
 var streamqueue = require('streamqueue');
+var open = require("open");
 
 gulp.task('watch', ['server'], function() {
   gp.livereload.listen();
@@ -10,12 +11,12 @@ gulp.task('watch', ['server'], function() {
 gulp.task('server', function() {
   gp.connect.server({
     root: ['./'],
-    port: 4242,
+    port: 8000,
     livereload: false
   });
-});
 
-//optionallity minify, move to dist
+  open('http://localhost:8000');
+});
 
 gulp.task('css-unmin', function() {
 
