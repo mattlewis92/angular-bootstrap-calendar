@@ -15,7 +15,7 @@ angular.module('mwl.calendar')
       scope: {
         events: '=calendarEvents',
         currentDay: '=calendarCurrentDay',
-        eventClick: '&calendarEventClick'
+        eventClick: '=calendarEventClick'
       },
       link: function postLink(scope, element, attrs, calendarCtrl) {
 

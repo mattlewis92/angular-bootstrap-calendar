@@ -29,7 +29,15 @@ angular.module('mwl.calendar')
     $scope.calendarDay = new Date();
 
     $scope.eventClicked = function(event) {
-      console.log(event);
+      console.log('Event clicked', event);
+    };
+
+    $scope.eventEdited = function(event) {
+      console.log('Event edited', event);
+    };
+
+    $scope.eventDeleted = function(event) {
+      console.log('Event deleted', event);
     };
 
     $scope.setCalendarToToday = function() {

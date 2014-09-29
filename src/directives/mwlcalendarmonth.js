@@ -7,7 +7,7 @@
  * # mwlCalendarMonth
  */
 angular.module('mwl.calendar')
-  .directive('mwlCalendarMonth', function (calendarHelper) {
+  .directive('mwlCalendarMonth', function ($sce, calendarHelper) {
     return {
       templateUrl: 'templates/month.html',
       restrict: 'EA',
@@ -15,9 +15,15 @@ angular.module('mwl.calendar')
       scope: {
         events: '=calendarEvents',
         currentDay: '=calendarCurrentDay',
-        eventClick: '&calendarEventClick'
+        eventClick: '=calendarEventClick',
+        eventEditClick: '=calendarEditEventClick',
+        eventDeleteClick: '=calendarDeleteEventClick',
+        editEventHtml: '=calendarEditEventHtml',
+        deleteEventHtml: '=calendarDeleteEventHtml'
       },
       link: function postLink(scope, element, attrs, calendarCtrl) {
+
+        scope.$sce = $sce;
 
         calendarCtrl.titleFunctions.month = function(currentDay) {
           return moment(currentDay).format('MMMM YYYY');

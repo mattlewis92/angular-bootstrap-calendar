@@ -40,14 +40,27 @@
           <li ng-repeat="event in openEvents track by $index">
             <span class="pull-left event event-{{ event.type }}"></span>
             &nbsp;
-            <a href="javascript:;" class="event-item" ng-click="eventClick({$event: event})">
+            <a
+              href="javascript:;"
+              class="event-item"
+              ng-click="eventClick({$event: event})">
               {{ event.title }}
             </a>
-            <a href="javascript:;" class="event-item-edit">
-              - Edit
+
+            <a
+              href="javascript:;"
+              class="event-item-edit"
+              ng-if="editEventHtml"
+              ng-bind-html="$sce.trustAsHtml(editEventHtml)"
+              ng-click="eventEditClick({$event: event})">
             </a>
-            <a href="javascript:;" class="event-item-delete">
-              - Delete
+
+            <a
+              href="javascript:;"
+              class="event-item-delete"
+              ng-if="deleteEventHtml"
+              ng-bind-html="$sce.trustAsHtml(deleteEventHtml)"
+              ng-click="eventDeleteClick({$event: event})">
             </a>
           </li>
 

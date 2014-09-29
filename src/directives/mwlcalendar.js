@@ -7,7 +7,7 @@
  * # mwlCalendar
  */
 angular.module('mwl.calendar')
-  .directive('mwlCalendar', function ($timeout, moment) {
+  .directive('mwlCalendar', function (moment) {
     return {
       templateUrl: 'templates/main.html',
       restrict: 'EA',
@@ -16,7 +16,11 @@ angular.module('mwl.calendar')
         view: '=calendarView',
         currentDay: '=calendarCurrentDay',
         control: '=calendarControl',
-        eventClick: '&calendarEventClick'
+        eventClick: '&calendarEventClick',
+        eventEditClick: '&calendarEditEventClick',
+        eventDeleteClick: '&calendarDeleteEventClick',
+        editEventHtml: '=calendarEditEventHtml',
+        deleteEventHtml: '=calendarDeleteEventHtml'
       },
       controller: function($scope) {
 
@@ -38,10 +42,6 @@ angular.module('mwl.calendar')
           if (!self.titleFunctions[$scope.view]) return '';
           return self.titleFunctions[$scope.view]($scope.currentDay);
         };
-
-        $scope.eventClickHandler = function(event) {
-          $scope.eventClick({$event: event});
-        }
 
       }
     };

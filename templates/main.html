@@ -3,28 +3,36 @@
   <mwl-calendar-year
     calendar-events="events"
     calendar-current-day="currentDay"
-    calendar-event-click="eventClickHandler($event)"
+    calendar-event-click="eventClick"
+    calendar-edit-event-click="eventEditClick"
+    calendar-delete-event-click="eventDeleteClick"
+    calendar-edit-event-html="editEventHtml"
+    calendar-delete-event-html="deleteEventHtml"
     ng-if="view == 'year'"
   ></mwl-calendar-year>
 
   <mwl-calendar-month
     calendar-events="events"
     calendar-current-day="currentDay"
-    calendar-event-click="eventClickHandler($event)"
+    calendar-event-click="eventClick"
+    calendar-edit-event-click="eventEditClick"
+    calendar-delete-event-click="eventDeleteClick"
+    calendar-edit-event-html="editEventHtml"
+    calendar-delete-event-html="deleteEventHtml"
     ng-if="view == 'month'"
     ></mwl-calendar-month>
 
   <mwl-calendar-week
     calendar-events="events"
     calendar-current-day="currentDay"
-    calendar-event-click="eventClickHandler($event)"
+    calendar-event-click="eventClick"
     ng-if="view == 'week'"
     ></mwl-calendar-week>
 
   <mwl-calendar-day
     calendar-events="events"
     calendar-current-day="currentDay"
-    calendar-event-click="eventClickHandler($event)"
+    calendar-event-click="eventClick"
     ng-if="view == 'day'"
     ></mwl-calendar-day>
 </div>

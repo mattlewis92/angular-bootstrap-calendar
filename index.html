@@ -54,8 +54,11 @@
             calendar-view="calendarView"
             calendar-current-day="calendarDay"
             calendar-control="calendarControl"
-            calendar-title="title"
             calendar-event-click="eventClicked($event)"
+            calendar-edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
+            calendar-delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
+            calendar-edit-event-click="eventEdited($event)"
+            calendar-delete-event-click="eventDeleted($event)"
             ></mwl-calendar>
         </div>
       </div>
