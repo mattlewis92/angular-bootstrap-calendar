@@ -92,6 +92,10 @@ angular.module('mwl.calendar')
 
       var grid = [];
       var buildRow = new Array(7);
+      var eventsWithIds = events.map(function(event, index) {
+        event.$id = index;
+        return event;
+      });
 
       for (var i = 1; i <= numberOfDaysInMonth; i++) {
 
@@ -112,7 +116,7 @@ angular.module('mwl.calendar')
         buildRow[getWeekDayIndex(startOfMonth)] = {
           label: startOfMonth.date(),
           inMonth: true,
-          events: events.filter(function(event) {
+          events: eventsWithIds.filter(function(event) {
             return self.eventIsInPeriod(event.starts_at, event.ends_at, startOfMonth.clone().startOf('day'), startOfMonth.clone().endOf('day'));
           })
         };

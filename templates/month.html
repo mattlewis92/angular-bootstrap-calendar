@@ -3,12 +3,16 @@
   <div class="cal-cell1" ng-repeat="day in weekDays">{{ day }}</div>
 
 </div>
-
 <div class="cal-month-box">
 
-  <div ng-repeat="week in view">
+  <div ng-repeat="week in view track by $index">
     <div class="cal-row-fluid cal-before-eventlist">
-      <div class="cal-cell1 cal-cell" ng-repeat="day in week track by $index" ng-click="dayClicked($parent.$index, $index)" ng-class="{pointer: day.events.length > 0}">
+      <div
+        class="cal-cell1 cal-cell {{ day.highlightClass }}"
+        ng-repeat="day in week track by $index"
+        ng-click="dayClicked($parent.$index, $index)"
+        ng-class="{pointer: day.events.length > 0}"
+      >
         <div class="cal-month-day" ng-class="{'cal-day-outmonth': !day.inMonth, 'cal-day-inmonth': day.inMonth, 'cal-day-weekend': $index == 5 || $index == 6}">
           <span class="pull-right" data-cal-date>{{ day.label }}</span>
           <div class="cal-day-tick" ng-show="day.isOpened"><i class="icon-chevron-down glyphicon glyphicon-chevron-down"></i></div>
@@ -18,6 +22,8 @@
               ng-click="eventClick({$event: event})"
               ng-repeat="event in day.events"
               class="pull-left event event-{{ event.type }}"
+              ng-mouseenter="highlightEvent(event, true)"
+              ng-mouseleave="highlightEvent(event, false)"
               tooltip-append-to-body="true"
               tooltip="{{ event.title }}"
               ></a>

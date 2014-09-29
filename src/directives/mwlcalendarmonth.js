@@ -39,6 +39,32 @@ angular.module('mwl.calendar')
 
         };
 
+        scope.highlightEvent = function(event, shouldAddClass) {
+
+          scope.view = scope.view.map(function(week) {
+
+            return week.map(function(day) {
+
+              delete day.highlightClass;
+
+              if (shouldAddClass) {
+                var dayContainsEvent = day.events.filter(function(e) {
+                  return e.$id == event.$id;
+                }).length > 0;
+
+                if (dayContainsEvent) {
+                  day.highlightClass = 'day-highlight dh-event-' + event.type;
+                }
+              }
+
+              return day;
+
+            });
+
+          });
+
+        };
+
       }
     };
   });
