@@ -28,7 +28,7 @@ angular.module('mwl.calendar')
         }
 
         scope.$watch('currentDay', updateView);
-        scope.$watchCollection('events', updateView);
+        scope.$watch('events', updateView, true);
 
       }
     };

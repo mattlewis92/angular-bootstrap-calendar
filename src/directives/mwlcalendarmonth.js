@@ -30,11 +30,12 @@ angular.module('mwl.calendar')
         };
 
         function updateView() {
+          console.log('VIEW UPDATED');
           scope.view = calendarHelper.getMonthView(scope.events, scope.currentDay);
         }
 
         scope.$watch('currentDay', updateView);
-        scope.$watchCollection('events', updateView);
+        scope.$watch('events', updateView, true);
 
         scope.weekDays = calendarHelper.getWeekDayNames();
 
