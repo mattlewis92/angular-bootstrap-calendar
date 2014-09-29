@@ -490,7 +490,13 @@ span[data-cal-date]:hover {
 .cal-slide-content a.event-item {
   color: #ffffff;
   font-weight: normal;
-  line-height: 22px;
+}
+a.event-item-edit, a.event-item-delete {
+  padding-left: 5px;
+}
+.cal-year-box .cal-slide-content a.event-item, .cal-year-box a.event-item-edit, .cal-year-box a.event-item-delete {
+  position: relative;
+  top: -3px;
 }
 .events-list {
   max-height: 47px;
