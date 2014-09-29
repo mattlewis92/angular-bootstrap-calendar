@@ -15,7 +15,6 @@ angular.module('mwl.calendar')
       scope: {
         events: '=calendarEvents',
         currentDay: '=calendarCurrentDay',
-        control: '=calendarControl',
         eventClick: '&calendarEventClick'
       },
       link: function postLink(scope, element, attrs, calendarCtrl) {
@@ -24,11 +23,12 @@ angular.module('mwl.calendar')
           return moment(currentDay).format('YYYY');
         };
 
-        scope.control = scope.control || {};
-
-        scope.control.updateView = function() {
+        function updateView() {
           scope.view = calendarHelper.getYearView(scope.events, scope.currentDay);
-        };
+        }
+
+        scope.$watch('currentDay', updateView);
+        scope.$watchCollection('events', updateView);
 
         scope.monthClicked = function(yearIndex, monthIndex) {
 

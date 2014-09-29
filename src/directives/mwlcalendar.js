@@ -24,8 +24,6 @@ angular.module('mwl.calendar')
 
         this.titleFunctions = {};
 
-        $scope.subControls = {};
-
         $scope.control = $scope.control || {};
 
         $scope.control.prev = function() {
@@ -44,23 +42,6 @@ angular.module('mwl.calendar')
         $scope.eventClickHandler = function(event) {
           $scope.eventClick({$event: event});
         }
-
-        function updateView() {
-          $timeout(function() {
-            if ($scope.subControls[$scope.view]) {
-              $scope.subControls[$scope.view].updateView();
-            } else {
-              updateView();
-            }
-          });
-        }
-
-        $timeout(function() {
-          $scope.$watch('view', updateView);
-          $scope.$watch('currentDay', updateView);
-          $scope.$watch('events', updateView);
-        });
-
 
       }
     };
