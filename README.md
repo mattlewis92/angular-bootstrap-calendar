@@ -1,3 +1,14 @@
+# Angular Bootstrap Calendar
+
+## Table of contents
+
+- [About](#about)
+- [Installation](#installation)
+- [Documentation](#documentation)
+- [Demo](#demo)
+- [Development](#development)
+- [License](#licence)
+
 ## About
 
 This plugin is an AngularJS port of the original jQuery bootstrap calendar that can be found here:
@@ -8,10 +19,6 @@ The layout and functionality is intended to be exactly the same, but without the
 All credits for the UI/UX of the calendar go to the original author.
 
 Pull requests are welcome.
-
-## Demo + documentation
-
-http://mattlewis92.github.io/angular-bootstrap-calendar/
 
 ## Installation
 
@@ -41,6 +48,80 @@ And finally add the module dependency in your AngularJS app:
 angular.module('myModule', ['mwl.calendar']);
 ```
 
+## Documentation
+
+There is a single directive exposed to create the calendar, use it like so:
+```javascript
+<mwl-calendar
+    calendar-events="events"
+    calendar-view="calendarView"
+    calendar-current-day="calendarDay"
+    calendar-control="calendarControl"
+    calendar-event-click="eventClicked($event)"
+    calendar-edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
+    calendar-delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
+    calendar-edit-event-click="eventEdited($event)"
+    calendar-delete-event-click="eventDeleted($event)"
+    ></mwl-calendar>
+```
+
+An explanation of the properties is as follows:
+
+### calendar-events
+
+An array of events to display on the calendar. For example:
+```javascript
+$scope.events = [
+  {
+    title: 'My event title', // The title of the event
+    type: 'info', // The type of the event (determines its color). Can be important, warning, info, inverse, success or special
+    starts_at: new Date(2013,5,1,1), // A javascript date object for when the event starts
+    ends_at: new Date(2014,8,26,15) // A javascript date object for when the event ends
+  }
+];
+```
+
+The 4 properties listed are required for all events.
+
+### calendar-view
+
+This variable is a string that can be either 'year', 'month', 'week' or 'day. Changing it will change the view of the calendar.
+
+### calendar-current-day
+
+This variable holds the current day the calendar is centralised on. Each view will decide on its current year / month / week / day depending on the value of this variable.
+
+### calendar-control
+
+The directive will instantiate this variable for you and add the following methods to it:
+* prev - Goes to the previous page of the view
+* next - Goes to the next page of the view
+* getTitle - Gets the title of the calendar depending on the current date and view.
+
+### calendar-event-click 
+
+This function is called when an event is clicked on the calendar. $event contains the calendar event that was clicked on.
+
+### calendar-edit-event-html 
+
+If provided this piece of html will be displayed next to an event on the year and month view and will fire the function passed to edit-event-click.
+
+### calendar-delete-event-html 
+
+If provided this piece of html will be displayed next to an event on the year and month view and will fire the function passed to delete-event-click.
+
+### calendar-edit-event-click 
+
+This function is called when an event edit link is clicked on the calendar. $event contains the calendar event that was clicked on.
+
+### calendar-delete-event-click 
+
+This function is called when an event delete link is clicked on the calendar. $event contains the calendar event that was clicked on.
+
+## Demo
+
+http://mattlewis92.github.io/angular-bootstrap-calendar/
+
 ## Development
 
 ### Prepare your environment
@@ -53,3 +134,25 @@ Run `gulp` to build the project files in the dist folder
 
 ### Development server
 Run `gulp watch` to start a development server with livereload on port 8000. 
+
+## License
+
+The MIT License
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
