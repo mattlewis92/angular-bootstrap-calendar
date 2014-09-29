@@ -46,6 +46,10 @@ angular.module('mwl.calendar')
 
         };
 
+        scope.drillDown = function(day) {
+          calendarCtrl.changeView('day', moment(scope.currentDay).clone().date(day).toDate());
+        };
+
         scope.highlightEvent = function(event, shouldAddClass) {
 
           scope.view = scope.view.map(function(week) {

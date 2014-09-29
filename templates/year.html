@@ -2,7 +2,7 @@
   <div ng-repeat="year in view track by $index">
     <div class="row cal-before-eventlist">
       <div class="span3 col-md-3 col-xs-6 cal-cell" ng-repeat="month in year track by $index" ng-click="monthClicked($parent.$index, $index)" ng-class="{pointer: month.events.length > 0}">
-        <span class="pull-right" data-cal-date>{{ month.label }}</span>
+        <span class="pull-right" data-cal-date ng-click="drillDown(month.monthIndex)">{{ month.label }}</span>
 
         <small class="cal-events-num badge badge-important pull-left" ng-show="month.events.length > 0">{{ month.events.length }}</small>
 

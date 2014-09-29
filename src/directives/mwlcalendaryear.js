@@ -44,6 +44,10 @@ angular.module('mwl.calendar')
 
         };
 
+        scope.drillDown = function(month) {
+          calendarCtrl.changeView('month', moment(scope.currentDay).clone().month(month).toDate());
+        };
+
       }
     };
   });

@@ -3,7 +3,7 @@
 
     <div class="cal-cell1" ng-repeat="column in view.columns track by $index" ng-class="{'cal-day-weekend': $index > 4}">{{ column.weekDay }}<br>
       <small>
-        <span data-cal-date="2013-03-10">{{ column.date }}</span>
+        <span data-cal-date ng-click="drillDown(column.day)" class="pointer">{{ column.date }}</span>
       </small>
     </div>
 
