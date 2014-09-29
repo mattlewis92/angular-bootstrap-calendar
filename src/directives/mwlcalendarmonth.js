@@ -30,7 +30,6 @@ angular.module('mwl.calendar')
         };
 
         function updateView() {
-          console.log('VIEW UPDATED');
           scope.view = calendarHelper.getMonthView(scope.events, scope.currentDay);
         }
 
@@ -45,6 +44,10 @@ angular.module('mwl.calendar')
           scope.view = handler.view;
           scope.openEvents = handler.openEvents;
 
+        };
+
+        scope.drillDown = function(day) {
+          calendarCtrl.changeView('day', moment(scope.currentDay).clone().date(day).toDate());
         };
 
         scope.highlightEvent = function(event, shouldAddClass) {

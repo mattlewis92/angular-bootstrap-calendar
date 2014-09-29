@@ -28,6 +28,11 @@ angular.module('mwl.calendar')
 
         this.titleFunctions = {};
 
+        this.changeView = function(view, newDay) {
+          $scope.view = view;
+          $scope.currentDay = newDay;
+        };
+
         $scope.control = $scope.control || {};
 
         $scope.control.prev = function() {

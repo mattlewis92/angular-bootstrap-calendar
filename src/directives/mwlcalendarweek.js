@@ -27,6 +27,10 @@ angular.module('mwl.calendar')
           scope.view = calendarHelper.getWeekView(scope.events, scope.currentDay);
         }
 
+        scope.drillDown = function(day) {
+          calendarCtrl.changeView('day', moment(scope.currentDay).clone().date(day).toDate());
+        };
+
         scope.$watch('currentDay', updateView);
         scope.$watch('events', updateView, true);
 

@@ -64,6 +64,7 @@ angular.module('mwl.calendar')
           var monthIndex = 12 - months.length;
           row.push({
             label: months.shift(),
+            monthIndex: monthIndex,
             events: events.filter(function(event) {
               var startPeriod = new Date(moment(currentDay).format('YYYY'), monthIndex, 1);
               var endPeriod = moment(startPeriod).add(1, 'month').subtract(1, 'second').toDate();
@@ -159,6 +160,7 @@ angular.module('mwl.calendar')
         var date = moment(currentDay).subtract(currentWeekDayIndex - i, 'days').add(1, 'day').toDate();
         columns[i] = {
           weekDay: weekDays[i],
+          day: $filter('date')(date, 'd'),
           date: $filter('date')(date, 'd MMM')
         };
         if (i == 0) {
@@ -172,6 +174,7 @@ angular.module('mwl.calendar')
         var date = moment(currentDay).add(i - currentWeekDayIndex, 'days').add(1, 'day').toDate();
         columns[i] = {
           weekDay: weekDays[i],
+          day: $filter('date')(date, 'd'),
           date: $filter('date')(date, 'd MMM')
         };
         if (i == 0) {

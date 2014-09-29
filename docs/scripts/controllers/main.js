@@ -21,7 +21,8 @@ angular.module('mwl.calendar')
         title: 'Event 2',
         type: 'info',
         starts_at: new Date(2013,5,1,1),
-        ends_at: new Date(2014,8,26,15)
+        ends_at: new Date(2014,8,26,15),
+        editable: false
       }
     ];
 
