@@ -50,7 +50,7 @@
             <a
               href="javascript:;"
               class="event-item-edit"
-              ng-if="editEventHtml"
+              ng-if="editEventHtml && event.editable !== false"
               ng-bind-html="$sce.trustAsHtml(editEventHtml)"
               ng-click="eventEditClick({$event: event})">
             </a>
@@ -58,7 +58,7 @@
             <a
               href="javascript:;"
               class="event-item-delete"
-              ng-if="deleteEventHtml"
+              ng-if="deleteEventHtml && event.deletable !== false"
               ng-bind-html="$sce.trustAsHtml(deleteEventHtml)"
               ng-click="eventDeleteClick({$event: event})">
             </a>
