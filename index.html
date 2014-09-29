@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>Angular bootstrap calendar demo</title>
-    <meta name="description" content="">
+    <meta name="description" content="Angular bootstrap calendar demo">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <link rel="stylesheet" href="docs/bower_components/bootstrap/dist/css/bootstrap.css" />
@@ -12,16 +12,25 @@
   </head>
   <body ng-app="mwl.calendar">
 
-    <a href="https://github.com/mattlewis92/angular-bootstrap-calendar" class="hidden-xs"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
-    <!-- Add your site or application content here -->
-    <div class="container-fluid">
-      <div class="header row">
-        <h3 class="text-muted col-md-8 col-md-offset-2">Angular Bootstrap Calendar</h3>
-      </div>
+    <a href="https://github.com/mattlewis92/angular-bootstrap-calendar" class="hidden-xs"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 2000" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
 
-      <div class="row" ng-controller="MainCtrl">
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Angular Bootstrap Calendar</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li><a href="#demo">Demo</a></li>
+          <li><a href="#event-editor">Event editor</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+
+      <div class="row" ng-controller="MainCtrl" id="demo">
         <div class="col-md-8 col-md-offset-2">
-          <h2 class="text-center">{{ title }}</h2>
+          <h2 class="text-center">{{ calendarControl.getTitle() }}</h2>
 
           <div class="row">
 
@@ -54,9 +63,82 @@
             calendar-view="calendarView"
             calendar-current-day="calendarDay"
             calendar-control="calendarControl"
-            calendar-title="title"
             calendar-event-click="eventClicked($event)"
+            calendar-edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
+            calendar-delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
+            calendar-edit-event-click="eventEdited($event)"
+            calendar-delete-event-click="eventDeleted($event)"
             ></mwl-calendar>
+
+          <br><br><br>
+
+          <script type="text/ng-template" id="modalContent.html">
+            <div class="modal-header">
+              <h3 class="modal-title">Event action occurred!</h3>
+            </div>
+            <div class="modal-body">
+              <p>Action: <pre>{{ action }}</pre></p>
+              <p>Event: <pre>{{ event | json }}</pre></p>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-primary" ng-click="$modalInstance.close()">OK</button>
+            </div>
+          </script>
+
+          <h3 id="event-editor">
+            Edit events
+            <button class="btn btn-primary pull-right" ng-click="events.push({title: 'New event', type: 'important'})">Add new</button>
+            <div class="clearfix"></div>
+          </h3>
+
+          <table class="table table-bordered">
+
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Type</th>
+                <th>Starts at</th>
+                <th>Ends at</th>
+                <th>Remove</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr ng-repeat="event in events">
+                <td><input type="text" class="form-control" ng-model="event.title"></td>
+                <td>
+                  <select ng-model="event.type" class="form-control">
+                    <option value="important">Important</option>
+                    <option value="warning">Warning</option>
+                    <option value="info">Info</option>
+                    <option value="inverse">Inverse</option>
+                    <option value="success">Success</option>
+                    <option value="special">Special</option>
+                  </select>
+                </td>
+                <td>
+                  <p class="input-group" style="max-width: 250px">
+                    <input type="text" class="form-control" readonly datepicker-popup="medium" ng-model="event.starts_at" is-open="event.startOpen" close-text="Close" />
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-default" ng-click="toggle($event, 'startOpen', event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                  </p>
+                  <timepicker ng-model="event.starts_at" hour-step="1" minute-step="15" show-meridian="true"></timepicker>
+                </td>
+                <td>
+                  <p class="input-group" style="max-width: 250px">
+                    <input type="text" class="form-control" readonly datepicker-popup="medium" ng-model="event.ends_at" is-open="event.endOpen" close-text="Close" />
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-default" ng-click="toggle($event, 'endOpen', event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                  </p>
+                  <timepicker ng-model="event.ends_at" hour-step="1" minute-step="15" show-meridian="true"></timepicker>
+                </td>
+                <td><button class="btn btn-danger" ng-click="events.splice($index, 1)">Delete</button></td>
+              </tr>
+            </tbody>
+
+          </table>
         </div>
       </div>
 

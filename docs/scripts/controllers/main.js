@@ -8,7 +8,7 @@
  * Controller of the angularBootstrapCalendarApp
  */
 angular.module('mwl.calendar')
-  .controller('MainCtrl', function ($scope) {
+  .controller('MainCtrl', function ($scope, $modal) {
 
     $scope.events = [
       {
@@ -28,15 +28,40 @@ angular.module('mwl.calendar')
     $scope.calendarView = 'month';
     $scope.calendarDay = new Date();
 
+    function showModal(action, event) {
+      $modal.open({
+        templateUrl: 'modalContent.html',
+        controller: function($scope, $modalInstance) {
+          $scope.$modalInstance = $modalInstance;
+          $scope.action = action;
+          $scope.event = event;
+        }
+      });
+    }
+
     $scope.eventClicked = function(event) {
-      console.log(event);
+      showModal('Clicked', event);
+    };
+
+    $scope.eventEdited = function(event) {
+      showModal('Edited', event);
+    };
+
+    $scope.eventDeleted = function(event) {
+      showModal('Deleted', event);
     };
 
     $scope.setCalendarToToday = function() {
       $scope.calendarDay = new Date();
     };
 
-    $scope.calendarControl = {};
-    $scope.title = '';
+    $scope.toggle = function($event, field, event) {
+      $event.preventDefault();
+      $event.stopPropagation();
+
+      event[field] = !event[field];
+    };
+
+
 
   });

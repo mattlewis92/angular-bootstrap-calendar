@@ -7,27 +7,35 @@
  * # mwlCalendarMonth
  */
 angular.module('mwl.calendar')
-  .directive('mwlCalendarMonth', function (calendarHelper) {
+  .directive('mwlCalendarMonth', function ($sce, calendarHelper) {
     return {
       templateUrl: 'templates/month.html',
       restrict: 'EA',
+      require: '^mwlCalendar',
       scope: {
         events: '=calendarEvents',
         currentDay: '=calendarCurrentDay',
-        control: '=calendarControl',
-        eventClick: '&calendarEventClick'
+        eventClick: '=calendarEventClick',
+        eventEditClick: '=calendarEditEventClick',
+        eventDeleteClick: '=calendarDeleteEventClick',
+        editEventHtml: '=calendarEditEventHtml',
+        deleteEventHtml: '=calendarDeleteEventHtml'
       },
-      link: function postLink(scope, element, attrs) {
+      link: function postLink(scope, element, attrs, calendarCtrl) {
 
-        scope.control = scope.control || {};
+        scope.$sce = $sce;
 
-        scope.control.getTitle = function() {
-          return moment(scope.currentDay).format('MMMM YYYY');
+        calendarCtrl.titleFunctions.month = function(currentDay) {
+          return moment(currentDay).format('MMMM YYYY');
         };
 
-        scope.control.updateView = function() {
+        function updateView() {
+          console.log('VIEW UPDATED');
           scope.view = calendarHelper.getMonthView(scope.events, scope.currentDay);
-        };
+        }
+
+        scope.$watch('currentDay', updateView);
+        scope.$watch('events', updateView, true);
 
         scope.weekDays = calendarHelper.getWeekDayNames();
 
@@ -36,6 +44,32 @@ angular.module('mwl.calendar')
           var handler = calendarHelper.toggleEventBreakdown(scope.view, rowIndex, cellIndex);
           scope.view = handler.view;
           scope.openEvents = handler.openEvents;
+
+        };
+
+        scope.highlightEvent = function(event, shouldAddClass) {
+
+          scope.view = scope.view.map(function(week) {
+
+            return week.map(function(day) {
+
+              delete day.highlightClass;
+
+              if (shouldAddClass) {
+                var dayContainsEvent = day.events.filter(function(e) {
+                  return e.$id == event.$id;
+                }).length > 0;
+
+                if (dayContainsEvent) {
+                  day.highlightClass = 'day-highlight dh-event-' + event.type;
+                }
+              }
+
+              return day;
+
+            });
+
+          });
 
         };
 

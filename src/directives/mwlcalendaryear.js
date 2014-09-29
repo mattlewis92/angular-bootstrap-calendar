@@ -7,27 +7,34 @@
  * # mwlCalendarYear
  */
 angular.module('mwl.calendar')
-  .directive('mwlCalendarYear', function(calendarHelper, moment) {
+  .directive('mwlCalendarYear', function($sce, calendarHelper, moment) {
     return {
       templateUrl: 'templates/year.html',
       restrict: 'EA',
+      require: '^mwlCalendar',
       scope: {
         events: '=calendarEvents',
         currentDay: '=calendarCurrentDay',
-        control: '=calendarControl',
-        eventClick: '&calendarEventClick'
+        eventClick: '=calendarEventClick',
+        eventEditClick: '=calendarEditEventClick',
+        eventDeleteClick: '=calendarDeleteEventClick',
+        editEventHtml: '=calendarEditEventHtml',
+        deleteEventHtml: '=calendarDeleteEventHtml'
       },
-      link: function postLink(scope, element, attrs) {
+      link: function postLink(scope, element, attrs, calendarCtrl) {
 
-        scope.control = scope.control || {};
+        scope.$sce = $sce;
 
-        scope.control.getTitle = function() {
-          return moment(scope.currentDay).format('YYYY');
+        calendarCtrl.titleFunctions.year = function(currentDay) {
+          return moment(currentDay).format('YYYY');
         };
 
-        scope.control.updateView = function() {
+        function updateView() {
           scope.view = calendarHelper.getYearView(scope.events, scope.currentDay);
-        };
+        }
+
+        scope.$watch('currentDay', updateView);
+        scope.$watch('events', updateView, true);
 
         scope.monthClicked = function(yearIndex, monthIndex) {
 

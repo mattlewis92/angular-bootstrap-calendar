@@ -7,7 +7,7 @@
  * # mwlCalendar
  */
 angular.module('mwl.calendar')
-  .directive('mwlCalendar', function ($timeout, moment) {
+  .directive('mwlCalendar', function (moment) {
     return {
       templateUrl: 'templates/main.html',
       restrict: 'EA',
@@ -16,44 +16,32 @@ angular.module('mwl.calendar')
         view: '=calendarView',
         currentDay: '=calendarCurrentDay',
         control: '=calendarControl',
-        title: '=calendarTitle',
-        eventClick: '&calendarEventClick'
+        eventClick: '&calendarEventClick',
+        eventEditClick: '&calendarEditEventClick',
+        eventDeleteClick: '&calendarDeleteEventClick',
+        editEventHtml: '=calendarEditEventHtml',
+        deleteEventHtml: '=calendarDeleteEventHtml'
       },
-      link: function postLink(scope, element, attrs) {
+      controller: function($scope) {
 
-        scope.subControls = {};
+        var self = this;
 
-        scope.control = scope.control || {};
+        this.titleFunctions = {};
 
-        scope.control.prev = function() {
-          scope.currentDay = moment(scope.currentDay).subtract(1, scope.view).toDate();
+        $scope.control = $scope.control || {};
+
+        $scope.control.prev = function() {
+          $scope.currentDay = moment($scope.currentDay).subtract(1, $scope.view).toDate();
         };
 
-        scope.control.next = function() {
-          scope.currentDay = moment(scope.currentDay).add(1, scope.view).toDate();
+        $scope.control.next = function() {
+          $scope.currentDay = moment($scope.currentDay).add(1, $scope.view).toDate();
         };
 
-        scope.eventClickHandler = function(event) {
-          scope.eventClick({$event: event});
-        }
-
-        function updateView() {
-          $timeout(function() {
-            if (scope.subControls[scope.view]) {
-              scope.title = scope.subControls[scope.view].getTitle();
-              scope.subControls[scope.view].updateView();
-            } else {
-              updateView();
-            }
-          });
-        }
-
-        $timeout(function() {
-          scope.$watch('view', updateView);
-          scope.$watch('currentDay', updateView);
-          scope.$watch('events', updateView);
-        });
-
+        $scope.control.getTitle = function() {
+          if (!self.titleFunctions[$scope.view]) return '';
+          return self.titleFunctions[$scope.view]($scope.currentDay);
+        };
 
       }
     };

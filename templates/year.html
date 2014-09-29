@@ -1,7 +1,7 @@
 <div class="cal-year-box">
-  <div ng-repeat="year in view">
+  <div ng-repeat="year in view track by $index">
     <div class="row cal-before-eventlist">
-      <div class="span3 col-md-3 col-xs-6 cal-cell" ng-repeat="month in year" ng-click="monthClicked($parent.$index, $index)" ng-class="{pointer: month.events.length > 0}">
+      <div class="span3 col-md-3 col-xs-6 cal-cell" ng-repeat="month in year track by $index" ng-click="monthClicked($parent.$index, $index)" ng-class="{pointer: month.events.length > 0}">
         <span class="pull-right" data-cal-date>{{ month.label }}</span>
 
         <small class="cal-events-num badge badge-important pull-left" ng-show="month.events.length > 0">{{ month.events.length }}</small>
@@ -10,16 +10,35 @@
 
       </div>
     </div>
-    <div class="cal-slide-box" ng-show="year.isOpened">
+    <div class="cal-slide-box" collapse="!year.isOpened">
       <span class="cal-slide-tick" class="tick-month3"></span>
       <div class="cal-slide-content" class="cal-event-list">
         <ul class="unstyled list-unstyled">
 
-          <li ng-repeat="event in openEvents">
+          <li ng-repeat="event in openEvents track by $index">
             <span class="pull-left event" ng-class="'event-' + event.type"></span>
             &nbsp;
-            <a href="javascript:;" class="event-item" ng-click="eventClick({$event: event})">
+            <a
+              href="javascript:;"
+              class="event-item"
+              ng-click="eventClick({$event: event})">
               {{ event.title }}
+            </a>
+
+            <a
+              href="javascript:;"
+              class="event-item-edit"
+              ng-if="editEventHtml"
+              ng-bind-html="$sce.trustAsHtml(editEventHtml)"
+              ng-click="eventEditClick({$event: event})">
+            </a>
+
+            <a
+              href="javascript:;"
+              class="event-item-delete"
+              ng-if="deleteEventHtml"
+              ng-bind-html="$sce.trustAsHtml(deleteEventHtml)"
+              ng-click="eventDeleteClick({$event: event})">
             </a>
           </li>
 

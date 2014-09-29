@@ -11,23 +11,24 @@ angular.module('mwl.calendar')
     return {
       templateUrl: 'templates/day.html',
       restrict: 'EA',
+      require: '^mwlCalendar',
       scope: {
         events: '=calendarEvents',
         currentDay: '=calendarCurrentDay',
-        control: '=calendarControl',
-        eventClick: '&calendarEventClick'
+        eventClick: '=calendarEventClick'
       },
-      link: function postLink(scope, element, attrs) {
+      link: function postLink(scope, element, attrs, calendarCtrl) {
 
-        scope.control = scope.control || {};
-
-        scope.control.getTitle = function() {
-          return moment(scope.currentDay).format('dddd DD MMMM, YYYY');
+        calendarCtrl.titleFunctions.day = function(currentDay) {
+          return moment(currentDay).format('dddd DD MMMM, YYYY');
         };
 
-        scope.control.updateView = function() {
+        function updateView() {
           scope.view = calendarHelper.getDayView(scope.events, scope.currentDay);
-        };
+        }
+
+        scope.$watch('currentDay', updateView);
+        scope.$watch('events', updateView, true);
 
       }
     };
