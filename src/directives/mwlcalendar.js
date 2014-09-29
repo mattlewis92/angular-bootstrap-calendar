@@ -16,32 +16,39 @@ angular.module('mwl.calendar')
         view: '=calendarView',
         currentDay: '=calendarCurrentDay',
         control: '=calendarControl',
-        title: '=calendarTitle',
         eventClick: '&calendarEventClick'
       },
-      link: function postLink(scope, element, attrs) {
+      controller: function($scope) {
 
-        scope.subControls = {};
+        var self = this;
 
-        scope.control = scope.control || {};
+        this.titleFunctions = {};
 
-        scope.control.prev = function() {
-          scope.currentDay = moment(scope.currentDay).subtract(1, scope.view).toDate();
+        $scope.subControls = {};
+
+        $scope.control = $scope.control || {};
+
+        $scope.control.prev = function() {
+          $scope.currentDay = moment($scope.currentDay).subtract(1, $scope.view).toDate();
         };
 
-        scope.control.next = function() {
-          scope.currentDay = moment(scope.currentDay).add(1, scope.view).toDate();
+        $scope.control.next = function() {
+          $scope.currentDay = moment($scope.currentDay).add(1, $scope.view).toDate();
         };
 
-        scope.eventClickHandler = function(event) {
-          scope.eventClick({$event: event});
+        $scope.control.getTitle = function() {
+          if (!self.titleFunctions[$scope.view]) return '';
+          return self.titleFunctions[$scope.view]($scope.currentDay);
+        };
+
+        $scope.eventClickHandler = function(event) {
+          $scope.eventClick({$event: event});
         }
 
         function updateView() {
           $timeout(function() {
-            if (scope.subControls[scope.view]) {
-              scope.title = scope.subControls[scope.view].getTitle();
-              scope.subControls[scope.view].updateView();
+            if ($scope.subControls[$scope.view]) {
+              $scope.subControls[$scope.view].updateView();
             } else {
               updateView();
             }
@@ -49,9 +56,9 @@ angular.module('mwl.calendar')
         }
 
         $timeout(function() {
-          scope.$watch('view', updateView);
-          scope.$watch('currentDay', updateView);
-          scope.$watch('events', updateView);
+          $scope.$watch('view', updateView);
+          $scope.$watch('currentDay', updateView);
+          $scope.$watch('events', updateView);
         });
 
 

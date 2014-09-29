@@ -36,7 +36,4 @@ angular.module('mwl.calendar')
       $scope.calendarDay = new Date();
     };
 
-    $scope.calendarControl = {};
-    $scope.title = '';
-
   });

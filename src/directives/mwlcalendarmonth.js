@@ -11,19 +11,20 @@ angular.module('mwl.calendar')
     return {
       templateUrl: 'templates/month.html',
       restrict: 'EA',
+      require: '^mwlCalendar',
       scope: {
         events: '=calendarEvents',
         currentDay: '=calendarCurrentDay',
         control: '=calendarControl',
         eventClick: '&calendarEventClick'
       },
-      link: function postLink(scope, element, attrs) {
+      link: function postLink(scope, element, attrs, calendarCtrl) {
+
+        calendarCtrl.titleFunctions.month = function(currentDay) {
+          return moment(currentDay).format('MMMM YYYY');
+        };
 
         scope.control = scope.control || {};
-
-        scope.control.getTitle = function() {
-          return moment(scope.currentDay).format('MMMM YYYY');
-        };
 
         scope.control.updateView = function() {
           scope.view = calendarHelper.getMonthView(scope.events, scope.currentDay);

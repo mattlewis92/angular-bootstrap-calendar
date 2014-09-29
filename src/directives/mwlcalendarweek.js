@@ -11,19 +11,20 @@ angular.module('mwl.calendar')
     return {
       templateUrl: 'templates/week.html',
       restrict: 'EA',
+      require: '^mwlCalendar',
       scope: {
         events: '=calendarEvents',
         currentDay: '=calendarCurrentDay',
         control: '=calendarControl',
         eventClick: '&calendarEventClick'
       },
-      link: function postLink(scope, element, attrs) {
+      link: function postLink(scope, element, attrs, calendarCtrl) {
+
+        calendarCtrl.titleFunctions.week = function(currentDay) {
+          return 'Week ' + moment(currentDay).week() + ' of ' + moment(currentDay).format('YYYY');
+        };
 
         scope.control = scope.control || {};
-
-        scope.control.getTitle = function() {
-          return 'Week ' + moment(scope.currentDay).week() + ' of ' + moment(scope.currentDay).format('YYYY');
-        };
 
         scope.control.updateView = function() {
           scope.view = calendarHelper.getWeekView(scope.events, scope.currentDay);
