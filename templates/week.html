@@ -1,7 +1,7 @@
 <div class="cal-week-box">
   <div class="cal-row-fluid cal-row-head">
 
-    <div class="cal-cell1" ng-repeat="column in view.columns" ng-class="{'cal-day-weekend': $index > 4}">{{ column.weekDay }}<br>
+    <div class="cal-cell1" ng-repeat="column in view.columns track by $index" ng-class="{'cal-day-weekend': $index > 4}">{{ column.weekDay }}<br>
       <small>
         <span data-cal-date="2013-03-10">{{ column.date }}</span>
       </small>
@@ -11,7 +11,7 @@
   </div>
   <hr>
 
-  <div class="cal-row-fluid" ng-repeat="event in view.events">
+  <div class="cal-row-fluid" ng-repeat="event in view.events track by $index">
     <div class="cal-cell{{ event.daySpan }} cal-offset{{ event.dayOffset }} day-highlight dh-event-{{ event.type }}" data-event-class>
       <a href="javascript:;" ng-click="eventClick({$event: event})" class="cal-event-week">
         {{ event.title }}

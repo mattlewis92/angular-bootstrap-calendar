@@ -20,7 +20,7 @@
             <a
               href="javascript:;"
               ng-click="eventClick({$event: event})"
-              ng-repeat="event in day.events"
+              ng-repeat="event in day.events track by $index"
               class="pull-left event event-{{ event.type }}"
               ng-mouseenter="highlightEvent(event, true)"
               ng-mouseleave="highlightEvent(event, false)"
@@ -33,11 +33,11 @@
       </div>
     </div>
 
-    <div class="cal-slide-box" ng-show="week.isOpened">
+    <div class="cal-slide-box" collapse="!week.isOpened">
       <div class="cal-slide-content cal-event-list">
         <ul class="unstyled list-unstyled">
 
-          <li ng-repeat="event in openEvents">
+          <li ng-repeat="event in openEvents track by $index">
             <span class="pull-left event event-{{ event.type }}"></span>
             &nbsp;
             <a href="javascript:;" class="event-item" ng-click="eventClick({$event: event})">
