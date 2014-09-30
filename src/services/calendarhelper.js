@@ -258,13 +258,16 @@ angular.module('mwl.calendar')
         var cannotFitInBucket = true;
         if (buckets.length > 0) {
           for (var i = 0; i < buckets[buckets.length - 1].length; i++) {
-            var bucketItem = buckets[buckets.length - 1][i];
-            if (!self.eventIsInPeriod(event.starts_at, event.ends_at, bucketItem.starts_at, bucketItem.ends_at) && !self.eventIsInPeriod(bucketItem.starts_at, bucketItem.ends_at, event.starts_at, event.ends_at)) {
-              cannotFitInBucket = false;
-              event.left = i * 150;
-              buckets[buckets.length - 1].push(event);
-              break;
+            for (var j = 0; j < buckets[i].length; j++) {
+              var bucketItem = buckets[i][j];
+              if (!self.eventIsInPeriod(event.starts_at, event.ends_at, bucketItem.starts_at, bucketItem.ends_at) && !self.eventIsInPeriod(bucketItem.starts_at, bucketItem.ends_at, event.starts_at, event.ends_at)) {
+                cannotFitInBucket = false;
+                event.left = i * 150;
+                buckets[buckets.length - 1].push(event);
+                break;
+              }
             }
+
           }
         }
 

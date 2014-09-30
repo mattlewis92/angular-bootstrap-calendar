@@ -14,19 +14,24 @@ angular.module('mwl.calendar')
       {
         title: 'Event 1',
         type: 'warning',
-        starts_at: new Date(),
-        ends_at: new Date()
+        starts_at: new Date(2014,8,30,8,30),
+        ends_at: new Date(2014,8,30,9,30)
       },
       {
         title: 'Event 2',
         type: 'info',
-        starts_at: new Date(2013,5,1,1),
-        ends_at: new Date(2014,8,26,15),
-        editable: false
-      }
+        starts_at: new Date(2014,8,24,7,30),
+        ends_at: new Date(2014,8,30,9,30)
+      },
+      {
+        title: 'Event 3',
+        type: 'warning',
+        starts_at: new Date(2014,8,30,6,30),
+        ends_at: new Date(2014,8,30,7,30)
+      },
     ];
 
-    $scope.calendarView = 'month';
+    $scope.calendarView = 'day';
     $scope.calendarDay = new Date();
 
     function showModal(action, event) {
