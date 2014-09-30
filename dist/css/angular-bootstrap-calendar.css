@@ -275,12 +275,15 @@
   margin-left: -60px;
 }
 .cal-day-box .day-event {
-  position: relative;
-  max-width: 150px;
+  position: absolute;
+  width: 150px;
   overflow: hidden;
 }
+.cal-day-box .day-event a {
+  font-size: 12px;
+}
 .cal-day-box .day-highlight {
-  line-height: 30px;
+  padding-top: 2px;
   padding-left: 8px;
   padding-right: 8px;
   box-sizing: border-box;
