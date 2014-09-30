@@ -31,7 +31,7 @@ angular.module('mwl.calendar')
       },
     ];
 
-    $scope.calendarView = 'day';
+    $scope.calendarView = 'month';
     $scope.calendarDay = new Date();
 
     function showModal(action, event) {
