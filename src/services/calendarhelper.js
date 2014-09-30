@@ -49,6 +49,10 @@ angular.module('mwl.calendar')
         ) || (
           moment(eventStart).isBefore(moment(periodStart)) &&
           moment(eventEnd).isAfter(moment(periodEnd))
+        ) || (
+          moment(eventStart).isSame(moment(periodStart))
+        ) || (
+          moment(eventEnd).isSame(moment(periodEnd))
       );
 
     };
