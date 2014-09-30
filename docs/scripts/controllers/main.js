@@ -24,10 +24,10 @@ angular.module('mwl.calendar')
         ends_at: new Date(2014,8,30,9,30)
       },
       {
-        title: 'Event 3',
+        title: 'This is a really long event title and blah blah',
         type: 'warning',
         starts_at: new Date(2014,8,30,6,30),
-        ends_at: new Date(2014,8,30,7,30)
+        ends_at: new Date(2014,8,30,6,60)
       },
     ];
 

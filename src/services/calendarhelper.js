@@ -229,9 +229,9 @@ angular.module('mwl.calendar')
         return self.eventIsInPeriod(event.starts_at, event.ends_at, moment(currentDay).startOf('day').toDate(), moment(currentDay).endOf('day').toDate());
       }).map(function(event) {
         if (moment(event.starts_at).isBefore(calendarStart)) {
-          event.top = '0';
+          event.top = 0;
         } else {
-          event.top = moment(event.starts_at).diff(calendarStart, 'minutes');
+          event.top = moment(event.starts_at).startOf('minute').diff(calendarStart.startOf('minute'), 'minutes') - 2;
         }
 
         if (moment(event.ends_at).isAfter(calendarEnd)) {
