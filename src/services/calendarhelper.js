@@ -255,23 +255,25 @@ angular.module('mwl.calendar')
         return event.height > 0;
       }).map(function(event) {
 
-        var cannotFitInBucket = true;
-        if (buckets.length > 0) {
-          for (var i = 0; i < buckets[buckets.length - 1].length; i++) {
-            for (var j = 0; j < buckets[i].length; j++) {
-              var bucketItem = buckets[i][j];
-              if (!self.eventIsInPeriod(event.starts_at, event.ends_at, bucketItem.starts_at, bucketItem.ends_at) && !self.eventIsInPeriod(bucketItem.starts_at, bucketItem.ends_at, event.starts_at, event.ends_at)) {
-                cannotFitInBucket = false;
-                event.left = i * 150;
-                buckets[buckets.length - 1].push(event);
-                break;
-              }
+        var cannotFitInABucket = true;
+        buckets.forEach(function(bucket, bucketIndex) {
+          var canFitInThisBucket = true;
+
+          bucket.forEach(function(bucketItem) {
+            if (self.eventIsInPeriod(event.starts_at, event.ends_at, bucketItem.starts_at, bucketItem.ends_at) || self.eventIsInPeriod(bucketItem.starts_at, bucketItem.ends_at, event.starts_at, event.ends_at)) {
+              canFitInThisBucket = false;
             }
+          });
 
+          if (canFitInThisBucket && cannotFitInABucket) {
+            cannotFitInABucket = false;
+            event.left = bucketIndex * 150;
+            buckets[bucketIndex].push(event);
           }
-        }
 
-        if (cannotFitInBucket) {
+        });
+
+        if (cannotFitInABucket) {
           event.left = buckets.length * 150;
           buckets.push([event]);
         }
