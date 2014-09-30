@@ -235,8 +235,8 @@
 </div>
 
 
-<div class="pull-left day-event day-highlight dh-event-{{ event.type }}" ng-repeat="event in view track by $index" ng-style="{'margin-top': event.marginTop + 'px', height: event.height + 'px'}">
-  <span class="cal-hours">{{ event.starts_at | date:'d MMM HH:mm' }} - {{ event.ends_at | date:'d MMM HH:mm' }}<br></span>
+<div class="pull-left day-event day-highlight dh-event-{{ event.type }}" ng-repeat="event in view track by $index" ng-style="{top: event.top + 'px', left: event.left + 60 + 'px', height: event.height + 'px'}">
+  <!--<span class="cal-hours">{{ event.starts_at | date:'d MMM HH:mm' }} - {{ event.ends_at | date:'d MMM HH:mm' }}<br></span>-->
   <a href="javascript:;" class="event-item" ng-click="eventClick({$event: event})">
     {{ event.title }}
   </a>

@@ -193,15 +193,15 @@ angular.module('mwl.calendar')
       var eventsSorted = events.filter(function(event) {
         return self.eventIsInPeriod(event.starts_at, event.ends_at, beginningOfWeek, endOfWeek);
       }).map(function(event) {
-        var span = moment(event.ends_at).diff(moment(event.starts_at), 'days') + 1;
-        if (span > 7) {
+        var span = moment(event.ends_at).startOf('day').diff(moment(event.starts_at).startOf('day'), 'days') + 1;
+        if (span >= 7) {
           span = 7;
-          if (moment(event.ends_at).diff(moment(endOfWeek), 'days') < 0) {
-            span += moment(event.ends_at).diff(moment(endOfWeek), 'days') + 1;
+          if (moment(event.ends_at).startOf('day').diff(moment(endOfWeek).startOf('day'), 'days') < 0) {
+            span += moment(event.ends_at).startOf('day').diff(moment(endOfWeek).startOf('day'), 'days') + 1;
           }
         }
 
-        var offset = moment(event.starts_at).diff(moment(beginningOfWeek), 'days');
+        var offset = moment(event.starts_at).startOf('day').diff(moment(beginningOfWeek).startOf('day'), 'days');
         if (offset < 0) offset = 0;
         if (offset > 6) offset = 6;
 
@@ -223,18 +223,19 @@ angular.module('mwl.calendar')
       var calendarStart = moment(currentDay).startOf('day').add(6, 'hours');
       var calendarEnd = moment(currentDay).startOf('day').add(22, 'hours');
       var calendarHeight = 16 * 60;
+      var buckets = [];
 
       return events.filter(function(event) {
         return self.eventIsInPeriod(event.starts_at, event.ends_at, moment(currentDay).startOf('day').toDate(), moment(currentDay).endOf('day').toDate());
       }).map(function(event) {
         if (moment(event.starts_at).isBefore(calendarStart)) {
-          event.marginTop = '0';
+          event.top = '0';
         } else {
-          event.marginTop = moment(event.starts_at).diff(calendarStart, 'minutes');
+          event.top = moment(event.starts_at).diff(calendarStart, 'minutes');
         }
 
         if (moment(event.ends_at).isAfter(calendarEnd)) {
-          event.height = calendarHeight - event.marginTop;
+          event.height = calendarHeight - event.top;
         } else {
           var diffStart = event.starts_at;
           if (moment(event.starts_at).isBefore(calendarStart)) {
@@ -243,13 +244,37 @@ angular.module('mwl.calendar')
           event.height = moment(event.ends_at).diff(diffStart, 'minutes');
         }
 
-        if (event.marginTop - event.height > calendarHeight) {
+        if (event.top - event.height > calendarHeight) {
           event.height = 0;
         }
+
+        event.left = 0;
 
         return event;
       }).filter(function(event) {
         return event.height > 0;
+      }).map(function(event) {
+
+        var cannotFitInBucket = true;
+        if (buckets.length > 0) {
+          for (var i = 0; i < buckets[buckets.length - 1].length; i++) {
+            var bucketItem = buckets[buckets.length - 1][i];
+            if (!self.eventIsInPeriod(event.starts_at, event.ends_at, bucketItem.starts_at, bucketItem.ends_at) && !self.eventIsInPeriod(bucketItem.starts_at, bucketItem.ends_at, event.starts_at, event.ends_at)) {
+              cannotFitInBucket = false;
+              event.left = i * 150;
+              buckets[buckets.length - 1].push(event);
+              break;
+            }
+          }
+        }
+
+        if (cannotFitInBucket) {
+          event.left = buckets.length * 150;
+          buckets.push([event]);
+        }
+
+        return event;
+
       });
 
     };
