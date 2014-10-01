@@ -15,7 +15,10 @@
       >
         <div class="cal-month-day" ng-class="{'cal-day-outmonth': !day.inMonth, 'cal-day-inmonth': day.inMonth, 'cal-day-weekend': $index == 5 || $index == 6}">
           <span class="pull-right" data-cal-date ng-click="drillDown(day.label)">{{ day.label }}</span>
-          <div class="cal-day-tick" ng-show="day.isOpened"><i class="icon-chevron-down glyphicon glyphicon-chevron-down"></i></div>
+          <div class="cal-day-tick" ng-show="day.isOpened">
+            <i class="glyphicon glyphicon-chevron-up"></i>
+            <i class="fa fa-chevron-up"></i>
+          </div>
           <div class="events-list" ng-show="day.events.length > 0">
             <a
               href="javascript:;"
