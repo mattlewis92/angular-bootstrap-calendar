@@ -54,9 +54,12 @@ angular.module('mwl.calendar')
 
           scope.view = scope.view.map(function(week) {
 
+            week.isOpened = false;
+
             return week.map(function(day) {
 
               delete day.highlightClass;
+              day.isOpened = false;
 
               if (shouldAddClass) {
                 var dayContainsEvent = day.events.filter(function(e) {
