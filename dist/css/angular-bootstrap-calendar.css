@@ -480,6 +480,9 @@ span[data-cal-date]:hover {
   background-color: #ededed;
   text-align: center;
 }
+.cal-day-tick .fa {
+  display: none;
+}
 .cal-slide-box {
   border-top: 0px solid #8c8c8c;
 }
