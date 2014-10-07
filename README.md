@@ -62,6 +62,7 @@ There is a single directive exposed to create the calendar, use it like so:
     calendar-delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
     calendar-edit-event-click="eventEdited($event)"
     calendar-delete-event-click="eventDeleted($event)"
+    calendar-auto-open="true"
     ></mwl-calendar>
 ```
 
@@ -119,6 +120,10 @@ This function is called when an event edit link is clicked on the calendar. $eve
 ### calendar-delete-event-click 
 
 This function is called when an event delete link is clicked on the calendar. $event contains the calendar event that was clicked on.
+
+### calendar-auto-open
+
+Whether to auto open the year and month view breakdown to the current year / month. Default: false
 
 ## Demo
 

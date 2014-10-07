@@ -7,7 +7,7 @@
  * # mwlCalendarMonth
  */
 angular.module('mwl.calendar')
-  .directive('mwlCalendarMonth', function ($sce, calendarHelper) {
+  .directive('mwlCalendarMonth', function ($sce, $timeout, calendarHelper) {
     return {
       templateUrl: 'templates/month.html',
       restrict: 'EA',
@@ -19,9 +19,12 @@ angular.module('mwl.calendar')
         eventEditClick: '=calendarEditEventClick',
         eventDeleteClick: '=calendarDeleteEventClick',
         editEventHtml: '=calendarEditEventHtml',
-        deleteEventHtml: '=calendarDeleteEventHtml'
+        deleteEventHtml: '=calendarDeleteEventHtml',
+        autoOpen: '=calendarAutoOpen'
       },
       link: function postLink(scope, element, attrs, calendarCtrl) {
+
+        var firstRun = false;
 
         scope.$sce = $sce;
 
@@ -31,6 +34,21 @@ angular.module('mwl.calendar')
 
         function updateView() {
           scope.view = calendarHelper.getMonthView(scope.events, scope.currentDay);
+
+          //Auto open the calendar to the current day if set
+          if (scope.autoOpen && !firstRun) {
+            scope.view.forEach(function(week, rowIndex) {
+              week.forEach(function(day, cellIndex) {
+                if (day.inMonth && moment(scope.currentDay).startOf('day').isSame(day.date.startOf('day'))) {
+                  scope.dayClicked(rowIndex, cellIndex);
+                  $timeout(function() {
+                    firstRun = false;
+                  });
+                }
+              });
+            });
+          }
+
         }
 
         scope.$watch('currentDay', updateView);

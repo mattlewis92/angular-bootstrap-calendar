@@ -8,26 +8,29 @@
  * Controller of the angularBootstrapCalendarApp
  */
 angular.module('mwl.calendar')
-  .controller('MainCtrl', function ($scope, $modal) {
+  .controller('MainCtrl', function ($scope, $modal, moment) {
+
+    var currentYear = moment().year();
+    var currentMonth = moment().month();
 
     $scope.events = [
       {
         title: 'Event 1',
         type: 'warning',
-        starts_at: new Date(2014,8,30,8,30),
-        ends_at: new Date(2014,8,30,9,30)
+        starts_at: new Date(currentYear,currentMonth,25,8,30),
+        ends_at: new Date(currentYear,currentMonth,25,9,30)
       },
       {
         title: 'Event 2',
         type: 'info',
-        starts_at: new Date(2014,8,24,7,30),
-        ends_at: new Date(2014,8,30,9,30)
+        starts_at: new Date(currentYear,currentMonth,19,7,30),
+        ends_at: new Date(currentYear,currentMonth,25,9,30)
       },
       {
-        title: 'This is a really long event title and blah blah',
-        type: 'warning',
-        starts_at: new Date(2014,8,30,6,30),
-        ends_at: new Date(2014,8,30,6,60)
+        title: 'This is a really long event title',
+        type: 'important',
+        starts_at: new Date(currentYear,currentMonth,25,6,30),
+        ends_at: new Date(currentYear,currentMonth,25,6,60)
       },
     ];
 

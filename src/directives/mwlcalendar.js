@@ -20,7 +20,8 @@ angular.module('mwl.calendar')
         eventEditClick: '&calendarEditEventClick',
         eventDeleteClick: '&calendarDeleteEventClick',
         editEventHtml: '=calendarEditEventHtml',
-        deleteEventHtml: '=calendarDeleteEventHtml'
+        deleteEventHtml: '=calendarDeleteEventHtml',
+        autoOpen: '=calendarAutoOpen'
       },
       controller: function($scope) {
 
