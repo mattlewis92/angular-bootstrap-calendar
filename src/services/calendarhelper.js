@@ -86,7 +86,7 @@ angular.module('mwl.calendar')
 
     this.getMonthView = function(events, currentDay) {
 
-      function getWeekDayIndex(date) {
+      function getWeekDayIndex() {
         var day = startOfMonth.day() - 1;
         if (day < 0) day = 6;
         return day;
@@ -112,6 +112,7 @@ angular.module('mwl.calendar')
             prefillMonth = prefillMonth.subtract(1, 'day');
             buildRow[weekdayIndex] = {
               label: prefillMonth.date(),
+              date: prefillMonth.clone(),
               inMonth: false,
               events: []
             };
@@ -121,6 +122,7 @@ angular.module('mwl.calendar')
         buildRow[getWeekDayIndex(startOfMonth)] = {
           label: startOfMonth.date(),
           inMonth: true,
+          date: startOfMonth.clone(),
           events: eventsWithIds.filter(function(event) {
             return self.eventIsInPeriod(event.starts_at, event.ends_at, startOfMonth.clone().startOf('day'), startOfMonth.clone().endOf('day'));
           })
@@ -134,6 +136,7 @@ angular.module('mwl.calendar')
             postfillMonth = postfillMonth.add(1, 'day');
             buildRow[weekdayIndex] = {
               label: postfillMonth.date(),
+              date: postfillMonth.clone(),
               inMonth: false,
               events: []
             };
