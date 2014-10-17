@@ -2,3 +2,4 @@ node_modules
 .tmp
 .sass-cache
 .idea
+docs/bower_components
