@@ -1,7 +1,7 @@
 <div class="cal-week-box">
   <div class="cal-row-fluid cal-row-head">
 
-    <div class="cal-cell1" ng-repeat="column in view.columns track by $index" ng-class="{'cal-day-weekend': $index > 4}">{{ column.weekDay }}<br>
+    <div class="cal-cell1" ng-repeat="column in view.columns track by $index" ng-class="{'cal-day-weekend': $index > 4, 'cal-day-today': column.isToday}">{{ column.weekDay }}<br>
       <small>
         <span data-cal-date ng-click="drillDown(column.day)" class="pointer">{{ column.date }}</span>
       </small>
