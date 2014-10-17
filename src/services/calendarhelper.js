@@ -66,13 +66,14 @@ angular.module('mwl.calendar')
         var row = [];
         for (var j = 0; j < 4; j++) {
           var monthIndex = 12 - months.length;
+          var startPeriod = new Date(moment(currentDay).format('YYYY'), monthIndex, 1);
+          var endPeriod = moment(startPeriod).add(1, 'month').subtract(1, 'second').toDate();
+
           row.push({
             label: months.shift(),
             monthIndex: monthIndex,
+            isToday: moment(startPeriod).startOf('month').isSame(moment().startOf('month')),
             events: events.filter(function(event) {
-              var startPeriod = new Date(moment(currentDay).format('YYYY'), monthIndex, 1);
-              var endPeriod = moment(startPeriod).add(1, 'month').subtract(1, 'second').toDate();
-
               return self.eventIsInPeriod(event.starts_at, event.ends_at, startPeriod, endPeriod);
             })
           });
@@ -122,6 +123,7 @@ angular.module('mwl.calendar')
         buildRow[getWeekDayIndex(startOfMonth)] = {
           label: startOfMonth.date(),
           inMonth: true,
+          isToday: moment().startOf('day').isSame(startOfMonth),
           date: startOfMonth.clone(),
           events: eventsWithIds.filter(function(event) {
             return self.eventIsInPeriod(event.starts_at, event.ends_at, startOfMonth.clone().startOf('day'), startOfMonth.clone().endOf('day'));
@@ -168,7 +170,8 @@ angular.module('mwl.calendar')
         columns[i] = {
           weekDay: weekDays[i],
           day: $filter('date')(date, 'd'),
-          date: $filter('date')(date, 'd MMM')
+          date: $filter('date')(date, 'd MMM'),
+          isToday: moment(date).startOf('day').isSame(moment().startOf('day'))
         };
         if (i == 0) {
           beginningOfWeek = date;
@@ -182,7 +185,8 @@ angular.module('mwl.calendar')
         columns[i] = {
           weekDay: weekDays[i],
           day: $filter('date')(date, 'd'),
-          date: $filter('date')(date, 'd MMM')
+          date: $filter('date')(date, 'd MMM'),
+          isToday: moment(date).startOf('day').isSame(moment().startOf('day'))
         };
         if (i == 0) {
           beginningOfWeek = date;
