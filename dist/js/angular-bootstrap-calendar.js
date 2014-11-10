@@ -227,7 +227,8 @@ angular.module('mwl.calendar')
         }
       }
 
-      endOfWeek = moment(endOfWeek).add(1, 'day').subtract(1, 'second').toDate();
+      endOfWeek = moment(endOfWeek).endOf('day').toDate();
+      beginningOfWeek = moment(beginningOfWeek).startOf('day').toDate();
 
       var eventsSorted = events.filter(function(event) {
         return self.eventIsInPeriod(event.starts_at, event.ends_at, beginningOfWeek, endOfWeek);
@@ -349,6 +350,25 @@ angular.module('mwl.calendar')
     };
 
   }]);
+
+'use strict';
+
+
+angular.module('mwl.calendar')
+  .filter('truncateEventTitle', function() {
+
+    return function(string, length, boxHeight) {
+      if (!string) return '';
+
+      //Only truncate if if actually needs truncating
+      if (string.length >= length && string.length / 20 > boxHeight / 30) {
+        return string.substr(0, length) + '...';
+      } else {
+        return string;
+      }
+    };
+
+  });
 
 'use strict';
 
@@ -654,22 +674,3 @@ angular.module('mwl.calendar')
       }]
     };
   }]);
-
-'use strict';
-
-
-angular.module('mwl.calendar')
-  .filter('truncateEventTitle', function() {
-
-    return function(string, length, boxHeight) {
-      if (!string) return '';
-
-      //Only truncate if if actually needs truncating
-      if (string.length >= length && string.length / 20 > boxHeight / 30) {
-        return string.substr(0, length) + '...';
-      } else {
-        return string;
-      }
-    };
-
-  });
