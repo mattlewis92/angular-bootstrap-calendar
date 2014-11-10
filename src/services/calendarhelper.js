@@ -195,7 +195,8 @@ angular.module('mwl.calendar')
         }
       }
 
-      endOfWeek = moment(endOfWeek).add(1, 'day').subtract(1, 'second').toDate();
+      endOfWeek = moment(endOfWeek).endOf('day').toDate();
+      beginningOfWeek = moment(beginningOfWeek).startOf('day').toDate();
 
       var eventsSorted = events.filter(function(event) {
         return self.eventIsInPeriod(event.starts_at, event.ends_at, beginningOfWeek, endOfWeek);
