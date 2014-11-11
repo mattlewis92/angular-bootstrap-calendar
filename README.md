@@ -125,6 +125,20 @@ This function is called when an event delete link is clicked on the calendar. $e
 
 Whether to auto open the year and month view breakdown to the current year / month. Default: false
 
+### calendar-use-iso-week
+
+Whether the calendar should use the the ISO week standard (i.e. the calendar month and week views start on Monday and not Sunday). 
+
+If not set the calendar will look at what is set in the locale by moment. You can set this globally via:
+
+```javascript
+moment.locale('en', {
+    week : {
+        dow : 1 // Monday is the first day of the week
+    }
+});
+```
+
 ## Demo
 
 http://mattlewis92.github.io/angular-bootstrap-calendar/

@@ -15,7 +15,8 @@ angular.module('mwl.calendar')
       scope: {
         events: '=calendarEvents',
         currentDay: '=calendarCurrentDay',
-        eventClick: '=calendarEventClick'
+        eventClick: '=calendarEventClick',
+        useIsoWeek: '=calendarUseIsoWeek'
       },
       link: function postLink(scope, element, attrs, calendarCtrl) {
 
@@ -24,7 +25,7 @@ angular.module('mwl.calendar')
         };
 
         function updateView() {
-          scope.view = calendarHelper.getWeekView(scope.events, scope.currentDay);
+          scope.view = calendarHelper.getWeekView(scope.events, scope.currentDay, scope.useIsoWeek);
         }
 
         scope.drillDown = function(day) {

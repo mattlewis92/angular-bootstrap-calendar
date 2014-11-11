@@ -12,6 +12,17 @@ angular.module('mwl.calendar')
 
     var self = this;
 
+    function isISOWeekBasedOnLocale() {
+      return moment().startOf('week').day() === 1;
+    }
+
+    function isISOWeek(userValue) {
+      //If a manual override has been set in the directive, use that
+      if (angular.isDefined(userValue)) return userValue;
+      //Otherwise fallback to the locale
+      return isISOWeekBasedOnLocale();
+    }
+
     this.getMonthNames = function(short) {
 
       var format = short ? 'MMM' : 'MMMM';
@@ -25,13 +36,14 @@ angular.module('mwl.calendar')
 
     };
 
-    this.getWeekDayNames = function(short) {
+    this.getWeekDayNames = function(short, useISOWeek) {
 
       var format = short ? 'EEE' : 'EEEE';
 
       var weekdays = [];
+      var startDay = isISOWeek(useISOWeek) ? 22 : 21;
       for (var i = 0; i <= 6; i++) {
-        weekdays.push($filter('date')(new Date(2014, 8, 22 + i), format));
+        weekdays.push($filter('date')(new Date(2014, 8, startDay + i), format));
       }
 
       return weekdays;
@@ -85,10 +97,12 @@ angular.module('mwl.calendar')
 
     };
 
-    this.getMonthView = function(events, currentDay) {
+    this.getMonthView = function(events, currentDay, useISOWeek) {
+
+      var dateOffset = isISOWeek(useISOWeek) ? 1 : 0;
 
       function getWeekDayIndex() {
-        var day = startOfMonth.day() - 1;
+        var day = startOfMonth.day() - dateOffset;
         if (day < 0) day = 6;
         return day;
       }
@@ -158,15 +172,16 @@ angular.module('mwl.calendar')
 
     };
 
-    this.getWeekView = function(events, currentDay) {
+    this.getWeekView = function(events, currentDay, useISOWeek) {
 
+      var dateOffset = isISOWeek(useISOWeek) ? 1 : 0;
       var columns = new Array(7);
-      var weekDays = self.getWeekDayNames();
+      var weekDays = self.getWeekDayNames(false, useISOWeek);
       var currentWeekDayIndex = currentDay.getDay();
       var beginningOfWeek, endOfWeek;
 
       for (var i = currentWeekDayIndex; i >= 0; i--) {
-        var date = moment(currentDay).subtract(currentWeekDayIndex - i, 'days').add(1, 'day').toDate();
+        var date = moment(currentDay).subtract(currentWeekDayIndex - i, 'days').add(dateOffset, 'day').toDate();
         columns[i] = {
           weekDay: weekDays[i],
           day: $filter('date')(date, 'd'),
@@ -181,7 +196,7 @@ angular.module('mwl.calendar')
       }
 
       for (var i = currentWeekDayIndex + 1; i < 7; i++) {
-        var date = moment(currentDay).add(i - currentWeekDayIndex, 'days').add(1, 'day').toDate();
+        var date = moment(currentDay).add(i - currentWeekDayIndex, 'days').add(dateOffset, 'day').toDate();
         columns[i] = {
           weekDay: weekDays[i],
           day: $filter('date')(date, 'd'),
@@ -205,7 +220,7 @@ angular.module('mwl.calendar')
         if (span >= 7) {
           span = 7;
           if (moment(event.ends_at).startOf('day').diff(moment(endOfWeek).startOf('day'), 'days') < 0) {
-            span += moment(event.ends_at).startOf('day').diff(moment(endOfWeek).startOf('day'), 'days') + 1;
+            span += moment(event.ends_at).startOf('day').diff(moment(endOfWeek).startOf('day'), 'days') + dateOffset;
           }
         }
 
