@@ -21,7 +21,8 @@ angular.module('mwl.calendar')
         eventDeleteClick: '&calendarDeleteEventClick',
         editEventHtml: '=calendarEditEventHtml',
         deleteEventHtml: '=calendarDeleteEventHtml',
-        autoOpen: '=calendarAutoOpen'
+        autoOpen: '=calendarAutoOpen',
+        useIsoWeek: '=calendarUseIsoWeek'
       },
       controller: function($scope) {
 

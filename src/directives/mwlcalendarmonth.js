@@ -20,7 +20,8 @@ angular.module('mwl.calendar')
         eventDeleteClick: '=calendarDeleteEventClick',
         editEventHtml: '=calendarEditEventHtml',
         deleteEventHtml: '=calendarDeleteEventHtml',
-        autoOpen: '=calendarAutoOpen'
+        autoOpen: '=calendarAutoOpen',
+        useIsoWeek: '=calendarUseIsoWeek'
       },
       link: function postLink(scope, element, attrs, calendarCtrl) {
 
@@ -33,7 +34,7 @@ angular.module('mwl.calendar')
         };
 
         function updateView() {
-          scope.view = calendarHelper.getMonthView(scope.events, scope.currentDay);
+          scope.view = calendarHelper.getMonthView(scope.events, scope.currentDay, scope.useIsoWeek);
 
           //Auto open the calendar to the current day if set
           if (scope.autoOpen && !firstRun) {
@@ -54,7 +55,7 @@ angular.module('mwl.calendar')
         scope.$watch('currentDay', updateView);
         scope.$watch('events', updateView, true);
 
-        scope.weekDays = calendarHelper.getWeekDayNames();
+        scope.weekDays = calendarHelper.getWeekDayNames(false, scope.useIsoWeek);
 
         scope.dayClicked = function(rowIndex, cellIndex) {
 
