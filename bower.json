@@ -7,7 +7,7 @@
   ],
   "description": "A pure AngularJS bootstrap themed responsive calendar that can display events and has views for year, month, week and day",
   "main": [
-    "dist/js/angular-bootstrap-calendar.min.js",
+    "dist/js/angular-bootstrap-calendar-tpls.min.js",
     "dist/css/angular-bootstrap-calendar.min.css"
   ],
   "keywords": [
@@ -26,9 +26,12 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "~1.3.0",
-    "moment": "~2.8.3",
-    "angular-bootstrap": "~0.11.0",
-    "bootstrap": "~3.3.0"
+    "angular": "~1.3.5",
+    "moment": "~2.8.4",
+    "angular-bootstrap": "~0.12.0",
+    "bootstrap": "~3.3.1"
+  },
+  "resolutions": {
+    "angular": "~1.3.5"
   }
 }

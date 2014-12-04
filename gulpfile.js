@@ -1,7 +1,7 @@
 var gulp = require('gulp');
 var gp = require('gulp-load-plugins')();
 var streamqueue = require('streamqueue');
-var open = require("open");
+var open = require('open');
 
 gulp.task('watch', ['server'], function() {
   gp.livereload.listen();
@@ -39,7 +39,7 @@ gulp.task('css-min', function() {
 
 gulp.task('css', ['css-min', 'css-unmin'], function() {});
 
-var getTemplates = function() {
+function getTemplates() {
 
   return gulp
     .src('templates/**/*.html')
@@ -48,39 +48,59 @@ var getTemplates = function() {
 
 };
 
-var mergeStreams = function(stream1, stream2) {
+function mergeStreams(stream1, stream2) {
   return streamqueue({ objectMode: true }, stream1, stream2);
 };
 
-var getJsBase = function() {
+function getJsBase(withTemplates) {
 
-  return mergeStreams(
+  var stream = withTemplates ? mergeStreams(
     gulp.src('src/**/*.js'),
     getTemplates()
-  ).pipe(gp.angularFilesort())
-   .pipe(gp.ngAnnotate());
+  ) : gulp.src('src/**/*.js');
+
+  return stream
+    .pipe(gp.angularFilesort())
+    .pipe(gp.ngAnnotate());
 };
 
-gulp.task('js-unmin', function() {
+function jsUnmin(withTemplates) {
+  var filename = withTemplates ? 'angular-bootstrap-calendar-tpls.js' : 'angular-bootstrap-calendar.js';
 
-  return getJsBase()
-    .pipe(gp.concat('angular-bootstrap-calendar.js'))
+  return getJsBase(withTemplates)
+    .pipe(gp.concat(filename))
     .pipe(gulp.dest('dist/js'));
+}
 
-});
+function jsMin(withTemplates) {
 
-gulp.task('js-min', function() {
+  var filename = withTemplates ? 'angular-bootstrap-calendar-tpls.min.js' : 'angular-bootstrap-calendar.min.js';
 
-  return getJsBase()
+  return getJsBase(withTemplates)
     .pipe(gp.sourcemaps.init())
-    .pipe(gp.concat('angular-bootstrap-calendar.min.js'))
+    .pipe(gp.concat(filename))
     .pipe(gp.uglify())
     .pipe(gp.sourcemaps.write('.'))
     .pipe(gulp.dest('dist/js'));
+}
 
+gulp.task('js-unmin', function() {
+  return jsUnmin();
 });
 
-gulp.task('js', ['js-min', 'js-unmin'], function() {});
+gulp.task('js-unmin-tpls', function() {
+  return jsUnmin(true);
+});
+
+gulp.task('js-min', function() {
+  return jsMin();
+});
+
+gulp.task('js-min-tpls', function() {
+  return jsMin(true);
+});
+
+gulp.task('js', ['js-min-tpls', 'js-min', 'js-unmin-tpls', 'js-unmin'], function() {});
 
 gulp.task('build', ['js', 'css'], function() {});
 
