@@ -39,7 +39,7 @@ You will then need to include the JS and CSS files for the plugin:
 
 ```
 <link rel="stylesheet" href="bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.min.css">
-<script src="bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar.min.js">
+<script src="bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.min.js">
 ```
 
 And finally add the module dependency in your AngularJS app:

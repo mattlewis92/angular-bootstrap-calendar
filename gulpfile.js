@@ -18,26 +18,18 @@ gulp.task('server', function() {
   open('http://localhost:8000');
 });
 
-gulp.task('css-unmin', function() {
-
-  return gulp.src('src/**/*.css')
-    .pipe(gp.concat('angular-bootstrap-calendar.css'))
-    .pipe(gulp.dest('dist/css'));
-
-});
-
-gulp.task('css-min', function() {
+gulp.task('css', function() {
 
   return gulp.src('src/**/*.css')
     .pipe(gp.sourcemaps.init())
-    .pipe(gp.concat('angular-bootstrap-calendar.min.css'))
+    .pipe(gp.concat('angular-bootstrap-calendar.css'))
+    .pipe(gulp.dest('dist/css'))
     .pipe(gp.minifyCss())
+    .pipe(gp.rename('angular-bootstrap-calendar.min.css'))
     .pipe(gp.sourcemaps.write('.'))
     .pipe(gulp.dest('dist/css'));
 
 });
-
-gulp.task('css', ['css-min', 'css-unmin'], function() {});
 
 function getTemplates() {
 
@@ -46,13 +38,16 @@ function getTemplates() {
     .pipe(gp.minifyHtml({empty: true, conditionals: true, spare: true, quotes: true}))
     .pipe(gp.angularTemplatecache({standalone: false, module: 'mwl.calendar', root: 'templates/'}));
 
-};
+}
 
 function mergeStreams(stream1, stream2) {
   return streamqueue({ objectMode: true }, stream1, stream2);
-};
+}
 
-function getJsBase(withTemplates) {
+function buildJS(withTemplates) {
+
+  var minFilename = withTemplates ? 'angular-bootstrap-calendar-tpls.min.js' : 'angular-bootstrap-calendar.min.js';
+  var unminfilename = withTemplates ? 'angular-bootstrap-calendar-tpls.js' : 'angular-bootstrap-calendar.js';
 
   var stream = withTemplates ? mergeStreams(
     gulp.src('src/**/*.js'),
@@ -61,46 +56,23 @@ function getJsBase(withTemplates) {
 
   return stream
     .pipe(gp.angularFilesort())
-    .pipe(gp.ngAnnotate());
-};
-
-function jsUnmin(withTemplates) {
-  var filename = withTemplates ? 'angular-bootstrap-calendar-tpls.js' : 'angular-bootstrap-calendar.js';
-
-  return getJsBase(withTemplates)
-    .pipe(gp.concat(filename))
-    .pipe(gulp.dest('dist/js'));
-}
-
-function jsMin(withTemplates) {
-
-  var filename = withTemplates ? 'angular-bootstrap-calendar-tpls.min.js' : 'angular-bootstrap-calendar.min.js';
-
-  return getJsBase(withTemplates)
     .pipe(gp.sourcemaps.init())
-    .pipe(gp.concat(filename))
+    .pipe(gp.ngAnnotate())
+    .pipe(gp.concat(unminfilename))
+    .pipe(gulp.dest('dist/js'))
     .pipe(gp.uglify())
+    .pipe(gp.rename(minFilename))
     .pipe(gp.sourcemaps.write('.'))
     .pipe(gulp.dest('dist/js'));
 }
 
-gulp.task('js-unmin', function() {
-  return jsUnmin();
+gulp.task('js-tpls', function() {
+  return buildJS(true);
 });
 
-gulp.task('js-unmin-tpls', function() {
-  return jsUnmin(true);
+gulp.task('js', ['js-tpls'], function() {
+  return buildJS();
 });
-
-gulp.task('js-min', function() {
-  return jsMin();
-});
-
-gulp.task('js-min-tpls', function() {
-  return jsMin(true);
-});
-
-gulp.task('js', ['js-min-tpls', 'js-min', 'js-unmin-tpls', 'js-unmin'], function() {});
 
 gulp.task('build', ['js', 'css'], function() {});
 
