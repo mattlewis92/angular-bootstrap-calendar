@@ -243,9 +243,9 @@ angular.module('mwl.calendar')
 
     this.getDayView = function(events, currentDay) {
 
-      var calendarStart = moment(currentDay).startOf('day').add(6, 'hours');
-      var calendarEnd = moment(currentDay).startOf('day').add(22, 'hours');
-      var calendarHeight = 16 * 60;
+      var calendarStart = moment(currentDay).startOf('day');
+      var calendarEnd = moment(currentDay).endOf('day');
+      var calendarHeight = 24 * 60;
       var buckets = [];
 
       return events.filter(function(event) {
