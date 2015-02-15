@@ -1,5 +1,7 @@
 <div class="cal-context" style="width: 100%;">
 
+  <div class="alert alert-danger" ng-if="!view">The value passed to calendar-view is not set</div>
+
   <mwl-calendar-year
     calendar-events="events"
     calendar-current-day="currentDay"
@@ -37,6 +39,10 @@
     calendar-events="events"
     calendar-current-day="currentDay"
     calendar-event-click="eventClick"
+    calendar-event-label="{{ eventLabel }}"
+    calendar-time-label="{{ timeLabel }}"
+    calendar-day-view-start="{{ dayViewStart }}"
+    calendar-day-view-end="{{ dayViewEnd }}"
     ng-if="view == 'day'"
     ></mwl-calendar-day>
 </div>

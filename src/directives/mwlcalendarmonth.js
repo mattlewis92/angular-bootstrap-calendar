@@ -7,7 +7,7 @@
  * # mwlCalendarMonth
  */
 angular.module('mwl.calendar')
-  .directive('mwlCalendarMonth', function ($sce, $timeout, calendarHelper) {
+  .directive('mwlCalendarMonth', function ($sce, $timeout, $filter, moment, calendarHelper) {
     return {
       templateUrl: 'templates/month.html',
       restrict: 'EA',
@@ -30,7 +30,7 @@ angular.module('mwl.calendar')
         scope.$sce = $sce;
 
         calendarCtrl.titleFunctions.month = function(currentDay) {
-          return moment(currentDay).format('MMMM YYYY');
+          return $filter('date')(currentDay, 'MMMM yyyy');
         };
 
         function updateView() {

@@ -268,11 +268,11 @@ angular.module('mwl.calendar')
 
     };
 
-    this.getDayView = function(events, currentDay) {
+    this.getDayView = function(events, currentDay, dayStartHour, dayEndHour) {
 
-      var calendarStart = moment(currentDay).startOf('day').add(6, 'hours');
-      var calendarEnd = moment(currentDay).startOf('day').add(22, 'hours');
-      var calendarHeight = 16 * 60;
+      var calendarStart = moment(currentDay).startOf('day').add(dayStartHour, 'hours');
+      var calendarEnd = moment(currentDay).startOf('day').add(dayEndHour, 'hours');
+      var calendarHeight = (dayEndHour - dayStartHour + 1) * 60;
       var buckets = [];
 
       return events.filter(function(event) {
@@ -338,10 +338,7 @@ angular.module('mwl.calendar')
 
       var openEvents = [];
 
-      if (view[rowIndex][cellIndex].events.length > 0) {
-
-        var isCellOpened = view[rowIndex][cellIndex].isOpened;
-
+      function closeAllOpenItems() {
         view = view.map(function(row) {
           row.isOpened = false;
           return row.map(function(cell) {
@@ -349,10 +346,19 @@ angular.module('mwl.calendar')
             return cell;
           });
         });
+      }
+
+      if (view[rowIndex][cellIndex].events.length > 0) {
+
+        var isCellOpened = view[rowIndex][cellIndex].isOpened;
+
+        closeAllOpenItems();
 
         view[rowIndex][cellIndex].isOpened = !isCellOpened;
         view[rowIndex].isOpened = !isCellOpened;
         openEvents = view[rowIndex][cellIndex].events;
+      } else {
+        closeAllOpenItems();
       }
 
       return {view: view, openEvents: openEvents};
@@ -360,6 +366,25 @@ angular.module('mwl.calendar')
     };
 
   }]);
+
+'use strict';
+
+
+angular.module('mwl.calendar')
+  .filter('truncateEventTitle', function() {
+
+    return function(string, length, boxHeight) {
+      if (!string) return '';
+
+      //Only truncate if if actually needs truncating
+      if (string.length >= length && string.length / 20 > boxHeight / 30) {
+        return string.substr(0, length) + '...';
+      } else {
+        return string;
+      }
+    };
+
+  });
 
 'use strict';
 
@@ -482,7 +507,7 @@ angular.module('mwl.calendar')
  * # mwlCalendarMonth
  */
 angular.module('mwl.calendar')
-  .directive('mwlCalendarMonth', ["$sce", "$timeout", "calendarHelper", function ($sce, $timeout, calendarHelper) {
+  .directive('mwlCalendarMonth', ["$sce", "$timeout", "$filter", "moment", "calendarHelper", function ($sce, $timeout, $filter, moment, calendarHelper) {
     return {
       templateUrl: 'templates/month.html',
       restrict: 'EA',
@@ -505,7 +530,7 @@ angular.module('mwl.calendar')
         scope.$sce = $sce;
 
         calendarCtrl.titleFunctions.month = function(currentDay) {
-          return moment(currentDay).format('MMMM YYYY');
+          return $filter('date')(currentDay, 'MMMM yyyy');
         };
 
         function updateView() {
@@ -586,7 +611,7 @@ angular.module('mwl.calendar')
  * # mwlCalendarDay
  */
 angular.module('mwl.calendar')
-  .directive('mwlCalendarDay', ["calendarHelper", function(calendarHelper) {
+  .directive('mwlCalendarDay', ["$filter", "moment", "calendarHelper", function($filter, moment, calendarHelper) {
     return {
       templateUrl: 'templates/day.html',
       restrict: 'EA',
@@ -594,16 +619,32 @@ angular.module('mwl.calendar')
       scope: {
         events: '=calendarEvents',
         currentDay: '=calendarCurrentDay',
-        eventClick: '=calendarEventClick'
+        eventClick: '=calendarEventClick',
+        eventLabel: '@calendarEventLabel',
+        timeLabel: '@calendarTimeLabel',
+        dayViewStart:'@calendarDayViewStart',
+        dayViewEnd:'@calendarDayViewEnd'
       },
       link: function postLink(scope, element, attrs, calendarCtrl) {
 
+        var dayViewStart = moment(scope.dayViewStart || '00:00', 'HH:mm');
+        var dayViewEnd = moment(scope.dayViewEnd || '23:00', 'HH:mm');
+
+        scope.days = [];
+        var dayCounter = moment(dayViewStart);
+        for (var i = 0; i <= dayViewEnd.diff(dayViewStart, 'hours'); i++) {
+          scope.days.push({
+            label: dayCounter.format('ha')
+          });
+          dayCounter.add(1, 'hour');
+        }
+
         calendarCtrl.titleFunctions.day = function(currentDay) {
-          return moment(currentDay).format('dddd DD MMMM, YYYY');
+          return $filter('date')(currentDay, 'EEEE d MMMM, yyyy');
         };
 
         function updateView() {
-          scope.view = calendarHelper.getDayView(scope.events, scope.currentDay);
+          scope.view = calendarHelper.getDayView(scope.events, scope.currentDay, dayViewStart.hours(), dayViewEnd.hours());
         }
 
         scope.$watch('currentDay', updateView);
@@ -622,7 +663,7 @@ angular.module('mwl.calendar')
  * # mwlCalendar
  */
 angular.module('mwl.calendar')
-  .directive('mwlCalendar', ["moment", function (moment) {
+  .directive('mwlCalendar', function () {
     return {
       templateUrl: 'templates/main.html',
       restrict: 'EA',
@@ -637,9 +678,13 @@ angular.module('mwl.calendar')
         editEventHtml: '=calendarEditEventHtml',
         deleteEventHtml: '=calendarDeleteEventHtml',
         autoOpen: '=calendarAutoOpen',
-        useIsoWeek: '=calendarUseIsoWeek'
+        useIsoWeek: '=calendarUseIsoWeek',
+        eventLabel: '@calendarEventLabel',
+        timeLabel: '@calendarTimeLabel',
+        dayViewStart:'@calendarDayViewStart',
+        dayViewEnd:'@calendarDayViewEnd'
       },
-      controller: ["$scope", function($scope) {
+      controller: ["$scope", "$timeout", "$locale", "moment", function($scope, $timeout, $locale, moment) {
 
         var self = this;
 
@@ -661,29 +706,34 @@ angular.module('mwl.calendar')
         };
 
         $scope.control.getTitle = function() {
-          if (!self.titleFunctions[$scope.view]) return '';
+          if (!self.titleFunctions[$scope.view]) {
+            return '';
+          }
           return self.titleFunctions[$scope.view]($scope.currentDay);
         };
 
+        //Auto update the calendar when the locale changes
+        var firstRunWatcher = true;
+        var unbindWatcher = $scope.$watch(function() {
+          return moment.locale() + $locale.id;
+        }, function() {
+          if (firstRunWatcher) { //dont run the first time the calendar is initialised
+            firstRunWatcher = false;
+            return;
+          }
+          var originalView = angular.copy($scope.view);
+          $scope.view = 'redraw';
+          $timeout(function() { //bit of a hacky way to redraw the calendar, should be refactored at some point
+            $scope.view = originalView;
+          });
+        });
+
+        //Remove the watcher when the calendar is destroyed
+        var unbindDestroyListener = $scope.$on('$destroy', function() {
+          unbindDestroyListener();
+          unbindWatcher();
+        });
+
       }]
     };
-  }]);
-
-'use strict';
-
-
-angular.module('mwl.calendar')
-  .filter('truncateEventTitle', function() {
-
-    return function(string, length, boxHeight) {
-      if (!string) return '';
-
-      //Only truncate if if actually needs truncating
-      if (string.length >= length && string.length / 20 > boxHeight / 30) {
-        return string.substr(0, length) + '...';
-      } else {
-        return string;
-      }
-    };
-
   });

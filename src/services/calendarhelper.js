@@ -241,11 +241,11 @@ angular.module('mwl.calendar')
 
     };
 
-    this.getDayView = function(events, currentDay) {
+    this.getDayView = function(events, currentDay, dayStartHour, dayEndHour) {
 
-      var calendarStart = moment(currentDay).startOf('day').add(6, 'hours');
-      var calendarEnd = moment(currentDay).startOf('day').add(22, 'hours');
-      var calendarHeight = 16 * 60;
+      var calendarStart = moment(currentDay).startOf('day').add(dayStartHour, 'hours');
+      var calendarEnd = moment(currentDay).startOf('day').add(dayEndHour, 'hours');
+      var calendarHeight = (dayEndHour - dayStartHour + 1) * 60;
       var buckets = [];
 
       return events.filter(function(event) {
@@ -311,10 +311,7 @@ angular.module('mwl.calendar')
 
       var openEvents = [];
 
-      if (view[rowIndex][cellIndex].events.length > 0) {
-
-        var isCellOpened = view[rowIndex][cellIndex].isOpened;
-
+      function closeAllOpenItems() {
         view = view.map(function(row) {
           row.isOpened = false;
           return row.map(function(cell) {
@@ -322,10 +319,19 @@ angular.module('mwl.calendar')
             return cell;
           });
         });
+      }
+
+      if (view[rowIndex][cellIndex].events.length > 0) {
+
+        var isCellOpened = view[rowIndex][cellIndex].isOpened;
+
+        closeAllOpenItems();
 
         view[rowIndex][cellIndex].isOpened = !isCellOpened;
         view[rowIndex].isOpened = !isCellOpened;
         openEvents = view[rowIndex][cellIndex].events;
+      } else {
+        closeAllOpenItems();
       }
 
       return {view: view, openEvents: openEvents};

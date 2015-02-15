@@ -78,7 +78,7 @@ $scope.events = [
     type: 'info', // The type of the event (determines its color). Can be important, warning, info, inverse, success or special
     starts_at: new Date(2013,5,1,1), // A javascript date object for when the event starts
     ends_at: new Date(2014,8,26,15), // A javascript date object for when the event ends
-    editable: false // If calendar-edit-event-html is set and this field is explicitly set to false then dont make it editable
+    editable: false, // If calendar-edit-event-html is set and this field is explicitly set to false then dont make it editable
     deletable: false // If calendar-delete-event-html is set and this field is explicitly set to false then dont make it deleteable
   }
 ];
@@ -127,7 +127,7 @@ Whether to auto open the year and month view breakdown to the current year / mon
 
 ### calendar-use-iso-week
 
-Whether the calendar should use the the ISO week standard (i.e. the calendar month and week views start on Monday and not Sunday). 
+Whether the calendar should use the the ISO week standard (i.e. the calendar month and week views start on Monday and not Sunday).
 
 If not set the calendar will look at what is set in the locale by moment. You can set this globally via:
 
@@ -138,6 +138,25 @@ moment.locale('en', {
     }
 });
 ```
+
+### calendar-event-label
+
+The locale string to use as the column header on the day view for the events column. Default: 'Events'.
+
+### calendar-time-label
+
+The locale string to use as the column header on the day view for the time column. Default: 'Time'.
+
+### calendar-day-view-start
+A string in the form of hh:mm to start the day view at, e.g. setting it to 06:00 will start the day view at 6am
+
+### calendar-day-view-end
+A string in the form of hh:mm to end the day view at, e.g. setting it to 22:00 will end the day view at 10pm
+
+## Internationalization and localization
+
+The calendar directive uses angulars date filter to produce all months and days of the week etc. Therefore to changes the language of the calendar you simply need to include the appropriate angular i18n file as described here:
+https://docs.angularjs.org/guide/i18n
 
 ## Demo
 
