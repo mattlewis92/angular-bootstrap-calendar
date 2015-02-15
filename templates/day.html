@@ -1,364 +1,42 @@
 <div class="cal-day-box">
-<div class="row-fluid clearfix cal-row-head">
-  <div class="span1 col-xs-1 cal-cell">{{ timeLabel || 'Time' }}</div>
-  <div class="span11 col-xs-11 cal-cell">{{ eventLabel || 'Events' }}</div>
-</div>
-
-
-<div class="cal-day-panel" class="clearfix" style="height: 1440px;">
-<div class="cal-day-panel-hour">
-
-<div class="cal-day-hour">
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"><b>12am</b></div>
-    <div class="span11 col-xs-11"></div>
+  <div class="row-fluid clearfix cal-row-head">
+    <div class="span1 col-xs-1 cal-cell">{{ timeLabel || 'Time' }}</div>
+    <div class="span11 col-xs-11 cal-cell">{{ eventLabel || 'Events' }}</div>
   </div>
 
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"></div>
-    <div class="span11 col-xs-11"></div>
+
+  <div class="cal-day-panel" class="clearfix" ng-style="{height: (days.length * 60) + 'px'}">
+    <div class="cal-day-panel-hour">
+
+      <div class="cal-day-hour" ng-repeat="day in days">
+
+        <div class="row-fluid cal-day-hour-part">
+          <div class="span1 col-xs-1"><b>{{ day.label }}</b></div>
+          <div class="span11 col-xs-11"></div>
+        </div>
+
+        <div class="row-fluid cal-day-hour-part">
+          <div class="span1 col-xs-1"></div>
+          <div class="span11 col-xs-11"></div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div
+      class="pull-left day-event day-highlight dh-event-{{ event.type }}"
+      ng-repeat="event in view track by $index"
+      ng-style="{top: event.top + 'px', left: event.left + 60 + 'px', height: event.height + 'px'}">
+
+      <!--<span class="cal-hours">{{ event.starts_at | date:'d MMM HH:mm' }} - {{ event.ends_at | date:'d MMM HH:mm' }}<br></span>-->
+      <a href="javascript:;" class="event-item" ng-click="eventClick({$event: event})">
+        <span>{{ event.title | truncateEventTitle:20:event.height }}</span>
+      </a>
+
+    </div>
+
   </div>
-
-</div>
-
-<div class="cal-day-hour">
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"><b>1am</b></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-</div>
-
-<div class="cal-day-hour">
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"><b>2am</b></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-</div>
-
-<div class="cal-day-hour">
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"><b>3am</b></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-</div>
-
-<div class="cal-day-hour">
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"><b>4am</b></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-</div>
-
-<div class="cal-day-hour">
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"><b>5am</b></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-</div>
-
-<div class="cal-day-hour">
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"><b>6am</b></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-</div>
-
-<div class="cal-day-hour">
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"><b>7am</b></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-</div>
-
-<div class="cal-day-hour">
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"><b>8am</b></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-</div>
-
-<div class="cal-day-hour">
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"><b>9am</b></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-</div>
-
-<div class="cal-day-hour">
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"><b>10am</b></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-</div>
-
-<div class="cal-day-hour">
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"><b>11am</b></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-</div>
-
-<div class="cal-day-hour">
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"><b>12pm</b></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-</div>
-
-<div class="cal-day-hour">
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"><b>1pm</b></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-</div>
-
-<div class="cal-day-hour">
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"><b>2pm</b></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-</div>
-
-<div class="cal-day-hour">
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"><b>3pm</b></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-</div>
-
-<div class="cal-day-hour">
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"><b>4pm</b></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-</div>
-
-<div class="cal-day-hour">
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"><b>5pm</b></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-</div>
-
-<div class="cal-day-hour">
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"><b>6pm</b></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-</div>
-
-<div class="cal-day-hour">
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"><b>7pm</b></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-</div>
-
-<div class="cal-day-hour">
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"><b>8pm</b></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-</div>
-
-<div class="cal-day-hour">
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"><b>9pm</b></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-</div>
-
-<div class="cal-day-hour">
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"><b>10pm</b></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-</div>
-
-<div class="cal-day-hour">
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"><b>11pm</b></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-  <div class="row-fluid cal-day-hour-part">
-    <div class="span1 col-xs-1"></div>
-    <div class="span11 col-xs-11"></div>
-  </div>
-
-</div>
-
-</div>
-
-
-<div
-  class="pull-left day-event day-highlight dh-event-{{ event.type }}"
-  ng-repeat="event in view track by $index"
-  ng-style="{top: event.top + 'px', left: event.left + 60 + 'px', height: event.height + 'px'}">
-
-  <!--<span class="cal-hours">{{ event.starts_at | date:'d MMM HH:mm' }} - {{ event.ends_at | date:'d MMM HH:mm' }}<br></span>-->
-  <a href="javascript:;" class="event-item" ng-click="eventClick({$event: event})">
-    <span>{{ event.title | truncateEventTitle:20:event.height }}</span>
-  </a>
-
-</div>
-
-</div>
 
 </div>

@@ -147,6 +147,12 @@ The locale string to use as the column header on the day view for the events col
 
 The locale string to use as the column header on the day view for the time column. Default: 'Time'.
 
+### calendar-day-view-start
+A string in the form of hh:mm to start the day view at, e.g. setting it to 06:00 will start the day view at 6am
+
+### calendar-day-view-end
+A string in the form of hh:mm to end the day view at, e.g. setting it to 22:00 will end the day view at 10pm
+
 ## Internationalization and localization
 
 The calendar directive uses angulars date filter to produce all months and days of the week etc. Therefore to changes the language of the calendar you simply need to include the appropriate angular i18n file as described here:

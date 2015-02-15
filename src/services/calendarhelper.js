@@ -241,11 +241,11 @@ angular.module('mwl.calendar')
 
     };
 
-    this.getDayView = function(events, currentDay) {
+    this.getDayView = function(events, currentDay, dayStartHour, dayEndHour) {
 
-      var calendarStart = moment(currentDay).startOf('day');
-      var calendarEnd = moment(currentDay).endOf('day');
-      var calendarHeight = 24 * 60;
+      var calendarStart = moment(currentDay).startOf('day').add(dayStartHour, 'hours');
+      var calendarEnd = moment(currentDay).startOf('day').add(dayEndHour, 'hours');
+      var calendarHeight = (dayEndHour - dayStartHour + 1) * 60;
       var buckets = [];
 
       return events.filter(function(event) {
