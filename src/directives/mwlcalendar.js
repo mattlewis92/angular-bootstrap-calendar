@@ -46,7 +46,9 @@ angular.module('mwl.calendar')
         };
 
         $scope.control.getTitle = function() {
-          if (!self.titleFunctions[$scope.view]) return '';
+          if (!self.titleFunctions[$scope.view]) {
+            return '';
+          }
           return self.titleFunctions[$scope.view]($scope.currentDay);
         };
 
