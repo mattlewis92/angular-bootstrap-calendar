@@ -128,6 +128,10 @@
   display: block;
   width: 100%;
 }
+.cal-month-day .cal-events-num {
+  margin-left: 10px;
+  margin-top: 18px;
+}
 #cal-week-box {
   position: absolute;
   width: 70px;
@@ -432,6 +436,10 @@
   border-left: 1px solid #e1e1e1;
   border-radius: 2px;
 }
+.cal-month-box {
+  border-right: 0px;
+  border-bottom: 0px;
+}
 span[data-cal-date] {
   font-size: 1.2em;
   font-weight: normal;
@@ -472,6 +480,9 @@ span[data-cal-date]:hover {
   border-radius: 5px 0 0 5px;
   background-color: #fafafa;
   text-align: right;
+}
+.cal-week-box .cal-row-head {
+  border-bottom: 1px solid #e1e1e1;
 }
 .cal-day-tick {
   border: 1px solid #e1e1e1;
