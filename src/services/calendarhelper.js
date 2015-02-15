@@ -18,9 +18,7 @@ angular.module('mwl.calendar')
 
     function isISOWeek(userValue) {
       //If a manual override has been set in the directive, use that
-      if (angular.isDefined(userValue)) {
-        return userValue;
-      }
+      if (angular.isDefined(userValue)) return userValue;
       //Otherwise fallback to the locale
       return isISOWeekBasedOnLocale();
     }
@@ -313,10 +311,7 @@ angular.module('mwl.calendar')
 
       var openEvents = [];
 
-      if (view[rowIndex][cellIndex].events.length > 0) {
-
-        var isCellOpened = view[rowIndex][cellIndex].isOpened;
-
+      function closeAllOpenItems() {
         view = view.map(function(row) {
           row.isOpened = false;
           return row.map(function(cell) {
@@ -324,10 +319,19 @@ angular.module('mwl.calendar')
             return cell;
           });
         });
+      }
+
+      if (view[rowIndex][cellIndex].events.length > 0) {
+
+        var isCellOpened = view[rowIndex][cellIndex].isOpened;
+
+        closeAllOpenItems();
 
         view[rowIndex][cellIndex].isOpened = !isCellOpened;
         view[rowIndex].isOpened = !isCellOpened;
         openEvents = view[rowIndex][cellIndex].events;
+      } else {
+        closeAllOpenItems();
       }
 
       return {view: view, openEvents: openEvents};
