@@ -18,7 +18,9 @@ angular.module('mwl.calendar')
 
     function isISOWeek(userValue) {
       //If a manual override has been set in the directive, use that
-      if (angular.isDefined(userValue)) return userValue;
+      if (angular.isDefined(userValue)) {
+        return userValue;
+      }
       //Otherwise fallback to the locale
       return isISOWeekBasedOnLocale();
     }

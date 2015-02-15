@@ -71,6 +71,4 @@ angular.module('mwl.calendar')
       event[field] = !event[field];
     };
 
-
-
   });
