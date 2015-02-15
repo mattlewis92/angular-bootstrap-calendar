@@ -22,7 +22,9 @@ angular.module('mwl.calendar')
         editEventHtml: '=calendarEditEventHtml',
         deleteEventHtml: '=calendarDeleteEventHtml',
         autoOpen: '=calendarAutoOpen',
-        useIsoWeek: '=calendarUseIsoWeek'
+        useIsoWeek: '=calendarUseIsoWeek',
+        eventLabel: '@calendarEventLabel',
+        timeLabel: '@calendarTimeLabel'
       },
       controller: function($scope) {
 

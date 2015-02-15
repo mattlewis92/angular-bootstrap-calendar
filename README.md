@@ -127,7 +127,7 @@ Whether to auto open the year and month view breakdown to the current year / mon
 
 ### calendar-use-iso-week
 
-Whether the calendar should use the the ISO week standard (i.e. the calendar month and week views start on Monday and not Sunday). 
+Whether the calendar should use the the ISO week standard (i.e. the calendar month and week views start on Monday and not Sunday).
 
 If not set the calendar will look at what is set in the locale by moment. You can set this globally via:
 
@@ -138,6 +138,19 @@ moment.locale('en', {
     }
 });
 ```
+
+### calendar-event-label
+
+The locale string to use as the column header on the day view for the events column. Default: 'Events'.
+
+### calendar-time-label
+
+The locale string to use as the column header on the day view for the time column. Default: 'Time'.
+
+## Internationalization and localization
+
+The calendar directive uses angulars date filter to produce all months and days of the week etc. Therefore to changes the language of the calendar you simply need to include the appropriate angular i18n file as described here:
+https://docs.angularjs.org/guide/i18n
 
 ## Demo
 

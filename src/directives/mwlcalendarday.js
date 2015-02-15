@@ -7,7 +7,7 @@
  * # mwlCalendarDay
  */
 angular.module('mwl.calendar')
-  .directive('mwlCalendarDay', function(calendarHelper) {
+  .directive('mwlCalendarDay', function($filter, calendarHelper) {
     return {
       templateUrl: 'templates/day.html',
       restrict: 'EA',
@@ -15,12 +15,14 @@ angular.module('mwl.calendar')
       scope: {
         events: '=calendarEvents',
         currentDay: '=calendarCurrentDay',
-        eventClick: '=calendarEventClick'
+        eventClick: '=calendarEventClick',
+        eventLabel: '@calendarEventLabel',
+        timeLabel: '@calendarTimeLabel'
       },
       link: function postLink(scope, element, attrs, calendarCtrl) {
 
         calendarCtrl.titleFunctions.day = function(currentDay) {
-          return moment(currentDay).format('dddd DD MMMM, YYYY');
+          return $filter('date')(currentDay, 'EEEE d MMMM, yyyy');
         };
 
         function updateView() {
