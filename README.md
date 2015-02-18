@@ -141,11 +141,15 @@ moment.locale('en', {
 
 ### calendar-event-label
 
-The locale string to use as the column header on the day view for the events column. Default: 'Events'.
+An interpolated locale string to use as the column header on the day view for the events column. Default: 'Events'.
 
 ### calendar-time-label
 
-The locale string to use as the column header on the day view for the time column. Default: 'Time'.
+An interpolated locale string to use as the column header on the day view for the time column. Default: 'Time'.
+
+### calendar-week-title-label
+
+An interpolated local string to use in the week view title. Default: 'Week {week} of {year}'
 
 ### calendar-day-view-start
 A string in the form of hh:mm to start the day view at, e.g. setting it to 06:00 will start the day view at 6am
