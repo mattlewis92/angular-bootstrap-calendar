@@ -26,7 +26,8 @@ angular.module('mwl.calendar')
         eventLabel: '@calendarEventLabel',
         timeLabel: '@calendarTimeLabel',
         dayViewStart:'@calendarDayViewStart',
-        dayViewEnd:'@calendarDayViewEnd'
+        dayViewEnd:'@calendarDayViewEnd',
+        weekTitleLabel: '@calendarWeekTitleLabel'
       },
       controller: function($scope, $timeout, $locale, moment) {
 

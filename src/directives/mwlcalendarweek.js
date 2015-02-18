@@ -16,12 +16,15 @@ angular.module('mwl.calendar')
         events: '=calendarEvents',
         currentDay: '=calendarCurrentDay',
         eventClick: '=calendarEventClick',
-        useIsoWeek: '=calendarUseIsoWeek'
+        useIsoWeek: '=calendarUseIsoWeek',
+        weekTitleLabel: '@calendarWeekTitleLabel'
       },
       link: function postLink(scope, element, attrs, calendarCtrl) {
 
+        var titleLabel = scope.weekTitleLabel || 'Week {week} of {year}';
+
         calendarCtrl.titleFunctions.week = function(currentDay) {
-          return 'Week ' + moment(currentDay).week() + ' of ' + moment(currentDay).format('YYYY');
+          return titleLabel.replace('{week}', moment(currentDay).week()).replace('{year}', moment(currentDay).format('YYYY'));
         };
 
         function updateView() {

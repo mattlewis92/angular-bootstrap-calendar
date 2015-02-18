@@ -369,25 +369,6 @@ angular.module('mwl.calendar')
 
 'use strict';
 
-
-angular.module('mwl.calendar')
-  .filter('truncateEventTitle', function() {
-
-    return function(string, length, boxHeight) {
-      if (!string) return '';
-
-      //Only truncate if if actually needs truncating
-      if (string.length >= length && string.length / 20 > boxHeight / 30) {
-        return string.substr(0, length) + '...';
-      } else {
-        return string;
-      }
-    };
-
-  });
-
-'use strict';
-
 /**
  * @ngdoc directive
  * @name angularBootstrapCalendarApp.directive:mwlCalendarYear
@@ -475,12 +456,15 @@ angular.module('mwl.calendar')
         events: '=calendarEvents',
         currentDay: '=calendarCurrentDay',
         eventClick: '=calendarEventClick',
-        useIsoWeek: '=calendarUseIsoWeek'
+        useIsoWeek: '=calendarUseIsoWeek',
+        weekTitleLabel: '@calendarWeekTitleLabel'
       },
       link: function postLink(scope, element, attrs, calendarCtrl) {
 
+        var titleLabel = scope.weekTitleLabel || 'Week {week} of {year}';
+
         calendarCtrl.titleFunctions.week = function(currentDay) {
-          return 'Week ' + moment(currentDay).week() + ' of ' + moment(currentDay).format('YYYY');
+          return titleLabel.replace('{week}', moment(currentDay).week()).replace('{year}', moment(currentDay).format('YYYY'));
         };
 
         function updateView() {
@@ -682,7 +666,8 @@ angular.module('mwl.calendar')
         eventLabel: '@calendarEventLabel',
         timeLabel: '@calendarTimeLabel',
         dayViewStart:'@calendarDayViewStart',
-        dayViewEnd:'@calendarDayViewEnd'
+        dayViewEnd:'@calendarDayViewEnd',
+        weekTitleLabel: '@calendarWeekTitleLabel'
       },
       controller: ["$scope", "$timeout", "$locale", "moment", function($scope, $timeout, $locale, moment) {
 
@@ -736,4 +721,23 @@ angular.module('mwl.calendar')
 
       }]
     };
+  });
+
+'use strict';
+
+
+angular.module('mwl.calendar')
+  .filter('truncateEventTitle', function() {
+
+    return function(string, length, boxHeight) {
+      if (!string) return '';
+
+      //Only truncate if if actually needs truncating
+      if (string.length >= length && string.length / 20 > boxHeight / 30) {
+        return string.substr(0, length) + '...';
+      } else {
+        return string;
+      }
+    };
+
   });
