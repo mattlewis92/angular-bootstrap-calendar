@@ -87,7 +87,8 @@ angular.module('mwl.calendar')
             isToday: moment(startPeriod).startOf('month').isSame(moment().startOf('month')),
             events: events.filter(function(event) {
               return self.eventIsInPeriod(event.starts_at, event.ends_at, startPeriod, endPeriod);
-            })
+            }),
+            date: moment(startPeriod).startOf('month')
           });
         }
         grid.push(row);

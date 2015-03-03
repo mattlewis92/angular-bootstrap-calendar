@@ -103,7 +103,7 @@ The directive will instantiate this variable for you and add the following metho
 
 ### calendar-event-click 
 
-This function is called when an event is clicked on the calendar. $event contains the calendar event that was clicked on.
+This expression is called when an event is clicked on the calendar. $event contains the calendar event that was clicked on.
 
 ### calendar-edit-event-html 
 
@@ -115,11 +115,15 @@ If provided this piece of html will be displayed next to an event on the year an
 
 ### calendar-edit-event-click 
 
-This function is called when an event edit link is clicked on the calendar. $event contains the calendar event that was clicked on.
+This expression is called when an event edit link is clicked on the calendar. $event contains the calendar event that was clicked on.
 
 ### calendar-delete-event-click 
 
-This function is called when an event delete link is clicked on the calendar. $event contains the calendar event that was clicked on.
+This expression is called when an event delete link is clicked on the calendar. $event contains the calendar event that was clicked on.
+
+### calendar-timespan-click
+
+This expression is called when a month or day on the calendar is clicked. $date contains the start of the month or day that was clicked on.
 
 ### calendar-auto-open
 

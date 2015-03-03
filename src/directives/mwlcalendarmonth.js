@@ -21,7 +21,8 @@ angular.module('mwl.calendar')
         editEventHtml: '=calendarEditEventHtml',
         deleteEventHtml: '=calendarDeleteEventHtml',
         autoOpen: '=calendarAutoOpen',
-        useIsoWeek: '=calendarUseIsoWeek'
+        useIsoWeek: '=calendarUseIsoWeek',
+        timespanClick: '=calendarTimespanClick'
       },
       link: function postLink(scope, element, attrs, calendarCtrl) {
 
@@ -41,7 +42,7 @@ angular.module('mwl.calendar')
             scope.view.forEach(function(week, rowIndex) {
               week.forEach(function(day, cellIndex) {
                 if (day.inMonth && moment(scope.currentDay).startOf('day').isSame(day.date.startOf('day'))) {
-                  scope.dayClicked(rowIndex, cellIndex);
+                  scope.dayClicked(rowIndex, cellIndex, true);
                   $timeout(function() {
                     firstRun = false;
                   });
@@ -57,7 +58,11 @@ angular.module('mwl.calendar')
 
         scope.weekDays = calendarHelper.getWeekDayNames(false, scope.useIsoWeek);
 
-        scope.dayClicked = function(rowIndex, cellIndex) {
+        scope.dayClicked = function(rowIndex, cellIndex, firstRun) {
+
+          if (!firstRun) {
+            scope.timespanClick({$date: scope.view[rowIndex][cellIndex].date.startOf('day').toDate()});
+          }
 
           var handler = calendarHelper.toggleEventBreakdown(scope.view, rowIndex, cellIndex);
           scope.view = handler.view;
