@@ -15,6 +15,25 @@ angular
 
 'use strict';
 
+
+angular.module('mwl.calendar')
+  .filter('truncateEventTitle', function() {
+
+    return function(string, length, boxHeight) {
+      if (!string) return '';
+
+      //Only truncate if if actually needs truncating
+      if (string.length >= length && string.length / 20 > boxHeight / 30) {
+        return string.substr(0, length) + '...';
+      } else {
+        return string;
+      }
+    };
+
+  });
+
+'use strict';
+
 /**
  * @ngdoc service
  * @name angularBootstrapCalendarApp.moment
@@ -114,7 +133,8 @@ angular.module('mwl.calendar')
             isToday: moment(startPeriod).startOf('month').isSame(moment().startOf('month')),
             events: events.filter(function(event) {
               return self.eventIsInPeriod(event.starts_at, event.ends_at, startPeriod, endPeriod);
-            })
+            }),
+            date: moment(startPeriod).startOf('month')
           });
         }
         grid.push(row);
@@ -243,7 +263,7 @@ angular.module('mwl.calendar')
       var eventsSorted = events.filter(function(event) {
         return self.eventIsInPeriod(event.starts_at, event.ends_at, beginningOfWeek, endOfWeek);
       }).map(function(event) {
-        var span = moment(event.ends_at).startOf('day').diff(moment(event.starts_at).startOf('day'), 'days') + 1;
+        var span = moment(endOfWeek).startOf('day').diff(moment(event.starts_at).startOf('day'), 'days') + 1;
         if (span >= 7) {
           span = 7;
           if (moment(event.ends_at).startOf('day').diff(moment(endOfWeek).startOf('day'), 'days') < 0) {
@@ -389,7 +409,8 @@ angular.module('mwl.calendar')
         eventDeleteClick: '=calendarDeleteEventClick',
         editEventHtml: '=calendarEditEventHtml',
         deleteEventHtml: '=calendarDeleteEventHtml',
-        autoOpen: '=calendarAutoOpen'
+        autoOpen: '=calendarAutoOpen',
+        timespanClick: '=calendarTimespanClick'
       },
       link: function postLink(scope, element, attrs, calendarCtrl) {
 
@@ -409,7 +430,7 @@ angular.module('mwl.calendar')
             scope.view.forEach(function(row, rowIndex) {
               row.forEach(function(year, cellIndex) {
                 if (year.label == moment(scope.currentDay).format('MMMM')) {
-                  scope.monthClicked(rowIndex, cellIndex);
+                  scope.monthClicked(rowIndex, cellIndex, true);
                   $timeout(function() {
                     firstRun = false;
                   });
@@ -422,7 +443,11 @@ angular.module('mwl.calendar')
         scope.$watch('currentDay', updateView);
         scope.$watch('events', updateView, true);
 
-        scope.monthClicked = function(yearIndex, monthIndex) {
+        scope.monthClicked = function(yearIndex, monthIndex, firstRun) {
+
+          if (!firstRun) {
+            scope.timespanClick({$date: scope.view[yearIndex][monthIndex].date.startOf('month').toDate()});
+          }
 
           var handler = calendarHelper.toggleEventBreakdown(scope.view, yearIndex, monthIndex);
           scope.view = handler.view;
@@ -505,7 +530,8 @@ angular.module('mwl.calendar')
         editEventHtml: '=calendarEditEventHtml',
         deleteEventHtml: '=calendarDeleteEventHtml',
         autoOpen: '=calendarAutoOpen',
-        useIsoWeek: '=calendarUseIsoWeek'
+        useIsoWeek: '=calendarUseIsoWeek',
+        timespanClick: '=calendarTimespanClick'
       },
       link: function postLink(scope, element, attrs, calendarCtrl) {
 
@@ -525,7 +551,7 @@ angular.module('mwl.calendar')
             scope.view.forEach(function(week, rowIndex) {
               week.forEach(function(day, cellIndex) {
                 if (day.inMonth && moment(scope.currentDay).startOf('day').isSame(day.date.startOf('day'))) {
-                  scope.dayClicked(rowIndex, cellIndex);
+                  scope.dayClicked(rowIndex, cellIndex, true);
                   $timeout(function() {
                     firstRun = false;
                   });
@@ -541,7 +567,11 @@ angular.module('mwl.calendar')
 
         scope.weekDays = calendarHelper.getWeekDayNames(false, scope.useIsoWeek);
 
-        scope.dayClicked = function(rowIndex, cellIndex) {
+        scope.dayClicked = function(rowIndex, cellIndex, firstRun) {
+
+          if (!firstRun) {
+            scope.timespanClick({$date: scope.view[rowIndex][cellIndex].date.startOf('day').toDate()});
+          }
 
           var handler = calendarHelper.toggleEventBreakdown(scope.view, rowIndex, cellIndex);
           scope.view = handler.view;
@@ -667,7 +697,8 @@ angular.module('mwl.calendar')
         timeLabel: '@calendarTimeLabel',
         dayViewStart:'@calendarDayViewStart',
         dayViewEnd:'@calendarDayViewEnd',
-        weekTitleLabel: '@calendarWeekTitleLabel'
+        weekTitleLabel: '@calendarWeekTitleLabel',
+        timespanClick: '&calendarTimespanClick'
       },
       controller: ["$scope", "$timeout", "$locale", "moment", function($scope, $timeout, $locale, moment) {
 
@@ -721,23 +752,4 @@ angular.module('mwl.calendar')
 
       }]
     };
-  });
-
-'use strict';
-
-
-angular.module('mwl.calendar')
-  .filter('truncateEventTitle', function() {
-
-    return function(string, length, boxHeight) {
-      if (!string) return '';
-
-      //Only truncate if if actually needs truncating
-      if (string.length >= length && string.length / 20 > boxHeight / 30) {
-        return string.substr(0, length) + '...';
-      } else {
-        return string;
-      }
-    };
-
   });
