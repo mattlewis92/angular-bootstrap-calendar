@@ -216,7 +216,7 @@ angular.module('mwl.calendar')
       var eventsSorted = events.filter(function(event) {
         return self.eventIsInPeriod(event.starts_at, event.ends_at, beginningOfWeek, endOfWeek);
       }).map(function(event) {
-        var span = moment(event.ends_at).startOf('day').diff(moment(event.starts_at).startOf('day'), 'days') + 1;
+        var span = moment(endOfWeek).startOf('day').diff(moment(event.starts_at).startOf('day'), 'days') + 1;
         if (span >= 7) {
           span = 7;
           if (moment(event.ends_at).startOf('day').diff(moment(endOfWeek).startOf('day'), 'days') < 0) {
