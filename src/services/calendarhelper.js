@@ -217,21 +217,29 @@ angular.module('mwl.calendar')
       var eventsSorted = events.filter(function(event) {
         return self.eventIsInPeriod(event.starts_at, event.ends_at, beginningOfWeek, endOfWeek);
       }).map(function(event) {
-        var span = moment(event.ends_at).startOf('day').diff(moment(event.starts_at).startOf('day'), 'days') + 1;
-        if (span >= 7) {
-          span = 7;
-          if (moment(event.ends_at).startOf('day').diff(moment(endOfWeek).startOf('day'), 'days') < 0) {
-            span += moment(event.ends_at).startOf('day').diff(moment(endOfWeek).startOf('day'), 'days') + dateOffset;
-          }
+
+        var eventStart = moment(event.starts_at).startOf('day');
+        var eventEnd = moment(event.ends_at).startOf('day');
+        var weekViewStart = moment(beginningOfWeek).startOf('day');
+        var weekViewEnd = moment(endOfWeek).startOf('day');
+
+        var offset, span;
+
+        if (eventStart.isBefore(weekViewStart) || eventStart.isSame(weekViewStart)) {
+          offset = 0;
+        } else {
+          offset = eventStart.diff(weekViewStart, 'days');
         }
 
-        var offset = moment(event.starts_at).startOf('day').diff(moment(beginningOfWeek).startOf('day'), 'days');
-        if (offset < 0) offset = 0;
-        if (offset > 6) offset = 6;
-
-        if (span - offset > 0) {
-          span -= offset;
+        if (eventEnd.isAfter(weekViewEnd)) {
+          eventEnd = weekViewEnd;
         }
+
+        if (eventStart.isBefore(weekViewStart)) {
+          eventStart = weekViewStart;
+        }
+
+        span = moment(eventEnd).diff(eventStart, 'days') + 1;
 
         event.daySpan = span;
         event.dayOffset = offset;
