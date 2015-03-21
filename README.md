@@ -27,7 +27,7 @@ The calendar has a few dependencies, these are as follows, and must be included 
 * [AngularJS](https://angularjs.org/) 1.2+
 * [Bootstrap](http://getbootstrap.com/) 3+ (CSS only)
 * [Moment.js](http://momentjs.com/)
-* [ui-bootstrap](http://angular-ui.github.io/bootstrap/) (tooltip and collapse plugins only if you want a custom build)
+* [ui-bootstrap](http://angular-ui.github.io/bootstrap/) (optional, include for collapse animations and tooltips on the year and month views)
 
 It is recommended that you install the plugin and its dependencies through bower:
 

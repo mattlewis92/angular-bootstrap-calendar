@@ -9,6 +9,4 @@
  * Main module of the application.
  */
 angular
-  .module('mwl.calendar', [
-    'ui.bootstrap'
-  ]);
+  .module('mwl.calendar', []);

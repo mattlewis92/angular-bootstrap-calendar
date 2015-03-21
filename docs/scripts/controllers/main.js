@@ -7,7 +7,7 @@
  * # MainCtrl
  * Controller of the angularBootstrapCalendarApp
  */
-angular.module('mwl.calendar')
+angular.module('demo', ['mwl.calendar', 'ui.bootstrap'])
   .controller('MainCtrl', function ($scope, $modal, moment) {
 
     var currentYear = moment().year();
@@ -31,7 +31,7 @@ angular.module('mwl.calendar')
         type: 'important',
         starts_at: new Date(currentYear,currentMonth,25,6,30),
         ends_at: new Date(currentYear,currentMonth,25,6,60)
-      },
+      }
     ];
 
     $scope.calendarView = 'month';
