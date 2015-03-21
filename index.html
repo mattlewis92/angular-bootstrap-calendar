@@ -110,7 +110,7 @@
             </thead>
 
             <tbody>
-              <tr ng-repeat="event in events">
+              <tr ng-repeat="event in events track by $index">
                 <td><input type="text" class="form-control" ng-model="event.title"></td>
                 <td>
                   <select ng-model="event.type" class="form-control">

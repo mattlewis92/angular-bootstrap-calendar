@@ -28,6 +28,20 @@ angular
       }
     ];
 
+    /*function random(min, max) {
+      return Math.floor((Math.random() * max) + min);
+    }
+
+    for (var i = 0; i < 1000; i++) {
+      var start = new Date(currentYear,random(0, 11),random(1, 28),random(0, 24),random(0, 59));
+      $scope.events.push({
+        title: 'Event ' + i,
+        type: 'warning',
+        starts_at: start,
+        ends_at: moment(start).add(2, 'hours').toDate()
+      })
+    }*/
+
     $scope.calendarView = 'month';
     $scope.calendarDay = new Date();
 
