@@ -1,12 +1,7 @@
 'use strict';
 
-/**
- * @ngdoc directive
- * @name angularBootstrapCalendarApp.directive:mwlCalendar
- * @description
- * # mwlCalendar
- */
-angular.module('mwl.calendar')
+angular
+  .module('mwl.calendar')
   .directive('mwlCalendar', function () {
     return {
       templateUrl: 'templates/main.html',
