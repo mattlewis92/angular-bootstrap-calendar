@@ -21,12 +21,10 @@ gulp.task('server', function() {
 gulp.task('css', function() {
 
   return gulp.src('src/**/*.css')
-    .pipe(gp.sourcemaps.init())
     .pipe(gp.concat('angular-bootstrap-calendar.css'))
     .pipe(gulp.dest('dist/css'))
     .pipe(gp.minifyCss())
     .pipe(gp.rename('angular-bootstrap-calendar.min.css'))
-    .pipe(gp.sourcemaps.write('.'))
     .pipe(gulp.dest('dist/css'));
 
 });
@@ -55,6 +53,7 @@ function buildJS(withTemplates) {
   ) : gulp.src('src/**/*.js');
 
   return stream
+    .pipe(gp.sort())
     .pipe(gp.angularFilesort())
     .pipe(gp.sourcemaps.init())
     .pipe(gp.ngAnnotate())
