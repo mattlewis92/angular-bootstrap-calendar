@@ -1,6 +1,6 @@
 <div class="cal-row-fluid cal-row-head">
 
-  <div class="cal-cell1" ng-repeat="day in weekDays">{{ day }}</div>
+  <div class="cal-cell1" ng-repeat="day in weekDays track by $index">{{ day }}</div>
 
 </div>
 <div class="cal-month-box">

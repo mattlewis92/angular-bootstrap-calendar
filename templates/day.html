@@ -8,7 +8,7 @@
   <div class="cal-day-panel" class="clearfix" ng-style="{height: (days.length * 60) + 'px'}">
     <div class="cal-day-panel-hour">
 
-      <div class="cal-day-hour" ng-repeat="day in days">
+      <div class="cal-day-hour" ng-repeat="day in days track by $index">
 
         <div class="row-fluid cal-day-hour-part">
           <div class="span1 col-xs-1"><b>{{ day.label }}</b></div>
