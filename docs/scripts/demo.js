@@ -1,13 +1,7 @@
 'use strict';
 
-/**
- * @ngdoc function
- * @name angularBootstrapCalendarApp.controller:MainCtrl
- * @description
- * # MainCtrl
- * Controller of the angularBootstrapCalendarApp
- */
-angular.module('demo', ['mwl.calendar', 'ui.bootstrap'])
+angular
+  .module('demo', ['mwl.calendar', 'ui.bootstrap'])
   .controller('MainCtrl', function ($scope, $modal, moment) {
 
     var currentYear = moment().year();
