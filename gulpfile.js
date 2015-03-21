@@ -33,8 +33,15 @@ function getTemplates() {
 
   return gulp
     .src('templates/**/*.html')
-    .pipe(gp.minifyHtml({empty: true, conditionals: true, spare: true, quotes: true}))
-    .pipe(gp.angularTemplatecache({standalone: false, module: 'mwl.calendar', root: 'templates/'}));
+    .pipe(gp.htmlmin({
+      removeComments: true,
+      collapseWhitespace: true
+    }))
+    .pipe(gp.angularTemplatecache({
+      standalone: false,
+      module: 'mwl.calendar',
+      root: 'templates/'
+    }));
 
 }
 
