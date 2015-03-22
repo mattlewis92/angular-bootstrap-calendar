@@ -192,7 +192,7 @@ http://mattlewis92.github.io/angular-bootstrap-calendar/
 * Install local dev dependencies: `npm install` while current directory is this repo
 
 ### Build
-Run `gulp` to build the project files in the dist folder
+Run `gulp build` to build the project files in the dist folder
 
 ### Development server
 Run `gulp watch` to start a development server with livereload on port 8000. 

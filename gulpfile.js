@@ -107,4 +107,20 @@ gulp.task('js', ['js-tpls'], function() {
 
 gulp.task('build', ['js', 'css'], function() {});
 
-gulp.task('default', ['build'], function() {});
+function release(importance) {
+  return gulp.src(['./package.json', './bower.json'])
+    .pipe($.bump({type: importance}))
+    .pipe(gulp.dest('./'))
+    .pipe($.git.commit('Release new version'))
+    .pipe($.filter('package.json'))
+    .pipe($.tagVersion({
+      prefix: '',
+      push: false
+    }));
+}
+
+gulp.task('release:patch', ['build'], function() { return release('patch'); })
+gulp.task('release:minor', ['build'], function() { return release('minor'); })
+gulp.task('release:major', ['build'], function() { return release('major'); })
+
+gulp.task('default', ['watch'], function() {});
