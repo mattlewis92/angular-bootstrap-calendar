@@ -14,11 +14,15 @@ angular
         eventLabel: '@calendarEventLabel',
         timeLabel: '@calendarTimeLabel',
         dayViewStart:'@calendarDayViewStart',
-        dayViewEnd:'@calendarDayViewEnd'
+        dayViewEnd:'@calendarDayViewEnd',
+        dayViewSplit: '@calendarDayViewSplit'
       },
       controller: function($scope, moment, calendarHelper) {
         var dayViewStart = moment($scope.dayViewStart || '00:00', 'HH:mm');
         var dayViewEnd = moment($scope.dayViewEnd || '23:00', 'HH:mm');
+
+        $scope.dayViewSplit = parseInt($scope.dayViewSplit);
+        $scope.dayHeight = (60 / $scope.dayViewSplit) * 30;
 
         $scope.days = [];
         var dayCounter = moment(dayViewStart);
@@ -30,7 +34,7 @@ angular
         }
 
         function updateView() {
-          $scope.view = calendarHelper.getDayView($scope.events, $scope.currentDay, dayViewStart.hours(), dayViewEnd.hours());
+          $scope.view = calendarHelper.getDayView($scope.events, $scope.currentDay, dayViewStart.hours(), dayViewEnd.hours(), $scope.dayHeight);
         }
 
         $scope.$watch('currentDay', updateView);

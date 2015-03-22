@@ -23,7 +23,8 @@ angular
         dayViewStart:'@calendarDayViewStart',
         dayViewEnd:'@calendarDayViewEnd',
         weekTitleLabel: '@calendarWeekTitleLabel',
-        timespanClick: '&calendarTimespanClick'
+        timespanClick: '&calendarTimespanClick',
+        dayViewSplit: '@calendarDayViewSplit'
       },
       controller: function($scope, $timeout, $locale, $filter, moment) {
 

@@ -90,6 +90,11 @@ The 4 properties listed are required for all events.
 
 This variable is a string that can be either 'year', 'month', 'week' or 'day. Changing it will change the view of the calendar.
 
+For the calendar to display this variable needs to be set like so:
+```javascript
+$scope.calendarView = 'month';
+```
+
 ### calendar-current-day
 
 This variable holds the current day the calendar is centralised on. Each view will decide on its current year / month / week / day depending on the value of this variable.
@@ -156,10 +161,13 @@ An interpolated locale string to use as the column header on the day view for th
 An interpolated local string to use in the week view title. Default: 'Week {week} of {year}'
 
 ### calendar-day-view-start
-A string in the form of hh:mm to start the day view at, e.g. setting it to 06:00 will start the day view at 6am
+An interpolated string in the form of hh:mm to start the day view at, e.g. setting it to 06:00 will start the day view at 6am
 
 ### calendar-day-view-end
-A string in the form of hh:mm to end the day view at, e.g. setting it to 22:00 will end the day view at 10pm
+An interpolated string in the form of hh:mm to end the day view at, e.g. setting it to 22:00 will end the day view at 10pm
+
+### calendar-day-view-split
+The number of chunks to split the day view hours up into. Can be either 10, 15 or 30. Default: 30
 
 ## Internationalization and localization
 
