@@ -2,7 +2,7 @@
 
 angular
   .module('mwl.calendar')
-  .directive('mwlCalendarDay', function($filter) {
+  .directive('mwlCalendarDay', function() {
     return {
       templateUrl: 'templates/day.html',
       restrict: 'EA',
@@ -35,13 +35,6 @@ angular
 
         $scope.$watch('currentDay', updateView);
         $scope.$watch('events', updateView, true);
-
-      },
-      link: function(scope, element, attrs, calendarCtrl) {
-
-        calendarCtrl.titleFunctions.day = function(currentDay) {
-          return $filter('date')(currentDay, 'EEEE d MMMM, yyyy');
-        };
 
       }
     };

@@ -94,13 +94,7 @@ angular
         };
       },
       link: function(scope, element, attrs, calendarCtrl) {
-
         scope.calendarCtrl = calendarCtrl;
-
-        calendarCtrl.titleFunctions.month = function(currentDay) {
-          return $filter('date')(currentDay, 'MMMM yyyy');
-        };
-
       }
     };
   });

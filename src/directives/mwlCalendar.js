@@ -2,7 +2,7 @@
 
 angular
   .module('mwl.calendar')
-  .directive('mwlCalendar', function () {
+  .directive('mwlCalendar', function() {
     return {
       templateUrl: 'templates/main.html',
       restrict: 'EA',
@@ -25,11 +25,25 @@ angular
         weekTitleLabel: '@calendarWeekTitleLabel',
         timespanClick: '&calendarTimespanClick'
       },
-      controller: function($scope, $timeout, $locale, moment) {
+      controller: function($scope, $timeout, $locale, $filter, moment) {
 
         var self = this;
 
-        this.titleFunctions = {};
+        var weekTitleLabel = $scope.weekTitleLabel || 'Week {week} of {year}';
+        this.titleFunctions = {
+          day: function(currentDay) {
+            return $filter('date')(currentDay, 'EEEE d MMMM, yyyy');
+          },
+          week: function(currentDay) {
+            return weekTitleLabel.replace('{week}', moment(currentDay).week()).replace('{year}', moment(currentDay).format('YYYY'));
+          },
+          month: function(currentDay) {
+            return $filter('date')(currentDay, 'MMMM yyyy');
+          },
+          year: function(currentDay) {
+            return moment(currentDay).format('YYYY');
+          }
+        };
 
         this.changeView = function(view, newDay) {
           $scope.view = view;

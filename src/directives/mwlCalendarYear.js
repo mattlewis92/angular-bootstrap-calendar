@@ -61,13 +61,7 @@ angular
         };
       },
       link: function(scope, element, attrs, calendarCtrl) {
-
-        calendarCtrl.titleFunctions.year = function(currentDay) {
-          return moment(currentDay).format('YYYY');
-        };
-
         scope.calendarCtrl = calendarCtrl;
-
       }
     };
   });

@@ -2,7 +2,7 @@
 
 angular
   .module('mwl.calendar')
-  .directive('mwlCalendarWeek', function(moment) {
+  .directive('mwlCalendarWeek', function() {
     return {
       templateUrl: 'templates/week.html',
       restrict: 'EA',
@@ -11,10 +11,9 @@ angular
         events: '=calendarEvents',
         currentDay: '=calendarCurrentDay',
         eventClick: '=calendarEventClick',
-        useIsoWeek: '=calendarUseIsoWeek',
-        weekTitleLabel: '@calendarWeekTitleLabel'
+        useIsoWeek: '=calendarUseIsoWeek'
       },
-      controller: function($scope, calendarHelper) {
+      controller: function($scope, moment, calendarHelper) {
         function updateView() {
           $scope.view = calendarHelper.getWeekView($scope.events, $scope.currentDay, $scope.useIsoWeek);
         }
@@ -27,15 +26,7 @@ angular
         $scope.$watch('events', updateView, true);
       },
       link: function(scope, element, attrs, calendarCtrl) {
-
-        var titleLabel = scope.weekTitleLabel || 'Week {week} of {year}';
-
-        calendarCtrl.titleFunctions.week = function(currentDay) {
-          return titleLabel.replace('{week}', moment(currentDay).week()).replace('{year}', moment(currentDay).format('YYYY'));
-        };
-
         scope.calendarCtrl = calendarCtrl;
-
       }
     };
   });
