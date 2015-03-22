@@ -7,6 +7,9 @@ angular
     var currentYear = moment().year();
     var currentMonth = moment().month();
 
+    //These variables MUST be set as a minimum for the calendar to work
+    $scope.calendarView = 'month';
+    $scope.calendarDay = new Date();
     $scope.events = [
       {
         title: 'Event 1',
@@ -41,9 +44,6 @@ angular
         ends_at: moment(start).add(2, 'hours').toDate()
       })
     }*/
-
-    $scope.calendarView = 'month';
-    $scope.calendarDay = new Date();
 
     function showModal(action, event) {
       $modal.open({
