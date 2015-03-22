@@ -170,6 +170,12 @@ https://docs.angularjs.org/guide/i18n
 
 http://mattlewis92.github.io/angular-bootstrap-calendar/
 
+## Roadmap
+
+[] Replace CSS with less from the original project https://github.com/mattlewis92/angular-bootstrap-calendar/issues/14
+[] Drop angular 1.2 support to take advantage of bindToController and one time binding in templates
+[] Add unit and e2e tests https://github.com/mattlewis92/angular-bootstrap-calendar/issues/10
+
 ## Development
 
 ### Prepare your environment
