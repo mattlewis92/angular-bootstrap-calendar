@@ -538,6 +538,10 @@ a.cal-event-week {
   border-bottom: 0px;
 }
 
+.cal-context {
+  width: 100%;
+}
+
 @media (max-width: 991px) {
 
   .cal-year-box [class*="span"]:nth-child(2) {

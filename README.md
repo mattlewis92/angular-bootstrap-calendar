@@ -27,7 +27,7 @@ The calendar has a few dependencies, these are as follows, and must be included 
 * [AngularJS](https://angularjs.org/) 1.2+
 * [Bootstrap](http://getbootstrap.com/) 3+ (CSS only)
 * [Moment.js](http://momentjs.com/)
-* [ui-bootstrap](http://angular-ui.github.io/bootstrap/) (tooltip and collapse plugins only if you want a custom build)
+* [ui-bootstrap](http://angular-ui.github.io/bootstrap/) (optional, include for collapse animations and tooltips on the year and month views)
 
 It is recommended that you install the plugin and its dependencies through bower:
 
@@ -89,6 +89,11 @@ The 4 properties listed are required for all events.
 ### calendar-view
 
 This variable is a string that can be either 'year', 'month', 'week' or 'day. Changing it will change the view of the calendar.
+
+For the calendar to display this variable needs to be set like so:
+```javascript
+$scope.calendarView = 'month';
+```
 
 ### calendar-current-day
 
@@ -156,10 +161,13 @@ An interpolated locale string to use as the column header on the day view for th
 An interpolated local string to use in the week view title. Default: 'Week {week} of {year}'
 
 ### calendar-day-view-start
-A string in the form of hh:mm to start the day view at, e.g. setting it to 06:00 will start the day view at 6am
+An interpolated string in the form of hh:mm to start the day view at, e.g. setting it to 06:00 will start the day view at 6am
 
 ### calendar-day-view-end
-A string in the form of hh:mm to end the day view at, e.g. setting it to 22:00 will end the day view at 10pm
+An interpolated string in the form of hh:mm to end the day view at, e.g. setting it to 22:00 will end the day view at 10pm
+
+### calendar-day-view-split
+The number of chunks to split the day view hours up into. Can be either 10, 15 or 30. Default: 30
 
 ## Internationalization and localization
 
@@ -169,6 +177,13 @@ https://docs.angularjs.org/guide/i18n
 ## Demo
 
 http://mattlewis92.github.io/angular-bootstrap-calendar/
+
+## Roadmap
+
+* Replace CSS with less from the original project [#14](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/14)
+* Partition the calendar into separate modules - one for day, week, month and year
+* Drop angular 1.2 support to take advantage of bindToController and one time binding in templates
+* Add unit and e2e tests [#10](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/10)
 
 ## Development
 

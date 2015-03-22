@@ -1,6 +1,6 @@
 <div class="cal-row-fluid cal-row-head">
 
-  <div class="cal-cell1" ng-repeat="day in weekDays">{{ day }}</div>
+  <div class="cal-cell1" ng-repeat="day in weekDays track by $index">{{ day }}</div>
 
 </div>
 <div class="cal-month-box">
@@ -36,7 +36,7 @@
       </div>
     </div>
 
-    <div class="cal-slide-box" collapse="!week.isOpened">
+    <div class="cal-slide-box" collapse="!week.isOpened" mwl-collapse-fallback="!week.isOpened">
       <div class="cal-slide-content cal-event-list">
         <ul class="unstyled list-unstyled">
 

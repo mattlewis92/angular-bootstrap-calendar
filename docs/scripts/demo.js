@@ -1,13 +1,7 @@
 'use strict';
 
-/**
- * @ngdoc function
- * @name angularBootstrapCalendarApp.controller:MainCtrl
- * @description
- * # MainCtrl
- * Controller of the angularBootstrapCalendarApp
- */
-angular.module('mwl.calendar')
+angular
+  .module('demo', ['mwl.calendar', 'ui.bootstrap'])
   .controller('MainCtrl', function ($scope, $modal, moment) {
 
     var currentYear = moment().year();
@@ -31,8 +25,22 @@ angular.module('mwl.calendar')
         type: 'important',
         starts_at: new Date(currentYear,currentMonth,25,6,30),
         ends_at: new Date(currentYear,currentMonth,25,6,60)
-      },
+      }
     ];
+
+    /*function random(min, max) {
+      return Math.floor((Math.random() * max) + min);
+    }
+
+    for (var i = 0; i < 1000; i++) {
+      var start = new Date(currentYear,random(0, 11),random(1, 28),random(0, 24),random(0, 59));
+      $scope.events.push({
+        title: 'Event ' + i,
+        type: 'warning',
+        starts_at: start,
+        ends_at: moment(start).add(2, 'hours').toDate()
+      })
+    }*/
 
     $scope.calendarView = 'month';
     $scope.calendarDay = new Date();
