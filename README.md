@@ -172,9 +172,10 @@ http://mattlewis92.github.io/angular-bootstrap-calendar/
 
 ## Roadmap
 
-[] Replace CSS with less from the original project https://github.com/mattlewis92/angular-bootstrap-calendar/issues/14
-[] Drop angular 1.2 support to take advantage of bindToController and one time binding in templates
-[] Add unit and e2e tests https://github.com/mattlewis92/angular-bootstrap-calendar/issues/10
+* Replace CSS with less from the original project [#14](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/14)
+* Partition the calendar into separate modules - one for day, week, month and year
+* Drop angular 1.2 support to take advantage of bindToController and one time binding in templates
+* Add unit and e2e tests [#10](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/10)
 
 ## Development
 
