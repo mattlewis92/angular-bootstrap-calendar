@@ -111,16 +111,14 @@ function release(importance) {
   return gulp.src(['./package.json', './bower.json'])
     .pipe($.bump({type: importance}))
     .pipe(gulp.dest('./'))
-    .pipe($.git.commit('Release new version'))
     .pipe($.filter('package.json'))
     .pipe($.tagVersion({
-      prefix: '',
-      push: false
+      prefix: ''
     }));
 }
 
-gulp.task('release:patch', ['build'], function() { return release('patch'); })
-gulp.task('release:minor', ['build'], function() { return release('minor'); })
-gulp.task('release:major', ['build'], function() { return release('major'); })
+gulp.task('release:patch', function() { return release('patch'); })
+gulp.task('release:minor', function() { return release('minor'); })
+gulp.task('release:major', function() { return release('major'); })
 
 gulp.task('default', ['watch'], function() {});
