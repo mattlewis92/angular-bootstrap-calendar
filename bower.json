@@ -7,8 +7,8 @@
   ],
   "description": "A pure AngularJS bootstrap themed responsive calendar that can display events and has views for year, month, week and day",
   "main": [
-    "dist/js/angular-bootstrap-calendar-tpls.min.js",
-    "dist/css/angular-bootstrap-calendar.min.css"
+    "dist/js/angular-bootstrap-calendar-tpls.js",
+    "dist/css/angular-bootstrap-calendar.css"
   ],
   "keywords": [
     "AngularJS",
