@@ -20,8 +20,8 @@ angular
         useIsoWeek: '=calendarUseIsoWeek',
         eventLabel: '@calendarEventLabel',
         timeLabel: '@calendarTimeLabel',
-        dayViewStart:'@calendarDayViewStart',
-        dayViewEnd:'@calendarDayViewEnd',
+        dayViewStart: '@calendarDayViewStart',
+        dayViewEnd: '@calendarDayViewEnd',
         weekTitleLabel: '@calendarWeekTitleLabel',
         timespanClick: '&calendarTimespanClick',
         dayViewSplit: '@calendarDayViewSplit'

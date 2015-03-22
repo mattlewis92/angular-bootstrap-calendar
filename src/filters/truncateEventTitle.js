@@ -5,7 +5,9 @@ angular.module('mwl.calendar')
   .filter('truncateEventTitle', function() {
 
     return function(string, length, boxHeight) {
-      if (!string) return '';
+      if (!string) {
+        return '';
+      }
 
       //Only truncate if if actually needs truncating
       if (string.length >= length && string.length / 20 > boxHeight / 30) {

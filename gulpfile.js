@@ -6,6 +6,7 @@ var open = require('open');
 gulp.task('watch', ['server'], function() {
   $.livereload.listen();
   gulp.watch('src/less/*.less', ['less']);
+  gulp.watch('src/**/*.js', ['lint']);
   gulp.watch('src/css/*.css').on('change', $.livereload.changed);
   gulp.watch([
     './index.html',
@@ -31,6 +32,12 @@ gulp.task('less', function() {
     .pipe($.less())
     .pipe($.rename('calendar.css'))
     .pipe(gulp.dest('src/css'))
+});
+
+gulp.task('lint', function() {
+  return gulp.src(['src/**/*.js'])
+    .pipe($.eslint())
+    .pipe($.eslint.format());
 });
 
 gulp.task('css', function() {

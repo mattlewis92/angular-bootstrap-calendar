@@ -30,7 +30,7 @@ angular
           if ($scope.autoOpen && !firstRun) {
             $scope.view.forEach(function(row, rowIndex) {
               row.forEach(function(year, cellIndex) {
-                if (year.label == moment($scope.currentDay).format('MMMM')) {
+                if (year.label === moment($scope.currentDay).format('MMMM')) {
                   $scope.monthClicked(rowIndex, cellIndex, true);
                   $timeout(function() {
                     firstRun = false;
@@ -44,9 +44,9 @@ angular
         $scope.$watch('currentDay', updateView);
         $scope.$watch('events', updateView, true);
 
-        $scope.monthClicked = function(yearIndex, monthIndex, firstRun) {
+        $scope.monthClicked = function(yearIndex, monthIndex, monthClickedFirstRun) {
 
-          if (!firstRun) {
+          if (!monthClickedFirstRun) {
             $scope.timespanClick({$date: $scope.view[yearIndex][monthIndex].date.startOf('month').toDate()});
           }
 

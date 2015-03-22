@@ -18,7 +18,9 @@ angular.module('mwl.calendar')
 
     function isISOWeek(userValue) {
       //If a manual override has been set in the directive, use that
-      if (angular.isDefined(userValue)) return userValue;
+      if (angular.isDefined(userValue)) {
+        return userValue;
+      }
       //Otherwise fallback to the locale
       return isISOWeekBasedOnLocale();
     }
@@ -109,12 +111,6 @@ angular.module('mwl.calendar')
 
       var dateOffset = isISOWeek(useISOWeek) ? 1 : 0;
 
-      function getWeekDayIndex() {
-        var day = startOfMonth.day() - dateOffset;
-        if (day < 0) day = 6;
-        return day;
-      }
-
       var startOfMonth = moment(currentDay).startOf('month');
       var numberOfDaysInMonth = moment(currentDay).endOf('month').date();
 
@@ -125,9 +121,17 @@ angular.module('mwl.calendar')
         return event;
       });
 
+      function getWeekDayIndex() {
+        var day = startOfMonth.day() - dateOffset;
+        if (day < 0) {
+          day = 6;
+        }
+        return day;
+      }
+
       for (var i = 1; i <= numberOfDaysInMonth; i++) {
 
-        if (i == 1) {
+        if (i === 1) {
           var weekdayIndex = getWeekDayIndex(startOfMonth);
           var prefillMonth = startOfMonth.clone();
           while (weekdayIndex > 0) {
@@ -152,8 +156,8 @@ angular.module('mwl.calendar')
           })
         };
 
-        if (i == numberOfDaysInMonth) {
-          var weekdayIndex = getWeekDayIndex(startOfMonth);
+        if (i === numberOfDaysInMonth) {
+          weekdayIndex = getWeekDayIndex(startOfMonth);
           var postfillMonth = startOfMonth.clone();
           while (weekdayIndex < 6) {
             weekdayIndex++;
@@ -167,7 +171,7 @@ angular.module('mwl.calendar')
           }
         }
 
-        if (getWeekDayIndex(startOfMonth) === 6 || i == numberOfDaysInMonth) {
+        if (getWeekDayIndex(startOfMonth) === 6 || i === numberOfDaysInMonth) {
           grid.push(buildRow);
           buildRow = new Array(7);
         }
@@ -187,34 +191,34 @@ angular.module('mwl.calendar')
       var columns = new Array(7);
       var weekDays = self.getWeekDayNames(false, useISOWeek);
       var currentWeekDayIndex = currentDay.getDay();
-      var beginningOfWeek, endOfWeek;
+      var beginningOfWeek, endOfWeek, i, date;
 
-      for (var i = currentWeekDayIndex; i >= 0; i--) {
-        var date = moment(currentDay).subtract(currentWeekDayIndex - i, 'days').add(dateOffset, 'day').toDate();
+      for (i = currentWeekDayIndex; i >= 0; i--) {
+        date = moment(currentDay).subtract(currentWeekDayIndex - i, 'days').add(dateOffset, 'day').toDate();
         columns[i] = {
           weekDay: weekDays[i],
           day: $filter('date')(date, 'd'),
           date: $filter('date')(date, 'd MMM'),
           isToday: moment(date).startOf('day').isSame(moment().startOf('day'))
         };
-        if (i == 0) {
+        if (i === 0) {
           beginningOfWeek = date;
-        } else if (i == 6) {
+        } else if (i === 6) {
           endOfWeek = date;
         }
       }
 
-      for (var i = currentWeekDayIndex + 1; i < 7; i++) {
-        var date = moment(currentDay).add(i - currentWeekDayIndex, 'days').add(dateOffset, 'day').toDate();
+      for (i = currentWeekDayIndex + 1; i < 7; i++) {
+        date = moment(currentDay).add(i - currentWeekDayIndex, 'days').add(dateOffset, 'day').toDate();
         columns[i] = {
           weekDay: weekDays[i],
           day: $filter('date')(date, 'd'),
           date: $filter('date')(date, 'd MMM'),
           isToday: moment(date).startOf('day').isSame(moment().startOf('day'))
         };
-        if (i == 0) {
+        if (i === 0) {
           beginningOfWeek = date;
-        } else if (i == 6) {
+        } else if (i === 6) {
           endOfWeek = date;
         }
       }

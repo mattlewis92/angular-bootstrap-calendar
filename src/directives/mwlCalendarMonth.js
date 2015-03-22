@@ -2,7 +2,7 @@
 
 angular
   .module('mwl.calendar')
-  .directive('mwlCalendarMonth', function($filter) {
+  .directive('mwlCalendarMonth', function() {
     return {
       templateUrl: 'templates/month.html',
       restrict: 'EA',
@@ -48,9 +48,9 @@ angular
 
         $scope.weekDays = calendarHelper.getWeekDayNames(false, $scope.useIsoWeek);
 
-        $scope.dayClicked = function(rowIndex, cellIndex, firstRun) {
+        $scope.dayClicked = function(rowIndex, cellIndex, dayClickedFirstRun) {
 
-          if (!firstRun) {
+          if (!dayClickedFirstRun) {
             $scope.timespanClick({$date: $scope.view[rowIndex][cellIndex].date.startOf('day').toDate()});
           }
 
@@ -77,7 +77,7 @@ angular
 
               if (shouldAddClass) {
                 var dayContainsEvent = day.events.filter(function(e) {
-                    return e.$id == event.$id;
+                    return e.$id === event.$id;
                   }).length > 0;
 
                 if (dayContainsEvent) {
