@@ -25,5 +25,6 @@
   },
   "engines": {
     "node": ">=0.10.0"
-  }
+  },
+  "browser": "dist/js/angular-bootstrap-calendar-tpls.js"
 }
