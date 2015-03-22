@@ -1,15 +1,23 @@
 var gulp = require('gulp');
-var gp = require('gulp-load-plugins')();
+var $ = require('gulp-load-plugins')();
 var streamqueue = require('streamqueue');
 var open = require('open');
 
 gulp.task('watch', ['server'], function() {
-  gp.livereload.listen();
-  gulp.watch(['./index.html', './docs/**', './src/**']).on('change', gp.livereload.changed);
+  $.livereload.listen();
+  gulp.watch('src/less/*.less', ['less']);
+  gulp.watch('src/css/*.css').on('change', $.livereload.changed);
+  gulp.watch([
+    './index.html',
+    './docs/scripts/*.js',
+    './docs/styles/*.css',
+    './src/**/*.js',
+    './templates/**']
+  ).on('change', $.livereload.changed);
 });
 
 gulp.task('server', function() {
-  gp.connect.server({
+  $.connect.server({
     root: ['./'],
     port: 8000,
     livereload: false
@@ -18,13 +26,23 @@ gulp.task('server', function() {
   open('http://localhost:8000');
 });
 
+gulp.task('less', function() {
+  return gulp.src('src/less/calendar.less')
+    .pipe($.less())
+    .pipe($.rename('calendar.css'))
+    .pipe(gulp.dest('src/css'))
+});
+
 gulp.task('css', function() {
 
-  return gulp.src('src/**/*.css')
-    .pipe(gp.concat('angular-bootstrap-calendar.css'))
+  return gulp.src('src/less/calendar.less')
+    .pipe($.sourcemaps.init())
+    .pipe($.less())
+    .pipe($.rename('angular-bootstrap-calendar.css'))
     .pipe(gulp.dest('dist/css'))
-    .pipe(gp.minifyCss())
-    .pipe(gp.rename('angular-bootstrap-calendar.min.css'))
+    .pipe($.minifyCss())
+    .pipe($.rename('angular-bootstrap-calendar.min.css'))
+    .pipe($.sourcemaps.write('.'))
     .pipe(gulp.dest('dist/css'));
 
 });
@@ -33,11 +51,11 @@ function getTemplates() {
 
   return gulp
     .src('templates/**/*.html')
-    .pipe(gp.htmlmin({
+    .pipe($.htmlmin({
       removeComments: true,
       collapseWhitespace: true
     }))
-    .pipe(gp.angularTemplatecache({
+    .pipe($.angularTemplatecache({
       standalone: false,
       module: 'mwl.calendar',
       root: 'templates/'
@@ -60,15 +78,15 @@ function buildJS(withTemplates) {
   ) : gulp.src('src/**/*.js');
 
   return stream
-    .pipe(gp.sort())
-    .pipe(gp.angularFilesort())
-    .pipe(gp.sourcemaps.init())
-    .pipe(gp.ngAnnotate())
-    .pipe(gp.concat(unminfilename))
+    .pipe($.sort())
+    .pipe($.angularFilesort())
+    .pipe($.sourcemaps.init())
+    .pipe($.ngAnnotate())
+    .pipe($.concat(unminfilename))
     .pipe(gulp.dest('dist/js'))
-    .pipe(gp.uglify())
-    .pipe(gp.rename(minFilename))
-    .pipe(gp.sourcemaps.write('.'))
+    .pipe($.uglify())
+    .pipe($.rename(minFilename))
+    .pipe($.sourcemaps.write('.'))
     .pipe(gulp.dest('dist/js'));
 }
 

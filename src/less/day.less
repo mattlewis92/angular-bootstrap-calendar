@@ -1,0 +1,71 @@
+.cal-day-box {
+  text-wrap: none;
+  .cal-day-hour-part {
+    height: 30px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border-bottom: thin dashed @borderColor;
+  }
+  .cal-day-hour {
+    .day-highlight {
+      height: 30px;
+    }
+  }
+  .cal-hours {
+    font-weight: bolder;
+  }
+  .cal-day-hour:nth-child(odd) {
+    background-color: @rowHover;
+  }
+  .cal-day-panel {
+    position: relative;
+    padding-left: 60px;
+  }
+  .cal-day-panel-hour {
+    position: absolute;
+    width: 100%;
+    margin-left: -60px;
+  }
+  .day-event {
+    position: absolute;
+    width: 150px;
+    overflow: hidden;
+
+    a {
+      font-size: 12px;
+    }
+
+  }
+  .day-highlight {
+    padding-top: 2px;
+    padding-left: 8px;
+    padding-right: 8px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border: 1px solid @eventStandardColor;
+    margin: 1px 1px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .day-highlight.dh-event-important {
+    border: 1px solid @eventImportantColor;
+  }
+  .day-highlight.dh-event-warning {
+    border: 1px solid @eventWarningColor;
+  }
+  .day-highlight.dh-event-info {
+    border: 1px solid @eventInfoColor;
+  }
+  .day-highlight.dh-event-inverse {
+    border: 1px solid @eventInverseColor;
+  }
+  .day-highlight.dh-event-success {
+    border: 1px solid @eventSuccessColor;
+  }
+  .day-highlight.dh-event-special {
+    background-color: @eventHiliteSpecial;
+    border: 1px solid @eventSpecialColor;
+  }
+}
