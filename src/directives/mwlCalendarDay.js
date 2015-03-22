@@ -13,8 +13,8 @@ angular
         eventClick: '=calendarEventClick',
         eventLabel: '@calendarEventLabel',
         timeLabel: '@calendarTimeLabel',
-        dayViewStart:'@calendarDayViewStart',
-        dayViewEnd:'@calendarDayViewEnd',
+        dayViewStart: '@calendarDayViewStart',
+        dayViewEnd: '@calendarDayViewEnd',
         dayViewSplit: '@calendarDayViewSplit'
       },
       controller: function($scope, moment, calendarHelper) {

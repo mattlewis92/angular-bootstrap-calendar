@@ -24,7 +24,7 @@
   box-sizing: border-box;
   float: left;
   margin-left: 0%;
-  *margin-left: -0.05213764337851929%;
+  *margin-left: -0.05213764%;
 }
 .cal-row-fluid [class*="cal-cell"]:first-child {
   margin-left: 0;
@@ -305,13 +305,13 @@
   border: 1px solid #e3bc08;
 }
 .cal-day-box .day-highlight.dh-event-info {
-  border: 1px solid #1e90ff;
+  border: 1px solid dodgerblue;
 }
 .cal-day-box .day-highlight.dh-event-inverse {
   border: 1px solid #1b1b1b;
 }
 .cal-day-box .day-highlight.dh-event-success {
-  border: 1px solid #006400;
+  border: 1px solid darkgreen;
 }
 .cal-day-box .day-highlight.dh-event-special {
   background-color: #ffe6ff;
@@ -342,7 +342,7 @@
   background-color: #ad2121;
 }
 .event-info {
-  background-color: #1e90ff;
+  background-color: dodgerblue;
 }
 .event-warning {
   background-color: #e3bc08;
@@ -351,7 +351,7 @@
   background-color: #1b1b1b;
 }
 .event-success {
-  background-color: #006400;
+  background-color: darkgreen;
 }
 .event-special {
   background-color: #800080;
@@ -401,7 +401,8 @@
 .cal-month-day {
   height: 100px;
 }
-[class*="cal-cell"]:hover, .cell-focus {
+[class*="cal-cell"]:hover,
+.cell-focus {
   background-color: #ededed;
 }
 .cal-year-box [class*="span"],
@@ -508,10 +509,13 @@ span[data-cal-date]:hover {
   color: #ffffff;
   font-weight: normal;
 }
-a.event-item-edit, a.event-item-delete {
+a.event-item-edit,
+a.event-item-delete {
   padding-left: 5px;
 }
-.cal-year-box .cal-slide-content a.event-item, .cal-year-box a.event-item-edit, .cal-year-box a.event-item-delete {
+.cal-year-box .cal-slide-content a.event-item,
+.cal-year-box a.event-item-edit,
+.cal-year-box a.event-item-delete {
   position: relative;
   top: -3px;
 }
@@ -529,27 +533,21 @@ a.cal-event-week {
 .badge-important {
   background-color: #b94a48;
 }
-
 .pointer {
-  cursor:pointer;
+  cursor: pointer;
 }
-
 .cal-year-box:last-child {
   border-bottom: 0px;
 }
-
 .cal-context {
   width: 100%;
 }
-
 @media (max-width: 991px) {
-
   .cal-year-box [class*="span"]:nth-child(2) {
     border-right: 0px;
   }
-
-  .cal-year-box [class*="span"]:nth-child(1), .cal-year-box [class*="span"]:nth-child(2) {
+  .cal-year-box [class*="span"]:nth-child(1),
+  .cal-year-box [class*="span"]:nth-child(2) {
     border-bottom: 1px solid #e1e1e1;
   }
-
 }
