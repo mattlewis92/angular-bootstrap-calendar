@@ -7,7 +7,7 @@ gulp.task('watch', ['server'], function() {
   $.livereload.listen();
   gulp.watch('src/less/*.less', ['less']);
   gulp.watch('src/**/*.js', ['lint']);
-  gulp.watch('src/css/*.css').on('change', $.livereload.changed);
+  gulp.watch('css/*.css').on('change', $.livereload.changed);
   gulp.watch([
     './index.html',
     './docs/scripts/*.js',
@@ -31,7 +31,7 @@ gulp.task('less', function() {
   return gulp.src('src/less/calendar.less')
     .pipe($.less())
     .pipe($.rename('calendar.css'))
-    .pipe(gulp.dest('src/css'))
+    .pipe(gulp.dest('css'))
 });
 
 gulp.task('lint', function() {
