@@ -12,7 +12,7 @@
         ng-repeat="day in week track by $index"
         ng-click="dayClicked($parent.$index, $index)"
         ng-class="{pointer: day.events.length > 0}">
-        <div class="cal-month-day" ng-class="{'cal-day-outmonth': !day.inMonth, 'cal-day-inmonth': day.inMonth, 'cal-day-weekend': $index == 5 || $index == 6, 'cal-day-today': day.isToday}">
+        <div class="cal-month-day" ng-class="{'cal-day-outmonth': !day.inMonth, 'cal-day-inmonth': day.inMonth, 'cal-day-weekend': $index == 5 || $index == 6, 'cal-day-today': day.isToday, 'cal-day-past': day.isPast}">
           <small class="cal-events-num badge badge-important pull-left" ng-show="day.events.length > 0">{{ day.events.length }}</small>
           <span class="pull-right" data-cal-date ng-click="drillDown(day.label)">{{ day.label }}</span>
           <div class="cal-day-tick" ng-show="day.isOpened">
