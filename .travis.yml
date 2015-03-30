@@ -21,5 +21,5 @@ after_success:
   - git remote rm origin
   - git remote add origin "https://mattlewis92:${GH_TOKEN}@github.com/mattlewis92/angular-bootstrap-calendar.git"
   - git add dist
-  - git commit -m "Travis: Build files"
+  - git commit -m "Travis -> Build files"
   - git push
