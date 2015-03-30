@@ -51,7 +51,7 @@ angular
         $scope.dayClicked = function(rowIndex, cellIndex, dayClickedFirstRun) {
 
           if (!dayClickedFirstRun) {
-            $scope.timespanClick({$date: $scope.view[rowIndex][cellIndex].date.startOf('day').toDate()});
+            $scope.timespanClick({calendarDate: $scope.view[rowIndex][cellIndex].date.startOf('day').toDate()});
           }
 
           var handler = calendarHelper.toggleEventBreakdown($scope.view, rowIndex, cellIndex);

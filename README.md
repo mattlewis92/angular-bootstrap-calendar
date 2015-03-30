@@ -57,11 +57,11 @@ There is a single directive exposed to create the calendar, use it like so:
     calendar-view="calendarView"
     calendar-current-day="calendarDay"
     calendar-control="calendarControl"
-    calendar-event-click="eventClicked($event)"
+    calendar-event-click="eventClicked(calendarEvent)"
     calendar-edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
     calendar-delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
-    calendar-edit-event-click="eventEdited($event)"
-    calendar-delete-event-click="eventDeleted($event)"
+    calendar-edit-event-click="eventEdited(calendarEvent)"
+    calendar-delete-event-click="eventDeleted(calendarEvent)"
     calendar-auto-open="true"
     ></mwl-calendar>
 ```
@@ -108,7 +108,7 @@ The directive will instantiate this variable for you and add the following metho
 
 ### calendar-event-click 
 
-This expression is called when an event is clicked on the calendar. $event contains the calendar event that was clicked on.
+This expression is called when an event is clicked on the calendar. calendarEvent contains the calendar event that was clicked on.
 
 ### calendar-edit-event-html 
 
@@ -120,15 +120,15 @@ If provided this piece of html will be displayed next to an event on the year an
 
 ### calendar-edit-event-click 
 
-This expression is called when an event edit link is clicked on the calendar. $event contains the calendar event that was clicked on.
+This expression is called when an event edit link is clicked on the calendar. calendarEvent contains the calendar event that was clicked on.
 
 ### calendar-delete-event-click 
 
-This expression is called when an event delete link is clicked on the calendar. $event contains the calendar event that was clicked on.
+This expression is called when an event delete link is clicked on the calendar. calendarEvent contains the calendar event that was clicked on.
 
 ### calendar-timespan-click
 
-This expression is called when a month or day on the calendar is clicked. $date contains the start of the month or day that was clicked on.
+This expression is called when a month or day on the calendar is clicked. calendarDate contains the start of the month or day that was clicked on.
 
 ### calendar-auto-open
 

@@ -47,7 +47,7 @@ angular
         $scope.monthClicked = function(yearIndex, monthIndex, monthClickedFirstRun) {
 
           if (!monthClickedFirstRun) {
-            $scope.timespanClick({$date: $scope.view[yearIndex][monthIndex].date.startOf('month').toDate()});
+            $scope.timespanClick({calendarDate: $scope.view[yearIndex][monthIndex].date.startOf('month').toDate()});
           }
 
           var handler = calendarHelper.toggleEventBreakdown($scope.view, yearIndex, monthIndex);

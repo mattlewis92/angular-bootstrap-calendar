@@ -33,7 +33,7 @@
           <div class="events-list" ng-show="day.events.length > 0">
             <a
               href="javascript:;"
-              ng-click="eventClick({$event: event})"
+              ng-click="eventClick({calendarEvent: event})"
               ng-repeat="event in day.events track by $index"
               class="pull-left event event-{{ event.type }}"
               ng-mouseenter="highlightEvent(event, true)"

@@ -50,7 +50,7 @@
       ng-style="{top: event.top + 'px', left: event.left + 60 + 'px', height: event.height + 'px'}">
 
       <!--<span class="cal-hours">{{ event.starts_at | date:'d MMM HH:mm' }} - {{ event.ends_at | date:'d MMM HH:mm' }}<br></span>-->
-      <a href="javascript:;" class="event-item" ng-click="eventClick({$event: event})">
+      <a href="javascript:;" class="event-item" ng-click="eventClick({calendarEvent: event})">
         <span>{{ event.title | truncateEventTitle:20:event.height }}</span>
       </a>
 
