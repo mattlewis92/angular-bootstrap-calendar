@@ -3,6 +3,7 @@
 angular
   .module('mwl.calendar')
   .directive('mwlCalendarMonth', function() {
+
     return {
       templateUrl: 'templates/month.html',
       restrict: 'EA',
@@ -97,4 +98,5 @@ angular
         scope.calendarCtrl = calendarCtrl;
       }
     };
+
   });

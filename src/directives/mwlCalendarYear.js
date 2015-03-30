@@ -3,6 +3,7 @@
 angular
   .module('mwl.calendar')
   .directive('mwlCalendarYear', function(moment) {
+
     return {
       templateUrl: 'templates/year.html',
       restrict: 'EA',
@@ -64,4 +65,5 @@ angular
         scope.calendarCtrl = calendarCtrl;
       }
     };
+
   });

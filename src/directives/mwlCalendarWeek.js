@@ -3,6 +3,7 @@
 angular
   .module('mwl.calendar')
   .directive('mwlCalendarWeek', function() {
+
     return {
       templateUrl: 'templates/week.html',
       restrict: 'EA',
@@ -29,4 +30,5 @@ angular
         scope.calendarCtrl = calendarCtrl;
       }
     };
+
   });

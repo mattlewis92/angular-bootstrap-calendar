@@ -3,6 +3,7 @@
 angular
   .module('mwl.calendar')
   .directive('mwlCalendarDay', function() {
+
     return {
       templateUrl: 'templates/day.html',
       restrict: 'EA',
@@ -42,4 +43,5 @@ angular
 
       }
     };
+
   });
