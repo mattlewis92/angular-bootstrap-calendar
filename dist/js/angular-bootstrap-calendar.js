@@ -165,8 +165,10 @@ angular.module('mwl.calendar')
         buildRow[getWeekDayIndex(startOfMonth)] = {
           label: startOfMonth.date(),
           inMonth: true,
-          isToday: moment().startOf('day').isSame(startOfMonth),
           isPast: moment().startOf('day').isAfter(startOfMonth),
+          isToday: moment().startOf('day').isSame(startOfMonth),
+          isFuture: moment().startOf('day').isBefore(startOfMonth),
+          isWeekend: [0, 6].indexOf(moment(startOfMonth).day()) > -1,
           date: startOfMonth.clone(),
           events: eventsWithIds.filter(function(event) {
             return self.eventIsInPeriod(event.starts_at, event.ends_at, startOfMonth.clone().startOf('day'), startOfMonth.clone().endOf('day'));
@@ -216,8 +218,10 @@ angular.module('mwl.calendar')
           weekDay: weekDays[i],
           day: $filter('date')(date, 'd'),
           date: $filter('date')(date, 'd MMM'),
+          isPast: moment(date).startOf('day').isBefore(moment().startOf('day')),
           isToday: moment(date).startOf('day').isSame(moment().startOf('day')),
-          isPast: moment(date).startOf('day').isBefore(moment().startOf('day'))
+          isFuture: moment(date).startOf('day').isAfter(moment().startOf('day')),
+          isWeekend: [0, 6].indexOf(moment(date).day()) > -1
         };
         if (i === 0) {
           beginningOfWeek = date;
@@ -232,7 +236,10 @@ angular.module('mwl.calendar')
           weekDay: weekDays[i],
           day: $filter('date')(date, 'd'),
           date: $filter('date')(date, 'd MMM'),
-          isToday: moment(date).startOf('day').isSame(moment().startOf('day'))
+          isPast: moment(date).startOf('day').isBefore(moment().startOf('day')),
+          isToday: moment(date).startOf('day').isSame(moment().startOf('day')),
+          isFuture: moment(date).startOf('day').isAfter(moment().startOf('day')),
+          isWeekend: [0, 6].indexOf(moment(date).day()) > -1
         };
         if (i === 0) {
           beginningOfWeek = date;
@@ -437,6 +444,7 @@ angular
 angular
   .module('mwl.calendar')
   .directive('mwlCalendarYear', ["moment", function(moment) {
+
     return {
       templateUrl: 'templates/year.html',
       restrict: 'EA',
@@ -481,7 +489,7 @@ angular
         $scope.monthClicked = function(yearIndex, monthIndex, monthClickedFirstRun) {
 
           if (!monthClickedFirstRun) {
-            $scope.timespanClick({$date: $scope.view[yearIndex][monthIndex].date.startOf('month').toDate()});
+            $scope.timespanClick({calendarDate: $scope.view[yearIndex][monthIndex].date.startOf('month').toDate()});
           }
 
           var handler = calendarHelper.toggleEventBreakdown($scope.view, yearIndex, monthIndex);
@@ -498,6 +506,7 @@ angular
         scope.calendarCtrl = calendarCtrl;
       }
     };
+
   }]);
 
 'use strict';
@@ -505,6 +514,7 @@ angular
 angular
   .module('mwl.calendar')
   .directive('mwlCalendarWeek', function() {
+
     return {
       templateUrl: 'templates/week.html',
       restrict: 'EA',
@@ -531,6 +541,37 @@ angular
         scope.calendarCtrl = calendarCtrl;
       }
     };
+
+  });
+
+'use strict';
+
+angular
+  .module('mwl.calendar')
+  .directive('mwlCalendarSlideBox', function() {
+
+    return {
+      restrict: 'EA',
+      templateUrl: 'templates/calendarSlideBox.html',
+      replace: true,
+      controller: ["$scope", "$attrs", function($scope, $attrs) {
+        var unbindWatcher = $scope.$watch($attrs.isOpen, function(shouldCollapse) {
+          $scope.shouldCollapse = shouldCollapse;
+        });
+
+        var unbindDestroy = $scope.$on('$destroy', function() {
+          unbindDestroy();
+          unbindWatcher();
+        });
+
+      }],
+      require: ['^?mwlCalendarMonth', '^?mwlCalendarYear'],
+      link: function(scope, elm, attrs, ctrls) {
+        scope.isMonthView = !!ctrls[0];
+        scope.isYearView = !!ctrls[1];
+      }
+    };
+
   });
 
 'use strict';
@@ -538,6 +579,7 @@ angular
 angular
   .module('mwl.calendar')
   .directive('mwlCalendarMonth', function() {
+
     return {
       templateUrl: 'templates/month.html',
       restrict: 'EA',
@@ -586,7 +628,7 @@ angular
         $scope.dayClicked = function(rowIndex, cellIndex, dayClickedFirstRun) {
 
           if (!dayClickedFirstRun) {
-            $scope.timespanClick({$date: $scope.view[rowIndex][cellIndex].date.startOf('day').toDate()});
+            $scope.timespanClick({calendarDate: $scope.view[rowIndex][cellIndex].date.startOf('day').toDate()});
           }
 
           var handler = calendarHelper.toggleEventBreakdown($scope.view, rowIndex, cellIndex);
@@ -632,6 +674,7 @@ angular
         scope.calendarCtrl = calendarCtrl;
       }
     };
+
   });
 
 'use strict';
@@ -639,6 +682,7 @@ angular
 angular
   .module('mwl.calendar')
   .directive('mwlCalendarDay', function() {
+
     return {
       templateUrl: 'templates/day.html',
       restrict: 'EA',
@@ -678,6 +722,7 @@ angular
 
       }]
     };
+
   });
 
 'use strict';
@@ -685,6 +730,7 @@ angular
 angular
   .module('mwl.calendar')
   .directive('mwlCalendar', function() {
+
     return {
       templateUrl: 'templates/main.html',
       restrict: 'EA',
@@ -774,4 +820,5 @@ angular
 
       }]
     };
+
   });
