@@ -12,9 +12,14 @@ before_script:
   - bower install --dev --config.interactive=0
   - gulp --version
   - bower --version
+
+script: gulp ci
+
+after_success:
   - git config --global user.email "build@travis-ci.org"
   - git config --global user.name "Travis CI"
   - git remote rm origin
   - git remote add origin "https://mattlewis92:${GH_TOKEN}@github.com/mattlewis92/angular-bootstrap-calendar.git"
-
-script: gulp ci
+  - git add dist
+  - git commit -m "Travis: Build files"
+  - git push
