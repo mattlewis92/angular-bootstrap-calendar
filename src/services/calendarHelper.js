@@ -149,8 +149,9 @@ angular.module('mwl.calendar')
         buildRow[getWeekDayIndex(startOfMonth)] = {
           label: startOfMonth.date(),
           inMonth: true,
-          isToday: moment().startOf('day').isSame(startOfMonth),
           isPast: moment().startOf('day').isAfter(startOfMonth),
+          isToday: moment().startOf('day').isSame(startOfMonth),
+          isFuture: moment().startOf('day').isBefore(startOfMonth),
           date: startOfMonth.clone(),
           events: eventsWithIds.filter(function(event) {
             return self.eventIsInPeriod(event.starts_at, event.ends_at, startOfMonth.clone().startOf('day'), startOfMonth.clone().endOf('day'));
@@ -200,8 +201,9 @@ angular.module('mwl.calendar')
           weekDay: weekDays[i],
           day: $filter('date')(date, 'd'),
           date: $filter('date')(date, 'd MMM'),
+          isPast: moment(date).startOf('day').isBefore(moment().startOf('day')),
           isToday: moment(date).startOf('day').isSame(moment().startOf('day')),
-          isPast: moment(date).startOf('day').isBefore(moment().startOf('day'))
+          isFuture: moment(date).startOf('day').isAfter(moment().startOf('day'))
         };
         if (i === 0) {
           beginningOfWeek = date;
