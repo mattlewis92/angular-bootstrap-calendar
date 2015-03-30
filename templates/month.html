@@ -17,7 +17,7 @@
           ng-class="{
             'cal-day-outmonth': !day.inMonth,
             'cal-day-inmonth': day.inMonth,
-            'cal-day-weekend': $index == 5 || $index == 6,
+            'cal-day-weekend': day.isWeekend,
             'cal-day-past': day.isPast,
             'cal-day-today': day.isToday,
             'cal-day-future': day.isFuture

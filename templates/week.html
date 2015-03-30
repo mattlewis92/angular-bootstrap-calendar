@@ -5,7 +5,7 @@
       class="cal-cell1"
       ng-repeat="column in view.columns track by $index"
       ng-class="{
-        'cal-day-weekend': $index > 4,
+        'cal-day-weekend': column.isWeekend,
         'cal-day-past': column.isPast,
         'cal-day-today': column.isToday,
         'cal-day-future': column.isFuture}"
