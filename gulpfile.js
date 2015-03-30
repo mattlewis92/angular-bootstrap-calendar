@@ -138,6 +138,14 @@ gulp.task('ci:lint', function() {
   return lint(true);
 });
 
+gulp.task('ci:build', ['build'], function(done) {
+  gulp.src('dist/*')
+    .pipe($.git.commit('Travis: build files'))
+    .on('end', function() {
+      $.git.push('origin', 'master', done);
+    });
+});
+
 gulp.task('ci', function(done) {
-  runSequence('ci:lint', 'build', done);
+  runSequence('ci:lint', 'ci:build', done);
 });
