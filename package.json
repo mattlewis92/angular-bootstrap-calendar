@@ -12,7 +12,6 @@
     "gulp-connect": "^2.0.6",
     "gulp-eslint": "~0.7.0",
     "gulp-filter": "~2.0.2",
-    "gulp-git": "~1.1.0",
     "gulp-htmlmin": "~1.1.1",
     "gulp-less": "~3.0.2",
     "gulp-livereload": "~3.8.0",

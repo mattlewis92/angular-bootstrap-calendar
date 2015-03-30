@@ -138,24 +138,6 @@ gulp.task('ci:lint', function() {
   return lint(true);
 });
 
-gulp.task('remote', function(done) {
-  var called = false;
-  $.git.addRemote('origin', 'https://mattlewis92:' + process.env.GH_TOKEN + '@github.com/mattlewis92/angular-bootstrap-calendar.git', function(err) {
-    if (!called) {
-      called = true;
-      done(err);
-    }
-  });
-});
-
-gulp.task('ci:build', ['build', 'remote'], function(done) {
-  gulp.src('dist/*')
-    .pipe($.git.commit('Travis CI: build files'))
-    .on('end', function() {
-      $.git.push('origin', 'master', done);
-    });
-});
-
 gulp.task('ci', function(done) {
-  runSequence('ci:lint', 'ci:build', done);
+  runSequence('ci:lint', 'build', done);
 });

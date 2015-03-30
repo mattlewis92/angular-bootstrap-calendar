@@ -3,17 +3,10 @@ language: node_js
 node_js:
   - '0.12'
 
-env:
-  global:
-  - secure: G6BHbFhefKZU8/hPVWdjKK/H3DRaNvttAetXIvLxbDXuE+780VryX8GJc8QQLErgQgtsB6YsXsMuDjmlr2m4QjjVjEJmnFWESCVmJskRqvPfL7GRWniBfePtpZ/vUb+Mr9Z24ri40sgXI5A90B4R8WgzhWjWXIovxwXIUF7RINI=
-
 before_script:
   - npm install -gq bower
   - bower install --dev --config.interactive=0
   - gulp --version
   - bower --version
-  - git remote rm origin
-  - git config --global user.email "build@travis-ci.org"
-  - git config --global user.name "Travis CI"
 
 script: gulp ci
