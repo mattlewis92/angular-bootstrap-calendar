@@ -220,7 +220,9 @@ angular.module('mwl.calendar')
           weekDay: weekDays[i],
           day: $filter('date')(date, 'd'),
           date: $filter('date')(date, 'd MMM'),
+          isPast: moment(date).startOf('day').isBefore(moment().startOf('day')),
           isToday: moment(date).startOf('day').isSame(moment().startOf('day')),
+          isFuture: moment(date).startOf('day').isAfter(moment().startOf('day')),
           isWeekend: [0, 6].indexOf(moment(date).day()) > -1
         };
         if (i === 0) {
