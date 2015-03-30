@@ -10,6 +10,8 @@
           class="event-item"
           ng-click="eventClick({$event: event})">
           {{ event.title }}
+          <span ng-show="isMonthView">({{ event.starts_at | date:'shortTime' }})</span>
+          <span ng-show="isYearView">({{ event.starts_at | date:'MMM d, h:mm a' }})</span>
         </a>
 
         <a

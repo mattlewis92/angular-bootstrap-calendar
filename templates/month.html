@@ -12,6 +12,7 @@
         ng-repeat="day in week track by $index"
         ng-click="dayClicked($parent.$index, $index)"
         ng-class="{pointer: day.events.length > 0}">
+
         <div
           class="cal-month-day"
           ng-class="{
