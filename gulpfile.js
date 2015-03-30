@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
 var streamqueue = require('streamqueue');
 var open = require('open');
+var runSequence = require('run-sequence');
 
 gulp.task('watch', ['server'], function() {
   $.livereload.listen();
@@ -32,12 +33,6 @@ gulp.task('less', function() {
     .pipe($.less())
     .pipe($.rename('calendar.css'))
     .pipe(gulp.dest('css'))
-});
-
-gulp.task('lint', function() {
-  return gulp.src(['src/**/*.js'])
-    .pipe($.eslint())
-    .pipe($.eslint.format());
 });
 
 gulp.task('css', function() {
@@ -122,3 +117,27 @@ gulp.task('release:minor', function() { return release('minor'); })
 gulp.task('release:major', function() { return release('major'); })
 
 gulp.task('default', ['watch'], function() {});
+
+function lint(failOnError) {
+  var stream = gulp.src(['src/**/*.js'])
+    .pipe($.eslint())
+    .pipe($.eslint.format());
+
+  if (failOnError) {
+    return stream.pipe($.eslint.failOnError());
+  } else {
+    return stream;
+  }
+}
+
+gulp.task('lint', function() {
+  return lint();
+});
+
+gulp.task('ci:lint', function() {
+  return lint(true);
+});
+
+gulp.task('ci', function(done) {
+  runSequence('ci:lint', 'build', done);
+});
