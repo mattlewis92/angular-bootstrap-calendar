@@ -141,6 +141,9 @@ angular.module('mwl.calendar')
               label: prefillMonth.date(),
               date: prefillMonth.clone(),
               inMonth: false,
+              isPast: moment().startOf('day').isAfter(prefillMonth),
+              isToday: moment().startOf('day').isSame(prefillMonth),
+              isFuture: moment().startOf('day').isBefore(prefillMonth),
               events: []
             };
           }
@@ -169,6 +172,9 @@ angular.module('mwl.calendar')
               label: postfillMonth.date(),
               date: postfillMonth.clone(),
               inMonth: false,
+              isPast: moment().startOf('day').isAfter(postfillMonth),
+              isToday: moment().startOf('day').isSame(postfillMonth),
+              isFuture: moment().startOf('day').isBefore(postfillMonth),
               events: []
             };
           }
