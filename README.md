@@ -46,10 +46,10 @@ You will then need to include the JS and CSS files for the plugin:
 <script src="bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.min.js">
 ```
 
-And finally add the module dependency in your AngularJS app:
+And finally add the module dependency in your AngularJS app (you can remove ui.bootstrap if you don't want the extra dependency - it is only required for collapse animations and tooltips):
 
 ```javascript
-angular.module('myModule', ['mwl.calendar']);
+angular.module('myModule', ['mwl.calendar', 'ui.bootstrap']);
 ```
 
 ## Documentation
