@@ -176,8 +176,7 @@ The number of chunks to split the day view hours up into. Can be either 10, 15 o
 
 ## Internationalization and localization
 
-The calendar directive uses angulars date filter to produce all months and days of the week etc. Therefore to changes the language of the calendar you simply need to include the appropriate angular i18n file as described here:
-https://docs.angularjs.org/guide/i18n
+The calendar directive uses moment.js to produce all months and days of the week etc. Therefore to change the language of the calendar just [follow this guide](http://momentjs.com/docs/#/i18n/).
 
 ## Demo
 

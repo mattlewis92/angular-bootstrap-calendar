@@ -27,20 +27,20 @@ angular
         timespanClick: '&calendarTimespanClick',
         dayViewSplit: '@calendarDayViewSplit'
       },
-      controller: function($scope, $timeout, $locale, $filter, moment) {
+      controller: function($scope, $timeout, moment) {
 
         var self = this;
 
         var weekTitleLabel = $scope.weekTitleLabel || 'Week {week} of {year}';
         this.titleFunctions = {
           day: function(currentDay) {
-            return $filter('date')(currentDay, 'EEEE d MMMM, yyyy');
+            return moment(currentDay).format('dddd D MMMM, YYYY');
           },
           week: function(currentDay) {
             return weekTitleLabel.replace('{week}', moment(currentDay).week()).replace('{year}', moment(currentDay).format('YYYY'));
           },
           month: function(currentDay) {
-            return $filter('date')(currentDay, 'MMMM yyyy');
+            return moment(currentDay).format('MMMM YYYY');
           },
           year: function(currentDay) {
             return moment(currentDay).format('YYYY');
@@ -72,7 +72,7 @@ angular
         //Auto update the calendar when the locale changes
         var firstRunWatcher = true;
         var unbindWatcher = $scope.$watch(function() {
-          return moment.locale() + $locale.id;
+          return moment.locale();
         }, function() {
           if (firstRunWatcher) { //dont run the first time the calendar is initialised
             firstRunWatcher = false;
