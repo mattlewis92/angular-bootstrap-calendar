@@ -1,5 +1,9 @@
 # Angular Bootstrap Calendar
 
+[![Build Status](https://travis-ci.org/mattlewis92/angular-bootstrap-calendar.svg?branch=master)](https://travis-ci.org/mattlewis92/angular-bootstrap-calendar)
+[![Bower version](https://badge.fury.io/bo/angular-bootstrap-calendar.svg)](http://badge.fury.io/bo/angular-bootstrap-calendar)
+[![devDependency Status](https://david-dm.org/mattlewis92/angular-bootstrap-calendar/dev-status.svg)](https://david-dm.org/mattlewis92/angular-bootstrap-calendar#info=devDependencies)
+
 ## Table of contents
 
 - [About](#about)
@@ -42,10 +46,10 @@ You will then need to include the JS and CSS files for the plugin:
 <script src="bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.min.js">
 ```
 
-And finally add the module dependency in your AngularJS app:
+And finally add the module dependency in your AngularJS app (you can remove ui.bootstrap if you don't want the extra dependency - it is only required for collapse animations and tooltips):
 
 ```javascript
-angular.module('myModule', ['mwl.calendar']);
+angular.module('myModule', ['mwl.calendar', 'ui.bootstrap']);
 ```
 
 ## Documentation
@@ -57,11 +61,11 @@ There is a single directive exposed to create the calendar, use it like so:
     calendar-view="calendarView"
     calendar-current-day="calendarDay"
     calendar-control="calendarControl"
-    calendar-event-click="eventClicked($event)"
+    calendar-event-click="eventClicked(calendarEvent)"
     calendar-edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
     calendar-delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
-    calendar-edit-event-click="eventEdited($event)"
-    calendar-delete-event-click="eventDeleted($event)"
+    calendar-edit-event-click="eventEdited(calendarEvent)"
+    calendar-delete-event-click="eventDeleted(calendarEvent)"
     calendar-auto-open="true"
     ></mwl-calendar>
 ```
@@ -108,7 +112,7 @@ The directive will instantiate this variable for you and add the following metho
 
 ### calendar-event-click 
 
-This expression is called when an event is clicked on the calendar. $event contains the calendar event that was clicked on.
+This expression is called when an event is clicked on the calendar. calendarEvent contains the calendar event that was clicked on.
 
 ### calendar-edit-event-html 
 
@@ -120,15 +124,15 @@ If provided this piece of html will be displayed next to an event on the year an
 
 ### calendar-edit-event-click 
 
-This expression is called when an event edit link is clicked on the calendar. $event contains the calendar event that was clicked on.
+This expression is called when an event edit link is clicked on the calendar. calendarEvent contains the calendar event that was clicked on.
 
 ### calendar-delete-event-click 
 
-This expression is called when an event delete link is clicked on the calendar. $event contains the calendar event that was clicked on.
+This expression is called when an event delete link is clicked on the calendar. calendarEvent contains the calendar event that was clicked on.
 
 ### calendar-timespan-click
 
-This expression is called when a month or day on the calendar is clicked. $date contains the start of the month or day that was clicked on.
+This expression is called when a month or day on the calendar is clicked. calendarDate contains the start of the month or day that was clicked on.
 
 ### calendar-auto-open
 
@@ -192,7 +196,7 @@ http://mattlewis92.github.io/angular-bootstrap-calendar/
 * Install local dev dependencies: `npm install` while current directory is this repo
 
 ### Build
-Run `gulp` to build the project files in the dist folder
+Run `gulp build` to build the project files in the dist folder
 
 ### Development server
 Run `gulp watch` to start a development server with livereload on port 8000. 

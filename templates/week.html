@@ -1,10 +1,22 @@
 <div class="cal-week-box">
   <div class="cal-row-fluid cal-row-head">
 
-    <div class="cal-cell1" ng-repeat="column in view.columns track by $index" ng-class="{'cal-day-weekend': $index > 4, 'cal-day-today': column.isToday}">{{ column.weekDay }}<br>
+    <div
+      class="cal-cell1"
+      ng-repeat="column in view.columns track by $index"
+      ng-class="{
+        'cal-day-weekend': column.isWeekend,
+        'cal-day-past': column.isPast,
+        'cal-day-today': column.isToday,
+        'cal-day-future': column.isFuture}"
+      >
+
+      {{ column.weekDay }}
+      <br>
       <small>
         <span data-cal-date ng-click="drillDown(column.day)" class="pointer">{{ column.date }}</span>
       </small>
+
     </div>
 
 
@@ -12,7 +24,7 @@
 
   <div class="cal-row-fluid" ng-repeat="event in view.events track by $index">
     <div class="cal-cell{{ event.daySpan }} cal-offset{{ event.dayOffset }} day-highlight dh-event-{{ event.type }}" data-event-class>
-      <a href="javascript:;" ng-click="eventClick({$event: event})" class="cal-event-week">
+      <a href="javascript:;" ng-click="eventClick({calendarEvent: event})" class="cal-event-week">
         {{ event.title }}
       </a>
     </div>

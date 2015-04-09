@@ -3,6 +3,7 @@
 angular
   .module('mwl.calendar')
   .directive('mwlCalendarYear', function(moment) {
+
     return {
       templateUrl: 'templates/year.html',
       restrict: 'EA',
@@ -47,7 +48,7 @@ angular
         $scope.monthClicked = function(yearIndex, monthIndex, monthClickedFirstRun) {
 
           if (!monthClickedFirstRun) {
-            $scope.timespanClick({$date: $scope.view[yearIndex][monthIndex].date.startOf('month').toDate()});
+            $scope.timespanClick({calendarDate: $scope.view[yearIndex][monthIndex].date.startOf('month').toDate()});
           }
 
           var handler = calendarHelper.toggleEventBreakdown($scope.view, yearIndex, monthIndex);
@@ -57,11 +58,15 @@ angular
         };
 
         $scope.drillDown = function(month) {
-          $scope.calendarCtrl.changeView('month', moment($scope.currentDay).clone().month(month).toDate());
+          var date = moment($scope.currentDay).clone().month(month).toDate();
+          if ($scope.timespanClick({calendarDate: date}) !== false) {
+            $scope.calendarCtrl.changeView('month', date);
+          }
         };
       },
       link: function(scope, element, attrs, calendarCtrl) {
         scope.calendarCtrl = calendarCtrl;
       }
     };
+
   });

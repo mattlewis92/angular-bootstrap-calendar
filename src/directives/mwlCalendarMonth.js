@@ -3,6 +3,7 @@
 angular
   .module('mwl.calendar')
   .directive('mwlCalendarMonth', function() {
+
     return {
       templateUrl: 'templates/month.html',
       restrict: 'EA',
@@ -51,7 +52,7 @@ angular
         $scope.dayClicked = function(rowIndex, cellIndex, dayClickedFirstRun) {
 
           if (!dayClickedFirstRun) {
-            $scope.timespanClick({$date: $scope.view[rowIndex][cellIndex].date.startOf('day').toDate()});
+            $scope.timespanClick({calendarDate: $scope.view[rowIndex][cellIndex].date.startOf('day').toDate()});
           }
 
           var handler = calendarHelper.toggleEventBreakdown($scope.view, rowIndex, cellIndex);
@@ -61,31 +62,29 @@ angular
         };
 
         $scope.drillDown = function(day) {
-          $scope.calendarCtrl.changeView('day', moment($scope.currentDay).clone().date(day).toDate());
+          var date = moment($scope.currentDay).clone().date(day).toDate();
+          if ($scope.timespanClick({calendarDate: date}) !== false) {
+            $scope.calendarCtrl.changeView('day', date);
+          }
         };
 
         $scope.highlightEvent = function(event, shouldAddClass) {
 
-          $scope.view = $scope.view.map(function(week) {
+          $scope.view.forEach(function(week) {
 
-            week.isOpened = false;
-
-            return week.map(function(day) {
+            week.forEach(function(day) {
 
               delete day.highlightClass;
-              day.isOpened = false;
 
               if (shouldAddClass) {
                 var dayContainsEvent = day.events.filter(function(e) {
-                    return e.$id === event.$id;
-                  }).length > 0;
+                  return e.$id === event.$id;
+                }).length > 0;
 
                 if (dayContainsEvent) {
                   day.highlightClass = 'day-highlight dh-event-' + event.type;
                 }
               }
-
-              return day;
 
             });
 
@@ -97,4 +96,5 @@ angular
         scope.calendarCtrl = calendarCtrl;
       }
     };
+
   });

@@ -12,7 +12,18 @@
         ng-repeat="day in week track by $index"
         ng-click="dayClicked($parent.$index, $index)"
         ng-class="{pointer: day.events.length > 0}">
-        <div class="cal-month-day" ng-class="{'cal-day-outmonth': !day.inMonth, 'cal-day-inmonth': day.inMonth, 'cal-day-weekend': $index == 5 || $index == 6, 'cal-day-today': day.isToday}">
+
+        <div
+          class="cal-month-day"
+          ng-class="{
+            'cal-day-outmonth': !day.inMonth,
+            'cal-day-inmonth': day.inMonth,
+            'cal-day-weekend': day.isWeekend,
+            'cal-day-past': day.isPast,
+            'cal-day-today': day.isToday,
+            'cal-day-future': day.isFuture
+          }">
+
           <small class="cal-events-num badge badge-important pull-left" ng-show="day.events.length > 0">{{ day.events.length }}</small>
           <span class="pull-right" data-cal-date ng-click="drillDown(day.label)">{{ day.label }}</span>
           <div class="cal-day-tick" ng-show="day.isOpened">
@@ -22,7 +33,7 @@
           <div class="events-list" ng-show="day.events.length > 0">
             <a
               href="javascript:;"
-              ng-click="eventClick({$event: event})"
+              ng-click="eventClick({calendarEvent: event})"
               ng-repeat="event in day.events track by $index"
               class="pull-left event event-{{ event.type }}"
               ng-mouseenter="highlightEvent(event, true)"
@@ -36,40 +47,8 @@
       </div>
     </div>
 
-    <div class="cal-slide-box" collapse="!week.isOpened" mwl-collapse-fallback="!week.isOpened">
-      <div class="cal-slide-content cal-event-list">
-        <ul class="unstyled list-unstyled">
+    <mwl-calendar-slide-box is-open="!week.isOpened"></mwl-calendar-slide-box>
 
-          <li ng-repeat="event in openEvents track by $index">
-            <span class="pull-left event event-{{ event.type }}"></span>
-            &nbsp;
-            <a
-              href="javascript:;"
-              class="event-item"
-              ng-click="eventClick({$event: event})">
-              {{ event.title }}
-            </a>
-
-            <a
-              href="javascript:;"
-              class="event-item-edit"
-              ng-if="editEventHtml && event.editable !== false"
-              ng-bind-html="$sce.trustAsHtml(editEventHtml)"
-              ng-click="eventEditClick({$event: event})">
-            </a>
-
-            <a
-              href="javascript:;"
-              class="event-item-delete"
-              ng-if="deleteEventHtml && event.deletable !== false"
-              ng-bind-html="$sce.trustAsHtml(deleteEventHtml)"
-              ng-click="eventDeleteClick({$event: event})">
-            </a>
-          </li>
-
-        </ul>
-      </div>
-    </div>
   </div>
 
 </div>

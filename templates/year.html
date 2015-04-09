@@ -13,41 +13,9 @@
 
       </div>
     </div>
-    <div class="cal-slide-box" collapse="!year.isOpened" mwl-collapse-fallback="!year.isOpened">
-      <span class="cal-slide-tick" class="tick-month3"></span>
-      <div class="cal-slide-content" class="cal-event-list">
-        <ul class="unstyled list-unstyled">
 
-          <li ng-repeat="event in openEvents track by $index">
-            <span class="pull-left event" ng-class="'event-' + event.type"></span>
-            &nbsp;
-            <a
-              href="javascript:;"
-              class="event-item"
-              ng-click="eventClick({$event: event})">
-              {{ event.title }}
-            </a>
+    <mwl-calendar-slide-box is-open="!year.isOpened"></mwl-calendar-slide-box>
 
-            <a
-              href="javascript:;"
-              class="event-item-edit"
-              ng-if="editEventHtml && event.editable !== false"
-              ng-bind-html="$sce.trustAsHtml(editEventHtml)"
-              ng-click="eventEditClick({$event: event})">
-            </a>
-
-            <a
-              href="javascript:;"
-              class="event-item-delete"
-              ng-if="deleteEventHtml && event.deletable !== false"
-              ng-bind-html="$sce.trustAsHtml(deleteEventHtml)"
-              ng-click="eventDeleteClick({$event: event})">
-            </a>
-          </li>
-
-        </ul>
-      </div>
-    </div>
   </div>
 
 </div>
