@@ -194,8 +194,7 @@ angular.module('mwl.calendar')
     };
 
     this.getWeekView = function(events, currentDay, useISOWeek) {
-
-      var eventsInPeriod = getEventsInPeriod(currentDay, 'week', events);
+      
       var dateOffset = isISOWeek(useISOWeek) ? 1 : 0;
       var columns = new Array(7);
       var weekDays = self.getWeekDayNames(false, useISOWeek);
@@ -241,7 +240,7 @@ angular.module('mwl.calendar')
       endOfWeek = moment(endOfWeek).endOf('day').toDate();
       beginningOfWeek = moment(beginningOfWeek).startOf('day').toDate();
 
-      var eventsSorted = eventsInPeriod.filter(function(event) {
+      var eventsSorted = events.filter(function(event) {
         return self.eventIsInPeriod(event.starts_at, event.ends_at, beginningOfWeek, endOfWeek);
       }).map(function(event) {
 
