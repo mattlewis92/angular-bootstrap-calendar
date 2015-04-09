@@ -58,7 +58,10 @@ angular
         };
 
         $scope.drillDown = function(month) {
-          $scope.calendarCtrl.changeView('month', moment($scope.currentDay).clone().month(month).toDate());
+          var date = moment($scope.currentDay).clone().month(month).toDate();
+          if ($scope.timespanClick({calendarDate: date}) !== false) {
+            $scope.calendarCtrl.changeView('month', date);
+          }
         };
       },
       link: function(scope, element, attrs, calendarCtrl) {
