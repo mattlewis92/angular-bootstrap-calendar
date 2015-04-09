@@ -31,7 +31,7 @@ angular
           if ($scope.autoOpen && !firstRun) {
             $scope.view.forEach(function(row, rowIndex) {
               row.forEach(function(year, cellIndex) {
-                if (year.label === moment($scope.currentDay).format('MMMM')) {
+                if (moment($scope.currentDay).startOf('month').isSame(year.date)) {
                   $scope.monthClicked(rowIndex, cellIndex, true);
                   $timeout(function() {
                     firstRun = false;

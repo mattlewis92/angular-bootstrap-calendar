@@ -83,7 +83,8 @@ $scope.events = [
     starts_at: new Date(2013,5,1,1), // A javascript date object for when the event starts
     ends_at: new Date(2014,8,26,15), // A javascript date object for when the event ends
     editable: false, // If calendar-edit-event-html is set and this field is explicitly set to false then dont make it editable
-    deletable: false // If calendar-delete-event-html is set and this field is explicitly set to false then dont make it deleteable
+    deletable: false, // If calendar-delete-event-html is set and this field is explicitly set to false then dont make it deleteable
+    incrementsBadgeTotal: true //If set to false then will not count towards the badge total amount on the month and year view
   }
 ];
 ```
@@ -175,8 +176,28 @@ The number of chunks to split the day view hours up into. Can be either 10, 15 o
 
 ## Internationalization and localization
 
-The calendar directive uses angulars date filter to produce all months and days of the week etc. Therefore to changes the language of the calendar you simply need to include the appropriate angular i18n file as described here:
-https://docs.angularjs.org/guide/i18n
+The calendar directive uses moment.js to produce all months and days of the week etc. Therefore to change the language of the calendar just [follow this guide](http://momentjs.com/docs/#/i18n/).
+
+## Configuring date formats
+
+You can easily customise the date formats used throughout the calendar by using the calendarConfigProvider. There are current 2 methods available. Please note that all formats are those used by moment.js. Example usage:
+
+```javascript
+angular.module('myModule')
+  .config(function(calendarConfigProvider) {
+  
+    calendarConfigProvider.configureDateFormats({
+      hour: 'HH:mm' //this will configure the hour view to display in 24 hour format rather than the default of 12 hour
+    });
+    
+    calendarConfigProvider.configureTitleFormats({
+      day: 'ddd D MMM' //this will configure the day view title to be shorter
+    });
+    
+  });
+```
+
+For a full list of all available formats and their defaults see [calendarConfig.js](https://github.com/mattlewis92/angular-bootstrap-calendar/blob/master/src/services/calendarConfig.js)
 
 ## Demo
 

@@ -1,0 +1,12 @@
+<div class="events-list" ng-show="day.events.length > 0">
+  <a
+    href="javascript:;"
+    ng-click="eventClick({calendarEvent: event})"
+    ng-repeat="event in day.events track by $index"
+    class="pull-left event event-{{ event.type }}"
+    ng-mouseenter="highlightEvent(event, true)"
+    ng-mouseleave="highlightEvent(event, false)"
+    tooltip-append-to-body="true"
+    tooltip="{{ event.title }}"
+    ></a>
+</div>

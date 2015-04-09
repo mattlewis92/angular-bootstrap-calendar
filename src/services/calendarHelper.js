@@ -8,7 +8,7 @@
  * Service in the angularBootstrapCalendarApp.
  */
 angular.module('mwl.calendar')
-  .service('calendarHelper', function calendarHelper($filter, moment) {
+  .service('calendarHelper', function (moment, calendarConfig) {
 
     var self = this;
 
@@ -33,13 +33,11 @@ angular.module('mwl.calendar')
       });
     }
 
-    this.getMonthNames = function(short) {
-
-      var format = short ? 'MMM' : 'MMMM';
+    this.getMonthNames = function() {
 
       var months = [];
       for (var i = 0; i <= 11; i++) {
-        months.push($filter('date')(new Date(2014, i), format));
+        months.push(moment(new Date(2014, i)).format(calendarConfig.dateFormats.month));
       }
 
       return months;
@@ -48,12 +46,10 @@ angular.module('mwl.calendar')
 
     this.getWeekDayNames = function(short, useISOWeek) {
 
-      var format = short ? 'EEE' : 'EEEE';
-
       var weekdays = [];
       var startDay = isISOWeek(useISOWeek) ? 22 : 21;
       for (var i = 0; i <= 6; i++) {
-        weekdays.push($filter('date')(new Date(2014, 8, startDay + i), format));
+        weekdays.push(moment(new Date(2014, 8, startDay + i)).format(calendarConfig.dateFormats.weekDay));
       }
 
       return weekdays;
@@ -195,7 +191,6 @@ angular.module('mwl.calendar')
 
     this.getWeekView = function(events, currentDay, useISOWeek) {
 
-      var eventsInPeriod = getEventsInPeriod(currentDay, 'week', events);
       var dateOffset = isISOWeek(useISOWeek) ? 1 : 0;
       var columns = new Array(7);
       var weekDays = self.getWeekDayNames(false, useISOWeek);
@@ -206,8 +201,8 @@ angular.module('mwl.calendar')
         date = moment(currentDay).subtract(currentWeekDayIndex - i, 'days').add(dateOffset, 'day').toDate();
         columns[i] = {
           weekDay: weekDays[i],
-          day: $filter('date')(date, 'd'),
-          date: $filter('date')(date, 'd MMM'),
+          day: moment(date).format('D'),
+          date: moment(date).format(calendarConfig.dateFormats.day),
           isPast: moment(date).startOf('day').isBefore(moment().startOf('day')),
           isToday: moment(date).startOf('day').isSame(moment().startOf('day')),
           isFuture: moment(date).startOf('day').isAfter(moment().startOf('day')),
@@ -224,8 +219,8 @@ angular.module('mwl.calendar')
         date = moment(currentDay).add(i - currentWeekDayIndex, 'days').add(dateOffset, 'day').toDate();
         columns[i] = {
           weekDay: weekDays[i],
-          day: $filter('date')(date, 'd'),
-          date: $filter('date')(date, 'd MMM'),
+          day: moment(date).format('D'),
+          date: moment(date).format(calendarConfig.dateFormats.day),
           isPast: moment(date).startOf('day').isBefore(moment().startOf('day')),
           isToday: moment(date).startOf('day').isSame(moment().startOf('day')),
           isFuture: moment(date).startOf('day').isAfter(moment().startOf('day')),
@@ -241,7 +236,7 @@ angular.module('mwl.calendar')
       endOfWeek = moment(endOfWeek).endOf('day').toDate();
       beginningOfWeek = moment(beginningOfWeek).startOf('day').toDate();
 
-      var eventsSorted = eventsInPeriod.filter(function(event) {
+      var eventsSorted = events.filter(function(event) {
         return self.eventIsInPeriod(event.starts_at, event.ends_at, beginningOfWeek, endOfWeek);
       }).map(function(event) {
 

@@ -19,9 +19,9 @@
  * Service in the angularBootstrapCalendarApp.
  */
     angular.module('mwl.calendar').service('calendarHelper', [
-        '$filter',
         'moment',
-        function calendarHelper($filter, moment) {
+        'calendarConfig',
+        function (moment, calendarConfig) {
             var self = this;
             function isISOWeekBasedOnLocale() {
                 return moment().startOf('week').day() === 1;
@@ -41,20 +41,18 @@
                     return self.eventIsInPeriod(event.starts_at, event.ends_at, startPeriod, endPeriod);
                 });
             }
-            this.getMonthNames = function (short) {
-                var format = short ? 'MMM' : 'MMMM';
+            this.getMonthNames = function () {
                 var months = [];
                 for (var i = 0; i <= 11; i++) {
-                    months.push($filter('date')(new Date(2014, i), format));
+                    months.push(moment(new Date(2014, i)).format(calendarConfig.dateFormats.month));
                 }
                 return months;
             };
             this.getWeekDayNames = function (short, useISOWeek) {
-                var format = short ? 'EEE' : 'EEEE';
                 var weekdays = [];
                 var startDay = isISOWeek(useISOWeek) ? 22 : 21;
                 for (var i = 0; i <= 6; i++) {
-                    weekdays.push($filter('date')(new Date(2014, 8, startDay + i), format));
+                    weekdays.push(moment(new Date(2014, 8, startDay + i)).format(calendarConfig.dateFormats.weekDay));
                 }
                 return weekdays;
             };
@@ -166,7 +164,6 @@
                 return grid;
             };
             this.getWeekView = function (events, currentDay, useISOWeek) {
-                var eventsInPeriod = getEventsInPeriod(currentDay, 'week', events);
                 var dateOffset = isISOWeek(useISOWeek) ? 1 : 0;
                 var columns = new Array(7);
                 var weekDays = self.getWeekDayNames(false, useISOWeek);
@@ -176,8 +173,8 @@
                     date = moment(currentDay).subtract(currentWeekDayIndex - i, 'days').add(dateOffset, 'day').toDate();
                     columns[i] = {
                         weekDay: weekDays[i],
-                        day: $filter('date')(date, 'd'),
-                        date: $filter('date')(date, 'd MMM'),
+                        day: moment(date).format('D'),
+                        date: moment(date).format(calendarConfig.dateFormats.day),
                         isPast: moment(date).startOf('day').isBefore(moment().startOf('day')),
                         isToday: moment(date).startOf('day').isSame(moment().startOf('day')),
                         isFuture: moment(date).startOf('day').isAfter(moment().startOf('day')),
@@ -196,8 +193,8 @@
                     date = moment(currentDay).add(i - currentWeekDayIndex, 'days').add(dateOffset, 'day').toDate();
                     columns[i] = {
                         weekDay: weekDays[i],
-                        day: $filter('date')(date, 'd'),
-                        date: $filter('date')(date, 'd MMM'),
+                        day: moment(date).format('D'),
+                        date: moment(date).format(calendarConfig.dateFormats.day),
                         isPast: moment(date).startOf('day').isBefore(moment().startOf('day')),
                         isToday: moment(date).startOf('day').isSame(moment().startOf('day')),
                         isFuture: moment(date).startOf('day').isAfter(moment().startOf('day')),
@@ -214,7 +211,7 @@
                 }
                 endOfWeek = moment(endOfWeek).endOf('day').toDate();
                 beginningOfWeek = moment(beginningOfWeek).startOf('day').toDate();
-                var eventsSorted = eventsInPeriod.filter(function (event) {
+                var eventsSorted = events.filter(function (event) {
                     return self.eventIsInPeriod(event.starts_at, event.ends_at, beginningOfWeek, endOfWeek);
                 }).map(function (event) {
                     var eventStart = moment(event.starts_at).startOf('day');
@@ -324,6 +321,36 @@
         }
     ]);
     'use strict';
+    angular.module('mwl.calendar').provider('calendarConfig', function () {
+        var defaultDateFormats = {
+            hour: 'ha',
+            day: 'D MMM',
+            month: 'MMMM',
+            weekDay: 'dddd'
+        };
+        var defaultTitleFormats = {
+            day: 'dddd D MMMM, YYYY',
+            week: 'Week {week} of {year}',
+            month: 'MMMM YYYY',
+            year: 'YYYY'
+        };
+        var configProvider = this;
+        configProvider.configureDateFormats = function (formats) {
+            angular.extend(defaultDateFormats, formats);
+            return configProvider;
+        };
+        configProvider.configureTitleFormats = function (formats) {
+            angular.extend(defaultTitleFormats, formats);
+            return configProvider;
+        };
+        configProvider.$get = function () {
+            return {
+                dateFormats: defaultDateFormats,
+                titleFormats: defaultTitleFormats
+            };
+        };
+    });
+    'use strict';
     angular.module('mwl.calendar').filter('truncateEventTitle', function () {
         return function (string, length, boxHeight) {
             if (!string) {
@@ -335,6 +362,14 @@
             } else {
                 return string;
             }
+        };
+    });
+    'use strict';
+    angular.module('mwl.calendar').filter('eventCountBadgeTotal', function () {
+        return function (events) {
+            return events.filter(function (event) {
+                return event.incrementsBadgeTotal !== false;
+            }).length;
         };
     });
     'use strict';
@@ -400,7 +435,7 @@
                             if ($scope.autoOpen && !firstRun) {
                                 $scope.view.forEach(function (row, rowIndex) {
                                     row.forEach(function (year, cellIndex) {
-                                        if (year.label === moment($scope.currentDay).format('MMMM')) {
+                                        if (moment($scope.currentDay).startOf('month').isSame(year.date)) {
                                             $scope.monthClicked(rowIndex, cellIndex, true);
                                             $timeout(function () {
                                                 firstRun = false;
@@ -601,7 +636,8 @@
                 '$scope',
                 'moment',
                 'calendarHelper',
-                function ($scope, moment, calendarHelper) {
+                'calendarConfig',
+                function ($scope, moment, calendarHelper, calendarConfig) {
                     var dayViewStart = moment($scope.dayViewStart || '00:00', 'HH:mm');
                     var dayViewEnd = moment($scope.dayViewEnd || '23:00', 'HH:mm');
                     $scope.dayViewSplit = parseInt($scope.dayViewSplit);
@@ -609,7 +645,7 @@
                     $scope.days = [];
                     var dayCounter = moment(dayViewStart);
                     for (var i = 0; i <= dayViewEnd.diff(dayViewStart, 'hours'); i++) {
-                        $scope.days.push({ label: dayCounter.format('ha') });
+                        $scope.days.push({ label: dayCounter.format(calendarConfig.dateFormats.hour) });
                         dayCounter.add(1, 'hour');
                     }
                     function updateView() {
@@ -649,24 +685,23 @@
             controller: [
                 '$scope',
                 '$timeout',
-                '$locale',
-                '$filter',
                 'moment',
-                function ($scope, $timeout, $locale, $filter, moment) {
+                'calendarConfig',
+                function ($scope, $timeout, moment, calendarConfig) {
                     var self = this;
-                    var weekTitleLabel = $scope.weekTitleLabel || 'Week {week} of {year}';
+                    var weekTitleLabel = $scope.weekTitleLabel || calendarConfig.titleFormats.week;
                     this.titleFunctions = {
                         day: function (currentDay) {
-                            return $filter('date')(currentDay, 'EEEE d MMMM, yyyy');
+                            return moment(currentDay).format(calendarConfig.titleFormats.day);
                         },
                         week: function (currentDay) {
                             return weekTitleLabel.replace('{week}', moment(currentDay).week()).replace('{year}', moment(currentDay).format('YYYY'));
                         },
                         month: function (currentDay) {
-                            return $filter('date')(currentDay, 'MMMM yyyy');
+                            return moment(currentDay).format(calendarConfig.titleFormats.month);
                         },
                         year: function (currentDay) {
-                            return moment(currentDay).format('YYYY');
+                            return moment(currentDay).format(calendarConfig.titleFormats.year);
                         }
                     };
                     this.changeView = function (view, newDay) {
@@ -689,7 +724,7 @@
                     //Auto update the calendar when the locale changes
                     var firstRunWatcher = true;
                     var unbindWatcher = $scope.$watch(function () {
-                        return moment.locale() + $locale.id;
+                        return moment.locale();
                     }, function () {
                         if (firstRunWatcher) {
                             //dont run the first time the calendar is initialised
