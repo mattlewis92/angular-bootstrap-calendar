@@ -13,37 +13,7 @@
         ng-click="dayClicked($parent.$index, $index)"
         ng-class="{pointer: day.events.length > 0}">
 
-        <div
-          class="cal-month-day"
-          ng-class="{
-            'cal-day-outmonth': !day.inMonth,
-            'cal-day-inmonth': day.inMonth,
-            'cal-day-weekend': day.isWeekend,
-            'cal-day-past': day.isPast,
-            'cal-day-today': day.isToday,
-            'cal-day-future': day.isFuture
-          }">
-
-          <small class="cal-events-num badge badge-important pull-left" ng-show="day.events.length > 0">{{ day.events.length }}</small>
-          <span class="pull-right" data-cal-date ng-click="drillDown(day.label)">{{ day.label }}</span>
-          <div class="cal-day-tick" ng-show="day.isOpened">
-            <i class="glyphicon glyphicon-chevron-up"></i>
-            <i class="fa fa-chevron-up"></i>
-          </div>
-          <div class="events-list" ng-show="day.events.length > 0">
-            <a
-              href="javascript:;"
-              ng-click="eventClick({calendarEvent: event})"
-              ng-repeat="event in day.events track by $index"
-              class="pull-left event event-{{ event.type }}"
-              ng-mouseenter="highlightEvent(event, true)"
-              ng-mouseleave="highlightEvent(event, false)"
-              tooltip-append-to-body="true"
-              tooltip="{{ event.title }}"
-              ></a>
-          </div>
-
-        </div>
+        <div ng-include="'templates/calendarMonthDay.html'"></div>
       </div>
     </div>
 

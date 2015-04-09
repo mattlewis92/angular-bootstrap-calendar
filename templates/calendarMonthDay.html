@@ -1,0 +1,21 @@
+<div
+  class="cal-month-day"
+  ng-class="{
+            'cal-day-outmonth': !day.inMonth,
+            'cal-day-inmonth': day.inMonth,
+            'cal-day-weekend': day.isWeekend,
+            'cal-day-past': day.isPast,
+            'cal-day-today': day.isToday,
+            'cal-day-future': day.isFuture
+          }">
+
+  <small class="cal-events-num badge badge-important pull-left" ng-show="day.events.length > 0">{{ day.events.length }}</small>
+  <span class="pull-right" data-cal-date ng-click="drillDown(day.label)">{{ day.label }}</span>
+  <div class="cal-day-tick" ng-show="day.isOpened">
+    <i class="glyphicon glyphicon-chevron-up"></i>
+    <i class="fa fa-chevron-up"></i>
+  </div>
+
+  <div ng-include="'templates/calendarMonthEventsList.html'"></div>
+
+</div>
