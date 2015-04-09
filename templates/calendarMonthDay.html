@@ -9,7 +9,7 @@
             'cal-day-future': day.isFuture
           }">
 
-  <small class="cal-events-num badge badge-important pull-left" ng-show="day.events.length > 0">{{ day.events.length }}</small>
+  <small class="cal-events-num badge badge-important pull-left" ng-show="day.events.length > 0">{{ day.events | eventCountBadgeTotal }}</small>
   <span class="pull-right" data-cal-date ng-click="drillDown(day.label)">{{ day.label }}</span>
   <div class="cal-day-tick" ng-show="day.isOpened">
     <i class="glyphicon glyphicon-chevron-up"></i>
