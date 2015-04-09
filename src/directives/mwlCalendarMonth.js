@@ -70,26 +70,21 @@ angular
 
         $scope.highlightEvent = function(event, shouldAddClass) {
 
-          $scope.view = $scope.view.map(function(week) {
+          $scope.view.forEach(function(week) {
 
-            week.isOpened = false;
-
-            return week.map(function(day) {
+            week.forEach(function(day) {
 
               delete day.highlightClass;
-              day.isOpened = false;
 
               if (shouldAddClass) {
                 var dayContainsEvent = day.events.filter(function(e) {
-                    return e.$id === event.$id;
-                  }).length > 0;
+                  return e.$id === event.$id;
+                }).length > 0;
 
                 if (dayContainsEvent) {
                   day.highlightClass = 'day-highlight dh-event-' + event.type;
                 }
               }
-
-              return day;
 
             });
 
