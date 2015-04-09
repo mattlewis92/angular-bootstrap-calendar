@@ -27,23 +27,23 @@ angular
         timespanClick: '&calendarTimespanClick',
         dayViewSplit: '@calendarDayViewSplit'
       },
-      controller: function($scope, $timeout, moment) {
+      controller: function($scope, $timeout, moment, calendarConfig) {
 
         var self = this;
 
-        var weekTitleLabel = $scope.weekTitleLabel || 'Week {week} of {year}';
+        var weekTitleLabel = $scope.weekTitleLabel || calendarConfig.titleFormats.week;
         this.titleFunctions = {
           day: function(currentDay) {
-            return moment(currentDay).format('dddd D MMMM, YYYY');
+            return moment(currentDay).format(calendarConfig.titleFormats.day);
           },
           week: function(currentDay) {
             return weekTitleLabel.replace('{week}', moment(currentDay).week()).replace('{year}', moment(currentDay).format('YYYY'));
           },
           month: function(currentDay) {
-            return moment(currentDay).format('MMMM YYYY');
+            return moment(currentDay).format(calendarConfig.titleFormats.month);
           },
           year: function(currentDay) {
-            return moment(currentDay).format('YYYY');
+            return moment(currentDay).format(calendarConfig.titleFormats.year);
           }
         };
 

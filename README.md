@@ -178,6 +178,27 @@ The number of chunks to split the day view hours up into. Can be either 10, 15 o
 
 The calendar directive uses moment.js to produce all months and days of the week etc. Therefore to change the language of the calendar just [follow this guide](http://momentjs.com/docs/#/i18n/).
 
+## Configuring date formats
+
+You can easily customise the date formats used throughout the calendar by using the calendarConfigProvider. There are current 2 methods available. Please note that all formats are those used by moment.js. Example usage:
+
+```javascript
+angular.module('myModule')
+  .config(function(calendarConfigProvider) {
+  
+    calendarConfigProvider.configureDateFormats({
+      hour: 'HH:mm' //this will configure the hour view to display in 24 hour format rather than the default of 12 hour
+    });
+    
+    calendarConfigProvider.configureTitleFormats({
+      day: 'ddd D MMM' //this will configure the day view title to be shorter
+    });
+    
+  });
+```
+
+For a full list of all available formats and their defaults see [calendarConfig.js](https://github.com/mattlewis92/angular-bootstrap-calendar/blob/master/src/services/calendarConfig.js)
+
 ## Demo
 
 http://mattlewis92.github.io/angular-bootstrap-calendar/

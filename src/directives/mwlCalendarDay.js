@@ -18,7 +18,8 @@ angular
         dayViewEnd: '@calendarDayViewEnd',
         dayViewSplit: '@calendarDayViewSplit'
       },
-      controller: function($scope, moment, calendarHelper) {
+      controller: function($scope, moment, calendarHelper, calendarConfig) {
+
         var dayViewStart = moment($scope.dayViewStart || '00:00', 'HH:mm');
         var dayViewEnd = moment($scope.dayViewEnd || '23:00', 'HH:mm');
 
@@ -29,7 +30,7 @@ angular
         var dayCounter = moment(dayViewStart);
         for (var i = 0; i <= dayViewEnd.diff(dayViewStart, 'hours'); i++) {
           $scope.days.push({
-            label: dayCounter.format('ha')
+            label: dayCounter.format(calendarConfig.dateFormats.hour)
           });
           dayCounter.add(1, 'hour');
         }
