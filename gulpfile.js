@@ -85,6 +85,7 @@ function buildJS(withTemplates) {
     .pipe($.sourcemaps.init())
     .pipe($.ngAnnotate())
     .pipe($.concat(unminfilename))
+    .pipe($.wrapJs('(function(window, angular) {\n%= body %\n }) (window, angular);'))
     .pipe(gulp.dest('dist/js'))
     .pipe($.uglify())
     .pipe($.rename(minFilename))

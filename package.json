@@ -23,6 +23,7 @@
     "gulp-sourcemaps": "^1.2.2",
     "gulp-tag-version": "~1.2.1",
     "gulp-uglify": "^1.0.1",
+    "gulp-wrap-js": "~0.2.1",
     "open": "0.0.5",
     "run-sequence": "~1.0.2",
     "streamqueue": "^0.1.1"
