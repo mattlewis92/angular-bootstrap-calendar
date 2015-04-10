@@ -19,10 +19,11 @@ angular
         autoOpen: '=calendarAutoOpen',
         timespanClick: '=calendarTimespanClick'
       },
-      controller: function($scope, $sce, $timeout, calendarHelper) {
+      controller: function($scope, $sce, $timeout, calendarHelper, eventCountBadgeTotalFilter) {
         var firstRun = false;
 
         $scope.$sce = $sce;
+        $scope.eventCountBadgeTotalFilter = eventCountBadgeTotalFilter;
 
         function updateView() {
           $scope.view = calendarHelper.getYearView($scope.events, $scope.currentDay);

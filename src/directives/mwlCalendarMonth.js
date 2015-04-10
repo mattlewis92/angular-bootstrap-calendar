@@ -20,10 +20,11 @@ angular
         useIsoWeek: '=calendarUseIsoWeek',
         timespanClick: '=calendarTimespanClick'
       },
-      controller: function($scope, $sce, $timeout, moment, calendarHelper) {
+      controller: function($scope, $sce, $timeout, moment, calendarHelper, eventCountBadgeTotalFilter) {
         var firstRun = false;
 
         $scope.$sce = $sce;
+        $scope.eventCountBadgeTotalFilter = eventCountBadgeTotalFilter;
 
         function updateView() {
           $scope.view = calendarHelper.getMonthView($scope.events, $scope.currentDay, $scope.useIsoWeek);
