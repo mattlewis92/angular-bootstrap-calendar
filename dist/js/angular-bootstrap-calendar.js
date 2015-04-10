@@ -426,9 +426,11 @@
                     '$sce',
                     '$timeout',
                     'calendarHelper',
-                    function ($scope, $sce, $timeout, calendarHelper) {
+                    'eventCountBadgeTotalFilter',
+                    function ($scope, $sce, $timeout, calendarHelper, eventCountBadgeTotalFilter) {
                         var firstRun = false;
                         $scope.$sce = $sce;
+                        $scope.eventCountBadgeTotalFilter = eventCountBadgeTotalFilter;
                         function updateView() {
                             $scope.view = calendarHelper.getYearView($scope.events, $scope.currentDay);
                             //Auto open the calendar to the current day if set
@@ -558,9 +560,11 @@
                 '$timeout',
                 'moment',
                 'calendarHelper',
-                function ($scope, $sce, $timeout, moment, calendarHelper) {
+                'eventCountBadgeTotalFilter',
+                function ($scope, $sce, $timeout, moment, calendarHelper, eventCountBadgeTotalFilter) {
                     var firstRun = false;
                     $scope.$sce = $sce;
+                    $scope.eventCountBadgeTotalFilter = eventCountBadgeTotalFilter;
                     function updateView() {
                         $scope.view = calendarHelper.getMonthView($scope.events, $scope.currentDay, $scope.useIsoWeek);
                         //Auto open the calendar to the current day if set
