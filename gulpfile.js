@@ -106,11 +106,7 @@ gulp.task('build', ['js', 'css'], function() {});
 function release(importance) {
   return gulp.src(['./package.json', './bower.json'])
     .pipe($.bump({type: importance}))
-    .pipe(gulp.dest('./'))
-    .pipe($.filter('package.json'))
-    .pipe($.tagVersion({
-      prefix: ''
-    }));
+    .pipe(gulp.dest('./'));
 }
 
 gulp.task('release:patch', function() { return release('patch'); })
