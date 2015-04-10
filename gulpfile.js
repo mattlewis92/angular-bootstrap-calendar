@@ -35,15 +35,26 @@ gulp.task('less', function() {
     .pipe(gulp.dest('css'))
 });
 
+var pkg = require('./bower.json');
+var banner = ['/**',
+  ' * <%= pkg.name %> - <%= pkg.description %>',
+  ' * @version v<%= pkg.version %>',
+  ' * @link <%= pkg.homepage %>',
+  ' * @license <%= pkg.license %>',
+  ' */',
+  ''].join('\n');
+
 gulp.task('css', function() {
 
   return gulp.src('src/less/calendar.less')
     .pipe($.sourcemaps.init())
     .pipe($.less())
+    .pipe($.header(banner, { pkg : pkg } ))
     .pipe($.rename('angular-bootstrap-calendar.css'))
     .pipe(gulp.dest('dist/css'))
     .pipe($.minifyCss())
     .pipe($.rename('angular-bootstrap-calendar.min.css'))
+    .pipe($.header(banner, { pkg : pkg } ))
     .pipe($.sourcemaps.write('.'))
     .pipe(gulp.dest('dist/css'));
 
@@ -86,9 +97,11 @@ function buildJS(withTemplates) {
     .pipe($.ngAnnotate())
     .pipe($.concat(unminfilename))
     .pipe($.wrapJs('(function(window, angular) {\n%= body %\n }) (window, angular);'))
+    .pipe($.header(banner, { pkg : pkg } ))
     .pipe(gulp.dest('dist/js'))
     .pipe($.uglify())
     .pipe($.rename(minFilename))
+    .pipe($.header(banner, { pkg : pkg } ))
     .pipe($.sourcemaps.write('.'))
     .pipe(gulp.dest('dist/js'));
 }
@@ -109,9 +122,9 @@ function release(importance) {
     .pipe(gulp.dest('./'));
 }
 
-gulp.task('release:patch', function() { return release('patch'); })
-gulp.task('release:minor', function() { return release('minor'); })
-gulp.task('release:major', function() { return release('major'); })
+gulp.task('release:patch', function() { return release('patch'); });
+gulp.task('release:minor', function() { return release('minor'); });
+gulp.task('release:major', function() { return release('major'); });
 
 gulp.task('default', ['watch'], function() {});
 
