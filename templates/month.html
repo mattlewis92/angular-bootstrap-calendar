@@ -1,16 +1,16 @@
 <div class="cal-row-fluid cal-row-head">
 
-  <div class="cal-cell1" ng-repeat="day in weekDays track by $index">{{ day }}</div>
+  <div class="cal-cell1" ng-repeat="day in vm.weekDays track by $index">{{ day }}</div>
 
 </div>
 <div class="cal-month-box">
 
-  <div ng-repeat="week in view track by $index">
+  <div ng-repeat="rowOffset in vm.monthOffsets track by rowOffset">
     <div class="cal-row-fluid cal-before-eventlist">
       <div
+        ng-repeat="day in vm.view | calendarLimitTo:7:rowOffset track by $index"
         class="cal-cell1 cal-cell {{ day.highlightClass }}"
-        ng-repeat="day in week track by $index"
-        ng-click="dayClicked($parent.$index, $index)"
+        ng-click="vm.dayClicked(day)"
         ng-class="{pointer: day.events.length > 0}">
 
         <div ng-include="'templates/calendarMonthDay.html'"></div>
@@ -18,9 +18,9 @@
     </div>
 
     <mwl-calendar-slide-box
-      is-open="week.isOpened"
+      is-open="vm.openRowIndex === $index"
       is-month-view="true"
-      events="openEvents"
+      events="vm.openEvents"
       event-click="eventClick"
       edit-event-html="editEventHtml"
       event-edit-click="eventEditClick"

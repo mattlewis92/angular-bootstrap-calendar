@@ -20,24 +20,29 @@ angular
         timespanClick: '=calendarTimespanClick'
       },
       controller: function($scope, $timeout, moment, calendarHelper, eventCountBadgeTotalFilter) {
+
+        var vm = this;
         var firstRun = false;
 
-        $scope.eventCountBadgeTotalFilter = eventCountBadgeTotalFilter;
+        vm.eventCountBadgeTotalFilter = eventCountBadgeTotalFilter;
 
         function updateView() {
-          $scope.view = calendarHelper.getMonthView($scope.events, $scope.currentDay);
+          vm.view = calendarHelper.getMonthView($scope.events, $scope.currentDay);
+          var rows = Math.floor(vm.view.length / 7);
+          vm.monthOffsets = [];
+          for (var i = 0; i < rows; i++) {
+            vm.monthOffsets.push(i * 7);
+          }
 
           //Auto open the calendar to the current day if set
           if ($scope.autoOpen && !firstRun) {
-            $scope.view.forEach(function(week, rowIndex) {
-              week.forEach(function(day, cellIndex) {
-                if (day.inMonth && moment($scope.currentDay).startOf('day').isSame(day.date.startOf('day'))) {
-                  $scope.dayClicked(rowIndex, cellIndex, true);
-                  $timeout(function() {
-                    firstRun = false;
-                  });
-                }
-              });
+            vm.view.forEach(function(day) {
+              if (day.inMonth && moment($scope.currentDay).startOf('day').isSame(day.date)) {
+                vm.dayClicked(day, true);
+                $timeout(function() {
+                  firstRun = false;
+                });
+              }
             });
           }
 
@@ -46,53 +51,52 @@ angular
         $scope.$watch('currentDay', updateView);
         $scope.$watch('events', updateView, true);
 
-        $scope.weekDays = calendarHelper.getWeekDayNames();
+        vm.weekDays = calendarHelper.getWeekDayNames();
 
-        $scope.dayClicked = function(rowIndex, cellIndex, dayClickedFirstRun) {
+        vm.dayClicked = function(day, dayClickedFirstRun) {
 
           if (!dayClickedFirstRun) {
-            $scope.timespanClick({calendarDate: $scope.view[rowIndex][cellIndex].date.startOf('day').toDate()});
+            $scope.timespanClick({calendarDate: day.date.toDate()});
           }
 
-          var handler = calendarHelper.toggleEventBreakdown($scope.view, rowIndex, cellIndex);
-          $scope.view = handler.view;
-          $scope.openEvents = handler.openEvents;
+          vm.view.forEach(function(day) {
+            day.isOpened = false;
+          });
+
+          vm.openEvents = day.events;
+          vm.openRowIndex = null;
+          if (vm.openEvents.length > 0) {
+            var dayIndex = vm.view.indexOf(day);
+            vm.openRowIndex = Math.floor(dayIndex / 7);
+            day.isOpened = true;
+          }
 
         };
 
-        $scope.drillDown = function(day) {
-          var date = moment($scope.currentDay).clone().date(day).toDate();
+        vm.drillDown = function(day) {
+          var date = moment($scope.currentDay).clone().date(day.date.date()).toDate();
           if ($scope.timespanClick({calendarDate: date}) !== false) {
-            $scope.calendarCtrl.changeView('day', date);
+            vm.calendarCtrl.changeView('day', date);
           }
         };
 
-        $scope.highlightEvent = function(event, shouldAddClass) {
+        vm.highlightEvent = function(event, shouldAddClass) {
 
-          $scope.view.forEach(function(week) {
-
-            week.forEach(function(day) {
-
-              delete day.highlightClass;
-
-              if (shouldAddClass) {
-                var dayContainsEvent = day.events.filter(function(e) {
-                  return e.$id === event.$id;
-                }).length > 0;
-
-                if (dayContainsEvent) {
-                  day.highlightClass = 'day-highlight dh-event-' + event.type;
-                }
+          vm.view.forEach(function(day) {
+            delete day.highlightClass;
+            if (shouldAddClass) {
+              var dayContainsEvent = day.events.indexOf(event) > -1;
+              if (dayContainsEvent) {
+                day.highlightClass = 'day-highlight dh-event-' + event.type;
               }
-
-            });
-
+            }
           });
 
         };
       },
+      controllerAs: 'vm',
       link: function(scope, element, attrs, calendarCtrl) {
-        scope.calendarCtrl = calendarCtrl;
+        scope.vm.calendarCtrl = calendarCtrl;
       }
     };
 

@@ -1,13 +1,7 @@
 'use strict';
 
-/**
- * @ngdoc service
- * @name angularBootstrapCalendarApp.calendarHelper
- * @description
- * # calendarHelper
- * Service in the angularBootstrapCalendarApp.
- */
-angular.module('mwl.calendar')
+angular
+  .module('mwl.calendar')
   .service('calendarHelper', function (moment, calendarConfig) {
 
     var self = this;
@@ -80,88 +74,36 @@ angular.module('mwl.calendar')
     this.getMonthView = function(events, currentDay) {
 
       var eventsInPeriod = getEventsInPeriod(currentDay, 'month', events);
-
-      var dateOffset = isISOWeekBasedOnLocale() ? 1 : 0;
-
       var startOfMonth = moment(currentDay).startOf('month');
-      var numberOfDaysInMonth = moment(currentDay).endOf('month').date();
+      var day = startOfMonth.clone().startOf('week');
+      var endOfMonthView = moment(currentDay).endOf('month').endOf('week');
+      var view = [];
+      var today = moment().startOf('day');
+      while (day.isBefore(endOfMonthView)) {
 
-      var grid = [];
-      var buildRow = new Array(7);
-      var eventsWithIds = eventsInPeriod.map(function(event, index) {
-        event.$id = index;
-        return event;
-      });
-
-      function getWeekDayIndex() {
-        var day = startOfMonth.day() - dateOffset;
-        if (day < 0) {
-          day = 6;
+        var inMonth = day.month() === moment(currentDay).month();
+        var events = [];
+        if (inMonth) {
+          events = eventsInPeriod.filter(function(event) {
+            return self.eventIsInPeriod(event.starts_at, event.ends_at, day, day.clone().endOf('day'));
+          });
         }
-        return day;
+
+        view.push({
+          label: day.date(),
+          date: day.clone(),
+          inMonth: inMonth,
+          isPast: today.isAfter(day),
+          isToday: today.isSame(day),
+          isFuture: today.isBefore(day),
+          isWeekend: [0, 6].indexOf(day.day()) > -1,
+          events: events
+        });
+
+        day.add(1, 'day');
       }
 
-      for (var i = 1; i <= numberOfDaysInMonth; i++) {
-
-        if (i === 1) {
-          var weekdayIndex = getWeekDayIndex(startOfMonth);
-          var prefillMonth = startOfMonth.clone();
-          while (weekdayIndex > 0) {
-            weekdayIndex--;
-            prefillMonth = prefillMonth.subtract(1, 'day');
-            buildRow[weekdayIndex] = {
-              label: prefillMonth.date(),
-              date: prefillMonth.clone(),
-              inMonth: false,
-              isPast: moment().startOf('day').isAfter(prefillMonth),
-              isToday: moment().startOf('day').isSame(prefillMonth),
-              isFuture: moment().startOf('day').isBefore(prefillMonth),
-              events: []
-            };
-          }
-        }
-
-        buildRow[getWeekDayIndex(startOfMonth)] = {
-          label: startOfMonth.date(),
-          inMonth: true,
-          isPast: moment().startOf('day').isAfter(startOfMonth),
-          isToday: moment().startOf('day').isSame(startOfMonth),
-          isFuture: moment().startOf('day').isBefore(startOfMonth),
-          isWeekend: [0, 6].indexOf(moment(startOfMonth).day()) > -1,
-          date: startOfMonth.clone(),
-          events: eventsWithIds.filter(function(event) {
-            return self.eventIsInPeriod(event.starts_at, event.ends_at, startOfMonth.clone().startOf('day'), startOfMonth.clone().endOf('day'));
-          })
-        };
-
-        if (i === numberOfDaysInMonth) {
-          weekdayIndex = getWeekDayIndex(startOfMonth);
-          var postfillMonth = startOfMonth.clone();
-          while (weekdayIndex < 6) {
-            weekdayIndex++;
-            postfillMonth = postfillMonth.add(1, 'day');
-            buildRow[weekdayIndex] = {
-              label: postfillMonth.date(),
-              date: postfillMonth.clone(),
-              inMonth: false,
-              isPast: moment().startOf('day').isAfter(postfillMonth),
-              isToday: moment().startOf('day').isSame(postfillMonth),
-              isFuture: moment().startOf('day').isBefore(postfillMonth),
-              events: []
-            };
-          }
-        }
-
-        if (getWeekDayIndex(startOfMonth) === 6 || i === numberOfDaysInMonth) {
-          grid.push(buildRow);
-          buildRow = new Array(7);
-        }
-
-        startOfMonth = startOfMonth.add(1, 'day');
-
-      }
-
-      return grid;
+      return view;
 
     };
 
@@ -313,37 +255,6 @@ angular.module('mwl.calendar')
         return event;
 
       });
-
-    };
-
-    this.toggleEventBreakdown = function(view, rowIndex, cellIndex) {
-
-      var openEvents = [];
-
-      function closeAllOpenItems() {
-        view = view.map(function(row) {
-          row.isOpened = false;
-          return row.map(function(cell) {
-            cell.isOpened = false;
-            return cell;
-          });
-        });
-      }
-
-      if (view[rowIndex][cellIndex].events.length > 0) {
-
-        var isCellOpened = view[rowIndex][cellIndex].isOpened;
-
-        closeAllOpenItems();
-
-        view[rowIndex][cellIndex].isOpened = !isCellOpened;
-        view[rowIndex].isOpened = !isCellOpened;
-        openEvents = view[rowIndex][cellIndex].events;
-      } else {
-        closeAllOpenItems();
-      }
-
-      return {view: view, openEvents: openEvents};
 
     };
 
