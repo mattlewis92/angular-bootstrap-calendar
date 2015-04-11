@@ -82,9 +82,9 @@ angular
       while (day.isBefore(endOfMonthView)) {
 
         var inMonth = day.month() === moment(currentDay).month();
-        var events = [];
+        var monthEvents = [];
         if (inMonth) {
-          events = eventsInPeriod.filter(function(event) {
+          monthEvents = eventsInPeriod.filter(function(event) {
             return self.eventIsInPeriod(event.starts_at, event.ends_at, day, day.clone().endOf('day'));
           });
         }
@@ -97,7 +97,7 @@ angular
           isToday: today.isSame(day),
           isFuture: today.isBefore(day),
           isWeekend: [0, 6].indexOf(day.day()) > -1,
-          events: events
+          events: monthEvents
         });
 
         day.add(1, 'day');

@@ -59,8 +59,8 @@ angular
             $scope.timespanClick({calendarDate: day.date.toDate()});
           }
 
-          vm.view.forEach(function(day) {
-            day.isOpened = false;
+          vm.view.forEach(function(monthDay) {
+            monthDay.isOpened = false;
           });
 
           vm.openEvents = day.events;
