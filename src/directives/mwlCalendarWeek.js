@@ -14,10 +14,11 @@ angular
         eventClick: '=calendarEventClick',
         timespanClick: '=calendarTimespanClick'
       },
-      controller: function($scope, moment, calendarHelper) {
-        function updateView() {
+      controller: function($scope, moment, calendarHelper, calendarDebounce) {
+
+        var updateView = calendarDebounce(function() {
           $scope.view = calendarHelper.getWeekView($scope.events, $scope.currentDay);
-        }
+        }, 50);
 
         $scope.drillDown = function(day) {
           var date = moment($scope.currentDay).clone().date(day).toDate();

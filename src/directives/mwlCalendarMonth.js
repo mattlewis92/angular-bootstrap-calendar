@@ -19,14 +19,14 @@ angular
         autoOpen: '=calendarAutoOpen',
         timespanClick: '=calendarTimespanClick'
       },
-      controller: function($scope, $timeout, moment, calendarHelper, eventCountBadgeTotalFilter) {
+      controller: function($scope, $timeout, moment, calendarHelper, eventCountBadgeTotalFilter, calendarDebounce) {
 
         var vm = this;
         var firstRun = false;
 
         vm.eventCountBadgeTotalFilter = eventCountBadgeTotalFilter;
 
-        function updateView() {
+        var updateView = calendarDebounce(function() {
           vm.view = calendarHelper.getMonthView($scope.events, $scope.currentDay);
           var rows = Math.floor(vm.view.length / 7);
           vm.monthOffsets = [];
@@ -46,7 +46,7 @@ angular
             });
           }
 
-        }
+        }, 50);
 
         $scope.$watch('currentDay', updateView);
         $scope.$watch('events', updateView, true);

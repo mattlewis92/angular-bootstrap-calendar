@@ -19,14 +19,14 @@ angular
         autoOpen: '=calendarAutoOpen',
         timespanClick: '=calendarTimespanClick'
       },
-      controller: function($scope, $timeout, calendarHelper, eventCountBadgeTotalFilter) {
+      controller: function($scope, $timeout, calendarHelper, eventCountBadgeTotalFilter, calendarDebounce) {
 
         var vm = this;
         var firstRun = false;
 
         vm.eventCountBadgeTotalFilter = eventCountBadgeTotalFilter;
 
-        function updateView() {
+        var updateView = calendarDebounce(function() {
           vm.view = calendarHelper.getYearView($scope.events, $scope.currentDay);
 
           //Auto open the calendar to the current day if set
@@ -40,7 +40,7 @@ angular
               }
             });
           }
-        }
+        }, 50);
 
         $scope.$watch('currentDay', updateView);
         $scope.$watch('events', updateView, true);

@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('mwl.calendar')
+angular
+  .module('mwl.calendar')
   .provider('calendarConfig', function() {
 
     var defaultDateFormats = {
