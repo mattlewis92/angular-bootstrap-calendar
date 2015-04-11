@@ -32,7 +32,8 @@ angular
         var self = this;
 
         var weekTitleLabel = $scope.weekTitleLabel || calendarConfig.titleFormats.week;
-        this.titleFunctions = {
+
+        var titleFunctions = {
           day: function(currentDay) {
             return moment(currentDay).format(calendarConfig.titleFormats.day);
           },
@@ -52,22 +53,24 @@ angular
           $scope.currentDay = newDay;
         };
 
-        $scope.control = $scope.control || {};
+        var calendarControl = $scope.control || {};
 
-        $scope.control.prev = function() {
+        calendarControl.prev = function() {
           $scope.currentDay = moment($scope.currentDay).subtract(1, $scope.view).toDate();
         };
 
-        $scope.control.next = function() {
+        calendarControl.next = function() {
           $scope.currentDay = moment($scope.currentDay).add(1, $scope.view).toDate();
         };
 
-        $scope.control.getTitle = function() {
-          if (!self.titleFunctions[$scope.view]) {
+        calendarControl.getTitle = function() {
+          if (!titleFunctions[$scope.view]) {
             return '';
           }
-          return self.titleFunctions[$scope.view]($scope.currentDay);
+          return titleFunctions[$scope.view]($scope.currentDay);
         };
+
+        $scope.control = calendarControl;
 
         //Auto update the calendar when the locale changes
         var firstRunWatcher = true;
