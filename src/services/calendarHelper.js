@@ -24,19 +24,6 @@ angular.module('mwl.calendar')
       });
     }
 
-    this.getMonthNames = function() {
-
-      var months = [];
-      var count = 0;
-
-      while (count < 12) {
-        months.push(moment().month(count++).format(calendarConfig.dateFormats.month));
-      }
-
-      return months;
-
-    };
-
     this.getWeekDayNames = function() {
 
       var weekdays = [];
@@ -67,25 +54,27 @@ angular.module('mwl.calendar')
     this.getYearView = function(events, currentDay) {
 
       var grid = [];
-      var months = self.getMonthNames();
       var eventsInPeriod = getEventsInPeriod(currentDay, 'year', events);
+      var month = moment(currentDay).startOf('year');
+      var count = 0;
 
       for (var i = 0; i < 3; i++) {
         var row = [];
         for (var j = 0; j < 4; j++) {
-          var monthIndex = 12 - months.length;
-          var startPeriod = new Date(moment(currentDay).format('YYYY'), monthIndex, 1);
-          var endPeriod = moment(startPeriod).add(1, 'month').subtract(1, 'second').toDate();
+          var startPeriod = month.clone();
+          var endPeriod = startPeriod.clone().endOf('month');
 
           row.push({
-            label: months.shift(),
-            monthIndex: monthIndex,
-            isToday: moment(startPeriod).startOf('month').isSame(moment().startOf('month')),
+            label: startPeriod.format(calendarConfig.dateFormats.month),
+            monthIndex: count++,
+            isToday: startPeriod.isSame(moment().startOf('month')),
             events: eventsInPeriod.filter(function(event) {
               return self.eventIsInPeriod(event.starts_at, event.ends_at, startPeriod, endPeriod);
             }),
-            date: moment(startPeriod).startOf('month')
+            date: startPeriod
           });
+
+          month.add(1, 'month');
         }
         grid.push(row);
       }
