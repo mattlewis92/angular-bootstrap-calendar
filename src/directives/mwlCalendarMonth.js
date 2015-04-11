@@ -48,7 +48,7 @@ angular
         $scope.$watch('currentDay', updateView);
         $scope.$watch('events', updateView, true);
 
-        $scope.weekDays = calendarHelper.getWeekDayNames(false, $scope.useIsoWeek);
+        $scope.weekDays = calendarHelper.getWeekDayNames($scope.useIsoWeek);
 
         $scope.dayClicked = function(rowIndex, cellIndex, dayClickedFirstRun) {
 

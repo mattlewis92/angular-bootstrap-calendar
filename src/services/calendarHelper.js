@@ -46,7 +46,7 @@ angular.module('mwl.calendar')
 
     };
 
-    this.getWeekDayNames = function(short, useISOWeek) {
+    this.getWeekDayNames = function(useISOWeek) {
 
       var weekdays = [];
       var startDay = isISOWeek(useISOWeek) ? 22 : 21;
@@ -195,7 +195,7 @@ angular.module('mwl.calendar')
 
       var dateOffset = isISOWeek(useISOWeek) ? 1 : 0;
       var columns = new Array(7);
-      var weekDays = self.getWeekDayNames(false, useISOWeek);
+      var weekDays = self.getWeekDayNames(useISOWeek);
       var currentWeekDayIndex = currentDay.getDay();
       var beginningOfWeek, endOfWeek, i, date;
 
