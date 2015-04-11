@@ -16,22 +16,26 @@ angular
       },
       controller: function($scope, moment, calendarHelper, calendarDebounce) {
 
+        var vm = this;
+
         var updateView = calendarDebounce(function() {
           $scope.view = calendarHelper.getWeekView($scope.events, $scope.currentDay);
         }, 50);
 
-        $scope.drillDown = function(day) {
-          var date = moment($scope.currentDay).clone().date(day).toDate();
+        $scope.$watch('currentDay', updateView);
+        $scope.$watch('events', updateView, true);
+
+        vm.drillDown = function(day) {
+          var date = day.date.toDate();
           if ($scope.timespanClick({calendarDate: date}) !== false) {
-            $scope.calendarCtrl.changeView('day', date);
+            vm.calendarCtrl.changeView('day', date);
           }
         };
 
-        $scope.$watch('currentDay', updateView);
-        $scope.$watch('events', updateView, true);
       },
+      controllerAs: 'vm',
       link: function(scope, element, attrs, calendarCtrl) {
-        scope.calendarCtrl = calendarCtrl;
+        scope.vm.calendarCtrl = calendarCtrl;
       }
     };
 

@@ -105,60 +105,32 @@ angular
 
     function getWeekView(events, currentDay) {
 
-      var dateOffset = isISOWeekBasedOnLocale() ? 1 : 0;
-      var columns = new Array(7);
-      var weekDays = getWeekDayNames();
-      var currentWeekDayIndex = currentDay.getDay();
-      var beginningOfWeek, endOfWeek, i, date;
-
-      for (i = currentWeekDayIndex; i >= 0; i--) {
-        date = moment(currentDay).subtract(currentWeekDayIndex - i, 'days').add(dateOffset, 'day').toDate();
-        columns[i] = {
-          weekDay: weekDays[i],
-          day: moment(date).format('D'),
-          date: moment(date).format(calendarConfig.dateFormats.day),
-          isPast: moment(date).startOf('day').isBefore(moment().startOf('day')),
-          isToday: moment(date).startOf('day').isSame(moment().startOf('day')),
-          isFuture: moment(date).startOf('day').isAfter(moment().startOf('day')),
-          isWeekend: [0, 6].indexOf(moment(date).day()) > -1
-        };
-        if (i === 0) {
-          beginningOfWeek = date;
-        } else if (i === 6) {
-          endOfWeek = date;
-        }
+      var startOfWeek = moment(currentDay).startOf('week');
+      var endOfWeek = moment(currentDay).endOf('week');
+      var dayCounter = startOfWeek.clone();
+      var days = [];
+      var today = moment().startOf('day');
+      while(days.length < 7) {
+        days.push({
+          weekDayLabel: dayCounter.format(calendarConfig.dateFormats.weekDay),
+          date: dayCounter.clone(),
+          dayLabel: dayCounter.format(calendarConfig.dateFormats.day),
+          isPast: dayCounter.isBefore(today),
+          isToday: dayCounter.isSame(today),
+          isFuture: dayCounter.isAfter(today),
+          isWeekend: [0, 6].indexOf(dayCounter.day()) > -1
+        });
+        dayCounter.add(1, 'day');
       }
-
-      for (i = currentWeekDayIndex + 1; i < 7; i++) {
-        date = moment(currentDay).add(i - currentWeekDayIndex, 'days').add(dateOffset, 'day').toDate();
-        columns[i] = {
-          weekDay: weekDays[i],
-          day: moment(date).format('D'),
-          date: moment(date).format(calendarConfig.dateFormats.day),
-          isPast: moment(date).startOf('day').isBefore(moment().startOf('day')),
-          isToday: moment(date).startOf('day').isSame(moment().startOf('day')),
-          isFuture: moment(date).startOf('day').isAfter(moment().startOf('day')),
-          isWeekend: [0, 6].indexOf(moment(date).day()) > -1
-        };
-        if (i === 0) {
-          beginningOfWeek = date;
-        } else if (i === 6) {
-          endOfWeek = date;
-        }
-      }
-
-      endOfWeek = moment(endOfWeek).endOf('day').toDate();
-      beginningOfWeek = moment(beginningOfWeek).startOf('day').toDate();
 
       var eventsSorted = events.filter(function(event) {
-        return eventIsInPeriod(event.starts_at, event.ends_at, beginningOfWeek, endOfWeek);
+        return eventIsInPeriod(event.starts_at, event.ends_at, startOfWeek, endOfWeek);
       }).map(function(event) {
 
         var eventStart = moment(event.starts_at).startOf('day');
         var eventEnd = moment(event.ends_at).startOf('day');
-        var weekViewStart = moment(beginningOfWeek).startOf('day');
+        var weekViewStart = moment(startOfWeek).startOf('day');
         var weekViewEnd = moment(endOfWeek).startOf('day');
-
         var offset, span;
 
         if (eventStart.isBefore(weekViewStart) || eventStart.isSame(weekViewStart)) {
@@ -179,10 +151,11 @@ angular
 
         event.daySpan = span;
         event.dayOffset = offset;
+
         return event;
       });
 
-      return {columns: columns, events: eventsSorted};
+      return {days: days, events: eventsSorted};
 
     }
 

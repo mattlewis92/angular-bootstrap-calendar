@@ -3,21 +3,20 @@
 
     <div
       class="cal-cell1"
-      ng-repeat="column in view.columns track by $index"
+      ng-repeat="day in view.days track by $index"
       ng-class="{
-        'cal-day-weekend': column.isWeekend,
-        'cal-day-past': column.isPast,
-        'cal-day-today': column.isToday,
-        'cal-day-future': column.isFuture}">
+        'cal-day-weekend': day.isWeekend,
+        'cal-day-past': day.isPast,
+        'cal-day-today': day.isToday,
+        'cal-day-future': day.isFuture}">
 
-      {{ column.weekDay }}
+      {{ day.weekDayLabel }}
       <br>
       <small>
-        <span data-cal-date ng-click="drillDown(column.day)" class="pointer">{{ column.date }}</span>
+        <span data-cal-date ng-click="vm.drillDown(day)" class="pointer">{{ day.dayLabel }}</span>
       </small>
 
     </div>
-
 
   </div>
 
@@ -28,6 +27,5 @@
       </a>
     </div>
   </div>
-
 
 </div>
