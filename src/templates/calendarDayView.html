@@ -49,7 +49,7 @@
       ng-repeat="event in vm.view track by $index"
       ng-style="{top: event.top + 'px', left: event.left + 60 + 'px', height: event.height + 'px'}">
 
-      <!--<span class="cal-hours">{{ event.starts_at | date:'d MMM HH:mm' }} - {{ event.ends_at | date:'d MMM HH:mm' }}<br></span>-->
+      <!--<span class="cal-hours">{{ event.startsAt | date:'d MMM HH:mm' }} - {{ event.endsAt | date:'d MMM HH:mm' }}<br></span>-->
       <a href="javascript:;" class="event-item" ng-click="onEventClick({calendarEvent: event})">
         <span>{{ event.title | truncateEventTitle:20:event.height }}</span>
       </a>

@@ -23,7 +23,7 @@ angular
       var startPeriod = moment(calendarDate).startOf(period);
       var endPeriod = moment(calendarDate).endOf(period);
       return allEvents.filter(function(event) {
-        return eventIsInPeriod(event.starts_at, event.ends_at, startPeriod, endPeriod);
+        return eventIsInPeriod(event.startsAt, event.endsAt, startPeriod, endPeriod);
       });
     }
 
@@ -52,7 +52,7 @@ angular
         var startPeriod = month.clone();
         var endPeriod = startPeriod.clone().endOf('month');
         var periodEvents = eventsInPeriod.filter(function(event) {
-          return eventIsInPeriod(event.starts_at, event.ends_at, startPeriod, endPeriod);
+          return eventIsInPeriod(event.startsAt, event.endsAt, startPeriod, endPeriod);
         });
         view.push({
           label: startPeriod.format(calendarConfig.dateFormats.month),
@@ -84,7 +84,7 @@ angular
         var monthEvents = [];
         if (inMonth) {
           monthEvents = eventsInPeriod.filter(function(event) {
-            return eventIsInPeriod(event.starts_at, event.ends_at, day, day.clone().endOf('day'));
+            return eventIsInPeriod(event.startsAt, event.endsAt, day, day.clone().endOf('day'));
           });
         }
 
@@ -128,11 +128,11 @@ angular
       }
 
       var eventsSorted = events.filter(function(event) {
-        return eventIsInPeriod(event.starts_at, event.ends_at, startOfWeek, endOfWeek);
+        return eventIsInPeriod(event.startsAt, event.endsAt, startOfWeek, endOfWeek);
       }).map(function(event) {
 
-        var eventStart = moment(event.starts_at).startOf('day');
-        var eventEnd = moment(event.ends_at).startOf('day');
+        var eventStart = moment(event.startsAt).startOf('day');
+        var eventEnd = moment(event.endsAt).startOf('day');
         var weekViewStart = moment(startOfWeek).startOf('day');
         var weekViewEnd = moment(endOfWeek).startOf('day');
         var offset, span;
@@ -174,26 +174,26 @@ angular
 
       return eventsInPeriod.filter(function(event) {
         return eventIsInPeriod(
-          event.starts_at,
-          event.ends_at,
+          event.startsAt,
+          event.endsAt,
           moment(currentDay).startOf('day').toDate(),
           moment(currentDay).endOf('day').toDate()
         );
       }).map(function(event) {
-        if (moment(event.starts_at).isBefore(calendarStart)) {
+        if (moment(event.startsAt).isBefore(calendarStart)) {
           event.top = 0;
         } else {
-          event.top = (moment(event.starts_at).startOf('minute').diff(calendarStart.startOf('minute'), 'minutes') * dayHeightMultiplier) - 2;
+          event.top = (moment(event.startsAt).startOf('minute').diff(calendarStart.startOf('minute'), 'minutes') * dayHeightMultiplier) - 2;
         }
 
-        if (moment(event.ends_at).isAfter(calendarEnd)) {
+        if (moment(event.endsAt).isAfter(calendarEnd)) {
           event.height = calendarHeight - event.top;
         } else {
-          var diffStart = event.starts_at;
-          if (moment(event.starts_at).isBefore(calendarStart)) {
+          var diffStart = event.startsAt;
+          if (moment(event.startsAt).isBefore(calendarStart)) {
             diffStart = calendarStart.toDate();
           }
-          event.height = moment(event.ends_at).diff(diffStart, 'minutes') * dayHeightMultiplier;
+          event.height = moment(event.endsAt).diff(diffStart, 'minutes') * dayHeightMultiplier;
         }
 
         if (event.top - event.height > calendarHeight) {
@@ -212,8 +212,8 @@ angular
           var canFitInThisBucket = true;
 
           bucket.forEach(function(bucketItem) {
-            if (eventIsInPeriod(event.starts_at, event.ends_at, bucketItem.starts_at, bucketItem.ends_at) ||
-              eventIsInPeriod(bucketItem.starts_at, bucketItem.ends_at, event.starts_at, event.ends_at)) {
+            if (eventIsInPeriod(event.startsAt, event.endsAt, bucketItem.startsAt, bucketItem.endsAt) ||
+              eventIsInPeriod(bucketItem.startsAt, bucketItem.endsAt, event.startsAt, event.endsAt)) {
               canFitInThisBucket = false;
             }
           });

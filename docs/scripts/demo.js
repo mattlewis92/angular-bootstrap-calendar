@@ -14,20 +14,20 @@ angular
       {
         title: 'Event 1',
         type: 'warning',
-        starts_at: new Date(currentYear,currentMonth,25,8,30),
-        ends_at: new Date(currentYear,currentMonth,25,9,30)
+        startsAt: new Date(currentYear,currentMonth,25,8,30),
+        endsAt: new Date(currentYear,currentMonth,25,9,30)
       },
       {
         title: 'Event 2',
         type: 'info',
-        starts_at: new Date(currentYear,currentMonth,19,7,30),
-        ends_at: new Date(currentYear,currentMonth,25,9,30)
+        startsAt: new Date(currentYear,currentMonth,19,7,30),
+        endsAt: new Date(currentYear,currentMonth,25,9,30)
       },
       {
         title: 'This is a really long event title',
         type: 'important',
-        starts_at: new Date(currentYear,currentMonth,25,6,30),
-        ends_at: new Date(currentYear,currentMonth,25,6,60)
+        startsAt: new Date(currentYear,currentMonth,25,6,30),
+        endsAt: new Date(currentYear,currentMonth,25,6,60)
       }
     ];
 
@@ -40,8 +40,8 @@ angular
       $scope.events.push({
         title: 'Event ' + i,
         type: 'warning',
-        starts_at: start,
-        ends_at: moment(start).add(2, 'hours').toDate()
+        startsAt: start,
+        endsAt: moment(start).add(2, 'hours').toDate()
       })
     }*/
 
