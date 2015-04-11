@@ -200,7 +200,12 @@ angular
       var buckets = [];
 
       return eventsInPeriod.filter(function(event) {
-        return self.eventIsInPeriod(event.starts_at, event.ends_at, moment(currentDay).startOf('day').toDate(), moment(currentDay).endOf('day').toDate());
+        return self.eventIsInPeriod(
+          event.starts_at,
+          event.ends_at,
+          moment(currentDay).startOf('day').toDate(),
+          moment(currentDay).endOf('day').toDate()
+        );
       }).map(function(event) {
         if (moment(event.starts_at).isBefore(calendarStart)) {
           event.top = 0;
@@ -234,7 +239,8 @@ angular
           var canFitInThisBucket = true;
 
           bucket.forEach(function(bucketItem) {
-            if (self.eventIsInPeriod(event.starts_at, event.ends_at, bucketItem.starts_at, bucketItem.ends_at) || self.eventIsInPeriod(bucketItem.starts_at, bucketItem.ends_at, event.starts_at, event.ends_at)) {
+            if (self.eventIsInPeriod(event.starts_at, event.ends_at, bucketItem.starts_at, bucketItem.ends_at) ||
+              self.eventIsInPeriod(bucketItem.starts_at, bucketItem.ends_at, event.starts_at, event.ends_at)) {
               canFitInThisBucket = false;
             }
           });
