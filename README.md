@@ -139,11 +139,9 @@ This expression is called when a month or day on the calendar is clicked. calend
 
 Whether to auto open the year and month view breakdown to the current year / month. Default: false
 
-### calendar-use-iso-week
+### calendar-use-iso-week (DEPRECATED)
 
-Whether the calendar should use the the ISO week standard (i.e. the calendar month and week views start on Monday and not Sunday).
-
-If not set the calendar will look at what is set in the locale by moment. You can set this globally via:
+This option is now deprecated. Use moment to use monday as the first day of the calendar instead like so:
 
 ```javascript
 moment.locale('en', {
@@ -152,6 +150,8 @@ moment.locale('en', {
     }
 });
 ```
+
+To preserve backwards compatibility the calendar will automatically change the locale dow in moment if you specify this attribute but this will be removed in a future version.
 
 ### calendar-event-label
 

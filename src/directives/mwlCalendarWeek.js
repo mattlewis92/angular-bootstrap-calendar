@@ -12,12 +12,11 @@ angular
         events: '=calendarEvents',
         currentDay: '=calendarCurrentDay',
         eventClick: '=calendarEventClick',
-        useIsoWeek: '=calendarUseIsoWeek',
         timespanClick: '=calendarTimespanClick'
       },
       controller: function($scope, moment, calendarHelper) {
         function updateView() {
-          $scope.view = calendarHelper.getWeekView($scope.events, $scope.currentDay, $scope.useIsoWeek);
+          $scope.view = calendarHelper.getWeekView($scope.events, $scope.currentDay);
         }
 
         $scope.drillDown = function(day) {

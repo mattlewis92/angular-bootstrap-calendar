@@ -17,7 +17,6 @@ angular
         editEventHtml: '=calendarEditEventHtml',
         deleteEventHtml: '=calendarDeleteEventHtml',
         autoOpen: '=calendarAutoOpen',
-        useIsoWeek: '=calendarUseIsoWeek',
         timespanClick: '=calendarTimespanClick'
       },
       controller: function($scope, $sce, $timeout, moment, calendarHelper, eventCountBadgeTotalFilter) {
@@ -27,7 +26,7 @@ angular
         $scope.eventCountBadgeTotalFilter = eventCountBadgeTotalFilter;
 
         function updateView() {
-          $scope.view = calendarHelper.getMonthView($scope.events, $scope.currentDay, $scope.useIsoWeek);
+          $scope.view = calendarHelper.getMonthView($scope.events, $scope.currentDay);
 
           //Auto open the calendar to the current day if set
           if ($scope.autoOpen && !firstRun) {
@@ -48,7 +47,7 @@ angular
         $scope.$watch('currentDay', updateView);
         $scope.$watch('events', updateView, true);
 
-        $scope.weekDays = calendarHelper.getWeekDayNames($scope.useIsoWeek);
+        $scope.weekDays = calendarHelper.getWeekDayNames();
 
         $scope.dayClicked = function(rowIndex, cellIndex, dayClickedFirstRun) {
 

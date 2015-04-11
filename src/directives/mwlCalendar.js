@@ -73,7 +73,17 @@ angular
         var firstRunWatcher = true;
         var unbindWatcher = $scope.$watch(function() {
           return moment.locale();
-        }, function() {
+        }, function(locale) {
+
+          //Maintain backwards compatibility with the previous functionality of the calendar
+          if ($scope.useIsoWeek === true) {
+            moment.locale(locale, {
+              week : {
+                dow : 1 //set monday as the first day of the week
+              }
+            });
+          }
+
           if (firstRunWatcher) { //dont run the first time the calendar is initialised
             firstRunWatcher = false;
             return;

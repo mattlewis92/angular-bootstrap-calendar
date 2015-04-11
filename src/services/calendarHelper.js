@@ -16,15 +16,6 @@ angular.module('mwl.calendar')
       return moment().startOf('week').day() === 1;
     }
 
-    function isISOWeek(userValue) {
-      //If a manual override has been set in the directive, use that
-      if (angular.isDefined(userValue)) {
-        return userValue;
-      }
-      //Otherwise fallback to the locale
-      return isISOWeekBasedOnLocale();
-    }
-
     function getEventsInPeriod(calendarDate, period, allEvents) {
       var startPeriod = moment(calendarDate).startOf(period);
       var endPeriod = moment(calendarDate).endOf(period);
@@ -46,10 +37,10 @@ angular.module('mwl.calendar')
 
     };
 
-    this.getWeekDayNames = function(useISOWeek) {
+    this.getWeekDayNames = function() {
 
       var weekdays = [];
-      var startDay = isISOWeek(useISOWeek) ? 22 : 21;
+      var startDay = isISOWeekBasedOnLocale() ? 22 : 21;
       for (var i = 0; i <= 6; i++) {
         weekdays.push(moment(new Date(2014, 8, startDay + i)).format(calendarConfig.dateFormats.weekDay));
       }
@@ -103,11 +94,11 @@ angular.module('mwl.calendar')
 
     };
 
-    this.getMonthView = function(events, currentDay, useISOWeek) {
+    this.getMonthView = function(events, currentDay) {
 
       var eventsInPeriod = getEventsInPeriod(currentDay, 'month', events);
 
-      var dateOffset = isISOWeek(useISOWeek) ? 1 : 0;
+      var dateOffset = isISOWeekBasedOnLocale() ? 1 : 0;
 
       var startOfMonth = moment(currentDay).startOf('month');
       var numberOfDaysInMonth = moment(currentDay).endOf('month').date();
@@ -191,9 +182,9 @@ angular.module('mwl.calendar')
 
     };
 
-    this.getWeekView = function(events, currentDay, useISOWeek) {
+    this.getWeekView = function(events, currentDay) {
 
-      var dateOffset = isISOWeek(useISOWeek) ? 1 : 0;
+      var dateOffset = isISOWeekBasedOnLocale() ? 1 : 0;
       var columns = new Array(7);
       var weekDays = self.getWeekDayNames(useISOWeek);
       var currentWeekDayIndex = currentDay.getDay();
