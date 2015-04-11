@@ -5,41 +5,41 @@
   <mwl-calendar-year
     events="events"
     current-day="currentDay"
-    event-click="eventClick"
-    edit-event-click="eventEditClick"
-    delete-event-click="eventDeleteClick"
+    on-event-click="onEventClick"
+    on-edit-event-click="onEditEventClick"
+    on-delete-event-click="onDeleteEventClick"
+    on-timespan-click="onTimespanClick"
     edit-event-html="editEventHtml"
     delete-event-html="deleteEventHtml"
     auto-open="autoOpen"
-    timespan-click="timespanClick"
     ng-switch-when="year"
   ></mwl-calendar-year>
 
   <mwl-calendar-month
     events="events"
     current-day="currentDay"
-    event-click="eventClick"
-    edit-event-click="eventEditClick"
-    delete-event-click="eventDeleteClick"
+    on-event-click="onEventClick"
+    on-edit-event-click="onEditEventClick"
+    on-delete-event-click="onDeleteEventClick"
+    on-timespan-click="onTimespanClick"
     edit-event-html="editEventHtml"
     delete-event-html="deleteEventHtml"
     auto-open="autoOpen"
-    timespan-click="timespanClick"
     ng-switch-when="month"
     ></mwl-calendar-month>
 
   <mwl-calendar-week
     events="events"
     current-day="currentDay"
-    event-click="eventClick"
-    timespan-click="timespanClick"
+    on-event-click="onEventClick"
+    on-timespan-click="onTimespanClick"
     ng-switch-when="week"
     ></mwl-calendar-week>
 
   <mwl-calendar-day
     events="events"
     current-day="currentDay"
-    event-click="eventClick"
+    on-event-click="onEventClick"
     day-view-start="{{ dayViewStart }}"
     day-view-end="{{ dayViewEnd }}"
     day-view-split="{{ dayViewSplit || 30 }}"

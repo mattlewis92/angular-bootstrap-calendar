@@ -11,7 +11,7 @@ angular
       scope: {
         events: '=',
         currentDay: '=',
-        eventClick: '=',
+        onEventClick: '=',
         dayViewStart: '@',
         dayViewEnd: '@',
         dayViewSplit: '@'

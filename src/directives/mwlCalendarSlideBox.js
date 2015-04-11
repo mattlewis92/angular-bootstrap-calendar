@@ -32,11 +32,11 @@ angular
       scope: {
         isOpen: '=',
         events: '=',
-        eventClick: '=',
+        onEventClick: '=',
         editEventHtml: '=',
-        eventEditClick: '=',
+        onEditEventClick: '=',
         deleteEventHtml: '=',
-        eventDeleteClick: '='
+        onDeleteEventClick: '='
       }
     };
 

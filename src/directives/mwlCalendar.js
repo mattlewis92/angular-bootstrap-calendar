@@ -10,19 +10,19 @@ angular
       scope: {
         events: '=',
         view: '=',
+        viewTitle: '=',
         currentDay: '=',
-        eventClick: '&',
-        eventEditClick: '&',
-        eventDeleteClick: '&',
         editEventHtml: '=',
         deleteEventHtml: '=',
         autoOpen: '=',
-        timespanClick: '&',
+        onEventClick: '&',
+        onEditEventClick: '&',
+        onDeleteEventClick: '&',
+        onTimespanClick: '&',
+        onDrillDownClick: '&',
         dayViewStart: '@',
         dayViewEnd: '@',
-        dayViewSplit: '@',
-        viewTitle: '=',
-        onDrillDown: '&'
+        dayViewSplit: '@'
       },
       controller: function($scope, $timeout, moment, calendarTitle, calendarDebounce) {
 
@@ -41,7 +41,7 @@ angular
             'week': 'day'
           };
 
-          if ($scope.onDrillDown({calendarDate: moment(date).toDate(), calendarNextView: nextView[$scope.view]}) !== false) {
+          if ($scope.onDrillDownClick({calendarDate: moment(date).toDate(), calendarNextView: nextView[$scope.view]}) !== false) {
             vm.changeView(nextView[$scope.view], date);
           }
 

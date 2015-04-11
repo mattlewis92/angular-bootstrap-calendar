@@ -87,15 +87,15 @@
             view="calendarView"
             view-title="calendarTitle"
             current-day="calendarDay"
-            event-click="eventClicked(calendarEvent)"
+            on-event-click="eventClicked(calendarEvent)"
             edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
             delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
-            edit-event-click="eventEdited(calendarEvent)"
-            delete-event-click="eventDeleted(calendarEvent)"
+            on-edit-event-click="eventEdited(calendarEvent)"
+            on-delete-event-click="eventDeleted(calendarEvent)"
             auto-open="true"
             day-view-start="06:00"
             day-view-end="22:00"
-            timespan-click="dayClicked($date)"
+            on-timespan-click="dayClicked(calendarDay)"
             day-view-split="30">
           </mwl-calendar>
 

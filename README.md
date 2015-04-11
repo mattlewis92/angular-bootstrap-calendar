@@ -61,11 +61,11 @@ There is a single directive exposed to create the calendar, use it like so:
     view="calendarView"
     view-title="calendarTitle"
     current-day="calendarDay"
-    event-click="eventClicked(calendarEvent)"
+    on-event-click="eventClicked(calendarEvent)"
     edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
     delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
-    edit-event-click="eventEdited(calendarEvent)"
-    delete-event-click="eventDeleted(calendarEvent)"
+    on-edit-event-click="eventEdited(calendarEvent)"
+    on-delete-event-click="eventDeleted(calendarEvent)"
     auto-open="true"
     ></mwl-calendar>
 ```
@@ -108,7 +108,7 @@ This variable holds the current day the calendar is centralised on. Each view wi
 
 This variable will be assigned to the calendar title. If you want to change the formatting you can use the calendarConfigProvider or just override the appropriate method in the calendarTitle factory.
 
-### event-click 
+### on-event-click 
 
 This expression is called when an event is clicked on the calendar. calendarEvent contains the calendar event that was clicked on.
 
@@ -120,15 +120,15 @@ If provided this piece of html will be displayed next to an event on the year an
 
 If provided this piece of html will be displayed next to an event on the year and month view and will fire the function passed to delete-event-click.
 
-### edit-event-click 
+### on-edit-event-click 
 
 This expression is called when an event edit link is clicked on the calendar. calendarEvent contains the calendar event that was clicked on.
 
-### delete-event-click 
+### on-delete-event-click 
 
 This expression is called when an event delete link is clicked on the calendar. calendarEvent contains the calendar event that was clicked on.
 
-### timespan-click
+### on-timespan-click
 
 This expression is called when a month or day on the calendar is clicked. calendarDate contains the start of the month or day that was clicked on.
 
@@ -148,7 +148,7 @@ An interpolated string in the form of hh:mm to end the day view at, e.g. setting
 
 The number of chunks to split the day view hours up into. Can be either 10, 15 or 30. Default: 30
 
-### on-drill-down
+### on-drill-down-click
 
 An optional expression that is evaluated when the drilldown (clicking on a date to change the view) is triggered. Return false from the expression function to disable the drilldown. calendarDate is available as the date that was selected. calendarNextView is the view that the calendar will be changed to.  
 

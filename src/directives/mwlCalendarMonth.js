@@ -11,13 +11,13 @@ angular
       scope: {
         events: '=',
         currentDay: '=',
-        eventClick: '=',
-        eventEditClick: '=',
-        eventDeleteClick: '=',
+        onEventClick: '=',
+        onEditEventClick: '=',
+        onDeleteEventClick: '=',
         editEventHtml: '=',
         deleteEventHtml: '=',
         autoOpen: '=',
-        timespanClick: '='
+        onTimespanClick: '='
       },
       controller: function($scope, moment, calendarHelper, eventCountBadgeTotalFilter) {
 
@@ -51,7 +51,7 @@ angular
         vm.dayClicked = function(day, dayClickedFirstRun) {
 
           if (!dayClickedFirstRun) {
-            $scope.timespanClick({calendarDate: day.date.toDate()});
+            $scope.onTimespanClick({calendarDate: day.date.toDate()});
           }
 
           vm.view.forEach(function(monthDay) {
