@@ -5,7 +5,7 @@ angular
   .directive('mwlCalendarDay', function() {
 
     return {
-      templateUrl: 'templates/day.html',
+      templateUrl: 'templates/calendarDayView.html',
       restrict: 'EA',
       require: '^mwlCalendar',
       scope: {

@@ -5,7 +5,7 @@ angular
   .directive('mwlCalendarYear', function(moment) {
 
     return {
-      templateUrl: 'templates/year.html',
+      templateUrl: 'templates/calendarYearView.html',
       restrict: 'EA',
       require: '^mwlCalendar',
       scope: {
