@@ -9,10 +9,10 @@ angular
       restrict: 'EA',
       require: '^mwlCalendar',
       scope: {
-        events: '=calendarEvents',
-        currentDay: '=calendarCurrentDay',
-        eventClick: '=calendarEventClick',
-        timespanClick: '=calendarTimespanClick'
+        events: '=',
+        currentDay: '=',
+        eventClick: '=',
+        timespanClick: '='
       },
       controller: function($scope, moment, calendarHelper, calendarDebounce) {
 

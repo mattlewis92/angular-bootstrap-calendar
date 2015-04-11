@@ -57,22 +57,22 @@ angular.module('myModule', ['mwl.calendar', 'ui.bootstrap']);
 There is a single directive exposed to create the calendar, use it like so:
 ```javascript
 <mwl-calendar
-    calendar-events="events"
-    calendar-view="calendarView"
-    calendar-current-day="calendarDay"
-    calendar-control="calendarControl"
-    calendar-event-click="eventClicked(calendarEvent)"
-    calendar-edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
-    calendar-delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
-    calendar-edit-event-click="eventEdited(calendarEvent)"
-    calendar-delete-event-click="eventDeleted(calendarEvent)"
-    calendar-auto-open="true"
+    events="events"
+    view="calendarView"
+    current-day="calendarDay"
+    control="calendarControl"
+    event-click="eventClicked(calendarEvent)"
+    edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
+    delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
+    edit-event-click="eventEdited(calendarEvent)"
+    delete-event-click="eventDeleted(calendarEvent)"
+    auto-open="true"
     ></mwl-calendar>
 ```
 
 An explanation of the properties is as follows:
 
-### calendar-events
+### events
 
 An array of events to display on the calendar. For example:
 ```javascript
@@ -82,8 +82,8 @@ $scope.events = [
     type: 'info', // The type of the event (determines its color). Can be important, warning, info, inverse, success or special
     starts_at: new Date(2013,5,1,1), // A javascript date object for when the event starts
     ends_at: new Date(2014,8,26,15), // A javascript date object for when the event ends
-    editable: false, // If calendar-edit-event-html is set and this field is explicitly set to false then dont make it editable
-    deletable: false, // If calendar-delete-event-html is set and this field is explicitly set to false then dont make it deleteable
+    editable: false, // If edit-event-html is set and this field is explicitly set to false then dont make it editable
+    deletable: false, // If delete-event-html is set and this field is explicitly set to false then dont make it deleteable
     incrementsBadgeTotal: true //If set to false then will not count towards the badge total amount on the month and year view
   }
 ];
@@ -91,7 +91,7 @@ $scope.events = [
 
 The 4 properties listed are required for all events.
 
-### calendar-view
+### view
 
 This variable is a string that can be either 'year', 'month', 'week' or 'day. Changing it will change the view of the calendar.
 
@@ -100,46 +100,46 @@ For the calendar to display this variable needs to be set like so:
 $scope.calendarView = 'month';
 ```
 
-### calendar-current-day
+### current-day
 
 This variable holds the current day the calendar is centralised on. Each view will decide on its current year / month / week / day depending on the value of this variable.
 
-### calendar-control
+### control
 
 The directive will instantiate this variable for you and add the following methods to it:
 * prev - Goes to the previous page of the view
 * next - Goes to the next page of the view
 * getTitle - Gets the title of the calendar depending on the current date and view.
 
-### calendar-event-click 
+### event-click 
 
 This expression is called when an event is clicked on the calendar. calendarEvent contains the calendar event that was clicked on.
 
-### calendar-edit-event-html 
+### edit-event-html 
 
 If provided this piece of html will be displayed next to an event on the year and month view and will fire the function passed to edit-event-click.
 
-### calendar-delete-event-html 
+### delete-event-html 
 
 If provided this piece of html will be displayed next to an event on the year and month view and will fire the function passed to delete-event-click.
 
-### calendar-edit-event-click 
+### edit-event-click 
 
 This expression is called when an event edit link is clicked on the calendar. calendarEvent contains the calendar event that was clicked on.
 
-### calendar-delete-event-click 
+### delete-event-click 
 
 This expression is called when an event delete link is clicked on the calendar. calendarEvent contains the calendar event that was clicked on.
 
-### calendar-timespan-click
+### timespan-click
 
 This expression is called when a month or day on the calendar is clicked. calendarDate contains the start of the month or day that was clicked on.
 
-### calendar-auto-open
+### auto-open
 
 Whether to auto open the year and month view breakdown to the current year / month. Default: false
 
-### calendar-use-iso-week (DEPRECATED)
+### use-iso-week (DEPRECATED)
 
 This option is now deprecated. Use moment to use monday as the first day of the calendar instead like so:
 
@@ -153,25 +153,25 @@ moment.locale('en', {
 
 To preserve backwards compatibility the calendar will automatically change the locale dow in moment if you specify this attribute but this will be removed in a future version.
 
-### calendar-event-label
+### event-label
 
 An interpolated locale string to use as the column header on the day view for the events column. Default: 'Events'.
 
-### calendar-time-label
+### time-label
 
 An interpolated locale string to use as the column header on the day view for the time column. Default: 'Time'.
 
-### calendar-week-title-label
+### week-title-label
 
 An interpolated local string to use in the week view title. Default: 'Week {week} of {year}'
 
-### calendar-day-view-start
+### day-view-start
 An interpolated string in the form of hh:mm to start the day view at, e.g. setting it to 06:00 will start the day view at 6am
 
-### calendar-day-view-end
+### day-view-end
 An interpolated string in the form of hh:mm to end the day view at, e.g. setting it to 22:00 will end the day view at 10pm
 
-### calendar-day-view-split
+### day-view-split
 The number of chunks to split the day view hours up into. Can be either 10, 15 or 30. Default: 30
 
 ## Internationalization and localization

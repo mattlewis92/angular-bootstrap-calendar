@@ -9,15 +9,15 @@ angular
       restrict: 'EA',
       require: '^mwlCalendar',
       scope: {
-        events: '=calendarEvents',
-        currentDay: '=calendarCurrentDay',
-        eventClick: '=calendarEventClick',
-        eventEditClick: '=calendarEditEventClick',
-        eventDeleteClick: '=calendarDeleteEventClick',
-        editEventHtml: '=calendarEditEventHtml',
-        deleteEventHtml: '=calendarDeleteEventHtml',
-        autoOpen: '=calendarAutoOpen',
-        timespanClick: '=calendarTimespanClick'
+        events: '=',
+        currentDay: '=',
+        eventClick: '=',
+        eventEditClick: '=',
+        eventDeleteClick: '=',
+        editEventHtml: '=',
+        deleteEventHtml: '=',
+        autoOpen: '=',
+        timespanClick: '='
       },
       controller: function($scope, $timeout, calendarHelper, eventCountBadgeTotalFilter, calendarDebounce) {
 

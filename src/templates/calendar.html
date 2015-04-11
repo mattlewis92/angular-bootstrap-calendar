@@ -3,48 +3,48 @@
   <div class="alert alert-danger" ng-switch-default>The value passed to calendar-view is not set</div>
 
   <mwl-calendar-year
-    calendar-events="events"
-    calendar-current-day="currentDay"
-    calendar-event-click="eventClick"
-    calendar-edit-event-click="eventEditClick"
-    calendar-delete-event-click="eventDeleteClick"
-    calendar-edit-event-html="editEventHtml"
-    calendar-delete-event-html="deleteEventHtml"
-    calendar-auto-open="autoOpen"
-    calendar-timespan-click="timespanClick"
+    events="events"
+    current-day="currentDay"
+    event-click="eventClick"
+    edit-event-click="eventEditClick"
+    delete-event-click="eventDeleteClick"
+    edit-event-html="editEventHtml"
+    delete-event-html="deleteEventHtml"
+    auto-open="autoOpen"
+    timespan-click="timespanClick"
     ng-switch-when="year"
   ></mwl-calendar-year>
 
   <mwl-calendar-month
-    calendar-events="events"
-    calendar-current-day="currentDay"
-    calendar-event-click="eventClick"
-    calendar-edit-event-click="eventEditClick"
-    calendar-delete-event-click="eventDeleteClick"
-    calendar-edit-event-html="editEventHtml"
-    calendar-delete-event-html="deleteEventHtml"
-    calendar-auto-open="autoOpen"
-    calendar-timespan-click="timespanClick"
+    events="events"
+    current-day="currentDay"
+    event-click="eventClick"
+    edit-event-click="eventEditClick"
+    delete-event-click="eventDeleteClick"
+    edit-event-html="editEventHtml"
+    delete-event-html="deleteEventHtml"
+    auto-open="autoOpen"
+    timespan-click="timespanClick"
     ng-switch-when="month"
     ></mwl-calendar-month>
 
   <mwl-calendar-week
-    calendar-events="events"
-    calendar-current-day="currentDay"
-    calendar-event-click="eventClick"
-    calendar-timespan-click="timespanClick"
+    events="events"
+    current-day="currentDay"
+    event-click="eventClick"
+    timespan-click="timespanClick"
     ng-switch-when="week"
     ></mwl-calendar-week>
 
   <mwl-calendar-day
-    calendar-events="events"
-    calendar-current-day="currentDay"
-    calendar-event-click="eventClick"
-    calendar-event-label="{{ eventLabel }}"
-    calendar-time-label="{{ timeLabel }}"
-    calendar-day-view-start="{{ dayViewStart }}"
-    calendar-day-view-end="{{ dayViewEnd }}"
-    calendar-day-view-split="{{ dayViewSplit || 30 }}"
+    events="events"
+    current-day="currentDay"
+    event-click="eventClick"
+    event-label="{{ eventLabel }}"
+    time-label="{{ timeLabel }}"
+    day-view-start="{{ dayViewStart }}"
+    day-view-end="{{ dayViewEnd }}"
+    day-view-split="{{ dayViewSplit || 30 }}"
     ng-switch-when="day"
     ></mwl-calendar-day>
 </div>

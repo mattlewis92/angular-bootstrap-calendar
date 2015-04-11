@@ -9,14 +9,14 @@ angular
       restrict: 'EA',
       require: '^mwlCalendar',
       scope: {
-        events: '=calendarEvents',
-        currentDay: '=calendarCurrentDay',
-        eventClick: '=calendarEventClick',
-        eventLabel: '@calendarEventLabel',
-        timeLabel: '@calendarTimeLabel',
-        dayViewStart: '@calendarDayViewStart',
-        dayViewEnd: '@calendarDayViewEnd',
-        dayViewSplit: '@calendarDayViewSplit'
+        events: '=',
+        currentDay: '=',
+        eventClick: '=',
+        eventLabel: '@',
+        timeLabel: '@',
+        dayViewStart: '@',
+        dayViewEnd: '@',
+        dayViewSplit: '@'
       },
       controller: function($scope, moment, calendarHelper, calendarConfig, calendarDebounce) {
 
