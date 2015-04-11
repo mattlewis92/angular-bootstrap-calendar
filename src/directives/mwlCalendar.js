@@ -17,7 +17,6 @@ angular
         editEventHtml: '=',
         deleteEventHtml: '=',
         autoOpen: '=',
-        useIsoWeek: '=',
         eventLabel: '@',
         timeLabel: '@',
         dayViewStart: '@',
@@ -45,19 +44,7 @@ angular
         //Auto update the calendar when the locale changes
         var unbindLocaleWatcher = $scope.$watch(function() {
           return moment.locale();
-        }, function(locale) {
-
-          //Maintain backwards compatibility with the previous functionality of the calendar
-          if ($scope.useIsoWeek === true) {
-            moment.locale(locale, {
-              week: {
-                dow: 1 //set monday as the first day of the week
-              }
-            });
-          }
-
-          refreshCalendar();
-        });
+        }, refreshCalendar);
 
         var unbindOnDestroy = [];
         unbindOnDestroy.push(unbindLocaleWatcher);
