@@ -12,16 +12,6 @@ angular
       });
     }
 
-    function getWeekDayNames() {
-      var weekdays = [];
-      var count = 0;
-      while(count < 7) {
-        weekdays.push(moment().weekday(count++).format(calendarConfig.dateFormats.weekDay));
-      }
-
-      return weekdays;
-    }
-
     function eventIsInPeriod(eventStart, eventEnd, periodStart, periodEnd) {
 
       eventStart = moment(eventStart);
@@ -35,6 +25,15 @@ angular
         eventStart.isSame(periodStart) ||
         eventEnd.isSame(periodEnd);
 
+    }
+
+    function getWeekDayNames() {
+      var weekdays = [];
+      var count = 0;
+      while(count < 7) {
+        weekdays.push(moment().weekday(count++).format(calendarConfig.dateFormats.weekDay));
+      }
+      return weekdays;
     }
 
     function getYearView(events, currentDay) {
@@ -231,7 +230,6 @@ angular
 
     return {
       getWeekDayNames: getWeekDayNames,
-      eventIsInPeriod: eventIsInPeriod,
       getYearView: getYearView,
       getMonthView: getMonthView,
       getWeekView: getWeekView,
