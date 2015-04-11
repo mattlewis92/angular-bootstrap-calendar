@@ -55,12 +55,6 @@ angular
 
         };
 
-        vm.drillDown = function(month) {
-          var date = moment($scope.currentDay).clone().month(month.date.month()).toDate();
-          if ($scope.timespanClick({calendarDate: date}) !== false) {
-            vm.calendarCtrl.changeView('month', date);
-          }
-        };
       },
       controllerAs: 'vm',
       link: function(scope, element, attrs, calendarCtrl) {

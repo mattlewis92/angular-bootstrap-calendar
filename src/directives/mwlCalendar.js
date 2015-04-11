@@ -23,13 +23,30 @@ angular
         dayViewStart: '@',
         dayViewEnd: '@',
         dayViewSplit: '@',
-        viewTitle: '='
+        viewTitle: '=',
+        onDrillDown: '&'
       },
       controller: function($scope, $timeout, moment, calendarTitle, calendarDebounce) {
 
-        this.changeView = function(view, newDay) {
+        var vm = this;
+
+        vm.changeView = function(view, newDay) {
           $scope.view = view;
           $scope.currentDay = newDay;
+        };
+
+        vm.drillDown = function(date) {
+
+          var nextView = {
+            'year': 'month',
+            'month': 'day',
+            'week': 'day'
+          };
+
+          if ($scope.onDrillDown({calendarDate: moment(date).toDate(), calendarNextView: nextView[$scope.view]}) !== false) {
+            vm.changeView(nextView[$scope.view], date);
+          }
+
         };
 
         //Use a debounce to prevent it being called 3 times on initialisation
@@ -38,7 +55,7 @@ angular
             $scope.viewTitle = calendarTitle[$scope.view]($scope.currentDay);
           }
           $scope.$broadcast('calendar.refreshView');
-        }, 10);
+        }, 50);
 
         //Auto update the calendar when the locale changes
         var unbindLocaleWatcher = $scope.$watch(function() {

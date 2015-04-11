@@ -22,13 +22,6 @@ angular
           vm.view = calendarHelper.getWeekView($scope.events, $scope.currentDay);
         });
 
-        vm.drillDown = function(day) {
-          var date = day.date.toDate();
-          if ($scope.timespanClick({calendarDate: date}) !== false) {
-            vm.calendarCtrl.changeView('day', date);
-          }
-        };
-
       },
       controllerAs: 'vm',
       link: function(scope, element, attrs, calendarCtrl) {

@@ -13,7 +13,7 @@
       {{ day.weekDayLabel }}
       <br>
       <small>
-        <span data-cal-date ng-click="vm.drillDown(day)" class="pointer">{{ day.dayLabel }}</span>
+        <span data-cal-date ng-click="vm.calendarCtrl.drillDown(day.date.toDate())" class="pointer">{{ day.dayLabel }}</span>
       </small>
 
     </div>

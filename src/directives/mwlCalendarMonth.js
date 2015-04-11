@@ -68,13 +68,6 @@ angular
 
         };
 
-        vm.drillDown = function(day) {
-          var date = moment($scope.currentDay).clone().date(day.date.date()).toDate();
-          if ($scope.timespanClick({calendarDate: date}) !== false) {
-            vm.calendarCtrl.changeView('day', date);
-          }
-        };
-
         vm.highlightEvent = function(event, shouldAddClass) {
 
           vm.view.forEach(function(day) {

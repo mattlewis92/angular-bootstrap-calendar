@@ -147,13 +147,20 @@ An interpolated locale string to use as the column header on the day view for th
 An interpolated locale string to use as the column header on the day view for the time column. Default: 'Time'.
 
 ### day-view-start
+
 An interpolated string in the form of hh:mm to start the day view at, e.g. setting it to 06:00 will start the day view at 6am
 
 ### day-view-end
+
 An interpolated string in the form of hh:mm to end the day view at, e.g. setting it to 22:00 will end the day view at 10pm
 
 ### day-view-split
+
 The number of chunks to split the day view hours up into. Can be either 10, 15 or 30. Default: 30
+
+### on-drill-down
+
+An optional expression that is evaluated when the drilldown (clicking on a date to change the view) is triggered. Return false from the expression function to disable the drilldown. calendarDate is available as the date that was selected. calendarNextView is the view that the calendar will be changed to.  
 
 ## The mwl-date-modifier directive
 
