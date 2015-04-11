@@ -36,8 +36,10 @@ angular.module('mwl.calendar')
     this.getMonthNames = function() {
 
       var months = [];
-      for (var i = 0; i <= 11; i++) {
-        months.push(moment(new Date(2014, i)).format(calendarConfig.dateFormats.month));
+      var count = 0;
+
+      while (count < 12) {
+        months.push(moment().month(count++).format(calendarConfig.dateFormats.month));
       }
 
       return months;
