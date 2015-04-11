@@ -31,8 +31,6 @@ angular
       },
       scope: {
         isOpen: '=',
-        isMonthView: '=?',
-        isYearView: '=?',
         events: '=',
         eventClick: '=',
         editEventHtml: '=',
