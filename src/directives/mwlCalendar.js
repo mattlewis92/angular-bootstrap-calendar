@@ -39,7 +39,7 @@ angular
             $scope.viewTitle = calendarTitle[$scope.view]($scope.currentDay);
           }
           $scope.$broadcast('calendar.refreshView');
-        }, 50);
+        }, 10);
 
         //Auto update the calendar when the locale changes
         var unbindLocaleWatcher = $scope.$watch(function() {
