@@ -2,7 +2,7 @@
 
 angular
   .module('mwl.calendar')
-  .directive('mwlCalendarYear', function(moment) {
+  .directive('mwlCalendarYear', function() {
 
     return {
       templateUrl: 'src/templates/calendarYearView.html',
@@ -19,7 +19,7 @@ angular
         autoOpen: '=',
         timespanClick: '='
       },
-      controller: function($scope, $timeout, calendarHelper, eventCountBadgeTotalFilter, calendarDebounce) {
+      controller: function($scope, $timeout, moment, calendarHelper, eventCountBadgeTotalFilter, calendarDebounce) {
 
         var vm = this;
         var firstRun = false;
