@@ -6,7 +6,7 @@ angular
 
     return {
       restrict: 'EA',
-      templateUrl: 'templates/calendarSlideBox.html',
+      templateUrl: 'src/templates/calendarSlideBox.html',
       replace: true,
       controller: function($scope, $sce) {
 

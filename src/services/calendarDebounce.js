@@ -21,7 +21,7 @@ angular
           func.apply(context, args);
         }
       };
-    };
+    }
 
     return debounce;
 

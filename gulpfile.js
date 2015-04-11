@@ -14,7 +14,7 @@ gulp.task('watch', ['server'], function() {
     './docs/scripts/*.js',
     './docs/styles/*.css',
     './src/**/*.js',
-    './templates/**']
+    './src/templates/**']
   ).on('change', $.livereload.changed);
 });
 
@@ -63,7 +63,7 @@ gulp.task('css', function() {
 function getTemplates() {
 
   return gulp
-    .src('templates/**/*.html')
+    .src('src/templates/**/*.html')
     .pipe($.htmlmin({
       removeComments: true,
       collapseWhitespace: true
@@ -71,7 +71,7 @@ function getTemplates() {
     .pipe($.angularTemplatecache({
       standalone: false,
       module: 'mwl.calendar',
-      root: 'templates/'
+      root: 'src/templates/'
     }));
 
 }
