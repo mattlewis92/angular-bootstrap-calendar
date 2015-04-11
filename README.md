@@ -66,8 +66,8 @@ There is a single directive exposed to create the calendar, use it like so:
     delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
     on-edit-event-click="eventEdited(calendarEvent)"
     on-delete-event-click="eventDeleted(calendarEvent)"
-    auto-open="true"
-    ></mwl-calendar>
+    auto-open="true">
+</mwl-calendar>
 ```
 
 An explanation of the properties is as follows:
