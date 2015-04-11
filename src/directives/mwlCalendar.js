@@ -17,8 +17,6 @@ angular
         editEventHtml: '=',
         deleteEventHtml: '=',
         autoOpen: '=',
-        eventLabel: '@',
-        timeLabel: '@',
         timespanClick: '&',
         dayViewStart: '@',
         dayViewEnd: '@',

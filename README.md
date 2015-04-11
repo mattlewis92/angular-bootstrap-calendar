@@ -59,8 +59,8 @@ There is a single directive exposed to create the calendar, use it like so:
 <mwl-calendar
     events="events"
     view="calendarView"
+    view-title="calendarTitle"
     current-day="calendarDay"
-    control="calendarControl"
     event-click="eventClicked(calendarEvent)"
     edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
     delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
@@ -136,16 +136,6 @@ This expression is called when a month or day on the calendar is clicked. calend
 
 Whether to auto open the year and month view breakdown to the current year / month. Default: false
 
-To preserve backwards compatibility the calendar will automatically change the locale dow in moment if you specify this attribute but this will be removed in a future version.
-
-### event-label
-
-An interpolated locale string to use as the column header on the day view for the events column. Default: 'Events'.
-
-### time-label
-
-An interpolated locale string to use as the column header on the day view for the time column. Default: 'Time'.
-
 ### day-view-start
 
 An interpolated string in the form of hh:mm to start the day view at, e.g. setting it to 06:00 will start the day view at 6am
@@ -196,20 +186,27 @@ There is also a helper directive that you can use for the next, today and previo
 
 The calendar directive uses moment.js to produce all months and days of the week etc. Therefore to change the language of the calendar just [follow this guide](http://momentjs.com/docs/#/i18n/).
 
+tl;dr include the appropriate moment locale file (or all of them) and call ```moment.locale('YOUR_LOCALE_STRING')```.
+
 ## Configuring date formats
 
-You can easily customise the date formats used throughout the calendar by using the calendarConfigProvider. There are current 2 methods available. Please note that all formats are those used by moment.js. Example usage:
+You can easily customise the date formats and i18n strings used throughout the calendar by using the calendarConfigProvider. Please note that all formats are those used by moment.js. Example usage:
 
 ```javascript
 angular.module('myModule')
   .config(function(calendarConfigProvider) {
   
-    calendarConfigProvider.configureDateFormats({
+    calendarConfigProvider.setDateFormats({
       hour: 'HH:mm' //this will configure the hour view to display in 24 hour format rather than the default of 12 hour
     });
     
-    calendarConfigProvider.configureTitleFormats({
+    calendarConfigProvider.setTitleFormats({
       day: 'ddd D MMM' //this will configure the day view title to be shorter
+    });
+    
+    calendarConfigProvider.setI18nStrings({
+      eventsLabel: 'Events', //This will set the events label on the day view
+      timeLabel: 'Time' //This will set the time label on the time view
     });
     
   });

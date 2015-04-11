@@ -12,8 +12,6 @@ angular
         events: '=',
         currentDay: '=',
         eventClick: '=',
-        eventLabel: '@',
-        timeLabel: '@',
         dayViewStart: '@',
         dayViewEnd: '@',
         dayViewSplit: '@'
@@ -22,6 +20,8 @@ angular
 
         var vm = this;
         var dayViewStart, dayViewEnd;
+
+        vm.calendarConfig = calendarConfig;
 
         function updateDays() {
           dayViewStart = moment($scope.dayViewStart || '00:00', 'HH:mm');
