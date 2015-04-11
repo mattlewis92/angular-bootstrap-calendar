@@ -203,8 +203,8 @@ angular
           var canFitInThisBucket = true;
 
           bucket.forEach(function(bucketItem) {
-            if (self.eventIsInPeriod(event.starts_at, event.ends_at, bucketItem.starts_at, bucketItem.ends_at) ||
-              self.eventIsInPeriod(bucketItem.starts_at, bucketItem.ends_at, event.starts_at, event.ends_at)) {
+            if (eventIsInPeriod(event.starts_at, event.ends_at, bucketItem.starts_at, bucketItem.ends_at) ||
+              eventIsInPeriod(bucketItem.starts_at, bucketItem.ends_at, event.starts_at, event.ends_at)) {
               canFitInThisBucket = false;
             }
           });

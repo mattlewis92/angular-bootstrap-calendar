@@ -18,31 +18,43 @@ angular
         dayViewEnd: '@',
         dayViewSplit: '@'
       },
-      controller: function($scope, moment, calendarHelper, calendarConfig, calendarDebounce) {
+      controller: function($scope, $timeout, moment, calendarHelper, calendarConfig) {
 
-        var dayViewStart = moment($scope.dayViewStart || '00:00', 'HH:mm');
-        var dayViewEnd = moment($scope.dayViewEnd || '23:00', 'HH:mm');
+        var vm = this;
+        var dayViewStart, dayViewEnd;
 
-        $scope.dayViewSplit = parseInt($scope.dayViewSplit);
-        $scope.dayHeight = (60 / $scope.dayViewSplit) * 30;
-
-        $scope.days = [];
-        var dayCounter = moment(dayViewStart);
-        for (var i = 0; i <= dayViewEnd.diff(dayViewStart, 'hours'); i++) {
-          $scope.days.push({
-            label: dayCounter.format(calendarConfig.dateFormats.hour)
-          });
-          dayCounter.add(1, 'hour');
+        function updateDays() {
+          dayViewStart = moment($scope.dayViewStart || '00:00', 'HH:mm');
+          dayViewEnd = moment($scope.dayViewEnd || '23:00', 'HH:mm');
+          vm.dayViewSplit = parseInt($scope.dayViewSplit);
+          vm.dayHeight = (60 / $scope.dayViewSplit) * 30;
+          vm.days = [];
+          var dayCounter = moment(dayViewStart);
+          for (var i = 0; i <= dayViewEnd.diff(dayViewStart, 'hours'); i++) {
+            vm.days.push({
+              label: dayCounter.format(calendarConfig.dateFormats.hour)
+            });
+            dayCounter.add(1, 'hour');
+          }
         }
 
-        var updateView = calendarDebounce(function() {
-          $scope.view = calendarHelper.getDayView($scope.events, $scope.currentDay, dayViewStart.hours(), dayViewEnd.hours(), $scope.dayHeight);
-        }, 50);
+        var originalLocale = moment.locale();
 
-        $scope.$watch('currentDay', updateView);
-        $scope.$watch('events', updateView, true);
+        $scope.$on('calendar.refreshView', function() {
 
-      }
+          if (originalLocale !== moment.locale()) {
+            originalLocale = moment.locale();
+            updateDays();
+          }
+
+          vm.view = calendarHelper.getDayView($scope.events, $scope.currentDay, dayViewStart.hours(), dayViewEnd.hours(), vm.dayHeight);
+
+        });
+
+        updateDays();
+
+      },
+      controllerAs: 'vm'
     };
 
   });

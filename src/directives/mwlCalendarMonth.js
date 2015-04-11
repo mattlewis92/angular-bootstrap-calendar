@@ -19,14 +19,13 @@ angular
         autoOpen: '=',
         timespanClick: '='
       },
-      controller: function($scope, $timeout, moment, calendarHelper, eventCountBadgeTotalFilter, calendarDebounce) {
+      controller: function($scope, moment, calendarHelper, eventCountBadgeTotalFilter) {
 
-        var vm = this;
-        var firstRun = false;
+        var firstRun = true;
 
-        vm.eventCountBadgeTotalFilter = eventCountBadgeTotalFilter;
+        $scope.$on('calendar.refreshView', function() {
+          vm.weekDays = calendarHelper.getWeekDayNames();
 
-        var updateView = calendarDebounce(function() {
           vm.view = calendarHelper.getMonthView($scope.events, $scope.currentDay);
           var rows = Math.floor(vm.view.length / 7);
           vm.monthOffsets = [];
@@ -35,23 +34,19 @@ angular
           }
 
           //Auto open the calendar to the current day if set
-          if ($scope.autoOpen && !firstRun) {
+          if ($scope.autoOpen && firstRun) {
+            firstRun = false;
             vm.view.forEach(function(day) {
               if (day.inMonth && moment($scope.currentDay).startOf('day').isSame(day.date)) {
                 vm.dayClicked(day, true);
-                $timeout(function() {
-                  firstRun = false;
-                });
               }
             });
           }
+        });
 
-        }, 50);
+        var vm = this;
 
-        $scope.$watch('currentDay', updateView);
-        $scope.$watch('events', updateView, true);
-
-        vm.weekDays = calendarHelper.getWeekDayNames();
+        vm.eventCountBadgeTotalFilter = eventCountBadgeTotalFilter;
 
         vm.dayClicked = function(day, dayClickedFirstRun) {
 

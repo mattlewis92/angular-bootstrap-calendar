@@ -19,31 +19,26 @@ angular
         autoOpen: '=',
         timespanClick: '='
       },
-      controller: function($scope, $timeout, moment, calendarHelper, eventCountBadgeTotalFilter, calendarDebounce) {
+      controller: function($scope, moment, calendarHelper, eventCountBadgeTotalFilter) {
 
         var vm = this;
-        var firstRun = false;
+        var firstRun = true;
 
         vm.eventCountBadgeTotalFilter = eventCountBadgeTotalFilter;
 
-        var updateView = calendarDebounce(function() {
+        $scope.$on('calendar.refreshView', function() {
           vm.view = calendarHelper.getYearView($scope.events, $scope.currentDay);
 
           //Auto open the calendar to the current day if set
-          if ($scope.autoOpen && !firstRun) {
+          if ($scope.autoOpen && firstRun) {
+            firstRun = false;
             vm.view.forEach(function(month) {
               if (moment($scope.currentDay).startOf('month').isSame(month.date)) {
                 vm.monthClicked(month, true);
-                $timeout(function() {
-                  firstRun = false;
-                });
               }
             });
           }
-        }, 50);
-
-        $scope.$watch('currentDay', updateView);
-        $scope.$watch('events', updateView, true);
+        });
 
         vm.monthClicked = function(month, monthClickedFirstRun) {
 

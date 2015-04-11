@@ -27,9 +27,7 @@ angular
         timespanClick: '&',
         dayViewSplit: '@'
       },
-      controller: function($scope, $timeout, moment, calendarConfig) {
-
-        var self = this;
+      controller: function($scope, $timeout, moment, calendarConfig, calendarDebounce) {
 
         var weekTitleLabel = $scope.weekTitleLabel || calendarConfig.titleFormats.week;
 
@@ -72,9 +70,13 @@ angular
 
         $scope.control = calendarControl;
 
+        //Use a debounce to prevent it being called 3 times on initialisation
+        var refreshCalendar = calendarDebounce(function() {
+          $scope.$broadcast('calendar.refreshView');
+        }, 50);
+
         //Auto update the calendar when the locale changes
-        var firstRunWatcher = true;
-        var unbindWatcher = $scope.$watch(function() {
+        var unbindLocaleWatcher = $scope.$watch(function() {
           return moment.locale();
         }, function(locale) {
 
@@ -87,22 +89,24 @@ angular
             });
           }
 
-          if (firstRunWatcher) { //dont run the first time the calendar is initialised
-            firstRunWatcher = false;
-            return;
-          }
-          var originalView = angular.copy($scope.view);
-          $scope.view = 'redraw';
-          $timeout(function() { //bit of a hacky way to redraw the calendar, should be refactored at some point
-            $scope.view = originalView;
-          });
+          refreshCalendar();
         });
 
-        //Remove the watcher when the calendar is destroyed
+        var unbindOnDestroy = [];
+        unbindOnDestroy.push(unbindLocaleWatcher);
+
+        //Refresh the calendar when any of these variables change.
+        unbindOnDestroy.push($scope.$watch('currentDay', refreshCalendar));
+        unbindOnDestroy.push($scope.$watch('view', refreshCalendar));
+        unbindOnDestroy.push($scope.$watch('events', refreshCalendar, true));
+
+        //Remove any watchers when the calendar is destroyed
         var unbindDestroyListener = $scope.$on('$destroy', function() {
-          unbindDestroyListener();
-          unbindWatcher();
+          unbindOnDestroy.forEach(function(unbind) {
+            unbind();
+          });
         });
+        unbindOnDestroy.push(unbindDestroyListener);
 
       }
     };
