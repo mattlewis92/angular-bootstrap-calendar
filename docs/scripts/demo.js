@@ -68,14 +68,9 @@ angular
       showModal('Deleted', event);
     };
 
-    $scope.setCalendarToToday = function() {
-      $scope.calendarDay = new Date();
-    };
-
     $scope.toggle = function($event, field, event) {
       $event.preventDefault();
       $event.stopPropagation();
-
       event[field] = !event[field];
     };
 

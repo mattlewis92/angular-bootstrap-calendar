@@ -104,12 +104,9 @@ $scope.calendarView = 'month';
 
 This variable holds the current day the calendar is centralised on. Each view will decide on its current year / month / week / day depending on the value of this variable.
 
-### control
+### view-title
 
-The directive will instantiate this variable for you and add the following methods to it:
-* prev - Goes to the previous page of the view
-* next - Goes to the next page of the view
-* getTitle - Gets the title of the calendar depending on the current date and view.
+This variable will be assigned to the calendar title. If you want to change the formatting you can use the calendarConfigProvider or just override the appropriate method in the calendarTitle factory.
 
 ### event-click 
 
@@ -139,18 +136,6 @@ This expression is called when a month or day on the calendar is clicked. calend
 
 Whether to auto open the year and month view breakdown to the current year / month. Default: false
 
-### use-iso-week (DEPRECATED)
-
-This option is now deprecated. Use moment to use monday as the first day of the calendar instead like so:
-
-```javascript
-moment.locale('en', {
-    week : {
-        dow : 1 // Monday is the first day of the week
-    }
-});
-```
-
 To preserve backwards compatibility the calendar will automatically change the locale dow in moment if you specify this attribute but this will be removed in a future version.
 
 ### event-label
@@ -161,10 +146,6 @@ An interpolated locale string to use as the column header on the day view for th
 
 An interpolated locale string to use as the column header on the day view for the time column. Default: 'Time'.
 
-### week-title-label
-
-An interpolated local string to use in the week view title. Default: 'Week {week} of {year}'
-
 ### day-view-start
 An interpolated string in the form of hh:mm to start the day view at, e.g. setting it to 06:00 will start the day view at 6am
 
@@ -173,6 +154,36 @@ An interpolated string in the form of hh:mm to end the day view at, e.g. setting
 
 ### day-view-split
 The number of chunks to split the day view hours up into. Can be either 10, 15 or 30. Default: 30
+
+## The mwl-date-modifier directive
+
+There is also a helper directive that you can use for the next, today and previous buttons. Use it like so:
+
+```html
+<button
+  class="btn btn-primary"
+  mwl-date-modifier
+  date="calendarDay"
+  decrement="calendarView">
+  Previous
+</button>
+
+<button
+  class="btn btn-default"
+  mwl-date-modifier
+  date="calendarDay"
+  set-to-today>
+  Today
+</button>
+
+<button
+  class="btn btn-primary"
+  mwl-date-modifier
+  date="calendarDay"
+  increment="calendarView">
+  Next
+</button>
+```
 
 ## Internationalization and localization
 

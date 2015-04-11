@@ -11,7 +11,6 @@ angular
         events: '=',
         view: '=',
         currentDay: '=',
-        control: '=',
         eventClick: '&',
         eventEditClick: '&',
         eventDeleteClick: '&',
@@ -25,53 +24,21 @@ angular
         dayViewEnd: '@',
         weekTitleLabel: '@',
         timespanClick: '&',
-        dayViewSplit: '@'
+        dayViewSplit: '@',
+        viewTitle: '='
       },
-      controller: function($scope, $timeout, moment, calendarConfig, calendarDebounce) {
-
-        var weekTitleLabel = $scope.weekTitleLabel || calendarConfig.titleFormats.week;
-
-        var titleFunctions = {
-          day: function(currentDay) {
-            return moment(currentDay).format(calendarConfig.titleFormats.day);
-          },
-          week: function(currentDay) {
-            return weekTitleLabel.replace('{week}', moment(currentDay).week()).replace('{year}', moment(currentDay).format('YYYY'));
-          },
-          month: function(currentDay) {
-            return moment(currentDay).format(calendarConfig.titleFormats.month);
-          },
-          year: function(currentDay) {
-            return moment(currentDay).format(calendarConfig.titleFormats.year);
-          }
-        };
+      controller: function($scope, $timeout, moment, calendarTitle, calendarDebounce) {
 
         this.changeView = function(view, newDay) {
           $scope.view = view;
           $scope.currentDay = newDay;
         };
 
-        var calendarControl = $scope.control || {};
-
-        calendarControl.prev = function() {
-          $scope.currentDay = moment($scope.currentDay).subtract(1, $scope.view).toDate();
-        };
-
-        calendarControl.next = function() {
-          $scope.currentDay = moment($scope.currentDay).add(1, $scope.view).toDate();
-        };
-
-        calendarControl.getTitle = function() {
-          if (!titleFunctions[$scope.view]) {
-            return '';
-          }
-          return titleFunctions[$scope.view]($scope.currentDay);
-        };
-
-        $scope.control = calendarControl;
-
         //Use a debounce to prevent it being called 3 times on initialisation
         var refreshCalendar = calendarDebounce(function() {
+          if (calendarTitle[$scope.view]) {
+            $scope.viewTitle = calendarTitle[$scope.view]($scope.currentDay);
+          }
           $scope.$broadcast('calendar.refreshView');
         }, 50);
 

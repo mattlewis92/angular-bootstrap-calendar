@@ -36,16 +36,34 @@
 
       <div class="row" ng-controller="MainCtrl" id="demo">
         <div class="col-md-8 col-md-offset-2">
-          <h2 class="text-center">{{ calendarControl.getTitle() }}</h2>
+          <h2 class="text-center">{{ calendarTitle }}</h2>
 
           <div class="row">
 
             <div class="col-md-6 text-center">
               <div class="btn-group">
 
-                <button class="btn btn-primary" ng-click="calendarControl.prev()">Previous</button>
-                <button class="btn btn-default" ng-click="setCalendarToToday()">Today</button>
-                <button class="btn btn-primary" ng-click="calendarControl.next()">Next</button>
+                <button
+                  class="btn btn-primary"
+                  mwl-date-modifier
+                  date="calendarDay"
+                  decrement="calendarView">
+                  Previous
+                </button>
+                <button
+                  class="btn btn-default"
+                  mwl-date-modifier
+                  date="calendarDay"
+                  set-to-today>
+                  Today
+                </button>
+                <button
+                  class="btn btn-primary"
+                  mwl-date-modifier
+                  date="calendarDay"
+                  increment="calendarView">
+                  Next
+                </button>
               </div>
             </div>
 
@@ -67,8 +85,8 @@
           <mwl-calendar
             events="events"
             view="calendarView"
+            view-title="calendarTitle"
             current-day="calendarDay"
-            control="calendarControl"
             event-click="eventClicked(calendarEvent)"
             edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
             delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
@@ -164,10 +182,12 @@
     <script src="src/filters/eventCountBadgeTotal.js"></script>
     <script src="src/filters/calendarLimitTo.js"></script>
     <script src="src/services/calendarConfig.js"></script>
+    <script src="src/services/calendarTitle.js"></script>
     <script src="src/services/calendarHelper.js"></script>
     <script src="src/services/calendarDebounce.js"></script>
     <script src="src/services/moment.js"></script>
     <script src="src/directives/mwlCollapseFallback.js"></script>
+    <script src="src/directives/mwlDateModifier.js"></script>
     <script src="src/directives/mwlCalendarYear.js"></script>
     <script src="src/directives/mwlCalendarMonth.js"></script>
     <script src="src/directives/mwlCalendarWeek.js"></script>
