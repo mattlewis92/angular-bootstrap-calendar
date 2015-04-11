@@ -2,9 +2,7 @@
 
 angular
   .module('mwl.calendar')
-  .service('calendarHelper', function (moment, calendarConfig) {
-
-    var self = this;
+  .factory('calendarHelper', function (moment, calendarConfig) {
 
     function isISOWeekBasedOnLocale() {
       return moment().startOf('week').day() === 1;
@@ -14,12 +12,11 @@ angular
       var startPeriod = moment(calendarDate).startOf(period);
       var endPeriod = moment(calendarDate).endOf(period);
       return allEvents.filter(function(event) {
-        return self.eventIsInPeriod(event.starts_at, event.ends_at, startPeriod, endPeriod);
+        return eventIsInPeriod(event.starts_at, event.ends_at, startPeriod, endPeriod);
       });
     }
 
-    this.getWeekDayNames = function() {
-
+    function getWeekDayNames() {
       var weekdays = [];
       var count = 0;
       while(count < 7) {
@@ -27,10 +24,9 @@ angular
       }
 
       return weekdays;
+    }
 
-    };
-
-    this.eventIsInPeriod = function(eventStart, eventEnd, periodStart, periodEnd) {
+    function eventIsInPeriod(eventStart, eventEnd, periodStart, periodEnd) {
 
       eventStart = moment(eventStart);
       eventEnd = moment(eventEnd);
@@ -43,9 +39,9 @@ angular
         eventStart.isSame(periodStart) ||
         eventEnd.isSame(periodEnd);
 
-    };
+    }
 
-    this.getYearView = function(events, currentDay) {
+    function getYearView(events, currentDay) {
 
       var view = [];
       var eventsInPeriod = getEventsInPeriod(currentDay, 'year', events);
@@ -58,7 +54,7 @@ angular
           label: startPeriod.format(calendarConfig.dateFormats.month),
           isToday: startPeriod.isSame(moment().startOf('month')),
           events: eventsInPeriod.filter(function(event) {
-            return self.eventIsInPeriod(event.starts_at, event.ends_at, startPeriod, endPeriod);
+            return eventIsInPeriod(event.starts_at, event.ends_at, startPeriod, endPeriod);
           }),
           date: startPeriod
         });
@@ -69,9 +65,9 @@ angular
 
       return view;
 
-    };
+    }
 
-    this.getMonthView = function(events, currentDay) {
+    function getMonthView(events, currentDay) {
 
       var eventsInPeriod = getEventsInPeriod(currentDay, 'month', events);
       var startOfMonth = moment(currentDay).startOf('month');
@@ -85,7 +81,7 @@ angular
         var monthEvents = [];
         if (inMonth) {
           monthEvents = eventsInPeriod.filter(function(event) {
-            return self.eventIsInPeriod(event.starts_at, event.ends_at, day, day.clone().endOf('day'));
+            return eventIsInPeriod(event.starts_at, event.ends_at, day, day.clone().endOf('day'));
           });
         }
 
@@ -105,13 +101,13 @@ angular
 
       return view;
 
-    };
+    }
 
-    this.getWeekView = function(events, currentDay) {
+    function getWeekView(events, currentDay) {
 
       var dateOffset = isISOWeekBasedOnLocale() ? 1 : 0;
       var columns = new Array(7);
-      var weekDays = self.getWeekDayNames();
+      var weekDays = getWeekDayNames();
       var currentWeekDayIndex = currentDay.getDay();
       var beginningOfWeek, endOfWeek, i, date;
 
@@ -155,7 +151,7 @@ angular
       beginningOfWeek = moment(beginningOfWeek).startOf('day').toDate();
 
       var eventsSorted = events.filter(function(event) {
-        return self.eventIsInPeriod(event.starts_at, event.ends_at, beginningOfWeek, endOfWeek);
+        return eventIsInPeriod(event.starts_at, event.ends_at, beginningOfWeek, endOfWeek);
       }).map(function(event) {
 
         var eventStart = moment(event.starts_at).startOf('day');
@@ -188,9 +184,9 @@ angular
 
       return {columns: columns, events: eventsSorted};
 
-    };
+    }
 
-    this.getDayView = function(events, currentDay, dayStartHour, dayEndHour, dayHeight) {
+    function getDayView(events, currentDay, dayStartHour, dayEndHour, dayHeight) {
 
       var eventsInPeriod = getEventsInPeriod(currentDay, 'day', events);
       var calendarStart = moment(currentDay).startOf('day').add(dayStartHour, 'hours');
@@ -200,7 +196,7 @@ angular
       var buckets = [];
 
       return eventsInPeriod.filter(function(event) {
-        return self.eventIsInPeriod(
+        return eventIsInPeriod(
           event.starts_at,
           event.ends_at,
           moment(currentDay).startOf('day').toDate(),
@@ -262,6 +258,15 @@ angular
 
       });
 
+    }
+
+    return {
+      getWeekDayNames: getWeekDayNames,
+      eventIsInPeriod: eventIsInPeriod,
+      getYearView: getYearView,
+      getMonthView: getMonthView,
+      getWeekView: getWeekView,
+      getDayView: getDayView
     };
 
   });
