@@ -53,33 +53,27 @@ angular.module('mwl.calendar')
 
     this.getYearView = function(events, currentDay) {
 
-      var grid = [];
+      var view = [];
       var eventsInPeriod = getEventsInPeriod(currentDay, 'year', events);
       var month = moment(currentDay).startOf('year');
       var count = 0;
+      while (count < 12) {
+        var startPeriod = month.clone();
+        var endPeriod = startPeriod.clone().endOf('month');
+        view.push({
+          label: startPeriod.format(calendarConfig.dateFormats.month),
+          isToday: startPeriod.isSame(moment().startOf('month')),
+          events: eventsInPeriod.filter(function(event) {
+            return self.eventIsInPeriod(event.starts_at, event.ends_at, startPeriod, endPeriod);
+          }),
+          date: startPeriod
+        });
 
-      for (var i = 0; i < 3; i++) {
-        var row = [];
-        for (var j = 0; j < 4; j++) {
-          var startPeriod = month.clone();
-          var endPeriod = startPeriod.clone().endOf('month');
-
-          row.push({
-            label: startPeriod.format(calendarConfig.dateFormats.month),
-            monthIndex: count++,
-            isToday: startPeriod.isSame(moment().startOf('month')),
-            events: eventsInPeriod.filter(function(event) {
-              return self.eventIsInPeriod(event.starts_at, event.ends_at, startPeriod, endPeriod);
-            }),
-            date: startPeriod
-          });
-
-          month.add(1, 'month');
-        }
-        grid.push(row);
+        month.add(1, 'month');
+        count++;
       }
 
-      return grid;
+      return view;
 
     };
 

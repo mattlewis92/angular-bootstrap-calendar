@@ -17,7 +17,16 @@
       </div>
     </div>
 
-    <mwl-calendar-slide-box is-open="!week.isOpened"></mwl-calendar-slide-box>
+    <mwl-calendar-slide-box
+      is-open="week.isOpened"
+      is-month-view="true"
+      events="openEvents"
+      event-click="eventClick"
+      edit-event-html="editEventHtml"
+      event-edit-click="eventEditClick"
+      delete-event-html="deleteEventHtml"
+      event-delete-click="eventDeleteClick">
+    </mwl-calendar-slide-box>
 
   </div>
 

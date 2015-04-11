@@ -19,10 +19,9 @@ angular
         autoOpen: '=calendarAutoOpen',
         timespanClick: '=calendarTimespanClick'
       },
-      controller: function($scope, $sce, $timeout, moment, calendarHelper, eventCountBadgeTotalFilter) {
+      controller: function($scope, $timeout, moment, calendarHelper, eventCountBadgeTotalFilter) {
         var firstRun = false;
 
-        $scope.$sce = $sce;
         $scope.eventCountBadgeTotalFilter = eventCountBadgeTotalFilter;
 
         function updateView() {

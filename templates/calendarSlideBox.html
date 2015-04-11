@@ -1,8 +1,8 @@
-<div class="cal-slide-box" collapse="shouldCollapse" mwl-collapse-fallback="shouldCollapse">
+<div class="cal-slide-box" collapse="vm.shouldCollapse" mwl-collapse-fallback="vm.shouldCollapse">
   <div class="cal-slide-content cal-event-list">
     <ul class="unstyled list-unstyled">
 
-      <li ng-repeat="event in openEvents track by $index">
+      <li ng-repeat="event in events track by $index">
         <span class="pull-left event" ng-class="'event-' + event.type"></span>
         &nbsp;
         <a
@@ -18,7 +18,7 @@
           href="javascript:;"
           class="event-item-edit"
           ng-if="editEventHtml && event.editable !== false"
-          ng-bind-html="$sce.trustAsHtml(editEventHtml)"
+          ng-bind-html="vm.$sce.trustAsHtml(editEventHtml)"
           ng-click="eventEditClick({calendarEvent: event})">
         </a>
 
@@ -26,7 +26,7 @@
           href="javascript:;"
           class="event-item-delete"
           ng-if="deleteEventHtml && event.deletable !== false"
-          ng-bind-html="$sce.trustAsHtml(deleteEventHtml)"
+          ng-bind-html="vm.$sce.trustAsHtml(deleteEventHtml)"
           ng-click="eventDeleteClick({calendarEvent: event})">
         </a>
       </li>

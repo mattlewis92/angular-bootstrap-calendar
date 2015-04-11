@@ -8,9 +8,13 @@ angular
       restrict: 'EA',
       templateUrl: 'templates/calendarSlideBox.html',
       replace: true,
-      controller: function($scope, $attrs) {
-        var unbindWatcher = $scope.$watch($attrs.isOpen, function(shouldCollapse) {
-          $scope.shouldCollapse = shouldCollapse;
+      controller: function($scope, $sce) {
+
+        var vm = this;
+        vm.$sce = $sce;
+
+        var unbindWatcher = $scope.$watch('isOpen', function(isOpen) {
+          vm.shouldCollapse = !isOpen;
         });
 
         var unbindDestroy = $scope.$on('$destroy', function() {
@@ -19,10 +23,22 @@ angular
         });
 
       },
+      controllerAs: 'vm',
       require: ['^?mwlCalendarMonth', '^?mwlCalendarYear'],
       link: function(scope, elm, attrs, ctrls) {
         scope.isMonthView = !!ctrls[0];
         scope.isYearView = !!ctrls[1];
+      },
+      scope: {
+        isOpen: '=',
+        isMonthView: '=?',
+        isYearView: '=?',
+        events: '=',
+        eventClick: '=',
+        editEventHtml: '=',
+        eventEditClick: '=',
+        deleteEventHtml: '=',
+        eventDeleteClick: '='
       }
     };
 
