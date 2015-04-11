@@ -19,10 +19,9 @@ angular
         autoOpen: '=',
         eventLabel: '@',
         timeLabel: '@',
+        timespanClick: '&',
         dayViewStart: '@',
         dayViewEnd: '@',
-        weekTitleLabel: '@',
-        timespanClick: '&',
         dayViewSplit: '@',
         viewTitle: '='
       },
