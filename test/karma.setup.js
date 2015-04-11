@@ -1,0 +1,1 @@
+beforeEach(module('mwl.calendar'));

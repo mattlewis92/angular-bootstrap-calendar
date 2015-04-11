@@ -3,9 +3,12 @@ var $ = require('gulp-load-plugins')();
 var streamqueue = require('streamqueue');
 var open = require('open');
 var runSequence = require('run-sequence');
+var bowerFiles = require('main-bower-files');
+var series = require('stream-series');
 
 gulp.task('watch', ['server'], function() {
   $.livereload.listen();
+  gulp.start('test:watch');
   gulp.watch('src/less/*.less', ['less']);
   gulp.watch('src/**/*.js', ['lint']);
   gulp.watch('css/*.css').on('change', $.livereload.changed);
@@ -148,6 +151,39 @@ gulp.task('ci:lint', function() {
   return lint(true);
 });
 
+function runTests(action, onDistCode) {
+  var vendorJs = gulp.src(bowerFiles({includeDev: true})).pipe($.filter('*.js'));
+  if (onDistCode) {
+    var appJs = gulp.src('dist/js/angular-bootstrap-calendar-tpls.min.js');
+  } else {
+    var appJs = gulp.src('src/**/*.js').pipe($.sort()).pipe($.angularFilesort());
+  }
+  var karmaSetup = gulp.src('test/karma.setup.js');
+  var test = gulp.src('test/unit/**/*.js');
+
+  return series(vendorJs, appJs, karmaSetup, test)
+    .pipe($.karma({
+      configFile: 'karma.conf.js',
+      action: action
+    }));
+}
+
+gulp.task('test:src', function() {
+  return runTests('run').on('error', function(err) {
+    throw err;
+  });
+});
+
+gulp.task('test:dist', function() {
+  return runTests('run', true).on('error', function(err) {
+    throw err;
+  });
+});
+
+gulp.task('test:watch', function() {
+  return runTests('watch');
+});
+
 gulp.task('ci', function(done) {
-  runSequence('ci:lint', 'build', done);
+  runSequence('ci:lint', 'build', 'test:dist', done);
 });
