@@ -4,10 +4,6 @@ angular
   .module('mwl.calendar')
   .factory('calendarHelper', function (moment, calendarConfig) {
 
-    function isISOWeekBasedOnLocale() {
-      return moment().startOf('week').day() === 1;
-    }
-
     function getEventsInPeriod(calendarDate, period, allEvents) {
       var startPeriod = moment(calendarDate).startOf(period);
       var endPeriod = moment(calendarDate).endOf(period);
