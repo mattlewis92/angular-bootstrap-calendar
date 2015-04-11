@@ -15,7 +15,7 @@
             $templateCache.put('src/templates/calendarMonthDay.html', '<div class="cal-month-day" ng-class="{\n            \'cal-day-outmonth\': !day.inMonth,\n            \'cal-day-inmonth\': day.inMonth,\n            \'cal-day-weekend\': day.isWeekend,\n            \'cal-day-past\': day.isPast,\n            \'cal-day-today\': day.isToday,\n            \'cal-day-future\': day.isFuture\n          }"><small class="cal-events-num badge badge-important pull-left" ng-show="day.badgeTotal > 0">{{ day.badgeTotal }}</small> <span class="pull-right" data-cal-date ng-click="vm.calendarCtrl.drillDown(day.date)">{{ day.label }}</span><div class="cal-day-tick" ng-show="day.isOpened"><i class="glyphicon glyphicon-chevron-up"></i> <i class="fa fa-chevron-up"></i></div><div ng-include="\'src/templates/calendarMonthEventsList.html\'"></div></div>');
             $templateCache.put('src/templates/calendarMonthEventsList.html', '<div class="events-list" ng-show="day.events.length > 0"><a href="javascript:;" ng-click="onEventClick({calendarEvent: event})" ng-repeat="event in day.events track by $index" class="pull-left event event-{{ event.type }}" ng-mouseenter="vm.highlightEvent(event, true)" ng-mouseleave="vm.highlightEvent(event, false)" tooltip-append-to-body="true" tooltip="{{ event.title }}"></a></div>');
             $templateCache.put('src/templates/calendarMonthView.html', '<div class="cal-row-fluid cal-row-head"><div class="cal-cell1" ng-repeat="day in vm.weekDays track by $index">{{ day }}</div></div><div class="cal-month-box"><div ng-repeat="rowOffset in vm.monthOffsets track by rowOffset"><div class="cal-row-fluid cal-before-eventlist"><div ng-repeat="day in vm.view | calendarLimitTo:7:rowOffset track by $index" class="cal-cell1 cal-cell {{ day.highlightClass }}" ng-click="vm.dayClicked(day)" ng-class="{pointer: day.events.length > 0}"><div ng-include="\'src/templates/calendarMonthDay.html\'"></div></div></div><mwl-calendar-slide-box is-open="vm.openRowIndex === $index" events="vm.openEvents" on-event-click="onEventClick" edit-event-html="editEventHtml" on-edit-event-click="onEditEventClick" delete-event-html="deleteEventHtml" on-delete-event-click="onDeleteEventClick"></mwl-calendar-slide-box></div></div>');
-            $templateCache.put('src/templates/calendarSlideBox.html', '<div class="cal-slide-box" collapse="vm.shouldCollapse" mwl-collapse-fallback="vm.shouldCollapse"><div class="cal-slide-content cal-event-list"><ul class="unstyled list-unstyled"><li ng-repeat="event in events track by $index"><span class="pull-left event" ng-class="\'event-\' + event.type"></span> &nbsp; <a href="javascript:;" class="event-item" ng-click="onEventClick({calendarEvent: event})">{{ event.title }} <span ng-show="isMonthView">({{ event.starts_at | date:\'shortTime\' }})</span> <span ng-show="isYearView">({{ event.starts_at | date:\'MMM d, h:mm a\' }})</span></a> <a href="javascript:;" class="event-item-edit" ng-if="editEventHtml && event.editable !== false" ng-bind-html="vm.$sce.trustAsHtml(editEventHtml)" ng-click="onEditEventClick({calendarEvent: event})"></a> <a href="javascript:;" class="event-item-delete" ng-if="deleteEventHtml && event.deletable !== false" ng-bind-html="vm.$sce.trustAsHtml(deleteEventHtml)" ng-click="onDeleteEventClick({calendarEvent: event})"></a></li></ul></div></div>');
+            $templateCache.put('src/templates/calendarSlideBox.html', '<div class="cal-slide-box" collapse="vm.shouldCollapse" mwl-collapse-fallback="vm.shouldCollapse"><div class="cal-slide-content cal-event-list"><ul class="unstyled list-unstyled"><li ng-repeat="event in events track by $index"><span class="pull-left event" ng-class="\'event-\' + event.type"></span> &nbsp; <a href="javascript:;" class="event-item" ng-click="onEventClick({calendarEvent: event})">{{ event.title }} <span ng-show="isMonthView">({{ event.startsAt | date:\'shortTime\' }})</span> <span ng-show="isYearView">({{ event.startsAt | date:\'MMM d, h:mm a\' }})</span></a> <a href="javascript:;" class="event-item-edit" ng-if="editEventHtml && event.editable !== false" ng-bind-html="vm.$sce.trustAsHtml(editEventHtml)" ng-click="onEditEventClick({calendarEvent: event})"></a> <a href="javascript:;" class="event-item-delete" ng-if="deleteEventHtml && event.deletable !== false" ng-bind-html="vm.$sce.trustAsHtml(deleteEventHtml)" ng-click="onDeleteEventClick({calendarEvent: event})"></a></li></ul></div></div>');
             $templateCache.put('src/templates/calendarWeekView.html', '<div class="cal-week-box"><div class="cal-row-fluid cal-row-head"><div class="cal-cell1" ng-repeat="day in vm.view.days track by $index" ng-class="{\n        \'cal-day-weekend\': day.isWeekend,\n        \'cal-day-past\': day.isPast,\n        \'cal-day-today\': day.isToday,\n        \'cal-day-future\': day.isFuture}">{{ day.weekDayLabel }}<br><small><span data-cal-date ng-click="vm.calendarCtrl.drillDown(day.date.toDate())" class="pointer">{{ day.dayLabel }}</span></small></div></div><div class="cal-row-fluid" ng-repeat="event in vm.view.events track by $index"><div class="cal-cell{{ event.daySpan }} cal-offset{{ event.dayOffset }} day-highlight dh-event-{{ event.type }}" data-event-class><a href="javascript:;" ng-click="onEventClick({calendarEvent: event})" class="cal-event-week">{{ event.title }}</a></div></div></div>');
             $templateCache.put('src/templates/calendarYearView.html', '<div class="cal-year-box"><div ng-repeat="rowOffset in [0, 4, 8] track by rowOffset"><div class="row cal-before-eventlist"><div class="span3 col-md-3 col-xs-6 cal-cell" ng-repeat="month in vm.view | calendarLimitTo:4:rowOffset track by $index" ng-click="vm.monthClicked(month)" ng-class="{pointer: month.events.length > 0, \'cal-day-today\': month.isToday}"><span class="pull-right" data-cal-date ng-click="vm.calendarCtrl.drillDown(month.date)">{{ month.label }}</span> <small class="cal-events-num badge badge-important pull-left" ng-show="month.badgeTotal > 0">{{ month.badgeTotal }}</small><div class="cal-day-tick" ng-show="month.isOpened"><i class="glyphicon glyphicon-chevron-up"></i> <i class="fa fa-chevron-up"></i></div></div></div><mwl-calendar-slide-box is-open="vm.openRowIndex === $index" events="vm.openEvents" on-event-click="onEventClick" edit-event-html="editEventHtml" on-edit-event-click="onEditEventClick" delete-event-html="deleteEventHtml" on-delete-event-click="onDeleteEventClick"></mwl-calendar-slide-box></div></div>');
         }
@@ -64,7 +64,7 @@
                 var startPeriod = moment(calendarDate).startOf(period);
                 var endPeriod = moment(calendarDate).endOf(period);
                 return allEvents.filter(function (event) {
-                    return eventIsInPeriod(event.starts_at, event.ends_at, startPeriod, endPeriod);
+                    return eventIsInPeriod(event.startsAt, event.endsAt, startPeriod, endPeriod);
                 });
             }
             function getWeekDayNames() {
@@ -89,7 +89,7 @@
                     var startPeriod = month.clone();
                     var endPeriod = startPeriod.clone().endOf('month');
                     var periodEvents = eventsInPeriod.filter(function (event) {
-                        return eventIsInPeriod(event.starts_at, event.ends_at, startPeriod, endPeriod);
+                        return eventIsInPeriod(event.startsAt, event.endsAt, startPeriod, endPeriod);
                     });
                     view.push({
                         label: startPeriod.format(calendarConfig.dateFormats.month),
@@ -115,7 +115,7 @@
                     var monthEvents = [];
                     if (inMonth) {
                         monthEvents = eventsInPeriod.filter(function (event) {
-                            return eventIsInPeriod(event.starts_at, event.ends_at, day, day.clone().endOf('day'));
+                            return eventIsInPeriod(event.startsAt, event.endsAt, day, day.clone().endOf('day'));
                         });
                     }
                     view.push({
@@ -158,10 +158,10 @@
                     dayCounter.add(1, 'day');
                 }
                 var eventsSorted = events.filter(function (event) {
-                    return eventIsInPeriod(event.starts_at, event.ends_at, startOfWeek, endOfWeek);
+                    return eventIsInPeriod(event.startsAt, event.endsAt, startOfWeek, endOfWeek);
                 }).map(function (event) {
-                    var eventStart = moment(event.starts_at).startOf('day');
-                    var eventEnd = moment(event.ends_at).startOf('day');
+                    var eventStart = moment(event.startsAt).startOf('day');
+                    var eventEnd = moment(event.endsAt).startOf('day');
                     var weekViewStart = moment(startOfWeek).startOf('day');
                     var weekViewEnd = moment(endOfWeek).startOf('day');
                     var offset, span;
@@ -194,21 +194,21 @@
                 var dayHeightMultiplier = dayHeight / 60;
                 var buckets = [];
                 return eventsInPeriod.filter(function (event) {
-                    return eventIsInPeriod(event.starts_at, event.ends_at, moment(currentDay).startOf('day').toDate(), moment(currentDay).endOf('day').toDate());
+                    return eventIsInPeriod(event.startsAt, event.endsAt, moment(currentDay).startOf('day').toDate(), moment(currentDay).endOf('day').toDate());
                 }).map(function (event) {
-                    if (moment(event.starts_at).isBefore(calendarStart)) {
+                    if (moment(event.startsAt).isBefore(calendarStart)) {
                         event.top = 0;
                     } else {
-                        event.top = moment(event.starts_at).startOf('minute').diff(calendarStart.startOf('minute'), 'minutes') * dayHeightMultiplier - 2;
+                        event.top = moment(event.startsAt).startOf('minute').diff(calendarStart.startOf('minute'), 'minutes') * dayHeightMultiplier - 2;
                     }
-                    if (moment(event.ends_at).isAfter(calendarEnd)) {
+                    if (moment(event.endsAt).isAfter(calendarEnd)) {
                         event.height = calendarHeight - event.top;
                     } else {
-                        var diffStart = event.starts_at;
-                        if (moment(event.starts_at).isBefore(calendarStart)) {
+                        var diffStart = event.startsAt;
+                        if (moment(event.startsAt).isBefore(calendarStart)) {
                             diffStart = calendarStart.toDate();
                         }
-                        event.height = moment(event.ends_at).diff(diffStart, 'minutes') * dayHeightMultiplier;
+                        event.height = moment(event.endsAt).diff(diffStart, 'minutes') * dayHeightMultiplier;
                     }
                     if (event.top - event.height > calendarHeight) {
                         event.height = 0;
@@ -222,7 +222,7 @@
                     buckets.forEach(function (bucket, bucketIndex) {
                         var canFitInThisBucket = true;
                         bucket.forEach(function (bucketItem) {
-                            if (eventIsInPeriod(event.starts_at, event.ends_at, bucketItem.starts_at, bucketItem.ends_at) || eventIsInPeriod(bucketItem.starts_at, bucketItem.ends_at, event.starts_at, event.ends_at)) {
+                            if (eventIsInPeriod(event.startsAt, event.endsAt, bucketItem.startsAt, bucketItem.endsAt) || eventIsInPeriod(bucketItem.startsAt, bucketItem.endsAt, event.startsAt, event.endsAt)) {
                                 canFitInThisBucket = false;
                             }
                         });
