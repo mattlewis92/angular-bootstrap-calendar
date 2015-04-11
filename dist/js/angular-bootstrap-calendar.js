@@ -62,6 +62,11 @@
                 }
                 return weekdays;
             }
+            function getBadgeTotal(events) {
+                return events.filter(function (event) {
+                    return event.incrementsBadgeTotal !== false;
+                }).length;
+            }
             function getYearView(events, currentDay) {
                 var view = [];
                 var eventsInPeriod = getEventsInPeriod(currentDay, 'year', events);
@@ -70,13 +75,15 @@
                 while (count < 12) {
                     var startPeriod = month.clone();
                     var endPeriod = startPeriod.clone().endOf('month');
+                    var periodEvents = eventsInPeriod.filter(function (event) {
+                        return eventIsInPeriod(event.starts_at, event.ends_at, startPeriod, endPeriod);
+                    });
                     view.push({
                         label: startPeriod.format(calendarConfig.dateFormats.month),
                         isToday: startPeriod.isSame(moment().startOf('month')),
-                        events: eventsInPeriod.filter(function (event) {
-                            return eventIsInPeriod(event.starts_at, event.ends_at, startPeriod, endPeriod);
-                        }),
-                        date: startPeriod
+                        events: periodEvents,
+                        date: startPeriod,
+                        badgeTotal: getBadgeTotal(periodEvents)
                     });
                     month.add(1, 'month');
                     count++;
@@ -109,7 +116,8 @@
                             0,
                             6
                         ].indexOf(day.day()) > -1,
-                        events: monthEvents
+                        events: monthEvents,
+                        badgeTotal: getBadgeTotal(monthEvents)
                     });
                     day.add(1, 'day');
                 }
@@ -428,11 +436,9 @@
                 '$scope',
                 'moment',
                 'calendarHelper',
-                'eventCountBadgeTotalFilter',
-                function ($scope, moment, calendarHelper, eventCountBadgeTotalFilter) {
+                function ($scope, moment, calendarHelper) {
                     var vm = this;
                     var firstRun = true;
-                    vm.eventCountBadgeTotalFilter = eventCountBadgeTotalFilter;
                     $scope.$on('calendar.refreshView', function () {
                         vm.view = calendarHelper.getYearView($scope.events, $scope.currentDay);
                         //Auto open the calendar to the current day if set
@@ -554,8 +560,7 @@
                 '$scope',
                 'moment',
                 'calendarHelper',
-                'eventCountBadgeTotalFilter',
-                function ($scope, moment, calendarHelper, eventCountBadgeTotalFilter) {
+                function ($scope, moment, calendarHelper) {
                     var vm = this;
                     var firstRun = true;
                     $scope.$on('calendar.refreshView', function () {
@@ -576,7 +581,6 @@
                             });
                         }
                     });
-                    vm.eventCountBadgeTotalFilter = eventCountBadgeTotalFilter;
                     vm.dayClicked = function (day, dayClickedFirstRun) {
                         if (!dayClickedFirstRun) {
                             $scope.onTimespanClick({ calendarDate: day.date.toDate() });
