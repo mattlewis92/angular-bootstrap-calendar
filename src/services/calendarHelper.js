@@ -36,6 +36,12 @@ angular
       return weekdays;
     }
 
+    function getBadgeTotal(events) {
+      return events.filter(function(event) {
+        return event.incrementsBadgeTotal !== false;
+      }).length;
+    }
+
     function getYearView(events, currentDay) {
 
       var view = [];
@@ -45,13 +51,15 @@ angular
       while (count < 12) {
         var startPeriod = month.clone();
         var endPeriod = startPeriod.clone().endOf('month');
+        var periodEvents = eventsInPeriod.filter(function(event) {
+          return eventIsInPeriod(event.starts_at, event.ends_at, startPeriod, endPeriod);
+        });
         view.push({
           label: startPeriod.format(calendarConfig.dateFormats.month),
           isToday: startPeriod.isSame(moment().startOf('month')),
-          events: eventsInPeriod.filter(function(event) {
-            return eventIsInPeriod(event.starts_at, event.ends_at, startPeriod, endPeriod);
-          }),
-          date: startPeriod
+          events: periodEvents,
+          date: startPeriod,
+          badgeTotal: getBadgeTotal(periodEvents)
         });
 
         month.add(1, 'month');
@@ -88,7 +96,8 @@ angular
           isToday: today.isSame(day),
           isFuture: today.isBefore(day),
           isWeekend: [0, 6].indexOf(day.day()) > -1,
-          events: monthEvents
+          events: monthEvents,
+          badgeTotal: getBadgeTotal(monthEvents)
         });
 
         day.add(1, 'day');

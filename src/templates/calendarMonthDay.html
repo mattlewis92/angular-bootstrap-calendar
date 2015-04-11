@@ -11,8 +11,8 @@
 
   <small
     class="cal-events-num badge badge-important pull-left"
-    ng-show="vm.eventCountBadgeTotalFilter(day.events) > 0">
-    {{ day.events | eventCountBadgeTotal }}
+    ng-show="day.badgeTotal > 0">
+    {{ day.badgeTotal }}
   </small>
 
   <span

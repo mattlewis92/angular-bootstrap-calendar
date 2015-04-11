@@ -7,6 +7,7 @@
         ng-click="vm.monthClicked(month)"
         ng-class="{pointer: month.events.length > 0, 'cal-day-today': month.isToday}">
 
+
         <span
           class="pull-right"
           data-cal-date
@@ -16,8 +17,8 @@
 
         <small
           class="cal-events-num badge badge-important pull-left"
-          ng-show="vm.eventCountBadgeTotalFilter(month.events) > 0">
-          {{ month.events | eventCountBadgeTotal }}
+          ng-show="month.badgeTotal > 0">
+          {{ month.badgeTotal }}
         </small>
 
         <div

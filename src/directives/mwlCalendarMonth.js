@@ -19,7 +19,7 @@ angular
         autoOpen: '=',
         onTimespanClick: '='
       },
-      controller: function($scope, moment, calendarHelper, eventCountBadgeTotalFilter) {
+      controller: function($scope, moment, calendarHelper) {
 
         var vm = this;
         var firstRun = true;
@@ -44,8 +44,6 @@ angular
             });
           }
         });
-
-        vm.eventCountBadgeTotalFilter = eventCountBadgeTotalFilter;
 
         vm.dayClicked = function(day, dayClickedFirstRun) {
 

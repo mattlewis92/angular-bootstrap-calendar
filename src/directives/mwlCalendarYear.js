@@ -19,12 +19,10 @@ angular
         autoOpen: '=',
         onTimespanClick: '='
       },
-      controller: function($scope, moment, calendarHelper, eventCountBadgeTotalFilter) {
+      controller: function($scope, moment, calendarHelper) {
 
         var vm = this;
         var firstRun = true;
-
-        vm.eventCountBadgeTotalFilter = eventCountBadgeTotalFilter;
 
         $scope.$on('calendar.refreshView', function() {
           vm.view = calendarHelper.getYearView($scope.events, $scope.currentDay);
