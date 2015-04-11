@@ -21,6 +21,7 @@ angular
       },
       controller: function($scope, moment, calendarHelper, eventCountBadgeTotalFilter) {
 
+        var vm = this;
         var firstRun = true;
 
         $scope.$on('calendar.refreshView', function() {
@@ -43,8 +44,6 @@ angular
             });
           }
         });
-
-        var vm = this;
 
         vm.eventCountBadgeTotalFilter = eventCountBadgeTotalFilter;
 

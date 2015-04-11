@@ -4,14 +4,6 @@ angular
   .module('mwl.calendar')
   .factory('calendarHelper', function (moment, calendarConfig) {
 
-    function getEventsInPeriod(calendarDate, period, allEvents) {
-      var startPeriod = moment(calendarDate).startOf(period);
-      var endPeriod = moment(calendarDate).endOf(period);
-      return allEvents.filter(function(event) {
-        return eventIsInPeriod(event.starts_at, event.ends_at, startPeriod, endPeriod);
-      });
-    }
-
     function eventIsInPeriod(eventStart, eventEnd, periodStart, periodEnd) {
 
       eventStart = moment(eventStart);
@@ -25,6 +17,14 @@ angular
         eventStart.isSame(periodStart) ||
         eventEnd.isSame(periodEnd);
 
+    }
+
+    function getEventsInPeriod(calendarDate, period, allEvents) {
+      var startPeriod = moment(calendarDate).startOf(period);
+      var endPeriod = moment(calendarDate).endOf(period);
+      return allEvents.filter(function(event) {
+        return eventIsInPeriod(event.starts_at, event.ends_at, startPeriod, endPeriod);
+      });
     }
 
     function getWeekDayNames() {
