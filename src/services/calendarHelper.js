@@ -40,9 +40,9 @@ angular.module('mwl.calendar')
     this.getWeekDayNames = function() {
 
       var weekdays = [];
-      var startDay = isISOWeekBasedOnLocale() ? 22 : 21;
-      for (var i = 0; i <= 6; i++) {
-        weekdays.push(moment(new Date(2014, 8, startDay + i)).format(calendarConfig.dateFormats.weekDay));
+      var count = 0;
+      while(count < 7) {
+        weekdays.push(moment().weekday(count++).format(calendarConfig.dateFormats.weekDay));
       }
 
       return weekdays;
@@ -186,7 +186,7 @@ angular.module('mwl.calendar')
 
       var dateOffset = isISOWeekBasedOnLocale() ? 1 : 0;
       var columns = new Array(7);
-      var weekDays = self.getWeekDayNames(useISOWeek);
+      var weekDays = self.getWeekDayNames();
       var currentWeekDayIndex = currentDay.getDay();
       var beginningOfWeek, endOfWeek, i, date;
 

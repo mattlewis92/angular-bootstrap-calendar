@@ -78,8 +78,8 @@ angular
           //Maintain backwards compatibility with the previous functionality of the calendar
           if ($scope.useIsoWeek === true) {
             moment.locale(locale, {
-              week : {
-                dow : 1 //set monday as the first day of the week
+              week: {
+                dow: 1 //set monday as the first day of the week
               }
             });
           }
