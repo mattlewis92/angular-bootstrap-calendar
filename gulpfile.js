@@ -158,10 +158,11 @@ function runTests(action, onDistCode) {
   } else {
     var appJs = gulp.src('src/**/*.js').pipe($.sort()).pipe($.angularFilesort());
   }
+  var templates = gulp.src('src/templates/*.html');
   var karmaSetup = gulp.src('test/karma.setup.js');
   var test = gulp.src('test/unit/**/*.js');
 
-  return series(vendorJs, appJs, karmaSetup, test)
+  return series(vendorJs, appJs, templates, karmaSetup, test)
     .pipe($.karma({
       configFile: 'karma.conf.js',
       action: action

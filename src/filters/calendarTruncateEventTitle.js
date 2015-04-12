@@ -2,7 +2,7 @@
 
 angular
   .module('mwl.calendar')
-  .filter('truncateEventTitle', function() {
+  .filter('calendarTruncateEventTitle', function() {
 
     return function(string, length, boxHeight) {
       if (!string) {

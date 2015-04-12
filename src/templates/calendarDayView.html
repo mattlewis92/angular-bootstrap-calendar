@@ -51,7 +51,7 @@
 
       <!--<span class="cal-hours">{{ event.startsAt | date:'d MMM HH:mm' }} - {{ event.endsAt | date:'d MMM HH:mm' }}<br></span>-->
       <a href="javascript:;" class="event-item" ng-click="onEventClick({calendarEvent: event})">
-        <span>{{ event.title | truncateEventTitle:20:event.height }}</span>
+        <span>{{ event.title | calendarTruncateEventTitle:20:event.height }}</span>
       </a>
 
     </div>

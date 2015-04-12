@@ -188,6 +188,15 @@ The calendar directive uses moment.js to produce all months and days of the week
 
 tl;dr include the appropriate moment locale file (or all of them) and call ```moment.locale('YOUR_LOCALE_STRING')```.
 
+To set Monday as the first day of the week configure it in moment like so:
+```javascript
+moment.locale('en', {
+  week : {
+    dow : 1 // Monday is the first day of the week
+  }
+});
+```
+
 ## Configuring date formats
 
 You can easily customise the date formats and i18n strings used throughout the calendar by using the calendarConfigProvider. Please note that all formats are those used by moment.js. Example usage:

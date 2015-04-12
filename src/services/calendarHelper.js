@@ -27,6 +27,12 @@ angular
       });
     }
 
+    function getBadgeTotal(events) {
+      return events.filter(function(event) {
+        return event.incrementsBadgeTotal !== false;
+      }).length;
+    }
+
     function getWeekDayNames() {
       var weekdays = [];
       var count = 0;
@@ -34,12 +40,6 @@ angular
         weekdays.push(moment().weekday(count++).format(calendarConfig.dateFormats.weekDay));
       }
       return weekdays;
-    }
-
-    function getBadgeTotal(events) {
-      return events.filter(function(event) {
-        return event.incrementsBadgeTotal !== false;
-      }).length;
     }
 
     function getYearView(events, currentDay) {
