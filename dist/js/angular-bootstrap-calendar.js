@@ -54,6 +54,11 @@
                     return eventIsInPeriod(event.startsAt, event.endsAt, startPeriod, endPeriod);
                 });
             }
+            function getBadgeTotal(events) {
+                return events.filter(function (event) {
+                    return event.incrementsBadgeTotal !== false;
+                }).length;
+            }
             function getWeekDayNames() {
                 var weekdays = [];
                 var count = 0;
@@ -61,11 +66,6 @@
                     weekdays.push(moment().weekday(count++).format(calendarConfig.dateFormats.weekDay));
                 }
                 return weekdays;
-            }
-            function getBadgeTotal(events) {
-                return events.filter(function (event) {
-                    return event.incrementsBadgeTotal !== false;
-                }).length;
             }
             function getYearView(events, currentDay) {
                 var view = [];
@@ -300,7 +300,7 @@
         };
     });
     'use strict';
-    angular.module('mwl.calendar').filter('truncateEventTitle', function () {
+    angular.module('mwl.calendar').filter('calendarTruncateEventTitle', function () {
         return function (string, length, boxHeight) {
             if (!string) {
                 return '';
@@ -311,14 +311,6 @@
             } else {
                 return string;
             }
-        };
-    });
-    'use strict';
-    angular.module('mwl.calendar').filter('eventCountBadgeTotal', function () {
-        return function (events) {
-            return events.filter(function (event) {
-                return event.incrementsBadgeTotal !== false;
-            }).length;
         };
     });
     'use strict';
