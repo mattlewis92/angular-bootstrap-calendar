@@ -4,6 +4,8 @@
 [![Bower version](https://badge.fury.io/bo/angular-bootstrap-calendar.svg)](http://badge.fury.io/bo/angular-bootstrap-calendar)
 [![devDependency Status](https://david-dm.org/mattlewis92/angular-bootstrap-calendar/dev-status.svg)](https://david-dm.org/mattlewis92/angular-bootstrap-calendar#info=devDependencies)
 
+## *** These are the docs for the upcoming 0.10.0 release which contains many breaking changes. Please [see here](https://github.com/mattlewis92/angular-bootstrap-calendar/tree/0.9.2) for the latest stable docs. ***
+
 ## Table of contents
 
 - [About](#about)
