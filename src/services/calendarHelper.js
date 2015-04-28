@@ -42,6 +42,12 @@ angular
       return weekdays;
     }
 
+    function filterEventsInPeriod(events, startPeriod, endPeriod) {
+      return events.filter(function(event) {
+        return eventIsInPeriod(event.startsAt, event.endsAt, startPeriod, endPeriod);
+      });
+    }
+
     function getYearView(events, currentDay) {
 
       var view = [];
@@ -51,9 +57,7 @@ angular
       while (count < 12) {
         var startPeriod = month.clone();
         var endPeriod = startPeriod.clone().endOf('month');
-        var periodEvents = eventsInPeriod.filter(function(event) {
-          return eventIsInPeriod(event.startsAt, event.endsAt, startPeriod, endPeriod);
-        });
+        var periodEvents = filterEventsInPeriod(eventsInPeriod, startPeriod, endPeriod);
         view.push({
           label: startPeriod.format(calendarConfig.dateFormats.month),
           isToday: startPeriod.isSame(moment().startOf('month')),
@@ -83,9 +87,7 @@ angular
         var inMonth = day.month() === moment(currentDay).month();
         var monthEvents = [];
         if (inMonth) {
-          monthEvents = eventsInPeriod.filter(function(event) {
-            return eventIsInPeriod(event.startsAt, event.endsAt, day, day.clone().endOf('day'));
-          });
+          monthEvents = filterEventsInPeriod(eventsInPeriod, day, day.clone().endOf('day'));
         }
 
         view.push({
@@ -127,9 +129,7 @@ angular
         dayCounter.add(1, 'day');
       }
 
-      var eventsSorted = events.filter(function(event) {
-        return eventIsInPeriod(event.startsAt, event.endsAt, startOfWeek, endOfWeek);
-      }).map(function(event) {
+      var eventsSorted = filterEventsInPeriod(events, startOfWeek, endOfWeek).map(function(event) {
 
         var eventStart = moment(event.startsAt).startOf('day');
         var eventEnd = moment(event.endsAt).startOf('day');
@@ -165,21 +165,18 @@ angular
 
     function getDayView(events, currentDay, dayStartHour, dayEndHour, dayHeight) {
 
-      var eventsInPeriod = getEventsInPeriod(currentDay, 'day', events);
       var calendarStart = moment(currentDay).startOf('day').add(dayStartHour, 'hours');
       var calendarEnd = moment(currentDay).startOf('day').add(dayEndHour, 'hours');
       var calendarHeight = (dayEndHour - dayStartHour + 1) * dayHeight;
       var dayHeightMultiplier = dayHeight / 60;
       var buckets = [];
+      var eventsInPeriod = filterEventsInPeriod(
+        events,
+        moment(currentDay).startOf('day').toDate(),
+        moment(currentDay).endOf('day').toDate()
+      );
 
-      return eventsInPeriod.filter(function(event) {
-        return eventIsInPeriod(
-          event.startsAt,
-          event.endsAt,
-          moment(currentDay).startOf('day').toDate(),
-          moment(currentDay).endOf('day').toDate()
-        );
-      }).map(function(event) {
+      return eventsInPeriod.map(function(event) {
         if (moment(event.startsAt).isBefore(calendarStart)) {
           event.top = 0;
         } else {
