@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/mattlewis92/angular-bootstrap-calendar.svg?branch=master)](https://travis-ci.org/mattlewis92/angular-bootstrap-calendar)
 [![Bower version](https://badge.fury.io/bo/angular-bootstrap-calendar.svg)](http://badge.fury.io/bo/angular-bootstrap-calendar)
 [![devDependency Status](https://david-dm.org/mattlewis92/angular-bootstrap-calendar/dev-status.svg)](https://david-dm.org/mattlewis92/angular-bootstrap-calendar#info=devDependencies)
+[![Codacy Badge](https://www.codacy.com/project/badge/92f23ec92cfb4594b0b94b39dc3d3ebb)](https://www.codacy.com/app/matt-lewis-private/angular-bootstrap-calendar)
 
 ## *** These are the docs for the upcoming 0.10.0 release which contains many breaking changes. Please [see here](https://github.com/mattlewis92/angular-bootstrap-calendar/tree/0.9.2) for the latest stable docs. ***
 
