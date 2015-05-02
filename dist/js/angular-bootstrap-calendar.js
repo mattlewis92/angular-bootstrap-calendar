@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-calendar - A pure AngularJS bootstrap themed responsive calendar that can display events and has views for year, month, week and day
- * @version v0.9.2
+ * @version v0.10.0
  * @link https://github.com/mattlewis92/angular-bootstrap-calendar
  * @license MIT
  */
@@ -67,6 +67,11 @@
                 }
                 return weekdays;
             }
+            function filterEventsInPeriod(events, startPeriod, endPeriod) {
+                return events.filter(function (event) {
+                    return eventIsInPeriod(event.startsAt, event.endsAt, startPeriod, endPeriod);
+                });
+            }
             function getYearView(events, currentDay) {
                 var view = [];
                 var eventsInPeriod = getEventsInPeriod(currentDay, 'year', events);
@@ -75,9 +80,7 @@
                 while (count < 12) {
                     var startPeriod = month.clone();
                     var endPeriod = startPeriod.clone().endOf('month');
-                    var periodEvents = eventsInPeriod.filter(function (event) {
-                        return eventIsInPeriod(event.startsAt, event.endsAt, startPeriod, endPeriod);
-                    });
+                    var periodEvents = filterEventsInPeriod(eventsInPeriod, startPeriod, endPeriod);
                     view.push({
                         label: startPeriod.format(calendarConfig.dateFormats.month),
                         isToday: startPeriod.isSame(moment().startOf('month')),
@@ -101,9 +104,7 @@
                     var inMonth = day.month() === moment(currentDay).month();
                     var monthEvents = [];
                     if (inMonth) {
-                        monthEvents = eventsInPeriod.filter(function (event) {
-                            return eventIsInPeriod(event.startsAt, event.endsAt, day, day.clone().endOf('day'));
-                        });
+                        monthEvents = filterEventsInPeriod(eventsInPeriod, day, day.clone().endOf('day'));
                     }
                     view.push({
                         label: day.date(),
@@ -144,9 +145,7 @@
                     });
                     dayCounter.add(1, 'day');
                 }
-                var eventsSorted = events.filter(function (event) {
-                    return eventIsInPeriod(event.startsAt, event.endsAt, startOfWeek, endOfWeek);
-                }).map(function (event) {
+                var eventsSorted = filterEventsInPeriod(events, startOfWeek, endOfWeek).map(function (event) {
                     var eventStart = moment(event.startsAt).startOf('day');
                     var eventEnd = moment(event.endsAt).startOf('day');
                     var weekViewStart = moment(startOfWeek).startOf('day');
@@ -173,20 +172,18 @@
                     events: eventsSorted
                 };
             }
-            function getDayView(events, currentDay, dayStartHour, dayEndHour, dayHeight) {
-                var eventsInPeriod = getEventsInPeriod(currentDay, 'day', events);
+            function getDayView(events, currentDay, dayStartHour, dayEndHour, hourHeight) {
                 var calendarStart = moment(currentDay).startOf('day').add(dayStartHour, 'hours');
                 var calendarEnd = moment(currentDay).startOf('day').add(dayEndHour, 'hours');
-                var calendarHeight = (dayEndHour - dayStartHour + 1) * dayHeight;
-                var dayHeightMultiplier = dayHeight / 60;
+                var calendarHeight = (dayEndHour - dayStartHour + 1) * hourHeight;
+                var hourHeightMultiplier = hourHeight / 60;
                 var buckets = [];
-                return eventsInPeriod.filter(function (event) {
-                    return eventIsInPeriod(event.startsAt, event.endsAt, moment(currentDay).startOf('day').toDate(), moment(currentDay).endOf('day').toDate());
-                }).map(function (event) {
+                var eventsInPeriod = filterEventsInPeriod(events, moment(currentDay).startOf('day').toDate(), moment(currentDay).endOf('day').toDate());
+                return eventsInPeriod.map(function (event) {
                     if (moment(event.startsAt).isBefore(calendarStart)) {
                         event.top = 0;
                     } else {
-                        event.top = moment(event.startsAt).startOf('minute').diff(calendarStart.startOf('minute'), 'minutes') * dayHeightMultiplier - 2;
+                        event.top = moment(event.startsAt).startOf('minute').diff(calendarStart.startOf('minute'), 'minutes') * hourHeightMultiplier - 2;
                     }
                     if (moment(event.endsAt).isAfter(calendarEnd)) {
                         event.height = calendarHeight - event.top;
@@ -195,7 +192,7 @@
                         if (moment(event.startsAt).isBefore(calendarStart)) {
                             diffStart = calendarStart.toDate();
                         }
-                        event.height = moment(event.endsAt).diff(diffStart, 'minutes') * dayHeightMultiplier;
+                        event.height = moment(event.endsAt).diff(diffStart, 'minutes') * hourHeightMultiplier;
                     }
                     if (event.top - event.height > calendarHeight) {
                         event.height = 0;
@@ -635,11 +632,11 @@
                         dayViewStart = moment($scope.dayViewStart || '00:00', 'HH:mm');
                         dayViewEnd = moment($scope.dayViewEnd || '23:00', 'HH:mm');
                         vm.dayViewSplit = parseInt($scope.dayViewSplit);
-                        vm.dayHeight = 60 / $scope.dayViewSplit * 30;
-                        vm.days = [];
+                        vm.hourHeight = 60 / $scope.dayViewSplit * 30;
+                        vm.hours = [];
                         var dayCounter = moment(dayViewStart);
                         for (var i = 0; i <= dayViewEnd.diff(dayViewStart, 'hours'); i++) {
-                            vm.days.push({ label: dayCounter.format(calendarConfig.dateFormats.hour) });
+                            vm.hours.push({ label: dayCounter.format(calendarConfig.dateFormats.hour) });
                             dayCounter.add(1, 'hour');
                         }
                     }
@@ -649,7 +646,7 @@
                             originalLocale = moment.locale();
                             updateDays();
                         }
-                        vm.view = calendarHelper.getDayView($scope.events, $scope.currentDay, dayViewStart.hours(), dayViewEnd.hours(), vm.dayHeight);
+                        vm.view = calendarHelper.getDayView($scope.events, $scope.currentDay, dayViewStart.hours(), dayViewEnd.hours(), vm.hourHeight);
                     });
                     updateDays();
                 }
@@ -687,6 +684,7 @@
                 'calendarDebounce',
                 function ($scope, $timeout, moment, calendarTitle, calendarDebounce) {
                     var vm = this;
+                    $scope.events = $scope.events || [];
                     vm.changeView = function (view, newDay) {
                         $scope.view = view;
                         $scope.currentDay = newDay;
