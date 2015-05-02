@@ -1,0 +1,32 @@
+<div class="cal-row-fluid cal-row-head">
+
+  <div class="cal-cell1" ng-repeat="day in vm.weekDays track by $index">{{ day }}</div>
+
+</div>
+<div class="cal-month-box">
+
+  <div ng-repeat="rowOffset in vm.monthOffsets track by rowOffset">
+    <div class="cal-row-fluid cal-before-eventlist">
+      <div
+        ng-repeat="day in vm.view | calendarLimitTo:7:rowOffset track by $index"
+        class="cal-cell1 cal-cell {{ day.highlightClass }}"
+        ng-click="vm.dayClicked(day)"
+        ng-class="{pointer: day.events.length > 0}">
+
+        <div ng-include="'src/templates/calendarMonthDay.html'"></div>
+      </div>
+    </div>
+
+    <mwl-calendar-slide-box
+      is-open="vm.openRowIndex === $index"
+      events="vm.openEvents"
+      on-event-click="onEventClick"
+      edit-event-html="editEventHtml"
+      on-edit-event-click="onEditEventClick"
+      delete-event-html="deleteEventHtml"
+      on-delete-event-click="onDeleteEventClick">
+    </mwl-calendar-slide-box>
+
+  </div>
+
+</div>

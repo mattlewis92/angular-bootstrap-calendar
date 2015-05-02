@@ -1,0 +1,36 @@
+<div class="cal-slide-box" collapse="vm.shouldCollapse" mwl-collapse-fallback="vm.shouldCollapse">
+  <div class="cal-slide-content cal-event-list">
+    <ul class="unstyled list-unstyled">
+
+      <li ng-repeat="event in events track by $index">
+        <span class="pull-left event" ng-class="'event-' + event.type"></span>
+        &nbsp;
+        <a
+          href="javascript:;"
+          class="event-item"
+          ng-click="onEventClick({calendarEvent: event})">
+          {{ event.title }}
+          <span ng-show="isMonthView">({{ event.startsAt | date:'shortTime' }})</span>
+          <span ng-show="isYearView">({{ event.startsAt | date:'MMM d, h:mm a' }})</span>
+        </a>
+
+        <a
+          href="javascript:;"
+          class="event-item-edit"
+          ng-if="editEventHtml && event.editable !== false"
+          ng-bind-html="vm.$sce.trustAsHtml(editEventHtml)"
+          ng-click="onEditEventClick({calendarEvent: event})">
+        </a>
+
+        <a
+          href="javascript:;"
+          class="event-item-delete"
+          ng-if="deleteEventHtml && event.deletable !== false"
+          ng-bind-html="vm.$sce.trustAsHtml(deleteEventHtml)"
+          ng-click="onDeleteEventClick({calendarEvent: event})">
+        </a>
+      </li>
+
+    </ul>
+  </div>
+</div>

@@ -5,96 +5,83 @@ angular
   .directive('mwlCalendarMonth', function() {
 
     return {
-      templateUrl: 'templates/month.html',
+      templateUrl: 'src/templates/calendarMonthView.html',
       restrict: 'EA',
       require: '^mwlCalendar',
       scope: {
-        events: '=calendarEvents',
-        currentDay: '=calendarCurrentDay',
-        eventClick: '=calendarEventClick',
-        eventEditClick: '=calendarEditEventClick',
-        eventDeleteClick: '=calendarDeleteEventClick',
-        editEventHtml: '=calendarEditEventHtml',
-        deleteEventHtml: '=calendarDeleteEventHtml',
-        autoOpen: '=calendarAutoOpen',
-        useIsoWeek: '=calendarUseIsoWeek',
-        timespanClick: '=calendarTimespanClick'
+        events: '=',
+        currentDay: '=',
+        onEventClick: '=',
+        onEditEventClick: '=',
+        onDeleteEventClick: '=',
+        editEventHtml: '=',
+        deleteEventHtml: '=',
+        autoOpen: '=',
+        onTimespanClick: '='
       },
-      controller: function($scope, $sce, $timeout, moment, calendarHelper, eventCountBadgeTotalFilter) {
-        var firstRun = false;
+      controller: function($scope, moment, calendarHelper) {
 
-        $scope.$sce = $sce;
-        $scope.eventCountBadgeTotalFilter = eventCountBadgeTotalFilter;
+        var vm = this;
+        var firstRun = true;
 
-        function updateView() {
-          $scope.view = calendarHelper.getMonthView($scope.events, $scope.currentDay, $scope.useIsoWeek);
+        $scope.$on('calendar.refreshView', function() {
+          vm.weekDays = calendarHelper.getWeekDayNames();
+
+          vm.view = calendarHelper.getMonthView($scope.events, $scope.currentDay);
+          var rows = Math.floor(vm.view.length / 7);
+          vm.monthOffsets = [];
+          for (var i = 0; i < rows; i++) {
+            vm.monthOffsets.push(i * 7);
+          }
 
           //Auto open the calendar to the current day if set
-          if ($scope.autoOpen && !firstRun) {
-            $scope.view.forEach(function(week, rowIndex) {
-              week.forEach(function(day, cellIndex) {
-                if (day.inMonth && moment($scope.currentDay).startOf('day').isSame(day.date.startOf('day'))) {
-                  $scope.dayClicked(rowIndex, cellIndex, true);
-                  $timeout(function() {
-                    firstRun = false;
-                  });
-                }
-              });
+          if ($scope.autoOpen && firstRun) {
+            firstRun = false;
+            vm.view.forEach(function(day) {
+              if (day.inMonth && moment($scope.currentDay).startOf('day').isSame(day.date)) {
+                vm.dayClicked(day, true);
+              }
             });
           }
+        });
 
-        }
-
-        $scope.$watch('currentDay', updateView);
-        $scope.$watch('events', updateView, true);
-
-        $scope.weekDays = calendarHelper.getWeekDayNames(false, $scope.useIsoWeek);
-
-        $scope.dayClicked = function(rowIndex, cellIndex, dayClickedFirstRun) {
+        vm.dayClicked = function(day, dayClickedFirstRun) {
 
           if (!dayClickedFirstRun) {
-            $scope.timespanClick({calendarDate: $scope.view[rowIndex][cellIndex].date.startOf('day').toDate()});
+            $scope.onTimespanClick({calendarDate: day.date.toDate()});
           }
 
-          var handler = calendarHelper.toggleEventBreakdown($scope.view, rowIndex, cellIndex);
-          $scope.view = handler.view;
-          $scope.openEvents = handler.openEvents;
+          vm.view.forEach(function(monthDay) {
+            monthDay.isOpened = false;
+          });
+
+          vm.openEvents = day.events;
+          vm.openRowIndex = null;
+          if (vm.openEvents.length > 0) {
+            var dayIndex = vm.view.indexOf(day);
+            vm.openRowIndex = Math.floor(dayIndex / 7);
+            day.isOpened = true;
+          }
 
         };
 
-        $scope.drillDown = function(day) {
-          var date = moment($scope.currentDay).clone().date(day).toDate();
-          if ($scope.timespanClick({calendarDate: date}) !== false) {
-            $scope.calendarCtrl.changeView('day', date);
-          }
-        };
+        vm.highlightEvent = function(event, shouldAddClass) {
 
-        $scope.highlightEvent = function(event, shouldAddClass) {
-
-          $scope.view.forEach(function(week) {
-
-            week.forEach(function(day) {
-
-              delete day.highlightClass;
-
-              if (shouldAddClass) {
-                var dayContainsEvent = day.events.filter(function(e) {
-                  return e.$id === event.$id;
-                }).length > 0;
-
-                if (dayContainsEvent) {
-                  day.highlightClass = 'day-highlight dh-event-' + event.type;
-                }
+          vm.view.forEach(function(day) {
+            delete day.highlightClass;
+            if (shouldAddClass) {
+              var dayContainsEvent = day.events.indexOf(event) > -1;
+              if (dayContainsEvent) {
+                day.highlightClass = 'day-highlight dh-event-' + event.type;
               }
-
-            });
-
+            }
           });
 
         };
       },
+      controllerAs: 'vm',
       link: function(scope, element, attrs, calendarCtrl) {
-        scope.calendarCtrl = calendarCtrl;
+        scope.vm.calendarCtrl = calendarCtrl;
       }
     };
 

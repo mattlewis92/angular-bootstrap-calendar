@@ -1,0 +1,46 @@
+<div class="cal-year-box">
+  <div ng-repeat="rowOffset in [0, 4, 8] track by rowOffset">
+    <div class="row cal-before-eventlist">
+      <div
+        class="span3 col-md-3 col-xs-6 cal-cell"
+        ng-repeat="month in vm.view | calendarLimitTo:4:rowOffset track by $index"
+        ng-click="vm.monthClicked(month)"
+        ng-class="{pointer: month.events.length > 0, 'cal-day-today': month.isToday}">
+
+
+        <span
+          class="pull-right"
+          data-cal-date
+          ng-click="vm.calendarCtrl.drillDown(month.date)">
+          {{ month.label }}
+        </span>
+
+        <small
+          class="cal-events-num badge badge-important pull-left"
+          ng-show="month.badgeTotal > 0">
+          {{ month.badgeTotal }}
+        </small>
+
+        <div
+          class="cal-day-tick"
+          ng-show="month.isOpened">
+          <i class="glyphicon glyphicon-chevron-up"></i>
+          <i class="fa fa-chevron-up"></i>
+        </div>
+
+      </div>
+    </div>
+
+    <mwl-calendar-slide-box
+      is-open="vm.openRowIndex === $index"
+      events="vm.openEvents"
+      on-event-click="onEventClick"
+      edit-event-html="editEventHtml"
+      on-edit-event-click="onEditEventClick"
+      delete-event-html="deleteEventHtml"
+      on-delete-event-click="onDeleteEventClick">
+    </mwl-calendar-slide-box>
+
+  </div>
+
+</div>

@@ -1,0 +1,31 @@
+<div class="cal-week-box">
+  <div class="cal-row-fluid cal-row-head">
+
+    <div
+      class="cal-cell1"
+      ng-repeat="day in vm.view.days track by $index"
+      ng-class="{
+        'cal-day-weekend': day.isWeekend,
+        'cal-day-past': day.isPast,
+        'cal-day-today': day.isToday,
+        'cal-day-future': day.isFuture}">
+
+      {{ day.weekDayLabel }}
+      <br>
+      <small>
+        <span data-cal-date ng-click="vm.calendarCtrl.drillDown(day.date.toDate())" class="pointer">{{ day.dayLabel }}</span>
+      </small>
+
+    </div>
+
+  </div>
+
+  <div class="cal-row-fluid" ng-repeat="event in vm.view.events track by $index">
+    <div class="cal-cell{{ event.daySpan }} cal-offset{{ event.dayOffset }} day-highlight dh-event-{{ event.type }}" data-event-class>
+      <a href="javascript:;" ng-click="onEventClick({calendarEvent: event})" class="cal-event-week">
+        {{ event.title }}
+      </a>
+    </div>
+  </div>
+
+</div>

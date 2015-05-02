@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('mwl.calendar')
+angular
+  .module('mwl.calendar')
   .provider('calendarConfig', function() {
 
     var defaultDateFormats = {
@@ -17,22 +18,33 @@ angular.module('mwl.calendar')
       year: 'YYYY'
     };
 
+    var i18nStrings = {
+      eventsLabel: 'Events',
+      timeLabel: 'Time'
+    };
+
     var configProvider = this;
 
-    configProvider.configureDateFormats = function(formats) {
+    configProvider.setDateFormats = function(formats) {
       angular.extend(defaultDateFormats, formats);
       return configProvider;
     };
 
-    configProvider.configureTitleFormats = function(formats) {
+    configProvider.setTitleFormats = function(formats) {
       angular.extend(defaultTitleFormats, formats);
+      return configProvider;
+    };
+
+    configProvider.setI18nStrings = function(strings) {
+      angular.extend(i18nStrings, strings);
       return configProvider;
     };
 
     configProvider.$get = function() {
       return {
         dateFormats: defaultDateFormats,
-        titleFormats: defaultTitleFormats
+        titleFormats: defaultTitleFormats,
+        i18nStrings: i18nStrings
       };
     };
 

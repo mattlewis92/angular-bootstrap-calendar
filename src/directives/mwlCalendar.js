@@ -5,91 +5,78 @@ angular
   .directive('mwlCalendar', function() {
 
     return {
-      templateUrl: 'templates/main.html',
+      templateUrl: 'src/templates/calendar.html',
       restrict: 'EA',
       scope: {
-        events: '=calendarEvents',
-        view: '=calendarView',
-        currentDay: '=calendarCurrentDay',
-        control: '=calendarControl',
-        eventClick: '&calendarEventClick',
-        eventEditClick: '&calendarEditEventClick',
-        eventDeleteClick: '&calendarDeleteEventClick',
-        editEventHtml: '=calendarEditEventHtml',
-        deleteEventHtml: '=calendarDeleteEventHtml',
-        autoOpen: '=calendarAutoOpen',
-        useIsoWeek: '=calendarUseIsoWeek',
-        eventLabel: '@calendarEventLabel',
-        timeLabel: '@calendarTimeLabel',
-        dayViewStart: '@calendarDayViewStart',
-        dayViewEnd: '@calendarDayViewEnd',
-        weekTitleLabel: '@calendarWeekTitleLabel',
-        timespanClick: '&calendarTimespanClick',
-        dayViewSplit: '@calendarDayViewSplit'
+        events: '=',
+        view: '=',
+        viewTitle: '=',
+        currentDay: '=',
+        editEventHtml: '=',
+        deleteEventHtml: '=',
+        autoOpen: '=',
+        onEventClick: '&',
+        onEditEventClick: '&',
+        onDeleteEventClick: '&',
+        onTimespanClick: '&',
+        onDrillDownClick: '&',
+        dayViewStart: '@',
+        dayViewEnd: '@',
+        dayViewSplit: '@'
       },
-      controller: function($scope, $timeout, moment, calendarConfig) {
+      controller: function($scope, $timeout, moment, calendarTitle, calendarDebounce) {
 
-        var self = this;
+        var vm = this;
 
-        var weekTitleLabel = $scope.weekTitleLabel || calendarConfig.titleFormats.week;
-        this.titleFunctions = {
-          day: function(currentDay) {
-            return moment(currentDay).format(calendarConfig.titleFormats.day);
-          },
-          week: function(currentDay) {
-            return weekTitleLabel.replace('{week}', moment(currentDay).week()).replace('{year}', moment(currentDay).format('YYYY'));
-          },
-          month: function(currentDay) {
-            return moment(currentDay).format(calendarConfig.titleFormats.month);
-          },
-          year: function(currentDay) {
-            return moment(currentDay).format(calendarConfig.titleFormats.year);
-          }
-        };
+        $scope.events = $scope.events || [];
 
-        this.changeView = function(view, newDay) {
+        vm.changeView = function(view, newDay) {
           $scope.view = view;
           $scope.currentDay = newDay;
         };
 
-        $scope.control = $scope.control || {};
+        vm.drillDown = function(date) {
 
-        $scope.control.prev = function() {
-          $scope.currentDay = moment($scope.currentDay).subtract(1, $scope.view).toDate();
-        };
+          var nextView = {
+            'year': 'month',
+            'month': 'day',
+            'week': 'day'
+          };
 
-        $scope.control.next = function() {
-          $scope.currentDay = moment($scope.currentDay).add(1, $scope.view).toDate();
-        };
-
-        $scope.control.getTitle = function() {
-          if (!self.titleFunctions[$scope.view]) {
-            return '';
+          if ($scope.onDrillDownClick({calendarDate: moment(date).toDate(), calendarNextView: nextView[$scope.view]}) !== false) {
+            vm.changeView(nextView[$scope.view], date);
           }
-          return self.titleFunctions[$scope.view]($scope.currentDay);
+
         };
+
+        //Use a debounce to prevent it being called 3 times on initialisation
+        var refreshCalendar = calendarDebounce(function() {
+          if (calendarTitle[$scope.view]) {
+            $scope.viewTitle = calendarTitle[$scope.view]($scope.currentDay);
+          }
+          $scope.$broadcast('calendar.refreshView');
+        }, 50);
 
         //Auto update the calendar when the locale changes
-        var firstRunWatcher = true;
-        var unbindWatcher = $scope.$watch(function() {
+        var unbindLocaleWatcher = $scope.$watch(function() {
           return moment.locale();
-        }, function() {
-          if (firstRunWatcher) { //dont run the first time the calendar is initialised
-            firstRunWatcher = false;
-            return;
-          }
-          var originalView = angular.copy($scope.view);
-          $scope.view = 'redraw';
-          $timeout(function() { //bit of a hacky way to redraw the calendar, should be refactored at some point
-            $scope.view = originalView;
+        }, refreshCalendar);
+
+        var unbindOnDestroy = [];
+        unbindOnDestroy.push(unbindLocaleWatcher);
+
+        //Refresh the calendar when any of these variables change.
+        unbindOnDestroy.push($scope.$watch('currentDay', refreshCalendar));
+        unbindOnDestroy.push($scope.$watch('view', refreshCalendar));
+        unbindOnDestroy.push($scope.$watch('events', refreshCalendar, true));
+
+        //Remove any watchers when the calendar is destroyed
+        var unbindDestroyListener = $scope.$on('$destroy', function() {
+          unbindOnDestroy.forEach(function(unbind) {
+            unbind();
           });
         });
-
-        //Remove the watcher when the calendar is destroyed
-        var unbindDestroyListener = $scope.$on('$destroy', function() {
-          unbindDestroyListener();
-          unbindWatcher();
-        });
+        unbindOnDestroy.push(unbindDestroyListener);
 
       }
     };

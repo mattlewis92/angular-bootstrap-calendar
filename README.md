@@ -3,6 +3,9 @@
 [![Build Status](https://travis-ci.org/mattlewis92/angular-bootstrap-calendar.svg?branch=master)](https://travis-ci.org/mattlewis92/angular-bootstrap-calendar)
 [![Bower version](https://badge.fury.io/bo/angular-bootstrap-calendar.svg)](http://badge.fury.io/bo/angular-bootstrap-calendar)
 [![devDependency Status](https://david-dm.org/mattlewis92/angular-bootstrap-calendar/dev-status.svg)](https://david-dm.org/mattlewis92/angular-bootstrap-calendar#info=devDependencies)
+[![Codacy Badge](https://www.codacy.com/project/badge/92f23ec92cfb4594b0b94b39dc3d3ebb)](https://www.codacy.com/app/matt-lewis-private/angular-bootstrap-calendar)
+
+## *** These are the docs for the upcoming 0.10.0 release which contains many breaking changes. Please [see here](https://github.com/mattlewis92/angular-bootstrap-calendar/tree/0.9.2) for the latest stable docs. ***
 
 ## Table of contents
 
@@ -57,22 +60,22 @@ angular.module('myModule', ['mwl.calendar', 'ui.bootstrap']);
 There is a single directive exposed to create the calendar, use it like so:
 ```javascript
 <mwl-calendar
-    calendar-events="events"
-    calendar-view="calendarView"
-    calendar-current-day="calendarDay"
-    calendar-control="calendarControl"
-    calendar-event-click="eventClicked(calendarEvent)"
-    calendar-edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
-    calendar-delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
-    calendar-edit-event-click="eventEdited(calendarEvent)"
-    calendar-delete-event-click="eventDeleted(calendarEvent)"
-    calendar-auto-open="true"
-    ></mwl-calendar>
+    events="events"
+    view="calendarView"
+    view-title="calendarTitle"
+    current-day="calendarDay"
+    on-event-click="eventClicked(calendarEvent)"
+    edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
+    delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
+    on-edit-event-click="eventEdited(calendarEvent)"
+    on-delete-event-click="eventDeleted(calendarEvent)"
+    auto-open="true">
+</mwl-calendar>
 ```
 
 An explanation of the properties is as follows:
 
-### calendar-events
+### events
 
 An array of events to display on the calendar. For example:
 ```javascript
@@ -80,10 +83,10 @@ $scope.events = [
   {
     title: 'My event title', // The title of the event
     type: 'info', // The type of the event (determines its color). Can be important, warning, info, inverse, success or special
-    starts_at: new Date(2013,5,1,1), // A javascript date object for when the event starts
-    ends_at: new Date(2014,8,26,15), // A javascript date object for when the event ends
-    editable: false, // If calendar-edit-event-html is set and this field is explicitly set to false then dont make it editable
-    deletable: false, // If calendar-delete-event-html is set and this field is explicitly set to false then dont make it deleteable
+    startsAt: new Date(2013,5,1,1), // A javascript date object for when the event starts
+    endsAt: new Date(2014,8,26,15), // A javascript date object for when the event ends
+    editable: false, // If edit-event-html is set and this field is explicitly set to false then dont make it editable
+    deletable: false, // If delete-event-html is set and this field is explicitly set to false then dont make it deleteable
     incrementsBadgeTotal: true //If set to false then will not count towards the badge total amount on the month and year view
   }
 ];
@@ -91,7 +94,7 @@ $scope.events = [
 
 The 4 properties listed are required for all events.
 
-### calendar-view
+### view
 
 This variable is a string that can be either 'year', 'month', 'week' or 'day. Changing it will change the view of the calendar.
 
@@ -100,98 +103,122 @@ For the calendar to display this variable needs to be set like so:
 $scope.calendarView = 'month';
 ```
 
-### calendar-current-day
+### current-day
 
 This variable holds the current day the calendar is centralised on. Each view will decide on its current year / month / week / day depending on the value of this variable.
 
-### calendar-control
+### view-title
 
-The directive will instantiate this variable for you and add the following methods to it:
-* prev - Goes to the previous page of the view
-* next - Goes to the next page of the view
-* getTitle - Gets the title of the calendar depending on the current date and view.
+This variable will be assigned to the calendar title. If you want to change the formatting you can use the calendarConfigProvider or just override the appropriate method in the calendarTitle factory.
 
-### calendar-event-click 
+### on-event-click 
 
 This expression is called when an event is clicked on the calendar. calendarEvent contains the calendar event that was clicked on.
 
-### calendar-edit-event-html 
+### edit-event-html 
 
 If provided this piece of html will be displayed next to an event on the year and month view and will fire the function passed to edit-event-click.
 
-### calendar-delete-event-html 
+### delete-event-html 
 
 If provided this piece of html will be displayed next to an event on the year and month view and will fire the function passed to delete-event-click.
 
-### calendar-edit-event-click 
+### on-edit-event-click 
 
 This expression is called when an event edit link is clicked on the calendar. calendarEvent contains the calendar event that was clicked on.
 
-### calendar-delete-event-click 
+### on-delete-event-click 
 
 This expression is called when an event delete link is clicked on the calendar. calendarEvent contains the calendar event that was clicked on.
 
-### calendar-timespan-click
+### on-timespan-click
 
 This expression is called when a month or day on the calendar is clicked. calendarDate contains the start of the month or day that was clicked on.
 
-### calendar-auto-open
+### auto-open
 
 Whether to auto open the year and month view breakdown to the current year / month. Default: false
 
-### calendar-use-iso-week
+### day-view-start
 
-Whether the calendar should use the the ISO week standard (i.e. the calendar month and week views start on Monday and not Sunday).
-
-If not set the calendar will look at what is set in the locale by moment. You can set this globally via:
-
-```javascript
-moment.locale('en', {
-    week : {
-        dow : 1 // Monday is the first day of the week
-    }
-});
-```
-
-### calendar-event-label
-
-An interpolated locale string to use as the column header on the day view for the events column. Default: 'Events'.
-
-### calendar-time-label
-
-An interpolated locale string to use as the column header on the day view for the time column. Default: 'Time'.
-
-### calendar-week-title-label
-
-An interpolated local string to use in the week view title. Default: 'Week {week} of {year}'
-
-### calendar-day-view-start
 An interpolated string in the form of hh:mm to start the day view at, e.g. setting it to 06:00 will start the day view at 6am
 
-### calendar-day-view-end
+### day-view-end
+
 An interpolated string in the form of hh:mm to end the day view at, e.g. setting it to 22:00 will end the day view at 10pm
 
-### calendar-day-view-split
+### day-view-split
+
 The number of chunks to split the day view hours up into. Can be either 10, 15 or 30. Default: 30
+
+### on-drill-down-click
+
+An optional expression that is evaluated when the drilldown (clicking on a date to change the view) is triggered. Return false from the expression function to disable the drilldown. calendarDate is available as the date that was selected. calendarNextView is the view that the calendar will be changed to.  
+
+## The mwl-date-modifier directive
+
+There is also a helper directive that you can use for the next, today and previous buttons. Use it like so:
+
+```html
+<button
+  class="btn btn-primary"
+  mwl-date-modifier
+  date="calendarDay"
+  decrement="calendarView">
+  Previous
+</button>
+
+<button
+  class="btn btn-default"
+  mwl-date-modifier
+  date="calendarDay"
+  set-to-today>
+  Today
+</button>
+
+<button
+  class="btn btn-primary"
+  mwl-date-modifier
+  date="calendarDay"
+  increment="calendarView">
+  Next
+</button>
+```
 
 ## Internationalization and localization
 
 The calendar directive uses moment.js to produce all months and days of the week etc. Therefore to change the language of the calendar just [follow this guide](http://momentjs.com/docs/#/i18n/).
 
+tl;dr include the appropriate moment locale file (or all of them) and call ```moment.locale('YOUR_LOCALE_STRING')```.
+
+To set Monday as the first day of the week configure it in moment like so:
+```javascript
+moment.locale('en', {
+  week : {
+    dow : 1 // Monday is the first day of the week
+  }
+});
+```
+
 ## Configuring date formats
 
-You can easily customise the date formats used throughout the calendar by using the calendarConfigProvider. There are current 2 methods available. Please note that all formats are those used by moment.js. Example usage:
+You can easily customise the date formats and i18n strings used throughout the calendar by using the calendarConfigProvider. Please note that all formats are those used by moment.js. Example usage:
 
 ```javascript
 angular.module('myModule')
   .config(function(calendarConfigProvider) {
   
-    calendarConfigProvider.configureDateFormats({
+    calendarConfigProvider.setDateFormats({
       hour: 'HH:mm' //this will configure the hour view to display in 24 hour format rather than the default of 12 hour
     });
     
-    calendarConfigProvider.configureTitleFormats({
+    calendarConfigProvider.setTitleFormats({
       day: 'ddd D MMM' //this will configure the day view title to be shorter
+    });
+    
+    calendarConfigProvider.setI18nStrings({
+      eventsLabel: 'Events', //This will set the events label on the day view
+      timeLabel: 'Time' //This will set the time label on the time view
     });
     
   });
@@ -205,9 +232,8 @@ http://mattlewis92.github.io/angular-bootstrap-calendar/
 
 ## Roadmap
 
-* Partition the calendar into separate modules - one for day, week, month and year
-* Drop angular 1.2 support to take advantage of bindToController and one time binding in templates
-* Add unit and e2e tests [#10](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/10)
+* Add tests [#10](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/10)
+* Drop angular 1.2 support to take advantage of bindToController and one time binding in templates [#58](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/58)
 
 ## Development
 
@@ -216,11 +242,14 @@ http://mattlewis92.github.io/angular-bootstrap-calendar/
 * Install global dev dependencies: `npm install -g gulp`
 * Install local dev dependencies: `npm install` while current directory is this repo
 
+### Development server
+Run `gulp watch` to start a development server on port 8000 with livereload. 
+
+### Testing
+Run `gulp test:src` to run tests once or `test:watch` to continually run tests (this is automatic when you run `gulp watch`). 
+
 ### Build
 Run `gulp build` to build the project files in the dist folder
-
-### Development server
-Run `gulp watch` to start a development server with livereload on port 8000. 
 
 ## License
 

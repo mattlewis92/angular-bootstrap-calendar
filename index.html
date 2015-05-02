@@ -5,7 +5,11 @@
     <title>Angular bootstrap calendar demo</title>
     <meta name="description" content="Angular bootstrap calendar demo">
     <meta name="viewport" content="width=device-width">
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <style type="text/css">
+      [ng-cloak] {
+        display: none;
+      }
+    </style>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="dist/css/angular-bootstrap-calendar.min.css">
     <link rel="stylesheet" href="docs/styles/main.css">
@@ -32,16 +36,34 @@
 
       <div class="row" ng-controller="MainCtrl" id="demo">
         <div class="col-md-8 col-md-offset-2">
-          <h2 class="text-center">{{ calendarControl.getTitle() }}</h2>
+          <h2 class="text-center">{{ calendarTitle }}</h2>
 
           <div class="row">
 
             <div class="col-md-6 text-center">
               <div class="btn-group">
 
-                <button class="btn btn-primary" ng-click="calendarControl.prev()">Previous</button>
-                <button class="btn btn-default" ng-click="setCalendarToToday()">Today</button>
-                <button class="btn btn-primary" ng-click="calendarControl.next()">Next</button>
+                <button
+                  class="btn btn-primary"
+                  mwl-date-modifier
+                  date="calendarDay"
+                  decrement="calendarView">
+                  Previous
+                </button>
+                <button
+                  class="btn btn-default"
+                  mwl-date-modifier
+                  date="calendarDay"
+                  set-to-today>
+                  Today
+                </button>
+                <button
+                  class="btn btn-primary"
+                  mwl-date-modifier
+                  date="calendarDay"
+                  increment="calendarView">
+                  Next
+                </button>
               </div>
             </div>
 
@@ -61,21 +83,21 @@
           <br>
 
           <mwl-calendar
-            calendar-events="events"
-            calendar-view="calendarView"
-            calendar-current-day="calendarDay"
-            calendar-control="calendarControl"
-            calendar-event-click="eventClicked(calendarEvent)"
-            calendar-edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
-            calendar-delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
-            calendar-edit-event-click="eventEdited(calendarEvent)"
-            calendar-delete-event-click="eventDeleted(calendarEvent)"
-            calendar-auto-open="true"
-            calendar-day-view-start="06:00"
-            calendar-day-view-end="22:00"
-            calendar-timespan-click="dayClicked($date)"
-            calendar-day-view-split="30"
-            ></mwl-calendar>
+            events="events"
+            view="calendarView"
+            view-title="calendarTitle"
+            current-day="calendarDay"
+            on-event-click="eventClicked(calendarEvent)"
+            edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
+            delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
+            on-edit-event-click="eventEdited(calendarEvent)"
+            on-delete-event-click="eventDeleted(calendarEvent)"
+            auto-open="true"
+            day-view-start="06:00"
+            day-view-end="22:00"
+            on-timespan-click="dayClicked(calendarDay)"
+            day-view-split="30">
+          </mwl-calendar>
 
           <br><br><br>
 
@@ -125,21 +147,21 @@
                 </td>
                 <td>
                   <p class="input-group" style="max-width: 250px">
-                    <input type="text" class="form-control" readonly datepicker-popup="medium" ng-model="event.starts_at" is-open="event.startOpen" close-text="Close" />
+                    <input type="text" class="form-control" readonly datepicker-popup="medium" ng-model="event.startsAt" is-open="event.startOpen" close-text="Close" />
                     <span class="input-group-btn">
                       <button type="button" class="btn btn-default" ng-click="toggle($event, 'startOpen', event)"><i class="glyphicon glyphicon-calendar"></i></button>
                     </span>
                   </p>
-                  <timepicker ng-model="event.starts_at" hour-step="1" minute-step="15" show-meridian="true"></timepicker>
+                  <timepicker ng-model="event.startsAt" hour-step="1" minute-step="15" show-meridian="true"></timepicker>
                 </td>
                 <td>
                   <p class="input-group" style="max-width: 250px">
-                    <input type="text" class="form-control" readonly datepicker-popup="medium" ng-model="event.ends_at" is-open="event.endOpen" close-text="Close" />
+                    <input type="text" class="form-control" readonly datepicker-popup="medium" ng-model="event.endsAt" is-open="event.endOpen" close-text="Close" />
                     <span class="input-group-btn">
                       <button type="button" class="btn btn-default" ng-click="toggle($event, 'endOpen', event)"><i class="glyphicon glyphicon-calendar"></i></button>
                     </span>
                   </p>
-                  <timepicker ng-model="event.ends_at" hour-step="1" minute-step="15" show-meridian="true"></timepicker>
+                  <timepicker ng-model="event.endsAt" hour-step="1" minute-step="15" show-meridian="true"></timepicker>
                 </td>
                 <td><button class="btn btn-danger" ng-click="events.splice($index, 1)">Delete</button></td>
               </tr>
