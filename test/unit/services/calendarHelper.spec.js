@@ -19,7 +19,7 @@ describe('calendarHelper', function() {
       incrementsBadgeTotal: false
     }];
 
-    clock = sinon.useFakeTimers(new Date('October 20, 2015 11:13:00').getTime());
+    clock = sinon.useFakeTimers(new Date('October 20, 2015 11:10:00').getTime());
 
     calendarDay = new Date();
 
@@ -355,42 +355,71 @@ describe('calendarHelper', function() {
 
   describe('getDayView', function() {
 
-    var dayView;
+    var dayView, dayEvents;
 
     beforeEach(function() {
-      dayView = calendarHelper.getDayView(events, calendarDay);
+      dayEvents = [{
+        startsAt: new Date('October 19, 2015 11:00:00'),
+        endsAt: new Date('October 21, 2015 11:00:00')
+      }, {
+        startsAt: new Date('October 20, 2015 11:00:00'),
+        endsAt: new Date('October 21, 2015 11:00:00')
+      }, {
+        startsAt: new Date('October 20, 2015 11:00:00'),
+        endsAt: new Date('October 20, 2015 12:00:00')
+      }];
+
+      dayView = calendarHelper.getDayView(
+        dayEvents,
+        calendarDay,
+        moment('00:00', 'HH:mm').hours(),
+        moment('23:00', 'HH:mm').hours(),
+        60
+      );
     });
 
     it('should only contain events for that day', function() {
-
+      expect(dayView).to.eql(dayEvents);
     });
 
     it('should set the top to 0 if the event starts before the start of the day', function() {
-
+      expect(dayView[0].top).to.equal(0);
     });
 
     it('should set the top correctly if the event starts after the start of the day', function() {
-
+      expect(dayView[1].top).to.equal(658);
     });
 
     it('should set the height correctly if the event finishes after the end of the day', function() {
-
+      expect(dayView[1].height).to.equal(782);
     });
 
     it('should set the height correctly if the event finishes before the end of the day', function() {
-
+      expect(dayView[2].height).to.equal(60);
     });
 
     it('should never exceed the maximum height of the calendar', function() {
-
+      expect(dayView[0].height).to.equal(1440);
     });
 
     it('should remove events that start and end at the same time', function() {
-
+      dayView = calendarHelper.getDayView(
+        [{
+          startsAt: new Date('October 20, 2015 11:00:00'),
+          endsAt: new Date('October 20, 2015 11:00:00')
+        }],
+        calendarDay,
+        moment('00:00', 'HH:mm').hours(),
+        moment('23:00', 'HH:mm').hours(),
+        60
+      );
+      expect(dayView).to.eql([]);
     });
 
     it('should move events across if there are multiple ones on the same line', function() {
-
+      expect(dayView[0].left).to.equal(0);
+      expect(dayView[1].left).to.equal(150);
+      expect(dayView[2].left).to.equal(300);
     });
 
   });
