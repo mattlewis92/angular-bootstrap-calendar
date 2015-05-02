@@ -28,6 +28,8 @@ angular
 
         var vm = this;
 
+        $scope.events = $scope.events || [];
+
         vm.changeView = function(view, newDay) {
           $scope.view = view;
           $scope.currentDay = newDay;
