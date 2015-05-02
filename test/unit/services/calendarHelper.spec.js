@@ -8,7 +8,7 @@ describe('calendarHelper', function() {
     events = [{
       title: 'Event 1',
       type: 'info',
-      startsAt: new Date(2015, 9, 20, 1),
+      startsAt: new Date(2015, 9, 20, 2),
       endsAt: new Date(2015, 9, 20, 15),
       incrementsBadgeTotal: true
     }, {
@@ -355,8 +355,14 @@ describe('calendarHelper', function() {
 
   describe('getDayView', function() {
 
+    var dayView;
+
+    beforeEach(function() {
+      dayView = calendarHelper.getDayView(events, calendarDay);
+    });
+
     it('should only contain events for that day', function() {
-      
+
     });
 
     it('should set the top to 0 if the event starts before the start of the day', function() {
