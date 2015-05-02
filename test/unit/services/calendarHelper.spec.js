@@ -1,19 +1,31 @@
 describe('calendarHelper', function() {
 
-  var calendarHelper, events;
+  var calendarHelper, events, clock;
 
   beforeEach(inject(function(_calendarHelper_) {
     calendarHelper = _calendarHelper_;
 
     events = [{
-      title: 'My event title',
+      title: 'Event 1',
       type: 'info',
-      startsAt: new Date(2015,0,1,1),
-      endsAt: new Date(2015,0,1,15),
+      startsAt: new Date(2015, 9, 10, 1),
+      endsAt: new Date(2015, 9, 10, 15),
       incrementsBadgeTotal: true
+    }, {
+      title: 'Event 2',
+      type: 'info',
+      startsAt: new Date(2015, 9, 10, 1),
+      endsAt: new Date(2015, 9, 10, 15),
+      incrementsBadgeTotal: false
     }];
 
+    clock = sinon.useFakeTimers(new Date('October 20, 2015 11:13:00').getTime());
+
   }));
+
+  afterEach(function() {
+    clock.restore();
+  });
 
   describe('getWeekDayNames', function() {
 
@@ -43,32 +55,46 @@ describe('calendarHelper', function() {
 
   describe('getYearView', function() {
 
+    var yearView, calendarDay = new Date();
+
+    beforeEach(function() {
+      yearView = calendarHelper.getYearView(events, calendarDay);
+    });
+
     it('should give back 12 months', function() {
-      expect(calendarHelper.getYearView(events, new Date()).length).to.equal(12);
+      expect(yearView.length).to.equal(12);
     });
 
     it('should set the isToday flag to true on the current month', function() {
-
+      expect(yearView[9].isToday).to.be.true;
     });
 
     it('should set the isToday flag to false every month apart from the current one', function() {
-
+      yearView.forEach(function(month, index) {
+        if (index !== 9) {
+          expect(month.isToday).to.be.false;
+        }
+      });
     });
 
     it('should allocate the events to the correct month', function() {
-
+      expect(yearView[9].events).to.eql([events[0], events[1]]);
     });
 
     it('should set the correct badge total', function() {
-
+      expect(yearView[9].badgeTotal).to.eql(1);
     });
 
     it('should set date field to the start of each month', function() {
-
+      yearView.forEach(function(month, index) {
+        expect(month.date.toDate().getTime()).to.equal(moment(calendarDay).month(index).startOf('month').toDate().getTime());
+      });
     });
 
     it('should set the correct label for each month', function() {
-
+      yearView.forEach(function(month, index) {
+        expect(month.label).to.equal(moment().month(index).format('MMMM'));
+      });
     });
 
   });
