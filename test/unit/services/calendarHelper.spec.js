@@ -1,6 +1,6 @@
 describe('calendarHelper', function() {
 
-  var calendarHelper, events, clock;
+  var calendarHelper, events, clock, calendarDay;
 
   beforeEach(inject(function(_calendarHelper_) {
     calendarHelper = _calendarHelper_;
@@ -8,18 +8,20 @@ describe('calendarHelper', function() {
     events = [{
       title: 'Event 1',
       type: 'info',
-      startsAt: new Date(2015, 9, 10, 1),
-      endsAt: new Date(2015, 9, 10, 15),
+      startsAt: new Date(2015, 9, 5, 1),
+      endsAt: new Date(2015, 9, 5, 15),
       incrementsBadgeTotal: true
     }, {
       title: 'Event 2',
       type: 'info',
-      startsAt: new Date(2015, 9, 10, 1),
-      endsAt: new Date(2015, 9, 10, 15),
+      startsAt: new Date(2015, 9, 5, 1),
+      endsAt: new Date(2015, 9, 5, 15),
       incrementsBadgeTotal: false
     }];
 
     clock = sinon.useFakeTimers(new Date('October 20, 2015 11:13:00').getTime());
+
+    calendarDay = new Date();
 
   }));
 
@@ -55,7 +57,7 @@ describe('calendarHelper', function() {
 
   describe('getYearView', function() {
 
-    var yearView, calendarDay = new Date();
+    var yearView;
 
     beforeEach(function() {
       yearView = calendarHelper.getYearView(events, calendarDay);
@@ -101,64 +103,116 @@ describe('calendarHelper', function() {
 
   describe('getMonthView', function() {
 
-    it('should give back the correct amount of days for the calendar', function() {
+    var monthView;
 
+    beforeEach(function() {
+      monthView = calendarHelper.getMonthView(events, calendarDay);
+    });
+
+    it('should give back the correct amount of days for the calendar', function() {
+      expect(monthView.length).to.equal(35);
     });
 
     it('should set the correct label for each day', function() {
-
+      var expectedLabels = [27, 28, 29, 30];
+      for(var i = 1; i <= 31; i++) {
+        expectedLabels.push(i);
+      }
+      monthView.forEach(function(month, index) {
+        expect(month.label).to.equal(expectedLabels[index]);
+      });
     });
 
     it('should set date field to the start of each day', function() {
-
+      var startDate = moment('September 27, 2015').startOf('day');
+      monthView.forEach(function(month) {
+        expect(startDate.toDate().getTime()).to.equal(month.date.toDate().getTime());
+        startDate.add(1, 'day');
+      });
     });
 
     it('should set the inMonth flag to true', function() {
-
+      monthView.forEach(function(month, index) {
+        if (index > 3) {
+          expect(month.inMonth).to.be.true;
+        }
+      });
     });
 
     it('should set the inMonth flag to false', function() {
-
+      monthView.forEach(function(month, index) {
+        if (index <= 3) {
+          expect(month.inMonth).to.be.false;
+        }
+      });
     });
 
     it('should set the isPast flag to true', function() {
-
+      monthView.forEach(function(month, index) {
+        if (index <= 22) {
+          expect(month.isPast).to.be.true;
+        }
+      });
     });
 
     it('should set the isPast flag to false', function() {
-
+      monthView.forEach(function(month, index) {
+        if (index > 22) {
+          expect(month.isPast).to.be.false;
+        }
+      });
     });
 
     it('should set the isToday flag to true', function() {
-
+      expect(monthView[23].isToday).to.be.true;
     });
 
     it('should set the isToday flag to false', function() {
-
+      monthView.forEach(function(month, index) {
+        if (index != 23) {
+          expect(month.isToday).to.be.false;
+        }
+      });
     });
 
     it('should set the isFuture flag to true', function() {
-
+      monthView.forEach(function(month, index) {
+        if (index > 23) {
+          expect(month.isFuture).to.be.true;
+        }
+      });
     });
 
     it('should set the isFuture flag to false', function() {
-
+      monthView.forEach(function(month, index) {
+        if (index <= 23) {
+          expect(month.isFuture).to.be.false;
+        }
+      });
     });
 
     it('should set the isWeekend flag to true', function() {
-
+      monthView.forEach(function(month, index) {
+        if (index % 7 === 0 || index % 7 === 6) {
+          expect(month.isWeekend).to.be.true;
+        }
+      });
     });
 
     it('should set the isWeekend flag to false', function() {
-
+      monthView.forEach(function(month, index) {
+        if (index % 7 !== 0 && index % 7 !== 6) {
+          expect(month.isWeekend).to.be.false;
+        }
+      });
     });
 
     it('should allocate the events to the correct day', function() {
-
+      expect(monthView[8].events).to.eql([events[0], events[1]]);
     });
 
     it('should set the correct badge total', function() {
-
+      expect(monthView[8].badgeTotal).to.equal(1);
     });
 
   });
