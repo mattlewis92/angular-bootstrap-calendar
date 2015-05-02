@@ -8,14 +8,14 @@ describe('calendarHelper', function() {
     events = [{
       title: 'Event 1',
       type: 'info',
-      startsAt: new Date(2015, 9, 20, 2),
-      endsAt: new Date(2015, 9, 20, 15),
+      startsAt: new Date('October 20, 2015 02:00:00'),
+      endsAt: new Date('October 20, 2015 15:00:00'),
       incrementsBadgeTotal: true
     }, {
       title: 'Event 2',
       type: 'info',
-      startsAt: new Date(2015, 9, 20, 1),
-      endsAt: new Date(2015, 9, 20, 15),
+      startsAt: new Date('October 20, 2015 01:00:00'),
+      endsAt: new Date('October 20, 2015 15:00:00'),
       incrementsBadgeTotal: false
     }];
 
