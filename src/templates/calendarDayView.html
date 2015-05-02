@@ -5,13 +5,13 @@
   </div>
 
 
-  <div class="cal-day-panel" class="clearfix" ng-style="{height: (vm.days.length * vm.dayHeight) + 'px'}">
+  <div class="cal-day-panel" class="clearfix" ng-style="{height: (vm.hours.length * vm.hourHeight) + 'px'}">
     <div class="cal-day-panel-hour">
 
-      <div class="cal-day-hour" ng-repeat="day in vm.days track by $index">
+      <div class="cal-day-hour" ng-repeat="hour in vm.hours track by $index">
 
         <div class="row-fluid cal-day-hour-part">
-          <div class="span1 col-xs-1"><strong>{{ day.label }}</strong></div>
+          <div class="span1 col-xs-1"><strong>{{ hour.label }}</strong></div>
           <div class="span11 col-xs-11"></div>
         </div>
 

@@ -27,11 +27,11 @@ angular
           dayViewStart = moment($scope.dayViewStart || '00:00', 'HH:mm');
           dayViewEnd = moment($scope.dayViewEnd || '23:00', 'HH:mm');
           vm.dayViewSplit = parseInt($scope.dayViewSplit);
-          vm.dayHeight = (60 / $scope.dayViewSplit) * 30;
-          vm.days = [];
+          vm.hourHeight = (60 / $scope.dayViewSplit) * 30;
+          vm.hours = [];
           var dayCounter = moment(dayViewStart);
           for (var i = 0; i <= dayViewEnd.diff(dayViewStart, 'hours'); i++) {
-            vm.days.push({
+            vm.hours.push({
               label: dayCounter.format(calendarConfig.dateFormats.hour)
             });
             dayCounter.add(1, 'hour');
@@ -47,7 +47,7 @@ angular
             updateDays();
           }
 
-          vm.view = calendarHelper.getDayView($scope.events, $scope.currentDay, dayViewStart.hours(), dayViewEnd.hours(), vm.dayHeight);
+          vm.view = calendarHelper.getDayView($scope.events, $scope.currentDay, dayViewStart.hours(), dayViewEnd.hours(), vm.hourHeight);
 
         });
 

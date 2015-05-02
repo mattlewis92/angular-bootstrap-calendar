@@ -163,12 +163,12 @@ angular
 
     }
 
-    function getDayView(events, currentDay, dayStartHour, dayEndHour, dayHeight) {
+    function getDayView(events, currentDay, dayStartHour, dayEndHour, hourHeight) {
 
       var calendarStart = moment(currentDay).startOf('day').add(dayStartHour, 'hours');
       var calendarEnd = moment(currentDay).startOf('day').add(dayEndHour, 'hours');
-      var calendarHeight = (dayEndHour - dayStartHour + 1) * dayHeight;
-      var dayHeightMultiplier = dayHeight / 60;
+      var calendarHeight = (dayEndHour - dayStartHour + 1) * hourHeight;
+      var hourHeightMultiplier = hourHeight / 60;
       var buckets = [];
       var eventsInPeriod = filterEventsInPeriod(
         events,
@@ -180,7 +180,7 @@ angular
         if (moment(event.startsAt).isBefore(calendarStart)) {
           event.top = 0;
         } else {
-          event.top = (moment(event.startsAt).startOf('minute').diff(calendarStart.startOf('minute'), 'minutes') * dayHeightMultiplier) - 2;
+          event.top = (moment(event.startsAt).startOf('minute').diff(calendarStart.startOf('minute'), 'minutes') * hourHeightMultiplier) - 2;
         }
 
         if (moment(event.endsAt).isAfter(calendarEnd)) {
@@ -190,7 +190,7 @@ angular
           if (moment(event.startsAt).isBefore(calendarStart)) {
             diffStart = calendarStart.toDate();
           }
-          event.height = moment(event.endsAt).diff(diffStart, 'minutes') * dayHeightMultiplier;
+          event.height = moment(event.endsAt).diff(diffStart, 'minutes') * hourHeightMultiplier;
         }
 
         if (event.top - event.height > calendarHeight) {
