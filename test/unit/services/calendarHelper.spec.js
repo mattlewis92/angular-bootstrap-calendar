@@ -8,14 +8,14 @@ describe('calendarHelper', function() {
     events = [{
       title: 'Event 1',
       type: 'info',
-      startsAt: new Date(2015, 9, 5, 1),
-      endsAt: new Date(2015, 9, 5, 15),
+      startsAt: new Date(2015, 9, 20, 1),
+      endsAt: new Date(2015, 9, 20, 15),
       incrementsBadgeTotal: true
     }, {
       title: 'Event 2',
       type: 'info',
-      startsAt: new Date(2015, 9, 5, 1),
-      endsAt: new Date(2015, 9, 5, 15),
+      startsAt: new Date(2015, 9, 20, 1),
+      endsAt: new Date(2015, 9, 20, 15),
       incrementsBadgeTotal: false
     }];
 
@@ -208,81 +208,145 @@ describe('calendarHelper', function() {
     });
 
     it('should allocate the events to the correct day', function() {
-      expect(monthView[8].events).to.eql([events[0], events[1]]);
+      expect(monthView[23].events).to.eql([events[0], events[1]]);
     });
 
     it('should set the correct badge total', function() {
-      expect(monthView[8].badgeTotal).to.equal(1);
+      expect(monthView[23].badgeTotal).to.equal(1);
     });
 
   });
 
   describe('getWeekView', function() {
 
-    it('should set the weekDayLabel', function() {
+    var weekView;
 
+    beforeEach(function() {
+      weekView = calendarHelper.getWeekView(events, calendarDay);
+    });
+
+    it('should set the weekDayLabel', function() {
+      expect(weekView.days[0].weekDayLabel).to.equal('Sunday');
+      expect(weekView.days[1].weekDayLabel).to.equal('Monday');
+      expect(weekView.days[2].weekDayLabel).to.equal('Tuesday');
+      expect(weekView.days[3].weekDayLabel).to.equal('Wednesday');
+      expect(weekView.days[4].weekDayLabel).to.equal('Thursday');
+      expect(weekView.days[5].weekDayLabel).to.equal('Friday');
+      expect(weekView.days[6].weekDayLabel).to.equal('Saturday');
     });
 
     it('should set the dayLabel', function() {
-
+      expect(weekView.days[0].dayLabel).to.equal('18 Oct');
+      expect(weekView.days[1].dayLabel).to.equal('19 Oct');
+      expect(weekView.days[2].dayLabel).to.equal('20 Oct');
+      expect(weekView.days[3].dayLabel).to.equal('21 Oct');
+      expect(weekView.days[4].dayLabel).to.equal('22 Oct');
+      expect(weekView.days[5].dayLabel).to.equal('23 Oct');
+      expect(weekView.days[6].dayLabel).to.equal('24 Oct');
     });
 
     it('should set date field to the start of each day', function() {
-
+      expect(weekView.days[0].date.toDate().getTime()).to.equal(moment('October 18, 2015').startOf('day').toDate().getTime());
+      expect(weekView.days[1].date.toDate().getTime()).to.equal(moment('October 19, 2015').startOf('day').toDate().getTime());
+      expect(weekView.days[2].date.toDate().getTime()).to.equal(moment('October 20, 2015').startOf('day').toDate().getTime());
+      expect(weekView.days[3].date.toDate().getTime()).to.equal(moment('October 21, 2015').startOf('day').toDate().getTime());
+      expect(weekView.days[4].date.toDate().getTime()).to.equal(moment('October 22, 2015').startOf('day').toDate().getTime());
+      expect(weekView.days[5].date.toDate().getTime()).to.equal(moment('October 23, 2015').startOf('day').toDate().getTime());
+      expect(weekView.days[6].date.toDate().getTime()).to.equal(moment('October 24, 2015').startOf('day').toDate().getTime());
     });
 
     it('should set the isPast flag to true', function() {
-
+      expect(weekView.days[0].isPast).to.be.true;
+      expect(weekView.days[1].isPast).to.be.true;
     });
 
     it('should set the isPast flag to false', function() {
-
+      expect(weekView.days[2].isPast).to.be.false;
+      expect(weekView.days[3].isPast).to.be.false;
+      expect(weekView.days[4].isPast).to.be.false;
+      expect(weekView.days[5].isPast).to.be.false;
+      expect(weekView.days[6].isPast).to.be.false;
     });
 
     it('should set the isToday flag to true', function() {
-
+      expect(weekView.days[2].isToday).to.be.true;
     });
 
     it('should set the isToday flag to false', function() {
-
+      expect(weekView.days[0].isToday).to.be.false;
+      expect(weekView.days[1].isToday).to.be.false;
+      expect(weekView.days[3].isToday).to.be.false;
+      expect(weekView.days[4].isToday).to.be.false;
+      expect(weekView.days[5].isToday).to.be.false;
+      expect(weekView.days[6].isToday).to.be.false;
     });
 
     it('should set the isFuture flag to true', function() {
-
+      expect(weekView.days[3].isFuture).to.be.true;
+      expect(weekView.days[4].isFuture).to.be.true;
+      expect(weekView.days[5].isFuture).to.be.true;
+      expect(weekView.days[6].isFuture).to.be.true;
     });
 
     it('should set the isFuture flag to false', function() {
-
+      expect(weekView.days[0].isFuture).to.be.false;
+      expect(weekView.days[1].isFuture).to.be.false;
+      expect(weekView.days[2].isFuture).to.be.false;
     });
 
     it('should set the isWeekend flag to true', function() {
-
+      expect(weekView.days[0].isWeekend).to.be.true;
+      expect(weekView.days[6].isWeekend).to.be.true;
     });
 
     it('should set the isWeekend flag to false', function() {
-
+      expect(weekView.days[1].isWeekend).to.be.false;
+      expect(weekView.days[2].isWeekend).to.be.false;
+      expect(weekView.days[3].isWeekend).to.be.false;
+      expect(weekView.days[4].isWeekend).to.be.false;
+      expect(weekView.days[5].isWeekend).to.be.false;
     });
 
     it('should only contain events for that week', function() {
-
+      expect(weekView.events).to.eql([events[0], events[1]]);
     });
 
     describe('setting the correct span and offset', function() {
 
       it('should pass when the event is contained within the current week view', function() {
-
+        weekView = calendarHelper.getWeekView([{
+          startsAt: new Date(2015, 9, 20, 1),
+          endsAt: new Date(2015, 9, 21, 15)
+        }], calendarDay);
+        expect(weekView.events[0].daySpan).to.equal(2);
+        expect(weekView.events[0].dayOffset).to.equal(2);
       });
 
       it('should pass when the event starts before the current week view and ends within it', function() {
-
+        weekView = calendarHelper.getWeekView([{
+          startsAt: new Date(2015, 8, 20, 1),
+          endsAt: new Date(2015, 9, 21, 15)
+        }], calendarDay);
+        expect(weekView.events[0].daySpan).to.equal(4);
+        expect(weekView.events[0].dayOffset).to.equal(0);
       });
 
       it('should pass when the event starts before the current week view and ends after the end of the week', function() {
-
+        weekView = calendarHelper.getWeekView([{
+          startsAt: new Date(2015, 8, 20, 1),
+          endsAt: new Date(2015, 10, 21, 15)
+        }], calendarDay);
+        expect(weekView.events[0].daySpan).to.equal(7);
+        expect(weekView.events[0].dayOffset).to.equal(0);
       });
 
       it('should pass when the event starts within the current week but ends after it', function() {
-
+        weekView = calendarHelper.getWeekView([{
+          startsAt: new Date(2015, 9, 20, 1),
+          endsAt: new Date(2015, 10, 21, 15)
+        }], calendarDay);
+        expect(weekView.events[0].daySpan).to.equal(5);
+        expect(weekView.events[0].dayOffset).to.equal(2);
       });
 
     });
@@ -292,7 +356,7 @@ describe('calendarHelper', function() {
   describe('getDayView', function() {
 
     it('should only contain events for that day', function() {
-
+      
     });
 
     it('should set the top to 0 if the event starts before the start of the day', function() {
