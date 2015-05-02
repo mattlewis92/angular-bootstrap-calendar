@@ -4,9 +4,6 @@ angular
   .module('demo', ['mwl.calendar', 'ui.bootstrap'])
   .controller('MainCtrl', function ($scope, $modal, moment) {
 
-    var currentYear = moment().year();
-    var currentMonth = moment().month();
-
     //These variables MUST be set as a minimum for the calendar to work
     $scope.calendarView = 'month';
     $scope.calendarDay = new Date();
@@ -14,24 +11,28 @@ angular
       {
         title: 'Event 1',
         type: 'warning',
-        startsAt: new Date(currentYear,currentMonth,25,8,30),
-        endsAt: new Date(currentYear,currentMonth,25,9,30)
+        startsAt: moment().startOf('week').subtract(2, 'days').add(8, 'hours').toDate(),
+        endsAt: moment().startOf('week').add(1, 'week').add(9, 'hours').toDate()
       },
       {
         title: 'Event 2',
         type: 'info',
-        startsAt: new Date(currentYear,currentMonth,19,7,30),
-        endsAt: new Date(currentYear,currentMonth,25,9,30)
+        startsAt: moment().subtract(1, 'day').toDate(),
+        endsAt: moment().add(5, 'days').toDate()
       },
       {
         title: 'This is a really long event title',
         type: 'important',
-        startsAt: new Date(currentYear,currentMonth,25,6,30),
-        endsAt: new Date(currentYear,currentMonth,25,6,60)
+        startsAt: moment().startOf('day').add(5, 'hours').toDate(),
+        endsAt: moment().startOf('day').add(19, 'hours').toDate()
       }
     ];
 
-    /*function random(min, max) {
+    /*
+     var currentYear = moment().year();
+     var currentMonth = moment().month();
+
+    function random(min, max) {
       return Math.floor((Math.random() * max) + min);
     }
 
