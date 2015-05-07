@@ -37,14 +37,16 @@ angular
 
         vm.drillDown = function(date) {
 
+          var rawDate = moment(date).toDate();
+
           var nextView = {
             'year': 'month',
             'month': 'day',
             'week': 'day'
           };
 
-          if ($scope.onDrillDownClick({calendarDate: moment(date).toDate(), calendarNextView: nextView[$scope.view]}) !== false) {
-            vm.changeView(nextView[$scope.view], date);
+          if ($scope.onDrillDownClick({calendarDate: rawDate, calendarNextView: nextView[$scope.view]}) !== false) {
+            vm.changeView(nextView[$scope.view], rawDate);
           }
 
         };
