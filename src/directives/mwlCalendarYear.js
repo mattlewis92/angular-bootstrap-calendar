@@ -23,6 +23,7 @@ angular
 
         var vm = this;
         var firstRun = true;
+        vm.openEvents = [];
 
         $scope.$on('calendar.refreshView', function() {
           vm.view = calendarHelper.getYearView($scope.events, $scope.currentDay);
@@ -36,6 +37,20 @@ angular
               }
             });
           }
+
+          //if an event was deleted, remove it from the open events array
+          vm.openEvents = vm.openEvents.filter(function(event) {
+            return $scope.events.indexOf(event) > -1;
+          });
+
+          //Close the open year if no more events
+          if (vm.openEvents.length === 0) {
+            vm.openRowIndex = null;
+            vm.view.forEach(function(month) {
+              month.isOpened = false;
+            });
+          }
+
         });
 
         vm.monthClicked = function(month, monthClickedFirstRun) {

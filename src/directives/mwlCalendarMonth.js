@@ -24,6 +24,8 @@ angular
         var vm = this;
         var firstRun = true;
 
+        vm.openEvents = [];
+
         $scope.$on('calendar.refreshView', function() {
           vm.weekDays = calendarHelper.getWeekDayNames();
 
@@ -43,6 +45,20 @@ angular
               }
             });
           }
+
+          //if an event was deleted, remove it from the open events array
+          vm.openEvents = vm.openEvents.filter(function(event) {
+            return $scope.events.indexOf(event) > -1;
+          });
+
+          //close the open day if no more events
+          if (vm.openEvents.length === 0) {
+            vm.openRowIndex = null;
+            vm.view.forEach(function(day) {
+              day.isOpened = false;
+            });
+          }
+
         });
 
         vm.dayClicked = function(day, dayClickedFirstRun) {
