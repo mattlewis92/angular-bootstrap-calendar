@@ -23,7 +23,7 @@ http://bootstrap-calendar.azurewebsites.net/
 
 The layout and functionality is intended to be exactly the same, but without the overhead of including jQuery just for a calendar. 
 
-All credits for the UI/UX of the calendar go to the original author.
+All credits for the UI/UX and the less files of the calendar go to the original author.
 
 Pull requests are welcome.
 
@@ -229,11 +229,6 @@ For a full list of all available formats and their defaults see [calendarConfig.
 ## Demo
 
 http://mattlewis92.github.io/angular-bootstrap-calendar/
-
-## Roadmap
-
-* Add tests [#10](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/10)
-* Drop angular 1.2 support to take advantage of bindToController and one time binding in templates [#58](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/58)
 
 ## Development
 
