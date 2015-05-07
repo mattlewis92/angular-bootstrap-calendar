@@ -27,6 +27,7 @@ angular
         vm.openEvents = [];
 
         $scope.$on('calendar.refreshView', function() {
+
           vm.weekDays = calendarHelper.getWeekDayNames();
 
           vm.view = calendarHelper.getMonthView($scope.events, $scope.currentDay);
