@@ -10,20 +10,32 @@
         'cal-day-today': day.isToday,
         'cal-day-future': day.isFuture}">
 
-      {{ day.weekDayLabel }}
+      <span ng-bind="day.weekDayLabel"></span>
       <br>
       <small>
-        <span data-cal-date ng-click="vm.calendarCtrl.drillDown(day.date.toDate())" class="pointer">{{ day.dayLabel }}</span>
+        <span
+          data-cal-date
+          ng-click="vm.calendarCtrl.drillDown(day.date)"
+          class="pointer"
+          ng-bind="day.dayLabel">
+        </span>
       </small>
 
     </div>
 
   </div>
 
-  <div class="cal-row-fluid" ng-repeat="event in vm.view.events track by $index">
-    <div class="cal-cell{{ event.daySpan }} cal-offset{{ event.dayOffset }} day-highlight dh-event-{{ event.type }}" data-event-class>
-      <a href="javascript:;" ng-click="onEventClick({calendarEvent: event})" class="cal-event-week">
-        {{ event.title }}
+  <div
+    class="cal-row-fluid"
+    ng-repeat="event in vm.view.events track by $index">
+    <div
+      ng-class="'cal-cell' + event.daySpan + ' cal-offset' + event.dayOffset + ' day-highlight dh-event-' + event.type"
+      data-event-class>
+      <a
+        href="javascript:;"
+        ng-click="onEventClick({calendarEvent: event})"
+        class="cal-event-week"
+        ng-bind="event.title">
       </a>
     </div>
   </div>

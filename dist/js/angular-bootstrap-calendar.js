@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-calendar - A pure AngularJS bootstrap themed responsive calendar that can display events and has views for year, month, week and day
- * @version v0.10.0
+ * @version v0.10.1
  * @link https://github.com/mattlewis92/angular-bootstrap-calendar
  * @license MIT
  */
@@ -428,6 +428,7 @@
                 function ($scope, moment, calendarHelper) {
                     var vm = this;
                     var firstRun = true;
+                    vm.openEvents = [];
                     $scope.$on('calendar.refreshView', function () {
                         vm.view = calendarHelper.getYearView($scope.events, $scope.currentDay);
                         //Auto open the calendar to the current day if set
@@ -439,16 +440,38 @@
                                 }
                             });
                         }
+                        //if an event was deleted, remove it from the open events array
+                        vm.openEvents = vm.openEvents.filter(function (event) {
+                            return $scope.events.indexOf(event) > -1;
+                        });
+                        //Close the open year if no more events
+                        if (vm.openEvents.length === 0) {
+                            vm.openRowIndex = null;
+                            vm.view.forEach(function (month) {
+                                month.isOpened = false;
+                            });
+                        }
                     });
                     vm.monthClicked = function (month, monthClickedFirstRun) {
                         if (!monthClickedFirstRun) {
                             $scope.onTimespanClick({ calendarDate: month.date.toDate() });
                         }
-                        vm.openEvents = month.events;
+                        vm.view.forEach(function (yearMonth) {
+                            if (yearMonth !== month) {
+                                yearMonth.isOpened = false;
+                            }
+                        });
                         vm.openRowIndex = null;
-                        if (vm.openEvents.length > 0) {
-                            var monthIndex = vm.view.indexOf(month);
-                            vm.openRowIndex = Math.floor(monthIndex / 4);
+                        if (month.isOpened) {
+                            vm.openEvents = [];
+                            month.isOpened = false;
+                        } else {
+                            vm.openEvents = month.events;
+                            if (vm.openEvents.length > 0) {
+                                var monthIndex = vm.view.indexOf(month);
+                                vm.openRowIndex = Math.floor(monthIndex / 4);
+                                month.isOpened = true;
+                            }
                         }
                     };
                 }
@@ -468,8 +491,7 @@
             scope: {
                 events: '=',
                 currentDay: '=',
-                onEventClick: '=',
-                onTimespanClick: '='
+                onEventClick: '='
             },
             controller: [
                 '$scope',
@@ -552,6 +574,7 @@
                 function ($scope, moment, calendarHelper) {
                     var vm = this;
                     var firstRun = true;
+                    vm.openEvents = [];
                     $scope.$on('calendar.refreshView', function () {
                         vm.weekDays = calendarHelper.getWeekDayNames();
                         vm.view = calendarHelper.getMonthView($scope.events, $scope.currentDay);
@@ -569,20 +592,38 @@
                                 }
                             });
                         }
+                        //if an event was deleted, remove it from the open events array
+                        vm.openEvents = vm.openEvents.filter(function (event) {
+                            return $scope.events.indexOf(event) > -1;
+                        });
+                        //close the open day if no more events
+                        if (vm.openEvents.length === 0) {
+                            vm.openRowIndex = null;
+                            vm.view.forEach(function (day) {
+                                day.isOpened = false;
+                            });
+                        }
                     });
                     vm.dayClicked = function (day, dayClickedFirstRun) {
                         if (!dayClickedFirstRun) {
                             $scope.onTimespanClick({ calendarDate: day.date.toDate() });
                         }
                         vm.view.forEach(function (monthDay) {
-                            monthDay.isOpened = false;
+                            if (monthDay !== day) {
+                                monthDay.isOpened = false;
+                            }
                         });
-                        vm.openEvents = day.events;
                         vm.openRowIndex = null;
-                        if (vm.openEvents.length > 0) {
-                            var dayIndex = vm.view.indexOf(day);
-                            vm.openRowIndex = Math.floor(dayIndex / 7);
-                            day.isOpened = true;
+                        if (day.isOpened) {
+                            vm.openEvents = [];
+                            day.isOpened = false;
+                        } else {
+                            vm.openEvents = day.events;
+                            if (vm.openEvents.length > 0) {
+                                var dayIndex = vm.view.indexOf(day);
+                                vm.openRowIndex = Math.floor(dayIndex / 7);
+                                day.isOpened = true;
+                            }
                         }
                     };
                     vm.highlightEvent = function (event, shouldAddClass) {
@@ -614,9 +655,9 @@
                 events: '=',
                 currentDay: '=',
                 onEventClick: '=',
-                dayViewStart: '@',
-                dayViewEnd: '@',
-                dayViewSplit: '@'
+                dayViewStart: '=',
+                dayViewEnd: '=',
+                dayViewSplit: '='
             },
             controller: [
                 '$scope',
@@ -690,24 +731,37 @@
                         $scope.currentDay = newDay;
                     };
                     vm.drillDown = function (date) {
+                        var rawDate = moment(date).toDate();
                         var nextView = {
                             'year': 'month',
                             'month': 'day',
                             'week': 'day'
                         };
                         if ($scope.onDrillDownClick({
-                                calendarDate: moment(date).toDate(),
+                                calendarDate: rawDate,
                                 calendarNextView: nextView[$scope.view]
                             }) !== false) {
-                            vm.changeView(nextView[$scope.view], date);
+                            vm.changeView(nextView[$scope.view], rawDate);
                         }
                     };
+                    var previousDate = moment($scope.currentDay);
+                    var previousView = angular.copy($scope.view);
                     //Use a debounce to prevent it being called 3 times on initialisation
                     var refreshCalendar = calendarDebounce(function () {
                         if (calendarTitle[$scope.view]) {
                             $scope.viewTitle = calendarTitle[$scope.view]($scope.currentDay);
                         }
-                        $scope.$broadcast('calendar.refreshView');
+                        //if on-timespan-click="calendarDay = calendarDate" is set then dont update the view as nothing needs to change
+                        var currentDate = moment($scope.currentDay);
+                        var shouldUpdate = true;
+                        if (previousDate.clone().startOf($scope.view).isSame(currentDate.clone().startOf($scope.view)) && !previousDate.isSame(currentDate) && $scope.view === previousView) {
+                            shouldUpdate = false;
+                        }
+                        previousDate = currentDate;
+                        previousView = angular.copy($scope.view);
+                        if (shouldUpdate) {
+                            $scope.$broadcast('calendar.refreshView');
+                        }
                     }, 50);
                     //Auto update the calendar when the locale changes
                     var unbindLocaleWatcher = $scope.$watch(function () {

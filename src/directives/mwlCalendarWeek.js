@@ -11,8 +11,7 @@ angular
       scope: {
         events: '=',
         currentDay: '=',
-        onEventClick: '=',
-        onTimespanClick: '='
+        onEventClick: '='
       },
       controller: function($scope, calendarHelper) {
 

@@ -1,7 +1,7 @@
 'use strict';
 
 angular
-  .module('demo', ['mwl.calendar', 'ui.bootstrap'])
+  .module('demo', ['mwl.calendar', 'ui.bootstrap', 'ngAnimate'])
   .controller('MainCtrl', function ($scope, $modal, moment) {
 
     //These variables MUST be set as a minimum for the calendar to work
