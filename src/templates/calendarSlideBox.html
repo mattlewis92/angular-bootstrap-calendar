@@ -9,9 +9,9 @@
           href="javascript:;"
           class="event-item"
           ng-click="onEventClick({calendarEvent: event})">
-          {{ event.title }}
-          <span ng-show="isMonthView">({{ event.startsAt | date:'shortTime' }})</span>
-          <span ng-show="isYearView">({{ event.startsAt | date:'MMM d, h:mm a' }})</span>
+          <span ng-bind="event.title"></span>
+          <span ng-show="isMonthView">(<span ng-bind="event.startsAt | date:'shortTime'"></span>)</span>
+          <span ng-show="isYearView">(<span ng-bind="event.startsAt | date:'MMM d, h:mm a'"></span>)</span>
         </a>
 
         <a

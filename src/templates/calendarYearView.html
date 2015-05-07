@@ -11,14 +11,14 @@
         <span
           class="pull-right"
           data-cal-date
-          ng-click="vm.calendarCtrl.drillDown(month.date)">
-          {{ month.label }}
+          ng-click="vm.calendarCtrl.drillDown(month.date)"
+          ng-bind="month.label">
         </span>
 
         <small
           class="cal-events-num badge badge-important pull-left"
-          ng-show="month.badgeTotal > 0">
-          {{ month.badgeTotal }}
+          ng-show="month.badgeTotal > 0"
+          ng-bind="month.badgeTotal">
         </small>
 
         <div

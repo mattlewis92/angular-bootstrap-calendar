@@ -12,9 +12,9 @@ angular
         events: '=',
         currentDay: '=',
         onEventClick: '=',
-        dayViewStart: '@',
-        dayViewEnd: '@',
-        dayViewSplit: '@'
+        dayViewStart: '=',
+        dayViewEnd: '=',
+        dayViewSplit: '='
       },
       controller: function($scope, $timeout, moment, calendarHelper, calendarConfig) {
 

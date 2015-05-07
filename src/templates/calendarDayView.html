@@ -1,7 +1,7 @@
 <div class="cal-day-box">
   <div class="row-fluid clearfix cal-row-head">
-    <div class="span1 col-xs-1 cal-cell">{{ vm.calendarConfig.i18nStrings.timeLabel }}</div>
-    <div class="span11 col-xs-11 cal-cell">{{ vm.calendarConfig.i18nStrings.eventsLabel }}</div>
+    <div class="span1 col-xs-1 cal-cell" ng-bind="vm.calendarConfig.i18nStrings.timeLabel"></div>
+    <div class="span11 col-xs-11 cal-cell" ng-bind="vm.calendarConfig.i18nStrings.eventsLabel"></div>
   </div>
 
 
@@ -11,7 +11,7 @@
       <div class="cal-day-hour" ng-repeat="hour in vm.hours track by $index">
 
         <div class="row-fluid cal-day-hour-part">
-          <div class="span1 col-xs-1"><strong>{{ hour.label }}</strong></div>
+          <div class="span1 col-xs-1"><strong ng-bind="hour.label"></strong></div>
           <div class="span11 col-xs-11"></div>
         </div>
 
@@ -45,13 +45,14 @@
     </div>
 
     <div
-      class="pull-left day-event day-highlight dh-event-{{ event.type }}"
+      class="pull-left day-event day-highlight"
+      ng-class="'dh-event-' + event.type"
       ng-repeat="event in vm.view track by $index"
       ng-style="{top: event.top + 'px', left: event.left + 60 + 'px', height: event.height + 'px'}">
 
       <!--<span class="cal-hours">{{ event.startsAt | date:'d MMM HH:mm' }} - {{ event.endsAt | date:'d MMM HH:mm' }}<br></span>-->
       <a href="javascript:;" class="event-item" ng-click="onEventClick({calendarEvent: event})">
-        <span>{{ event.title | calendarTruncateEventTitle:20:event.height }}</span>
+        <span ng-bind="event.title | calendarTruncateEventTitle:20:event.height"></span>
       </a>
 
     </div>
