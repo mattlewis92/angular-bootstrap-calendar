@@ -52,15 +52,23 @@ angular
           }
 
           vm.view.forEach(function(monthDay) {
-            monthDay.isOpened = false;
+            if (monthDay !== day) {
+              monthDay.isOpened = false;
+            }
           });
 
-          vm.openEvents = day.events;
           vm.openRowIndex = null;
-          if (vm.openEvents.length > 0) {
-            var dayIndex = vm.view.indexOf(day);
-            vm.openRowIndex = Math.floor(dayIndex / 7);
-            day.isOpened = true;
+
+          if (day.isOpened) {
+            vm.openEvents = [];
+            day.isOpened = false;
+          } else {
+            vm.openEvents = day.events;
+            if (vm.openEvents.length > 0) {
+              var dayIndex = vm.view.indexOf(day);
+              vm.openRowIndex = Math.floor(dayIndex / 7);
+              day.isOpened = true;
+            }
           }
 
         };

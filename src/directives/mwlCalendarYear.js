@@ -44,11 +44,24 @@ angular
             $scope.onTimespanClick({calendarDate: month.date.toDate()});
           }
 
-          vm.openEvents = month.events;
+          vm.view.forEach(function(yearMonth) {
+            if (yearMonth !== month) {
+              yearMonth.isOpened = false;
+            }
+          });
+
           vm.openRowIndex = null;
-          if (vm.openEvents.length > 0) {
-            var monthIndex = vm.view.indexOf(month);
-            vm.openRowIndex = Math.floor(monthIndex / 4);
+
+          if (month.isOpened) {
+            vm.openEvents = [];
+            month.isOpened = false;
+          } else {
+            vm.openEvents = month.events;
+            if (vm.openEvents.length > 0) {
+              var monthIndex = vm.view.indexOf(month);
+              vm.openRowIndex = Math.floor(monthIndex / 4);
+              month.isOpened = true;
+            }
           }
 
         };
