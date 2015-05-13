@@ -46,7 +46,7 @@ You will then need to include the JS and CSS files for the plugin:
 
 ```
 <link rel="stylesheet" href="bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.min.css">
-<script src="bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.min.js">
+<script src="bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.min.js"></script>
 ```
 
 And finally add the module dependency in your AngularJS app (you can remove ui.bootstrap if you don't want the extra dependency - it is only required for collapse animations and tooltips):
@@ -60,10 +60,10 @@ angular.module('myModule', ['mwl.calendar', 'ui.bootstrap']);
 There is a single directive exposed to create the calendar, use it like so:
 ```javascript
 <mwl-calendar
-    events="events"
     view="calendarView"
-    view-title="calendarTitle"
     current-day="calendarDay"
+    events="events"
+    view-title="calendarTitle"
     on-event-click="eventClicked(calendarEvent)"
     edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
     delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
@@ -75,7 +75,20 @@ There is a single directive exposed to create the calendar, use it like so:
 
 An explanation of the properties is as follows:
 
-### events
+### view (required attribute)
+
+This variable is a string that can be either 'year', 'month', 'week' or 'day. Changing it will change the view of the calendar.
+
+For the calendar to display this variable needs to be set like so:
+```javascript
+$scope.calendarView = 'month';
+```
+
+### current-day (required attribute)
+
+This variable holds the current day the calendar is centralised on. Each view will decide on its current year / month / week / day depending on the value of this variable.
+
+### events (required attribute)
 
 An array of events to display on the calendar. For example:
 ```javascript
@@ -93,19 +106,6 @@ $scope.events = [
 ```
 
 The 4 properties listed are required for all events.
-
-### view
-
-This variable is a string that can be either 'year', 'month', 'week' or 'day. Changing it will change the view of the calendar.
-
-For the calendar to display this variable needs to be set like so:
-```javascript
-$scope.calendarView = 'month';
-```
-
-### current-day
-
-This variable holds the current day the calendar is centralised on. Each view will decide on its current year / month / week / day depending on the value of this variable.
 
 ### view-title
 
