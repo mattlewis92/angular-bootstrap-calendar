@@ -4,6 +4,9 @@
 [![Bower version](https://badge.fury.io/bo/angular-bootstrap-calendar.svg)](http://badge.fury.io/bo/angular-bootstrap-calendar)
 [![devDependency Status](https://david-dm.org/mattlewis92/angular-bootstrap-calendar/dev-status.svg)](https://david-dm.org/mattlewis92/angular-bootstrap-calendar#info=devDependencies)
 [![Codacy Badge](https://www.codacy.com/project/badge/92f23ec92cfb4594b0b94b39dc3d3ebb)](https://www.codacy.com/app/matt-lewis-private/angular-bootstrap-calendar)
+[![GitHub issues](https://img.shields.io/github/issues/mattlewis92/angular-bootstrap-confirm.svg)](https://github.com/mattlewis92/angular-bootstrap-confirm/issues)
+[![GitHub stars](https://img.shields.io/github/stars/mattlewis92/angular-bootstrap-confirm.svg)](https://github.com/mattlewis92/angular-bootstrap-confirm/stargazers)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/mattlewis92/angular-bootstrap-confirm/master/LICENSE)
 
 ## Please see the [release notes](https://github.com/mattlewis92/angular-bootstrap-calendar/releases/tag/0.10.0) for upgrading from 0.9.x to 0.10.x as there are many breaking changes.
 
