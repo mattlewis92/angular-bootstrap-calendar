@@ -4,6 +4,9 @@
 [![Bower version](https://badge.fury.io/bo/angular-bootstrap-calendar.svg)](http://badge.fury.io/bo/angular-bootstrap-calendar)
 [![devDependency Status](https://david-dm.org/mattlewis92/angular-bootstrap-calendar/dev-status.svg)](https://david-dm.org/mattlewis92/angular-bootstrap-calendar#info=devDependencies)
 [![Codacy Badge](https://www.codacy.com/project/badge/92f23ec92cfb4594b0b94b39dc3d3ebb)](https://www.codacy.com/app/matt-lewis-private/angular-bootstrap-calendar)
+[![GitHub issues](https://img.shields.io/github/issues/mattlewis92/angular-bootstrap-confirm.svg)](https://github.com/mattlewis92/angular-bootstrap-confirm/issues)
+[![GitHub stars](https://img.shields.io/github/stars/mattlewis92/angular-bootstrap-confirm.svg)](https://github.com/mattlewis92/angular-bootstrap-confirm/stargazers)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/mattlewis92/angular-bootstrap-confirm/master/LICENSE)
 
 ## Please see the [release notes](https://github.com/mattlewis92/angular-bootstrap-calendar/releases/tag/0.10.0) for upgrading from 0.9.x to 0.10.x as there are many breaking changes.
 
@@ -23,7 +26,7 @@ http://bootstrap-calendar.azurewebsites.net/
 
 The layout and functionality is intended to be exactly the same, but without the overhead of including jQuery just for a calendar. 
 
-All credits for the UI/UX of the calendar go to the original author.
+All credits for the UI/UX and the less files of the calendar go to the original author.
 
 Pull requests are welcome.
 
@@ -46,7 +49,7 @@ You will then need to include the JS and CSS files for the plugin:
 
 ```
 <link rel="stylesheet" href="bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.min.css">
-<script src="bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.min.js">
+<script src="bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.min.js"></script>
 ```
 
 And finally add the module dependency in your AngularJS app (you can remove ui.bootstrap if you don't want the extra dependency - it is only required for collapse animations and tooltips):
@@ -60,10 +63,10 @@ angular.module('myModule', ['mwl.calendar', 'ui.bootstrap']);
 There is a single directive exposed to create the calendar, use it like so:
 ```javascript
 <mwl-calendar
-    events="events"
     view="calendarView"
-    view-title="calendarTitle"
     current-day="calendarDay"
+    events="events"
+    view-title="calendarTitle"
     on-event-click="eventClicked(calendarEvent)"
     edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
     delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
@@ -75,7 +78,20 @@ There is a single directive exposed to create the calendar, use it like so:
 
 An explanation of the properties is as follows:
 
-### events
+### view (required attribute)
+
+This variable is a string that can be either 'year', 'month', 'week' or 'day. Changing it will change the view of the calendar.
+
+For the calendar to display this variable needs to be set like so:
+```javascript
+$scope.calendarView = 'month';
+```
+
+### current-day (required attribute)
+
+This variable holds the current day the calendar is centralised on. Each view will decide on its current year / month / week / day depending on the value of this variable.
+
+### events (required attribute)
 
 An array of events to display on the calendar. For example:
 ```javascript
@@ -93,19 +109,6 @@ $scope.events = [
 ```
 
 The 4 properties listed are required for all events.
-
-### view
-
-This variable is a string that can be either 'year', 'month', 'week' or 'day. Changing it will change the view of the calendar.
-
-For the calendar to display this variable needs to be set like so:
-```javascript
-$scope.calendarView = 'month';
-```
-
-### current-day
-
-This variable holds the current day the calendar is centralised on. Each view will decide on its current year / month / week / day depending on the value of this variable.
 
 ### view-title
 
@@ -229,11 +232,6 @@ For a full list of all available formats and their defaults see [calendarConfig.
 ## Demo
 
 http://mattlewis92.github.io/angular-bootstrap-calendar/
-
-## Roadmap
-
-* Add tests [#10](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/10)
-* Drop angular 1.2 support to take advantage of bindToController and one time binding in templates [#58](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/58)
 
 ## Development
 

@@ -125,9 +125,9 @@ function release(importance) {
     .pipe(gulp.dest('./'));
 }
 
-gulp.task('release:patch', function() { return release('patch'); });
-gulp.task('release:minor', function() { return release('minor'); });
-gulp.task('release:major', function() { return release('major'); });
+gulp.task('bump:patch', function() { return release('patch'); });
+gulp.task('bump:minor', function() { return release('minor'); });
+gulp.task('bump:major', function() { return release('major'); });
 
 gulp.task('default', ['watch'], function() {});
 
