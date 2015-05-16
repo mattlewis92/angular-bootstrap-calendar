@@ -2,7 +2,7 @@
 
 angular
   .module('mwl.calendar')
-  .factory('calendarHelper', function (moment, calendarConfig) {
+  .factory('calendarHelper', function(moment, calendarConfig) {
 
     function eventIsInPeriod(eventStart, eventEnd, periodStart, periodEnd) {
 
@@ -36,7 +36,7 @@ angular
     function getWeekDayNames() {
       var weekdays = [];
       var count = 0;
-      while(count < 7) {
+      while (count < 7) {
         weekdays.push(moment().weekday(count++).format(calendarConfig.dateFormats.weekDay));
       }
       return weekdays;
@@ -116,7 +116,7 @@ angular
       var dayCounter = startOfWeek.clone();
       var days = [];
       var today = moment().startOf('day');
-      while(days.length < 7) {
+      while (days.length < 7) {
         days.push({
           weekDayLabel: dayCounter.format(calendarConfig.dateFormats.weekDay),
           date: dayCounter.clone(),

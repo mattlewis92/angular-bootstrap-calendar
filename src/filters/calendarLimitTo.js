@@ -27,12 +27,10 @@ angular
 
       if (limit >= 0) {
         return input.slice(begin, begin + limit);
+      } else if (begin === 0) {
+        return input.slice(limit, input.length);
       } else {
-        if (begin === 0) {
-          return input.slice(limit, input.length);
-        } else {
-          return input.slice(Math.max(0, begin + limit), begin);
-        }
+        return input.slice(Math.max(0, begin + limit), begin);
       }
     };
 

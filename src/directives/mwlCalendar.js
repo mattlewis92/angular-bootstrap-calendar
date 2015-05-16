@@ -40,9 +40,9 @@ angular
           var rawDate = moment(date).toDate();
 
           var nextView = {
-            'year': 'month',
-            'month': 'day',
-            'week': 'day'
+            year: 'month',
+            month: 'day',
+            week: 'day'
           };
 
           if ($scope.onDrillDownClick({calendarDate: rawDate, calendarNextView: nextView[$scope.view]}) !== false) {
