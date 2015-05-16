@@ -32,7 +32,7 @@
     "karma-mocha": "~0.1.10",
     "karma-ng-html2js-preprocessor": "~0.1.2",
     "karma-phantomjs-launcher": "~0.1.4",
-    "main-bower-files": "~2.7.0",
+    "main-bower-files": "~2.8.0",
     "mocha": "~2.2.1",
     "open": "0.0.5",
     "run-sequence": "~1.1.0",
