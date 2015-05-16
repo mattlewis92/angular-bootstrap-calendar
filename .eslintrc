@@ -2,7 +2,6 @@
   "rules": {
     "quotes": "single",
     "global-strict": 0,
-    "no-loop-func": 0,
     "no-underscore-dangle": 0,
     "camelcase": [2, {"properties": "never"}],
     "brace-style": [2, "1tbs"],
