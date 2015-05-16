@@ -10,7 +10,7 @@ gulp.task('watch', ['server'], function() {
   $.livereload.listen();
   gulp.start('test:watch');
   gulp.watch('src/less/*.less', ['less']);
-  gulp.watch('src/**/*.js', ['lint']);
+  gulp.watch('src/**/*.js', ['eslint']);
   gulp.watch('css/*.css').on('change', $.livereload.changed);
   gulp.watch([
     './index.html',
