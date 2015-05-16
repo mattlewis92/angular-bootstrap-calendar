@@ -4,9 +4,9 @@
       <div
         class="span3 col-md-3 col-xs-6 cal-cell"
         ng-repeat="month in vm.view | calendarLimitTo:4:rowOffset track by $index"
+        ng-init="monthIndex = vm.view.indexOf(month)"
         ng-click="vm.monthClicked(month)"
         ng-class="{pointer: month.events.length > 0, 'cal-day-today': month.isToday}">
-
 
         <span
           class="pull-right"
@@ -23,7 +23,7 @@
 
         <div
           class="cal-day-tick"
-          ng-show="month.isOpened">
+          ng-show="monthIndex === vm.openMonthIndex && vm.view[vm.openMonthIndex].events.length > 0">
           <i class="glyphicon glyphicon-chevron-up"></i>
           <i class="fa fa-chevron-up"></i>
         </div>
@@ -32,8 +32,8 @@
     </div>
 
     <mwl-calendar-slide-box
-      is-open="vm.openRowIndex === $index"
-      events="vm.openEvents"
+      is-open="vm.openRowIndex === $index && vm.view[vm.openMonthIndex].events.length > 0"
+      events="vm.view[vm.openMonthIndex].events"
       on-event-click="onEventClick"
       edit-event-html="editEventHtml"
       on-edit-event-click="onEditEventClick"
