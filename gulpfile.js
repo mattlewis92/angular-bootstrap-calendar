@@ -131,7 +131,7 @@ gulp.task('bump:major', function() { return release('major'); });
 
 gulp.task('default', ['watch'], function() {});
 
-function lint(failOnError) {
+function eslint(failOnError) {
   var stream = gulp.src(['src/**/*.js'])
     .pipe($.eslint())
     .pipe($.eslint.format());
@@ -143,12 +143,12 @@ function lint(failOnError) {
   }
 }
 
-gulp.task('lint', function() {
-  return lint();
+gulp.task('eslint', function() {
+  return eslint();
 });
 
-gulp.task('ci:lint', function() {
-  return lint(true);
+gulp.task('ci:eslint', function() {
+  return eslint(true);
 });
 
 function runTests(action, onDistCode) {
@@ -186,5 +186,5 @@ gulp.task('test:watch', function() {
 });
 
 gulp.task('ci', function(done) {
-  runSequence('ci:lint', 'build', 'test:dist', done);
+  runSequence('ci:eslint', 'build', 'test:dist', done);
 });
