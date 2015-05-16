@@ -24,8 +24,6 @@ angular
         var vm = this;
         var firstRun = true;
 
-        vm.openEvents = [];
-
         $scope.$on('calendar.refreshView', function() {
 
           vm.weekDays = calendarHelper.getWeekDayNames();
@@ -47,45 +45,23 @@ angular
             });
           }
 
-          //if an event was deleted, remove it from the open events array
-          vm.openEvents = vm.openEvents.filter(function(event) {
-            return $scope.events.indexOf(event) > -1;
-          });
-
-          //close the open day if no more events
-          if (vm.openEvents.length === 0) {
-            vm.openRowIndex = null;
-            vm.view.forEach(function(day) {
-              day.isOpened = false;
-            });
-          }
-
         });
 
         vm.dayClicked = function(day, dayClickedFirstRun) {
 
           if (!dayClickedFirstRun) {
-            $scope.onTimespanClick({calendarDate: day.date.toDate()});
+            $scope.onTimespanClick({
+              calendarDate: day.date.toDate()
+            });
           }
 
-          vm.view.forEach(function(monthDay) {
-            if (monthDay !== day) {
-              monthDay.isOpened = false;
-            }
-          });
-
           vm.openRowIndex = null;
-
-          if (day.isOpened) {
-            vm.openEvents = [];
-            day.isOpened = false;
+          var dayIndex = vm.view.indexOf(day);
+          if (dayIndex === vm.openDayIndex) { //the day has been clicked and is already open
+            vm.openDayIndex = null; //close the open day
           } else {
-            vm.openEvents = day.events;
-            if (vm.openEvents.length > 0) {
-              var dayIndex = vm.view.indexOf(day);
-              vm.openRowIndex = Math.floor(dayIndex / 7);
-              day.isOpened = true;
-            }
+            vm.openDayIndex = dayIndex;
+            vm.openRowIndex = Math.floor(dayIndex / 7);
           }
 
         };

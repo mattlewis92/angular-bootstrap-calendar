@@ -9,18 +9,18 @@
     <div class="cal-row-fluid cal-before-eventlist">
       <div
         ng-repeat="day in vm.view | calendarLimitTo:7:rowOffset track by $index"
+        ng-init="dayIndex = vm.view.indexOf(day)"
         class="cal-cell1 cal-cell"
         ng-class="day.highlightClass"
         ng-click="vm.dayClicked(day)"
         ng-class="{pointer: day.events.length > 0}">
-
         <div ng-include="'src/templates/calendarMonthDay.html'"></div>
       </div>
     </div>
 
     <mwl-calendar-slide-box
-      is-open="vm.openRowIndex === $index"
-      events="vm.openEvents"
+      is-open="vm.openRowIndex === $index && vm.view[vm.openDayIndex].events.length > 0"
+      events="vm.view[vm.openDayIndex].events"
       on-event-click="onEventClick"
       edit-event-html="editEventHtml"
       on-edit-event-click="onEditEventClick"

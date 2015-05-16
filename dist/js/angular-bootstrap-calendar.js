@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-calendar - A pure AngularJS bootstrap themed responsive calendar that can display events and has views for year, month, week and day
- * @version v0.10.2
+ * @version v0.10.3
  * @link https://github.com/mattlewis92/angular-bootstrap-calendar
  * @license MIT
  */
@@ -428,7 +428,6 @@
                 function ($scope, moment, calendarHelper) {
                     var vm = this;
                     var firstRun = true;
-                    vm.openEvents = [];
                     $scope.$on('calendar.refreshView', function () {
                         vm.view = calendarHelper.getYearView($scope.events, $scope.currentDay);
                         //Auto open the calendar to the current day if set
@@ -440,38 +439,19 @@
                                 }
                             });
                         }
-                        //if an event was deleted, remove it from the open events array
-                        vm.openEvents = vm.openEvents.filter(function (event) {
-                            return $scope.events.indexOf(event) > -1;
-                        });
-                        //Close the open year if no more events
-                        if (vm.openEvents.length === 0) {
-                            vm.openRowIndex = null;
-                            vm.view.forEach(function (month) {
-                                month.isOpened = false;
-                            });
-                        }
                     });
                     vm.monthClicked = function (month, monthClickedFirstRun) {
                         if (!monthClickedFirstRun) {
                             $scope.onTimespanClick({ calendarDate: month.date.toDate() });
                         }
-                        vm.view.forEach(function (yearMonth) {
-                            if (yearMonth !== month) {
-                                yearMonth.isOpened = false;
-                            }
-                        });
                         vm.openRowIndex = null;
-                        if (month.isOpened) {
-                            vm.openEvents = [];
-                            month.isOpened = false;
+                        var monthIndex = vm.view.indexOf(month);
+                        if (monthIndex === vm.openMonthIndex) {
+                            //the month has been clicked and is already open
+                            vm.openMonthIndex = null;    //close the open month
                         } else {
-                            vm.openEvents = month.events;
-                            if (vm.openEvents.length > 0) {
-                                var monthIndex = vm.view.indexOf(month);
-                                vm.openRowIndex = Math.floor(monthIndex / 4);
-                                month.isOpened = true;
-                            }
+                            vm.openMonthIndex = monthIndex;
+                            vm.openRowIndex = Math.floor(monthIndex / 4);
                         }
                     };
                 }
@@ -574,7 +554,6 @@
                 function ($scope, moment, calendarHelper) {
                     var vm = this;
                     var firstRun = true;
-                    vm.openEvents = [];
                     $scope.$on('calendar.refreshView', function () {
                         vm.weekDays = calendarHelper.getWeekDayNames();
                         vm.view = calendarHelper.getMonthView($scope.events, $scope.currentDay);
@@ -592,38 +571,19 @@
                                 }
                             });
                         }
-                        //if an event was deleted, remove it from the open events array
-                        vm.openEvents = vm.openEvents.filter(function (event) {
-                            return $scope.events.indexOf(event) > -1;
-                        });
-                        //close the open day if no more events
-                        if (vm.openEvents.length === 0) {
-                            vm.openRowIndex = null;
-                            vm.view.forEach(function (day) {
-                                day.isOpened = false;
-                            });
-                        }
                     });
                     vm.dayClicked = function (day, dayClickedFirstRun) {
                         if (!dayClickedFirstRun) {
                             $scope.onTimespanClick({ calendarDate: day.date.toDate() });
                         }
-                        vm.view.forEach(function (monthDay) {
-                            if (monthDay !== day) {
-                                monthDay.isOpened = false;
-                            }
-                        });
                         vm.openRowIndex = null;
-                        if (day.isOpened) {
-                            vm.openEvents = [];
-                            day.isOpened = false;
+                        var dayIndex = vm.view.indexOf(day);
+                        if (dayIndex === vm.openDayIndex) {
+                            //the day has been clicked and is already open
+                            vm.openDayIndex = null;    //close the open day
                         } else {
-                            vm.openEvents = day.events;
-                            if (vm.openEvents.length > 0) {
-                                var dayIndex = vm.view.indexOf(day);
-                                vm.openRowIndex = Math.floor(dayIndex / 7);
-                                day.isOpened = true;
-                            }
+                            vm.openDayIndex = dayIndex;
+                            vm.openRowIndex = Math.floor(dayIndex / 7);
                         }
                     };
                     vm.highlightEvent = function (event, shouldAddClass) {
