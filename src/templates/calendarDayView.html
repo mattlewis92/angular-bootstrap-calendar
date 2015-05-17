@@ -4,8 +4,7 @@
     <div class="span11 col-xs-11 cal-cell" ng-bind="vm.calendarConfig.i18nStrings.eventsLabel"></div>
   </div>
 
-
-  <div class="cal-day-panel" class="clearfix" ng-style="{height: (vm.hours.length * vm.hourHeight) + 'px'}">
+  <div class="cal-day-panel clearfix" ng-style="{height: (vm.hours.length * vm.hourHeight) + 'px'}">
     <div class="cal-day-panel-hour">
 
       <div class="cal-day-hour" ng-repeat="hour in vm.hours track by $index">

@@ -13,6 +13,7 @@
     "gulp-eslint": "~0.12.0",
     "gulp-filter": "~2.0.2",
     "gulp-header": "~1.2.2",
+    "gulp-htmlhint": "~0.1.1",
     "gulp-htmlmin": "~1.1.1",
     "gulp-karma": "0.0.4",
     "gulp-less": "~3.0.2",

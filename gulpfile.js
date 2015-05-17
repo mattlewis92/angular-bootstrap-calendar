@@ -11,6 +11,7 @@ gulp.task('watch', ['server'], function() {
   gulp.start('test:watch');
   gulp.watch('src/less/*.less', ['less']);
   gulp.watch('src/**/*.js', ['eslint']);
+  gulp.watch('src/templates/**/*.html', ['htmlhint']);
   gulp.watch('css/*.css').on('change', $.livereload.changed);
   gulp.watch([
     './index.html',
@@ -151,6 +152,31 @@ gulp.task('ci:eslint', function() {
   return eslint(true);
 });
 
+function htmlhint(failOnError) {
+  var stream = gulp
+    .src('src/templates/*.html')
+    .pipe($.htmlhint('.htmlhintrc'))
+    .pipe($.htmlhint.reporter());
+
+  if (failOnError) {
+    return stream.pipe($.htmlhint.failReporter());
+  } else {
+    return stream;
+  }
+}
+
+gulp.task('htmlhint', function() {
+  return htmlhint();
+});
+
+gulp.task('ci:htmlhint', function() {
+  return htmlhint(true);
+});
+
+gulp.task('lint', ['eslint', 'htmlhint']);
+
+gulp.task('ci:lint', ['ci:eslint', 'ci:htmlhint']);
+
 function runTests(action, onDistCode) {
   var vendorJs = gulp.src(bowerFiles({includeDev: true})).pipe($.filter('*.js'));
   if (onDistCode) {
@@ -186,5 +212,5 @@ gulp.task('test:watch', function() {
 });
 
 gulp.task('ci', function(done) {
-  runSequence('ci:eslint', 'build', 'test:dist', done);
+  runSequence('ci:lint', 'build', 'test:dist', done);
 });

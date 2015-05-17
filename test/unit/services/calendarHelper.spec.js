@@ -124,7 +124,7 @@ describe('calendarHelper', function() {
     });
 
     it('should set date field to the start of each day', function() {
-      var startDate = moment('September 27, 2015').startOf('day');
+      var startDate = moment('September 27, 2015', 'MMMM DD, YYYY').startOf('day');
       monthView.forEach(function(month) {
         expect(startDate.toDate().getTime()).to.equal(month.date.toDate().getTime());
         startDate.add(1, 'day');
@@ -246,13 +246,13 @@ describe('calendarHelper', function() {
     });
 
     it('should set date field to the start of each day', function() {
-      expect(weekView.days[0].date.toDate().getTime()).to.equal(moment('October 18, 2015').startOf('day').toDate().getTime());
-      expect(weekView.days[1].date.toDate().getTime()).to.equal(moment('October 19, 2015').startOf('day').toDate().getTime());
-      expect(weekView.days[2].date.toDate().getTime()).to.equal(moment('October 20, 2015').startOf('day').toDate().getTime());
-      expect(weekView.days[3].date.toDate().getTime()).to.equal(moment('October 21, 2015').startOf('day').toDate().getTime());
-      expect(weekView.days[4].date.toDate().getTime()).to.equal(moment('October 22, 2015').startOf('day').toDate().getTime());
-      expect(weekView.days[5].date.toDate().getTime()).to.equal(moment('October 23, 2015').startOf('day').toDate().getTime());
-      expect(weekView.days[6].date.toDate().getTime()).to.equal(moment('October 24, 2015').startOf('day').toDate().getTime());
+      expect(weekView.days[0].date.toDate().getTime()).to.equal(moment('October 18, 2015', 'MMMM DD, YYYY').startOf('day').toDate().getTime());
+      expect(weekView.days[1].date.toDate().getTime()).to.equal(moment('October 19, 2015', 'MMMM DD, YYYY').startOf('day').toDate().getTime());
+      expect(weekView.days[2].date.toDate().getTime()).to.equal(moment('October 20, 2015', 'MMMM DD, YYYY').startOf('day').toDate().getTime());
+      expect(weekView.days[3].date.toDate().getTime()).to.equal(moment('October 21, 2015', 'MMMM DD, YYYY').startOf('day').toDate().getTime());
+      expect(weekView.days[4].date.toDate().getTime()).to.equal(moment('October 22, 2015', 'MMMM DD, YYYY').startOf('day').toDate().getTime());
+      expect(weekView.days[5].date.toDate().getTime()).to.equal(moment('October 23, 2015', 'MMMM DD, YYYY').startOf('day').toDate().getTime());
+      expect(weekView.days[6].date.toDate().getTime()).to.equal(moment('October 24, 2015', 'MMMM DD, YYYY').startOf('day').toDate().getTime());
     });
 
     it('should set the isPast flag to true', function() {
