@@ -30,7 +30,8 @@
   },
   "globals": {
     "window": true,
-    "angular": true
+    "angular": true,
+    "module": true
   },
   "envs": [
     "browser"
