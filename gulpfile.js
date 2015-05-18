@@ -101,7 +101,7 @@ function buildJS(withTemplates) {
     .pipe($.sourcemaps.init())
     .pipe($.ngAnnotate())
     .pipe($.concat(unminfilename))
-    .pipe($.wrapJs('(function(window, angular, module) {\n%= body %\n }) (window, angular, module);'))
+    .pipe($.wrapJs('(function(window, angular) {\n%= body %\n }) (window, angular);'))
     .pipe($.header(banner, { pkg : pkg } ))
     .pipe(gulp.dest('dist/js'))
     .pipe($.uglify())
