@@ -34,6 +34,7 @@ gulp.task('server', function() {
 
 gulp.task('less', function() {
   return gulp.src('src/less/calendar.less')
+    .pipe($.plumber())
     .pipe($.less())
     .pipe($.rename('calendar.css'))
     .pipe(gulp.dest('css'))
