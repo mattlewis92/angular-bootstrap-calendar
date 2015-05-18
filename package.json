@@ -44,6 +44,6 @@
   "engines": {
     "node": ">=0.12.0"
   },
-  "browser": "dist/js/angular-bootstrap-calendar-tpls.min.js",
-  "main": "dist/js/angular-bootstrap-calendar-tpls.min.js"
+  "browser": "dist/js/angular-bootstrap-calendar-tpls.js",
+  "main": "index.js"
 }
