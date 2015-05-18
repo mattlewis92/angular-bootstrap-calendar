@@ -4,12 +4,9 @@
  * @link https://github.com/mattlewis92/angular-bootstrap-calendar
  * @license MIT
  */
-(function (window, angular, module) {
+(function (window, angular) {
     'use strict';
     angular.module('mwl.calendar', []);
-    if (angular.isDefined(module) && angular.isDefined(module.exports)) {
-        module.exports = 'mwl.calendar';
-    }
     angular.module('mwl.calendar').run([
         '$templateCache',
         function ($templateCache) {
@@ -758,4 +755,4 @@
             ]
         };
     });
-}(window, angular, module));
+}(window, angular));
