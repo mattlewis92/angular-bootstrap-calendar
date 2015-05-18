@@ -4,7 +4,7 @@
  * @link https://github.com/mattlewis92/angular-bootstrap-calendar
  * @license MIT
  */
-(function (window, angular) {
+(function (window, angular, module) {
     'use strict';
     angular.module('mwl.calendar', []);
     if (angular.isDefined(module) && angular.isDefined(module.exports)) {
