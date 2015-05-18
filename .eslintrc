@@ -1,11 +1,39 @@
 {
   "rules": {
     "quotes": "single",
-    "global-strict": false,
-    "no-loop-func": false
+    "global-strict": 0,
+    "no-underscore-dangle": 0,
+    "camelcase": [2, {"properties": "never"}],
+    "brace-style": [2, "1tbs"],
+    "default-case": 2,
+    "no-throw-literal": 2,
+    "wrap-iife": 2,
+    "no-undefined": 2,
+    "comma-style": [2, "last"],
+    "func-style": [2, "declaration"],
+    "linebreak-style": [2, "unix"],
+    "max-nested-callbacks": [2, 4],
+    "no-lonely-if": 2,
+    "no-multiple-empty-lines": [2, {"max": 1}],
+    "no-nested-ternary": 2,
+    "no-unneeded-ternary": 2,
+    "operator-linebreak": 2,
+    "quote-props": [2, "as-needed"],
+    "space-after-keywords": [2, "always"],
+    "space-before-blocks": [2, "always"],
+    "space-before-function-paren": [2, "never"],
+    "space-in-brackets": [2, "never"],
+    "space-in-parens": [2, "never"],
+    "space-unary-ops": [2, { "words": true, "nonwords": false }],
+    "max-depth": [2, 4],
+    "max-len": [2, 160, 4]
   },
   "globals": {
     "window": true,
-    "angular": true
-  }
+    "angular": true,
+    "module": true
+  },
+  "envs": [
+    "browser"
+  ]
 }

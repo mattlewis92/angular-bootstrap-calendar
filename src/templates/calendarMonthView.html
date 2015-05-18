@@ -10,8 +10,7 @@
       <div
         ng-repeat="day in vm.view | calendarLimitTo:7:rowOffset track by $index"
         ng-init="dayIndex = vm.view.indexOf(day)"
-        class="cal-cell1 cal-cell"
-        ng-class="day.highlightClass"
+        class="cal-cell1 cal-cell {{ day.highlightClass }}"
         ng-click="vm.dayClicked(day)"
         ng-class="{pointer: day.events.length > 0}">
         <div ng-include="'src/templates/calendarMonthDay.html'"></div>

@@ -1,6 +1,6 @@
 {
   "name": "angular-bootstrap-calendar",
-  "version": "0.10.3",
+  "version": "0.10.4",
   "repository": "git@github.com:mattlewis92/angular-bootstrap-calendar.git",
   "dependencies": {},
   "devDependencies": {
@@ -13,6 +13,7 @@
     "gulp-eslint": "~0.12.0",
     "gulp-filter": "~2.0.2",
     "gulp-header": "~1.2.2",
+    "gulp-htmlhint": "~0.1.1",
     "gulp-htmlmin": "~1.1.1",
     "gulp-karma": "0.0.4",
     "gulp-less": "~3.0.2",
@@ -20,6 +21,7 @@
     "gulp-load-plugins": "~0.10.0",
     "gulp-minify-css": "~1.1.0",
     "gulp-ng-annotate": "~0.5.2",
+    "gulp-plumber": "~1.0.0",
     "gulp-rename": "^1.2.0",
     "gulp-sort": "~1.1.0",
     "gulp-sourcemaps": "^1.2.2",
@@ -32,7 +34,7 @@
     "karma-mocha": "~0.1.10",
     "karma-ng-html2js-preprocessor": "~0.1.2",
     "karma-phantomjs-launcher": "~0.1.4",
-    "main-bower-files": "~2.7.0",
+    "main-bower-files": "~2.8.0",
     "mocha": "~2.2.1",
     "open": "0.0.5",
     "run-sequence": "~1.1.0",
@@ -42,5 +44,6 @@
   "engines": {
     "node": ">=0.12.0"
   },
-  "browser": "dist/js/angular-bootstrap-calendar-tpls.js"
+  "browser": "dist/js/angular-bootstrap-calendar-tpls.min.js",
+  "main": "dist/js/angular-bootstrap-calendar-tpls.min.js"
 }

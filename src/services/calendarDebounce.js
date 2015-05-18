@@ -8,12 +8,12 @@ angular
       var timeout;
       return function() {
         var context = this, args = arguments;
-        var later = function() {
+        function later() {
           timeout = null;
           if (!immediate) {
             func.apply(context, args);
           }
-        };
+        }
         var callNow = immediate && !timeout;
         $timeout.cancel(timeout);
         timeout = $timeout(later, wait);

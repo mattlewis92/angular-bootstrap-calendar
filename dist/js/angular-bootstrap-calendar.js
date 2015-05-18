@@ -1,12 +1,15 @@
 /**
  * angular-bootstrap-calendar - A pure AngularJS bootstrap themed responsive calendar that can display events and has views for year, month, week and day
- * @version v0.10.3
+ * @version v0.10.4
  * @link https://github.com/mattlewis92/angular-bootstrap-calendar
  * @license MIT
  */
 (function (window, angular) {
     'use strict';
     angular.module('mwl.calendar', []);
+    if (angular.isDefined(module) && angular.isDefined(module.exports)) {
+        module.exports = 'mwl.calendar';
+    }
     'use strict';
     angular.module('mwl.calendar').constant('moment', window.moment);
     'use strict';
@@ -240,12 +243,12 @@
                 var timeout;
                 return function () {
                     var context = this, args = arguments;
-                    var later = function () {
+                    function later() {
                         timeout = null;
                         if (!immediate) {
                             func.apply(context, args);
                         }
-                    };
+                    }
                     var callNow = immediate && !timeout;
                     $timeout.cancel(timeout);
                     timeout = $timeout(later, wait);
@@ -332,12 +335,10 @@
             begin = begin < 0 && begin >= -input.length ? input.length + begin : begin;
             if (limit >= 0) {
                 return input.slice(begin, begin + limit);
+            } else if (begin === 0) {
+                return input.slice(limit, input.length);
             } else {
-                if (begin === 0) {
-                    return input.slice(limit, input.length);
-                } else {
-                    return input.slice(Math.max(0, begin + limit), begin);
-                }
+                return input.slice(Math.max(0, begin + limit), begin);
             }
         };
     });
@@ -693,9 +694,9 @@
                     vm.drillDown = function (date) {
                         var rawDate = moment(date).toDate();
                         var nextView = {
-                            'year': 'month',
-                            'month': 'day',
-                            'week': 'day'
+                            year: 'month',
+                            month: 'day',
+                            week: 'day'
                         };
                         if ($scope.onDrillDownClick({
                                 calendarDate: rawDate,

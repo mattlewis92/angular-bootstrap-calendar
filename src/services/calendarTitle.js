@@ -2,7 +2,7 @@
 
 angular
   .module('mwl.calendar')
-  .factory('calendarTitle', function (moment, calendarConfig) {
+  .factory('calendarTitle', function(moment, calendarConfig) {
 
     function day(currentDay) {
       return moment(currentDay).format(calendarConfig.titleFormats.day);
