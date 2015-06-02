@@ -19,20 +19,16 @@ angular
 
     }
 
-    function getEventsInPeriod(calendarDate, period, allEvents) {
-
-      var startPeriod, endPeriod;
-      if (angular.isString(period)) {
-        startPeriod = moment(calendarDate).startOf(period);
-        endPeriod = moment(calendarDate).endOf(period);
-      } else if (angular.isObject(period)) {
-        startPeriod = moment(period.start);
-        endPeriod = moment(period.end);
-      }
-
-      return allEvents.filter(function(event) {
+    function filterEventsInPeriod(events, startPeriod, endPeriod) {
+      return events.filter(function(event) {
         return eventIsInPeriod(event.startsAt, event.endsAt, startPeriod, endPeriod);
       });
+    }
+
+    function getEventsInPeriod(calendarDate, period, allEvents) {
+      var startPeriod = moment(calendarDate).startOf(period);
+      var endPeriod = moment(calendarDate).endOf(period);
+      return filterEventsInPeriod(allEvents, startPeriod, endPeriod);
     }
 
     function getBadgeTotal(events) {
@@ -48,12 +44,6 @@ angular
         weekdays.push(moment().weekday(count++).format(calendarConfig.dateFormats.weekDay));
       }
       return weekdays;
-    }
-
-    function filterEventsInPeriod(events, startPeriod, endPeriod) {
-      return events.filter(function(event) {
-        return eventIsInPeriod(event.startsAt, event.endsAt, startPeriod, endPeriod);
-      });
     }
 
     function getYearView(events, currentDay) {
@@ -87,10 +77,7 @@ angular
       var startOfMonth = moment(currentDay).startOf('month');
       var day = startOfMonth.clone().startOf('week');
       var endOfMonthView = moment(currentDay).endOf('month').endOf('week');
-      var eventsInPeriod = getEventsInPeriod(currentDay, {
-        start: day,
-        end: endOfMonthView
-      }, events);
+      var eventsInPeriod = filterEventsInPeriod(events, day, endOfMonthView);
       var view = [];
       var today = moment().startOf('day');
 
