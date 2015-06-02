@@ -1,9 +1,10 @@
 describe('calendarHelper', function() {
 
-  var calendarHelper, events, clock, calendarDay;
+  var calendarHelper, events, clock, calendarDay, calendarConfig;
 
-  beforeEach(inject(function(_calendarHelper_) {
+  beforeEach(inject(function(_calendarHelper_, _calendarConfig_) {
     calendarHelper = _calendarHelper_;
+    calendarConfig = _calendarConfig_;
 
     events = [{
       title: 'Event 1',
@@ -213,6 +214,17 @@ describe('calendarHelper', function() {
 
     it('should set the correct badge total', function() {
       expect(monthView[23].badgeTotal).to.equal(1);
+    });
+
+    it('should add events to days that display on the calendar but are outside of the current month when set in the calendarConfig service', function() {
+      calendarConfig.displayAllMonthEvents = true;
+      var eventsOffCalendar = [{
+        startsAt: new Date('September 29, 2015 02:00:00'),
+        endsAt: new Date('September 29, 2015 02:00:00')
+      }];
+      monthView = calendarHelper.getMonthView(eventsOffCalendar, calendarDay);
+      expect(monthView[2].events).to.eql(eventsOffCalendar);
+      calendarConfig.displayAllMonthEvents = false;
     });
 
   });

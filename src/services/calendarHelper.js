@@ -20,8 +20,16 @@ angular
     }
 
     function getEventsInPeriod(calendarDate, period, allEvents) {
-      var startPeriod = moment(calendarDate).startOf(period);
-      var endPeriod = moment(calendarDate).endOf(period);
+
+      var startPeriod, endPeriod;
+      if (angular.isString(period)) {
+        startPeriod = moment(calendarDate).startOf(period);
+        endPeriod = moment(calendarDate).endOf(period);
+      } else if (angular.isObject(period)) {
+        startPeriod = moment(period.start);
+        endPeriod = moment(period.end);
+      }
+
       return allEvents.filter(function(event) {
         return eventIsInPeriod(event.startsAt, event.endsAt, startPeriod, endPeriod);
       });
@@ -76,17 +84,21 @@ angular
 
     function getMonthView(events, currentDay) {
 
-      var eventsInPeriod = getEventsInPeriod(currentDay, 'month', events);
       var startOfMonth = moment(currentDay).startOf('month');
       var day = startOfMonth.clone().startOf('week');
       var endOfMonthView = moment(currentDay).endOf('month').endOf('week');
+      var eventsInPeriod = getEventsInPeriod(currentDay, {
+        start: day,
+        end: endOfMonthView
+      }, events);
       var view = [];
       var today = moment().startOf('day');
+
       while (day.isBefore(endOfMonthView)) {
 
         var inMonth = day.month() === moment(currentDay).month();
         var monthEvents = [];
-        if (inMonth) {
+        if (inMonth || calendarConfig.displayAllMonthEvents) {
           monthEvents = filterEventsInPeriod(eventsInPeriod, day, day.clone().endOf('day'));
         }
 

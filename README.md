@@ -233,6 +233,8 @@ angular.module('myModule')
       timeLabel: 'Time' //This will set the time label on the time view
     });
     
+    calendarConfigProvider.setDisplayAllMonthEvents(true); //This will display all events on a month view even if they're not in the current month. Default false.
+
   });
 ```
 

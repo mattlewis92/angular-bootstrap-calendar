@@ -23,6 +23,8 @@ angular
       timeLabel: 'Time'
     };
 
+    var displayAllMonthEvents = false;
+
     var configProvider = this;
 
     configProvider.setDateFormats = function(formats) {
@@ -40,11 +42,17 @@ angular
       return configProvider;
     };
 
+    configProvider.setDisplayAllMonthEvents = function(value) {
+      displayAllMonthEvents = value;
+      return configProvider;
+    };
+
     configProvider.$get = function() {
       return {
         dateFormats: defaultDateFormats,
         titleFormats: defaultTitleFormats,
-        i18nStrings: i18nStrings
+        i18nStrings: i18nStrings,
+        displayAllMonthEvents: displayAllMonthEvents
       };
     };
 
