@@ -4,7 +4,7 @@
     ng-click="onEventClick({calendarEvent: event})"
     ng-repeat="event in day.events track by $index"
     class="pull-left event"
-    ng-class="'event-' + event.type"
+    ng-class="'event-' + event.type + ' ' + event.cssClass"
     ng-mouseenter="vm.highlightEvent(event, true)"
     ng-mouseleave="vm.highlightEvent(event, false)"
     tooltip-append-to-body="true"

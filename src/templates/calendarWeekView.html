@@ -29,7 +29,7 @@
     class="cal-row-fluid"
     ng-repeat="event in vm.view.events track by $index">
     <div
-      ng-class="'cal-cell' + event.daySpan + ' cal-offset' + event.dayOffset + ' day-highlight dh-event-' + event.type"
+      ng-class="'cal-cell' + event.daySpan + ' cal-offset' + event.dayOffset + ' day-highlight dh-event-' + event.type + ' ' + event.cssClass"
       data-event-class>
       <a
         href="javascript:;"
