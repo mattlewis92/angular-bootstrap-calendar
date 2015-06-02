@@ -8,6 +8,6 @@
     ng-mouseenter="vm.highlightEvent(event, true)"
     ng-mouseleave="vm.highlightEvent(event, false)"
     tooltip-append-to-body="true"
-    tooltip="{{ event.title }}"
+    tooltip="{{ (event.startsAt | date:'HH:mm') + ' - ' + event.title }}"
     ></a>
 </div>
