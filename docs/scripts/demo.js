@@ -1,7 +1,7 @@
 'use strict';
 
 angular
-  .module('demo', ['mwl.calendar', 'ui.bootstrap', 'ngAnimate'])
+  .module('demo', ['mwl.calendar', 'ui.bootstrap'])
   .controller('MainCtrl', function ($scope, $modal, moment) {
 
     //These variables MUST be set as a minimum for the calendar to work
@@ -49,8 +49,7 @@ angular
     function showModal(action, event) {
       $modal.open({
         templateUrl: 'modalContent.html',
-        controller: function($scope, $modalInstance) {
-          $scope.$modalInstance = $modalInstance;
+        controller: function($scope) {
           $scope.action = action;
           $scope.event = event;
         }

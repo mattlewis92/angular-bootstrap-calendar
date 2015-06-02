@@ -2,7 +2,11 @@
 
 angular
   .module('mwl.calendar')
-  .filter('calendarLimitTo', function() {
+  .filter('calendarLimitTo', function(limitToFilter) {
+
+    if (angular.version.minor >= 4) { //1.4+ supports the begin attribute
+      return limitToFilter;
+    }
 
     //Copied from the angular source. Only 1.4 has the begin functionality.
     return function(input, limit, begin) {
