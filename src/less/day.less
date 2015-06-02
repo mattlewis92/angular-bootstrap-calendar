@@ -1,6 +1,7 @@
 .cal-day-box {
   text-wrap: none;
   overflow-x: auto !important;
+  overflow-y: hidden;
   .cal-day-hour-part {
     height: 30px;
     box-sizing: border-box;
@@ -14,7 +15,8 @@
     }
   }
   .cal-hours {
-    font-weight: bolder;
+    font-weight: bold;
+    font-size: 12px;
   }
   .cal-day-hour:nth-child(odd) {
     background-color: @rowHover;
