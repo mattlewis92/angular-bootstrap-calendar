@@ -1,8 +1,8 @@
 <div class="events-list" ng-show="day.events.length > 0">
   <a
+    ng-repeat="event in day.events | orderBy:'startsAt' track by $index"
     href="javascript:;"
     ng-click="onEventClick({calendarEvent: event})"
-    ng-repeat="event in day.events track by $index"
     class="pull-left event"
     ng-class="'event-' + event.type + ' ' + event.cssClass"
     ng-mouseenter="vm.highlightEvent(event, true)"
