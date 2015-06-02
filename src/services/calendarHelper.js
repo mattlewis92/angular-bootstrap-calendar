@@ -4,12 +4,36 @@ angular
   .module('mwl.calendar')
   .factory('calendarHelper', function(moment, calendarConfig) {
 
-    function eventIsInPeriod(eventStart, eventEnd, periodStart, periodEnd) {
+    function eventIsInPeriod(event, periodStart, periodEnd) {
 
-      eventStart = moment(eventStart);
-      eventEnd = moment(eventEnd);
+      var eventStart = moment(event.startsAt);
+      var eventEnd = moment(event.endsAt);
       periodStart = moment(periodStart);
       periodEnd = moment(periodEnd);
+
+      if (angular.isDefined(event.recursOn)) {
+
+        switch (event.recursOn) {
+          case 'year':
+            eventStart.set({
+              year: periodStart.year()
+            });
+            break;
+
+          case 'month':
+            eventStart.set({
+              year: periodStart.year(),
+              month: periodStart.month()
+            });
+            break;
+
+          default:
+            throw new Error('Invalid value (' + event.recursOn + ') given for recurs on. Can only be year, month or week.');
+        }
+
+        var diffInSeconds = moment(eventStart).diff(event.startsAt);
+        eventEnd.add(diffInSeconds);
+      }
 
       return (eventStart.isAfter(periodStart) && eventStart.isBefore(periodEnd)) ||
         (eventEnd.isAfter(periodStart) && eventEnd.isBefore(periodEnd)) ||
@@ -21,7 +45,7 @@ angular
 
     function filterEventsInPeriod(events, startPeriod, endPeriod) {
       return events.filter(function(event) {
-        return eventIsInPeriod(event.startsAt, event.endsAt, startPeriod, endPeriod);
+        return eventIsInPeriod(event, startPeriod, endPeriod);
       });
     }
 
@@ -77,7 +101,12 @@ angular
       var startOfMonth = moment(currentDay).startOf('month');
       var day = startOfMonth.clone().startOf('week');
       var endOfMonthView = moment(currentDay).endOf('month').endOf('week');
-      var eventsInPeriod = filterEventsInPeriod(events, day, endOfMonthView);
+      var eventsInPeriod;
+      if (calendarConfig.displayAllMonthEvents) {
+        eventsInPeriod = filterEventsInPeriod(events, day, endOfMonthView);
+      } else {
+        eventsInPeriod = filterEventsInPeriod(events, startOfMonth, startOfMonth.clone().endOf('month'));
+      }
       var view = [];
       var today = moment().startOf('day');
 
@@ -208,8 +237,8 @@ angular
           var canFitInThisBucket = true;
 
           bucket.forEach(function(bucketItem) {
-            if (eventIsInPeriod(event.startsAt, event.endsAt, bucketItem.startsAt, bucketItem.endsAt) ||
-              eventIsInPeriod(bucketItem.startsAt, bucketItem.endsAt, event.startsAt, event.endsAt)) {
+            if (eventIsInPeriod(event, bucketItem.startsAt, bucketItem.endsAt) ||
+              eventIsInPeriod(bucketItem, event.startsAt, event.endsAt)) {
               canFitInThisBucket = false;
             }
           });
@@ -238,7 +267,8 @@ angular
       getYearView: getYearView,
       getMonthView: getMonthView,
       getWeekView: getWeekView,
-      getDayView: getDayView
+      getDayView: getDayView,
+      eventIsInPeriod: eventIsInPeriod //expose for testing only
     };
 
   });

@@ -112,7 +112,8 @@ $scope.events = [
     endsAt: new Date(2014,8,26,15), // A javascript date object for when the event ends
     editable: false, // If edit-event-html is set and this field is explicitly set to false then dont make it editable
     deletable: false, // If delete-event-html is set and this field is explicitly set to false then dont make it deleteable
-    incrementsBadgeTotal: true //If set to false then will not count towards the badge total amount on the month and year view
+    incrementsBadgeTotal: true, //If set to false then will not count towards the badge total amount on the month and year view
+    recursOn: 'year' // If set the event will recur on the given period. Valid values are year or month
   }
 ];
 ```

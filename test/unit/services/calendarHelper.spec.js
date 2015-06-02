@@ -30,6 +30,93 @@ describe('calendarHelper', function() {
     clock.restore();
   });
 
+  describe('eventIsInPeriod', function() {
+
+    var periodStart, periodEnd;
+
+    beforeEach(function() {
+      periodStart = new Date('January 1, 2015 00:00:00');
+      periodEnd = new Date('January 31, 2015 00:00:00');
+    });
+
+    it('should be true when the event starts within the period', function() {
+
+      var isInPeriod = calendarHelper.eventIsInPeriod({
+        startsAt: new Date('January 2, 2015 00:00:00'),
+        endsAt: new Date('January 3, 2016 00:00:00')
+      }, periodStart, periodEnd);
+
+      expect(isInPeriod).to.be.true;
+
+    });
+
+    it('should be true when the event ends within the period', function() {
+      var isInPeriod = calendarHelper.eventIsInPeriod({
+        startsAt: new Date('January 2, 2014 00:00:00'),
+        endsAt: new Date('January 3, 2015 00:00:00')
+      }, periodStart, periodEnd);
+
+      expect(isInPeriod).to.be.true;
+    });
+
+    it('should be true when the event starts before the period and ends after it', function() {
+      var isInPeriod = calendarHelper.eventIsInPeriod({
+        startsAt: new Date('January 2, 2014 00:00:00'),
+        endsAt: new Date('January 3, 2016 00:00:00')
+      }, periodStart, periodEnd);
+
+      expect(isInPeriod).to.be.true;
+    });
+
+    it('should be true when the event starts at the same time as the period start', function() {
+      var isInPeriod = calendarHelper.eventIsInPeriod({
+        startsAt: new Date('January 1, 2015 00:00:00'),
+        endsAt: new Date('January 3, 2015 00:00:00')
+      }, periodStart, periodEnd);
+
+      expect(isInPeriod).to.be.true;
+    });
+
+    it('should be true when the event ends at the same time as the period end', function() {
+      var isInPeriod = calendarHelper.eventIsInPeriod({
+        startsAt: new Date('January 3, 2015 00:00:00'),
+        endsAt: new Date('January 31, 2015 00:00:00')
+      }, periodStart, periodEnd);
+
+      expect(isInPeriod).to.be.true;
+    });
+
+    it('should be false when the event doesn\'t overlap the period', function() {
+      var isInPeriod = calendarHelper.eventIsInPeriod({
+        startsAt: new Date('January 3, 2014 00:00:00'),
+        endsAt: new Date('January 31, 2014 00:00:00')
+      }, periodStart, periodEnd);
+
+      expect(isInPeriod).to.be.false;
+    });
+
+    it('should be true when the event occurs yearly and the event start and end times don\'t overlap', function() {
+      var isInPeriod = calendarHelper.eventIsInPeriod({
+        startsAt: new Date('January 3, 2014 00:00:00'),
+        endsAt: new Date('January 31, 2014 00:00:00'),
+        recursOn: 'year'
+      }, periodStart, periodEnd);
+
+      expect(isInPeriod).to.be.true;
+    });
+
+    it('should be true when the event occurs monthly and the event start and end times don\'t overlap', function() {
+      var isInPeriod = calendarHelper.eventIsInPeriod({
+        startsAt: new Date('March 3, 2014 00:00:00'),
+        endsAt: new Date('March 31, 2014 00:00:00'),
+        recursOn: 'month'
+      }, periodStart, periodEnd);
+
+      expect(isInPeriod).to.be.true;
+    });
+
+  });
+
   describe('getWeekDayNames', function() {
 
     it('should get the days of the week starting at sunday', function() {
