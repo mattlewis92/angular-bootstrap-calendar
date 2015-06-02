@@ -21,7 +21,7 @@ angular
       }, {
         title: 'This is a really long event title that occurs on every year',
         type: 'important',
-        startsAt: moment().startOf('day').add(5, 'hours').toDate(),
+        startsAt: moment().startOf('day').add(7, 'hours').toDate(),
         endsAt: moment().startOf('day').add(19, 'hours').toDate(),
         recursOn: 'year'
       }
