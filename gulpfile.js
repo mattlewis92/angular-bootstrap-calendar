@@ -1,6 +1,5 @@
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
-var streamqueue = require('streamqueue');
 var open = require('open');
 var runSequence = require('run-sequence');
 var bowerFiles = require('main-bower-files');
@@ -81,16 +80,12 @@ function getTemplates() {
 
 }
 
-function mergeStreams(stream1, stream2) {
-  return streamqueue({ objectMode: true }, stream1, stream2);
-}
-
 function buildJS(withTemplates) {
 
   var minFilename = withTemplates ? 'angular-bootstrap-calendar-tpls.min.js' : 'angular-bootstrap-calendar.min.js';
   var unminfilename = withTemplates ? 'angular-bootstrap-calendar-tpls.js' : 'angular-bootstrap-calendar.js';
 
-  var stream = withTemplates ? mergeStreams(
+  var stream = withTemplates ? series(
     gulp.src('src/**/*.js'),
     getTemplates()
   ) : gulp.src('src/**/*.js');
