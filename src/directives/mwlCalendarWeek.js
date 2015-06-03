@@ -2,6 +2,15 @@
 
 angular
   .module('mwl.calendar')
+  .controller('MwlCalendarWeekCtrl', function($scope, calendarHelper) {
+
+    var vm = this;
+
+    $scope.$on('calendar.refreshView', function() {
+      vm.view = calendarHelper.getWeekView($scope.events, $scope.currentDay);
+    });
+
+  })
   .directive('mwlCalendarWeek', function() {
 
     return {
@@ -13,16 +22,7 @@ angular
         currentDay: '=',
         onEventClick: '='
       },
-      controller: function($scope, calendarHelper) {
-
-        var vm = this;
-
-        $scope.$on('calendar.refreshView', function() {
-          vm.view = calendarHelper.getWeekView($scope.events, $scope.currentDay);
-        });
-
-      },
-      controllerAs: 'vm',
+      controller: 'MwlCalendarWeekCtrl as vm',
       link: function(scope, element, attrs, calendarCtrl) {
         scope.vm.calendarCtrl = calendarCtrl;
       }
