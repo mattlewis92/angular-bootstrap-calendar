@@ -4,7 +4,7 @@
     <div class="span11 col-xs-11 cal-cell" ng-bind="vm.calendarConfig.i18nStrings.eventsLabel"></div>
   </div>
 
-  <div class="cal-day-panel clearfix" ng-style="{height: (vm.dayViewHeight) + 'px'}">
+  <div class="cal-day-panel clearfix" ng-style="{height: vm.dayViewHeight + 'px'}">
 
     <mwl-calendar-hour-list
       day-view-start="dayViewStart"

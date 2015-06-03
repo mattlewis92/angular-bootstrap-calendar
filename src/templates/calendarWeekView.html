@@ -1,4 +1,4 @@
-<div class="cal-week-box">
+<div class="cal-day-box cal-week-box">
   <div class="cal-row-fluid cal-row-head">
 
     <div
@@ -25,19 +25,34 @@
 
   </div>
 
-  <div
-    class="cal-row-fluid"
-    ng-repeat="event in vm.view.events track by $index">
-    <div
-      ng-class="'cal-cell' + event.daySpan + ' cal-offset' + event.dayOffset + ' day-highlight dh-event-' + event.type + ' ' + event.cssClass"
-      data-event-class>
-      <a
-        href="javascript:;"
-        ng-click="onEventClick({calendarEvent: event})"
-        class="cal-event-week"
-        ng-bind="event.title">
-      </a>
+  <div class="cal-day-panel clearfix" ng-style="{height: vm.dayViewHeight + 'px'}">
+
+    <mwl-calendar-hour-list
+      day-view-start="dayViewStart"
+      day-view-end="dayViewEnd"
+      day-view-split="dayViewSplit">
+    </mwl-calendar-hour-list>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <div
+          class="cal-row-fluid "
+          ng-repeat="event in vm.view.events track by $index">
+          <div
+            ng-class="'cal-cell' + event.daySpan + ' cal-offset' + event.dayOffset + ' day-highlight dh-event-' + event.type + ' ' + event.cssClass"
+            data-event-class>
+            <a
+              href="javascript:;"
+              ng-click="onEventClick({calendarEvent: event})"
+              class="event-item"
+              ng-bind="event.title">
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
+
   </div>
+
 
 </div>

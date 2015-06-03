@@ -9,17 +9,18 @@ angular
     vm.calendarConfig = calendarConfig;
 
     $scope.$on('calendar.refreshView', function() {
-      var dayViewStart = moment($scope.dayViewStart || '00:00', 'HH:mm');
-      var dayViewEnd = moment($scope.dayViewEnd || '23:00', 'HH:mm');
-      var hourHeight = (60 / $scope.dayViewSplit) * 30;
-      vm.dayViewHeight = (dayViewEnd.diff(dayViewStart, 'hours') * hourHeight) + 1;
+      vm.dayViewHeight = calendarHelper.getDayViewHeight(
+        $scope.dayViewStart,
+        $scope.dayViewEnd,
+        $scope.dayViewSplit
+      );
 
       vm.view = calendarHelper.getDayView(
         $scope.events,
         $scope.currentDay,
-        dayViewStart.hours(),
-        dayViewEnd.hours(),
-        hourHeight
+        moment($scope.dayViewStart || '00:00', 'HH:mm').hours(),
+        moment($scope.dayViewEnd || '23:00', 'HH:mm').hours(),
+        (60 / $scope.dayViewSplit) * 30
       );
 
     });
