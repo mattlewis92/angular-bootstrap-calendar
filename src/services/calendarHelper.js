@@ -7,7 +7,7 @@ angular
     function eventIsInPeriod(event, periodStart, periodEnd) {
 
       var eventStart = moment(event.startsAt);
-      var eventEnd = moment(event.endsAt);
+      var eventEnd = moment(event.endsAt || event.startsAt);
       periodStart = moment(periodStart);
       periodEnd = moment(periodEnd);
 
@@ -160,7 +160,7 @@ angular
       var eventsSorted = filterEventsInPeriod(events, startOfWeek, endOfWeek).map(function(event) {
 
         var eventStart = moment(event.startsAt).startOf('day');
-        var eventEnd = moment(event.endsAt).startOf('day');
+        var eventEnd = moment(event.endsAt || event.startsAt).startOf('day');
         var weekViewStart = moment(startOfWeek).startOf('day');
         var weekViewEnd = moment(endOfWeek).startOf('day');
         var offset, span;
@@ -211,14 +211,18 @@ angular
           event.top = (moment(event.startsAt).startOf('minute').diff(calendarStart.startOf('minute'), 'minutes') * hourHeightMultiplier) - 2;
         }
 
-        if (moment(event.endsAt).isAfter(calendarEnd)) {
+        if (moment(event.endsAt || event.startsAt).isAfter(calendarEnd)) {
           event.height = calendarHeight - event.top;
         } else {
           var diffStart = event.startsAt;
           if (moment(event.startsAt).isBefore(calendarStart)) {
             diffStart = calendarStart.toDate();
           }
-          event.height = moment(event.endsAt).diff(diffStart, 'minutes') * hourHeightMultiplier;
+          if (!event.endsAt) {
+            event.height = 30;
+          } else {
+            event.height = moment(event.endsAt || event.startsAt).diff(diffStart, 'minutes') * hourHeightMultiplier;
+          }
         }
 
         if (event.top - event.height > calendarHeight) {
@@ -237,8 +241,8 @@ angular
           var canFitInThisBucket = true;
 
           bucket.forEach(function(bucketItem) {
-            if (eventIsInPeriod(event, bucketItem.startsAt, bucketItem.endsAt) ||
-              eventIsInPeriod(bucketItem, event.startsAt, event.endsAt)) {
+            if (eventIsInPeriod(event, bucketItem.startsAt, bucketItem.endsAt || bucketItem.startsAt) ||
+              eventIsInPeriod(bucketItem, event.startsAt, event.endsAt || event.startsAt)) {
               canFitInThisBucket = false;
             }
           });
