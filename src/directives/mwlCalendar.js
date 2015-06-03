@@ -2,7 +2,7 @@
 
 angular
   .module('mwl.calendar')
-  .controller('MwlCalendarCtrl', function($scope, $timeout, moment, calendarTitle, calendarDebounce) {
+  .controller('MwlCalendarCtrl', function($scope, $timeout, $window, moment, calendarTitle, calendarDebounce) {
 
     var vm = this;
 

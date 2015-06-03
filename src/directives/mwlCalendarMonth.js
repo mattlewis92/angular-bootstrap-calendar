@@ -2,7 +2,7 @@
 
 angular
   .module('mwl.calendar')
-  .controller('MwlCalendarMonthCtrl', function($scope, moment, calendarHelper) {
+  .controller('MwlCalendarMonthCtrl', function($scope, $window, moment, calendarHelper) {
 
     var vm = this;
     var firstRun = true;
@@ -31,6 +31,10 @@ angular
     });
 
     vm.dayClicked = function(day, dayClickedFirstRun) {
+
+      if ($window.draggingActive) {
+        return;
+      }
 
       if (!dayClickedFirstRun) {
         $scope.onTimespanClick({
@@ -62,6 +66,19 @@ angular
       });
 
     };
+
+    vm.onEventDrop = function(event, newMonthDate) {
+      var eventStart = moment(event.startsAt);
+      event.startsAt = moment(event.startsAt)
+        .date(moment(newMonthDate).date())
+        .month(moment(newMonthDate).month())
+        .toDate();
+      var diffInSeconds = moment(event.startsAt).diff(eventStart);
+      if (event.endsAt) {
+        event.endsAt = moment(event.endsAt).add(diffInSeconds).toDate();
+      }
+    };
+
   })
   .directive('mwlCalendarMonth', function() {
 

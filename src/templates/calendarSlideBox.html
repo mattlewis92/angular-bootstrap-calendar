@@ -2,7 +2,7 @@
   <div class="cal-slide-content cal-event-list">
     <ul class="unstyled list-unstyled">
 
-      <li ng-repeat="event in events | orderBy:'startsAt' track by $index" ng-class="event.cssClass">
+      <li ng-repeat="event in events | orderBy:'startsAt' track by $index" ng-class="event.cssClass" mwl-calendar-draggable>
         <span class="pull-left event" ng-class="'event-' + event.type"></span>
         &nbsp;
         <a
