@@ -8,6 +8,8 @@
     "moment": "~2.10.3"
   },
   "devDependencies": {
+    "eslint": "~0.22.1",
+    "eslint-plugin-angular": "0.0.7",
     "gulp": "~3.9.0",
     "gulp-angular-filesort": "~1.1.1",
     "gulp-angular-templatecache": "~1.6.0",
