@@ -39,7 +39,7 @@ angular
       }
 
       $scope.events = $scope.events.map(function(event, index) {
-        event.$id = index;
+        Object.defineProperty(event, '$id', {enumerable: false, value: index});
         return event;
       });
 
