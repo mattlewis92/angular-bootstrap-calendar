@@ -23,7 +23,17 @@ angular
           return $parse($attrs.mwlCalendarDraggable)($scope);
         }
 
+        var snap;
+        if ($attrs.snapGrid) {
+          snap = {
+            targets: [
+              interact.createSnapGrid($parse($attrs.snapGrid)($scope))
+            ]
+          }
+        }
+
         interact($element[0]).draggable({
+          snap: snap,
           onstart: function(event) {
             if (canDrag()) {
               angular.element(event.target).addClass('dragging-active');
@@ -38,9 +48,22 @@ angular
               var x = (parseFloat(elm.attr('data-x')) || 0) + event.dx;
               var y = (parseFloat(elm.attr('data-y')) || 0) + event.dy;
 
+              switch($attrs.axis) {
+                case 'x':
+                  y = 0;
+                  break;
+
+                case 'y':
+                  x = 0;
+                  break;
+              }
+
+              if (!getComputedStyle(elm[0]).position) {
+                elm.css('position', 'relative');
+              }
+
               translateElement(elm, 'translate(' + x + 'px, ' + y + 'px)')
                 .css('z-index', 1000)
-                .css('position', 'relative')
                 .attr('data-x', x)
                 .attr('data-y', y);
             }
