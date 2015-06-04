@@ -60,6 +60,11 @@ angular
           }
         });
 
+        var unbindDestroy = $scope.$on('$destroy', function() {
+          unbindDestroy();
+          interact($element[0]).unset();
+        });
+
       }
     };
 
