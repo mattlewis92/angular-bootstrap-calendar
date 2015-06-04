@@ -19,7 +19,7 @@ angular
             angular.element(event.target).removeClass('drop-active');
           },
           ondrop: function(event) {
-            event.relatedTarget.dropData = $parse($attrs.dropData)($scope);
+            $parse($attrs.onDrop)($scope, {dropData: event.relatedTarget.dropData});
           }
         });
 

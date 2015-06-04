@@ -12,6 +12,7 @@ angular
           onstart: function(event) {
             $window.draggingActive = true;
             angular.element(event.target).addClass('dragging-active');
+            event.target.dropData = $parse($attrs.dropData)($scope);
           },
           onmove: function(event) {
 
@@ -34,8 +35,6 @@ angular
               .removeAttr('data-x')
               .removeAttr('data-y')
               .removeClass('dragging-active');
-
-            $parse($attrs.onDrop)($scope, {dropData: event.target.dropData});
 
             $timeout(function() {
               $window.draggingActive = false;

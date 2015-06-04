@@ -10,6 +10,6 @@
     tooltip-append-to-body="true"
     tooltip="{{ (event.startsAt | date:'HH:mm') + ' - ' + event.title }}"
     mwl-calendar-draggable
-    on-drop="vm.onEventDrop(event, dropData.date)">
+    drop-data="{event: event}">
   </a>
 </div>

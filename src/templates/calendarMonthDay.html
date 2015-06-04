@@ -1,6 +1,6 @@
 <div
   mwl-calendar-droppable
-  drop-data="{date: day.date}"
+  on-drop="vm.onEventDrop(dropData.event, day.date)"
   class="cal-month-day"
   ng-class="{
             'cal-day-outmonth': !day.inMonth,
