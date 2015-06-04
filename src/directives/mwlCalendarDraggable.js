@@ -16,7 +16,7 @@ angular
           return elm
             .css('transform', transformValue)
             .css('-ms-transform', transformValue)
-            .css('-webkit-transform', transformValue)
+            .css('-webkit-transform', transformValue);
         }
 
         function canDrag() {
