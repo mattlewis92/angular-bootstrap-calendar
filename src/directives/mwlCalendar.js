@@ -38,6 +38,11 @@ angular
         $scope.viewTitle = calendarTitle[$scope.view]($scope.currentDay);
       }
 
+      $scope.events = $scope.events.map(function(event, index) {
+        event.$id = index;
+        return event;
+      });
+
       //if on-timespan-click="calendarDay = calendarDate" is set then dont update the view as nothing needs to change
       var currentDate = moment($scope.currentDay);
       var shouldUpdate = true;
@@ -89,6 +94,7 @@ angular
         deleteEventHtml: '=',
         autoOpen: '=',
         onEventClick: '&',
+        onEventDrop: '&',
         onEditEventClick: '&',
         onDeleteEventClick: '&',
         onTimespanClick: '&',

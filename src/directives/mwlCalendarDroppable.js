@@ -23,8 +23,10 @@ angular
             angular.element(event.target).removeClass('drop-active');
           },
           ondrop: function(event) {
-            $parse($attrs.onDrop)($scope, {dropData: event.relatedTarget.dropData});
-            $scope.$apply();
+            if (event.relatedTarget.dropData) {
+              $parse($attrs.onDrop)($scope, {dropData: event.relatedTarget.dropData});
+              $scope.$apply();
+            }
           }
         });
 

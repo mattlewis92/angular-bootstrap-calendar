@@ -63,16 +63,23 @@ angular
 
     };
 
-    vm.onEventDrop = function(event, newMonthDate) {
-      var eventStart = moment(event.startsAt);
-      event.startsAt = moment(event.startsAt)
+    vm.handleEventDrop = function(event, newMonthDate) {
+      var oldStart = moment(event.startsAt);
+      var newStart = moment(event.startsAt)
         .date(moment(newMonthDate).date())
         .month(moment(newMonthDate).month())
         .toDate();
-      var diffInSeconds = moment(event.startsAt).diff(eventStart);
+      var diffInSeconds = moment(newStart).diff(oldStart);
+      var newEnd;
       if (event.endsAt) {
-        event.endsAt = moment(event.endsAt).add(diffInSeconds).toDate();
+        newEnd = moment(event.endsAt).add(diffInSeconds).toDate();
       }
+      $scope.onEventDrop({
+        calendarEvent: event,
+        calendarDate: newMonthDate,
+        calendarNewEventStart: newStart,
+        calendarNewEventEnd: newEnd
+      });
     };
 
   })
@@ -88,6 +95,7 @@ angular
         onEventClick: '=',
         onEditEventClick: '=',
         onDeleteEventClick: '=',
+        onEventDrop: '=',
         editEventHtml: '=',
         deleteEventHtml: '=',
         autoOpen: '=',

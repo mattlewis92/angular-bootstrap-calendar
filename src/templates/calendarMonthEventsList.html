@@ -1,6 +1,6 @@
 <div class="events-list" ng-show="day.events.length > 0">
   <a
-    ng-repeat="event in day.events | orderBy:'startsAt' track by $index"
+    ng-repeat="event in day.events | orderBy:'startsAt' track by event.$id"
     href="javascript:;"
     ng-click="onEventClick({calendarEvent: event})"
     class="pull-left event"
@@ -9,7 +9,7 @@
     ng-mouseleave="vm.highlightEvent(event, false)"
     tooltip-append-to-body="true"
     tooltip="{{ (event.startsAt | date:'HH:mm') + ' - ' + event.title }}"
-    mwl-calendar-draggable
+    mwl-calendar-draggable="event.editable !== false"
     drop-data="{event: event}">
   </a>
 </div>
