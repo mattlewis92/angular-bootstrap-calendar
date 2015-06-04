@@ -4,6 +4,14 @@ angular
   .module('mwl.calendar')
   .factory('calendarHelper', function(moment, calendarConfig) {
 
+    function adjustEndDateFromStartDiff(oldStart, newStart, oldEnd) {
+      if (!oldEnd) {
+        return oldEnd;
+      }
+      var diffInSeconds = moment(newStart).diff(moment(oldStart));
+      return moment(oldEnd).add(diffInSeconds);
+    }
+
     function eventIsInPeriod(event, periodStart, periodEnd) {
 
       var eventStart = moment(event.startsAt);
@@ -31,8 +39,8 @@ angular
             throw new Error('Invalid value (' + event.recursOn + ') given for recurs on. Can only be year, month or week.');
         }
 
-        var diffInSeconds = moment(eventStart).diff(event.startsAt);
-        eventEnd.add(diffInSeconds);
+        eventEnd = adjustEndDateFromStartDiff(event.startsAt, eventStart, eventEnd);
+
       }
 
       return (eventStart.isAfter(periodStart) && eventStart.isBefore(periodEnd)) ||
@@ -272,6 +280,7 @@ angular
       getMonthView: getMonthView,
       getWeekView: getWeekView,
       getDayView: getDayView,
+      adjustEndDateFromStartDiff: adjustEndDateFromStartDiff,
       eventIsInPeriod: eventIsInPeriod //expose for testing only
     };
 

@@ -63,22 +63,19 @@ angular
 
     };
 
-    vm.handleEventDrop = function(event, newMonthDate) {
-      var oldStart = moment(event.startsAt);
+    vm.handleEventDrop = function(event, newDayDate) {
+
       var newStart = moment(event.startsAt)
-        .date(moment(newMonthDate).date())
-        .month(moment(newMonthDate).month())
-        .toDate();
-      var diffInSeconds = moment(newStart).diff(oldStart);
-      var newEnd;
-      if (event.endsAt) {
-        newEnd = moment(event.endsAt).add(diffInSeconds).toDate();
-      }
+        .date(moment(newDayDate).date())
+        .month(moment(newDayDate).month());
+
+      var newEnd = calendarHelper.adjustEndDateFromStartDiff(event.startsAt, newStart, event.endsAt);
+
       $scope.onEventDrop({
         calendarEvent: event,
-        calendarDate: newMonthDate,
-        calendarNewEventStart: newStart,
-        calendarNewEventEnd: newEnd
+        calendarDate: newDayDate,
+        calendarNewEventStart: newStart.toDate(),
+        calendarNewEventEnd: newEnd.toDate()
       });
     };
 
