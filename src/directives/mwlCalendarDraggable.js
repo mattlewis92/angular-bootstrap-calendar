@@ -29,7 +29,7 @@ angular
             targets: [
               interact.createSnapGrid($parse($attrs.snapGrid)($scope))
             ]
-          }
+          };
         }
 
         interact($element[0]).draggable({
@@ -48,7 +48,7 @@ angular
               var x = (parseFloat(elm.attr('data-x')) || 0) + event.dx;
               var y = (parseFloat(elm.attr('data-y')) || 0) + event.dy;
 
-              switch($attrs.axis) {
+              switch ($attrs.axis) {
                 case 'x':
                   y = 0;
                   break;
@@ -56,9 +56,11 @@ angular
                 case 'y':
                   x = 0;
                   break;
+
+                default:
               }
 
-              if (!getComputedStyle(elm[0]).position) {
+              if (!$window.getComputedStyle(elm[0]).position) {
                 elm.css('position', 'relative');
               }
 
