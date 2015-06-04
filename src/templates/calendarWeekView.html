@@ -32,7 +32,7 @@
     <div
       ng-class="'cal-cell' + event.daySpan + ' cal-offset' + event.dayOffset + ' day-highlight dh-event-' + event.type + ' ' + event.cssClass"
       data-event-class
-      mwl-calendar-draggable="event.editable !== false"
+      mwl-draggable="event.editable !== false"
       axis="x"
       snap-grid="{x: vm.dayColumnDimensions.width}">
       <a

@@ -9,7 +9,7 @@
     ng-mouseleave="vm.highlightEvent(event, false)"
     tooltip-append-to-body="true"
     tooltip="{{ (event.startsAt | date:'HH:mm') + ' - ' + event.title }}"
-    mwl-calendar-draggable="event.editable !== false"
+    mwl-draggable="event.editable !== false"
     drop-data="{event: event}">
   </a>
 </div>

@@ -5,7 +5,7 @@
       <li
         ng-repeat="event in events | orderBy:'startsAt' track by event.$id"
         ng-class="event.cssClass"
-        mwl-calendar-draggable="event.editable !== false"
+        mwl-draggable="event.editable !== false"
         drop-data="{event: event}">
         <span class="pull-left event" ng-class="'event-' + event.type"></span>
         &nbsp;

@@ -17,7 +17,7 @@
       ng-class="'dh-event-' + event.type + ' ' + event.cssClass"
       ng-repeat="event in vm.view track by $index"
       ng-style="{top: event.top + 'px', left: event.left + 60 + 'px', height: event.height + 'px'}"
-      mwl-calendar-draggable="event.editable !== false"
+      mwl-draggable="event.editable !== false"
       axis="y"
       snap-grid="{y: 30}">
 

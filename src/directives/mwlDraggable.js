@@ -2,7 +2,7 @@
 
 angular
   .module('mwl.calendar')
-  .directive('mwlCalendarDraggable', function() {
+  .directive('mwlDraggable', function() {
 
     return {
       restrict: 'A',
@@ -20,7 +20,7 @@ angular
         }
 
         function canDrag() {
-          return $parse($attrs.mwlCalendarDraggable)($scope);
+          return $parse($attrs.mwlDraggable)($scope);
         }
 
         var snap;

@@ -2,7 +2,7 @@
 
 angular
   .module('mwl.calendar')
-  .directive('mwlCalendarDroppable', function() {
+  .directive('mwlDroppable', function() {
 
     return {
       restrict: 'A',
