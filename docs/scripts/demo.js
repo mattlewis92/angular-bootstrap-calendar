@@ -2,7 +2,7 @@
 
 angular
   .module('demo', ['mwl.calendar', 'ui.bootstrap'])
-  .controller('MainCtrl', function ($scope, $window, $modal, moment) {
+  .controller('MainCtrl', function ($scope, $modal, moment) {
 
     //These variables MUST be set as a minimum for the calendar to work
     $scope.calendarView = 'month';
@@ -46,9 +46,6 @@ angular
     }*/
 
     function showModal(action, event) {
-      if ($window.draggingActive) {
-        return;
-      }
       $modal.open({
         templateUrl: 'modalContent.html',
         controller: function($scope) {

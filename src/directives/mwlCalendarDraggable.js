@@ -6,13 +6,17 @@ angular
 
     return {
       restrict: 'A',
-      controller: function($element, $scope, $window, $timeout, $parse, $attrs) {
+      controller: function($element, $scope, $window, $parse, $attrs, interact) {
 
-        $window.interact($element[0]).draggable({
+        if (!interact) {
+          return;
+        }
+
+        interact($element[0]).draggable({
           onstart: function(event) {
-            $window.draggingActive = true;
             angular.element(event.target).addClass('dragging-active');
             event.target.dropData = $parse($attrs.dropData)($scope);
+            event.target.style.pointerEvents = 'none';
           },
           onmove: function(event) {
 
@@ -36,9 +40,7 @@ angular
               .removeAttr('data-y')
               .removeClass('dragging-active');
 
-            $timeout(function() {
-              $window.draggingActive = false;
-            });
+            event.target.style.pointerEvents = 'auto';
 
           }
         });

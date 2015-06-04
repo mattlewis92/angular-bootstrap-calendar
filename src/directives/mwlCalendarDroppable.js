@@ -6,9 +6,13 @@ angular
 
     return {
       restrict: 'A',
-      controller: function($element, $scope, $window, $parse, $attrs) {
+      controller: function($element, $scope, $parse, $attrs, interact) {
 
-        $window.interact($element[0]).dropzone({
+        if (!interact) {
+          return;
+        }
+
+        interact($element[0]).dropzone({
           ondragenter: function(event) {
             angular.element(event.target).addClass('drop-active');
           },
@@ -20,6 +24,7 @@ angular
           },
           ondrop: function(event) {
             $parse($attrs.onDrop)($scope, {dropData: event.relatedTarget.dropData});
+            $scope.$apply();
           }
         });
 

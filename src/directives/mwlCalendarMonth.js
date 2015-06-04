@@ -2,7 +2,7 @@
 
 angular
   .module('mwl.calendar')
-  .controller('MwlCalendarMonthCtrl', function($scope, $window, moment, calendarHelper) {
+  .controller('MwlCalendarMonthCtrl', function($scope, moment, calendarHelper) {
 
     var vm = this;
     var firstRun = true;
@@ -31,10 +31,6 @@ angular
     });
 
     vm.dayClicked = function(day, dayClickedFirstRun) {
-
-      if ($window.draggingActive) {
-        return;
-      }
 
       if (!dayClickedFirstRun) {
         $scope.onTimespanClick({
