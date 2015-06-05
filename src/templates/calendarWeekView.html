@@ -34,7 +34,8 @@
       data-event-class
       mwl-draggable="event.editable !== false"
       axis="x"
-      snap-grid="{x: vm.dayColumnDimensions.width}">
+      snap-grid="{x: vm.dayColumnDimensions.width}"
+      on-drag-end="vm.weekDragged(event, x)">
       <a
         href="javascript:;"
         ng-click="onEventClick({calendarEvent: event})"
