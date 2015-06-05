@@ -20,8 +20,8 @@
       mwl-draggable="event.editable !== false"
       axis="y"
       snap-grid="{y: 30}"
-      on-drag="vm.tempTimeChanged(event, y * 30)"
-      on-drag-end="vm.timeChanged(event, y * 30)">
+      on-drag="vm.tempTimeChanged(event, y)"
+      on-drag-end="vm.timeChanged(event, y)">
 
       <span class="cal-hours">
         <span ng-show="event.top == 0"><span ng-bind="(event.tempStartsAt || event.startsAt) | date:'d MMM'"></span>, </span>
