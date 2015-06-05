@@ -38,10 +38,11 @@ Pull requests are welcome.
 
 The calendar has a few dependencies, these are as follows, and must be included BEFORE the plugin files:
 
-* [AngularJS](https://angularjs.org/) 1.2+
+* [AngularJS](https://angularjs.org/) 1.2.x, 1.3.x or 1.4.x are all supported
 * [Bootstrap](http://getbootstrap.com/) 3+ (CSS only)
 * [Moment.js](http://momentjs.com/)
 * [ui-bootstrap](http://angular-ui.github.io/bootstrap/) (optional, include for collapse animations and tooltips on the year and month views. Please note that if using angular 1.4.x that ui-bootstrap animations are broken for ui-bootstrap 0.13.0 and you should use ui-bootstrap 0.12.1 instead)
+* [interact.js](http://interactjs.io/) (optional, include to allow drag and drop on the calendar)
 
 It is recommended that you install the plugin and its dependencies through bower:
 
@@ -110,7 +111,7 @@ $scope.events = [
     type: 'info', // The type of the event (determines its color). Can be important, warning, info, inverse, success or special
     startsAt: new Date(2013,5,1,1), // A javascript date object for when the event starts
     endsAt: new Date(2014,8,26,15), // Optional - a javascript date object for when the event ends
-    editable: false, // If edit-event-html is set and this field is explicitly set to false then dont make it editable
+    editable: false, // If edit-event-html is set and this field is explicitly set to false then dont make it editable. If set to false will also prevent the event from being dragged and dropped.
     deletable: false, // If delete-event-html is set and this field is explicitly set to false then dont make it deleteable
     incrementsBadgeTotal: true, //If set to false then will not count towards the badge total amount on the month and year view
     recursOn: 'year', // If set the event will recur on the given period. Valid values are year or month
@@ -128,6 +129,10 @@ This variable will be assigned to the calendar title. If you want to change the 
 ### on-event-click 
 
 This expression is called when an event is clicked on the calendar. calendarEvent contains the calendar event that was clicked on.
+
+### on-event-drop
+
+This expression is called when an event is dragged and dropped into a different date / time on the calendar. The available parameters are: calendarEvent, calendarNewEventStart and calendarNewEventEnd. The directive won't change the event object and leaves that up to you to implement. Set event.editable to false to disable drag and drop on a particular event. Please note drag and drop is only available by including the [interact.js](http://interactjs.io/) library.
 
 ### edit-event-html 
 
