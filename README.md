@@ -235,7 +235,7 @@ moment.locale('en', {
 
 ## Configuring date formats
 
-You can easily customise the date formats and i18n strings used throughout the calendar by using the calendarConfigProvider. Please note that all formats are those used by moment.js. Example usage:
+You can easily customise the date formats and i18n strings used throughout the calendar by using the calendarConfigProvider. Please note that these example formats are those used by moment.js and these won't work if using angular as the date formatter. Example usage:
 
 ```javascript
 angular.module('myModule')

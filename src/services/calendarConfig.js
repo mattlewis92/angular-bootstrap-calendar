@@ -75,6 +75,7 @@ angular
       dateFormatter = value;
       defaultDateFormats = angular.copy(defaultFormats[dateFormatter].date);
       defaultTitleFormats = angular.copy(defaultFormats[dateFormatter].title);
+      return configProvider;
     };
 
     configProvider.$get = function() {
