@@ -6,7 +6,7 @@ angular
 
     return {
       restrict: 'A',
-      controller: function($element, $scope, $window, $parse, $attrs, interact) {
+      controller: function($element, $scope, $window, $parse, $attrs, $timeout, interact) {
 
         if (!interact) {
           return;
@@ -103,16 +103,19 @@ angular
               var elm = angular.element(event.target);
               var x = elm.attr('data-x');
               var y = elm.attr('data-y');
-              translateElement(elm, null)
-                .removeAttr('data-x')
-                .removeAttr('data-y')
-                .removeClass('dragging-active');
 
               event.target.style.pointerEvents = 'auto';
               if ($attrs.onDragEnd) {
                 $parse($attrs.onDragEnd)($scope, getUnitsMoved(x, y, snapGridDimensions));
                 $scope.$apply();
               }
+
+              $timeout(function() {
+                translateElement(elm, null)
+                  .removeAttr('data-x')
+                  .removeAttr('data-y')
+                  .removeClass('dragging-active');
+              }, 50);
             }
 
           }
