@@ -2,7 +2,7 @@
 
 angular
   .module('mwl.calendar')
-  .controller('MwlCalendarHourListCtrl', function($scope, moment, calendarConfig) {
+  .controller('MwlCalendarHourListCtrl', function($scope, moment, calendarConfig, calendarHelper) {
     var vm = this;
     var dayViewStart, dayViewEnd;
 
@@ -14,7 +14,7 @@ angular
       var dayCounter = moment(dayViewStart);
       for (var i = 0; i <= dayViewEnd.diff(dayViewStart, 'hours'); i++) {
         vm.hours.push({
-          label: dayCounter.format(calendarConfig.dateFormats.hour)
+          label: calendarHelper.formatDate(dayCounter, calendarConfig.dateFormats.hour)
         });
         dayCounter.add(1, 'hour');
       }

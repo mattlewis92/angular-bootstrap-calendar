@@ -2,7 +2,7 @@
 
 angular
   .module('mwl.calendar')
-  .controller('MwlCalendarCtrl', function($scope, $timeout, $window, moment, calendarTitle, calendarDebounce) {
+  .controller('MwlCalendarCtrl', function($scope, $timeout, $window, $locale, moment, calendarTitle, calendarDebounce) {
 
     var vm = this;
 
@@ -60,7 +60,7 @@ angular
 
     //Auto update the calendar when the locale changes
     var unbindLocaleWatcher = $scope.$watch(function() {
-      return moment.locale();
+      return moment.locale() + $locale.id;
     }, refreshCalendar);
 
     var unbindOnDestroy = [];

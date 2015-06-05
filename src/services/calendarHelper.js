@@ -2,7 +2,15 @@
 
 angular
   .module('mwl.calendar')
-  .factory('calendarHelper', function(moment, calendarConfig) {
+  .factory('calendarHelper', function(dateFilter, moment, calendarConfig) {
+
+    function formatDate(date, format) {
+      if (calendarConfig.dateFormatter === 'angular') {
+        return dateFilter(moment(date).toDate(), format);
+      } else if (calendarConfig.dateFormatter === 'moment') {
+        return moment(date).format(format);
+      }
+    }
 
     function adjustEndDateFromStartDiff(oldStart, newStart, oldEnd) {
       if (!oldEnd) {
@@ -73,7 +81,7 @@ angular
       var weekdays = [];
       var count = 0;
       while (count < 7) {
-        weekdays.push(moment().weekday(count++).format(calendarConfig.dateFormats.weekDay));
+        weekdays.push(formatDate(moment().weekday(count++), calendarConfig.dateFormats.weekDay));
       }
       return weekdays;
     }
@@ -89,7 +97,7 @@ angular
         var endPeriod = startPeriod.clone().endOf('month');
         var periodEvents = filterEventsInPeriod(eventsInPeriod, startPeriod, endPeriod);
         view.push({
-          label: startPeriod.format(calendarConfig.dateFormats.month),
+          label: formatDate(startPeriod, calendarConfig.dateFormats.month),
           isToday: startPeriod.isSame(moment().startOf('month')),
           events: periodEvents,
           date: startPeriod,
@@ -154,9 +162,9 @@ angular
       var today = moment().startOf('day');
       while (days.length < 7) {
         days.push({
-          weekDayLabel: dayCounter.format(calendarConfig.dateFormats.weekDay),
+          weekDayLabel: formatDate(dayCounter, calendarConfig.dateFormats.weekDay),
           date: dayCounter.clone(),
-          dayLabel: dayCounter.format(calendarConfig.dateFormats.day),
+          dayLabel: formatDate(dayCounter, calendarConfig.dateFormats.day),
           isPast: dayCounter.isBefore(today),
           isToday: dayCounter.isSame(today),
           isFuture: dayCounter.isAfter(today),
@@ -281,6 +289,7 @@ angular
       getWeekView: getWeekView,
       getDayView: getDayView,
       adjustEndDateFromStartDiff: adjustEndDateFromStartDiff,
+      formatDate: formatDate,
       eventIsInPeriod: eventIsInPeriod //expose for testing only
     };
 

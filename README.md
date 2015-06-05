@@ -207,11 +207,24 @@ There is also a helper directive that you can use for the next, today and previo
 
 ## Internationalization and localization
 
-The calendar directive uses moment.js to produce all months and days of the week etc. Therefore to change the language of the calendar just [follow this guide](http://momentjs.com/docs/#/i18n/).
+You can either use angular's date filter or moment.js to format dates. The default is to use angular. You can change the formatter to be moment like so:
 
-tl;dr include the appropriate moment locale file (or all of them) and call ```moment.locale('YOUR_LOCALE_STRING')```.
+```javascript
+angular.module('myModule')
+  .config(function(calendarConfigProvider) {
+  
+    calendarConfigProvider.setDateFormatter('moment'); // use moment to format dates
+ 
+  });
+```   
 
-To set Monday as the first day of the week configure it in moment like so:
+Then you just need to include the appropriate locale files for your app. 
+
+If you want to dynamically change the locale for angular and not include all of the available angular locale files [try this library](https://github.com/lgalfaso/angular-dynamic-locale).
+
+Otherwise if using moment you can call `moment.locale('YOUR_LOCALE_STRING')` to change the locale and the calendar will auto update.
+
+To set Monday as the first day of the week, configure it in moment like so (even if using angular for formatting dates):
 ```javascript
 moment.locale('en', {
   week : {
@@ -227,6 +240,8 @@ You can easily customise the date formats and i18n strings used throughout the c
 ```javascript
 angular.module('myModule')
   .config(function(calendarConfigProvider) {
+  
+    calendarConfigProvider.setDateFormatter('moment'); // use either moment or angular to format dates on the calendar. Default angular. Setting this will override any date formats you have already set.
   
     calendarConfigProvider.setDateFormats({
       hour: 'HH:mm' //this will configure the hour view to display in 24 hour format rather than the default of 12 hour
