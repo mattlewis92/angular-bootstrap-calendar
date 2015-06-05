@@ -2,7 +2,7 @@
 
 angular
   .module('mwl.calendar')
-  .controller('MwlCalendarWeekCtrl', function($scope, calendarHelper) {
+  .controller('MwlCalendarWeekCtrl', function($scope, moment, calendarHelper) {
 
     var vm = this;
 

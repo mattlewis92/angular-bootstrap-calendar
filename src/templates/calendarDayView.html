@@ -19,11 +19,13 @@
       ng-style="{top: event.top + 'px', left: event.left + 60 + 'px', height: event.height + 'px'}"
       mwl-draggable="event.editable !== false"
       axis="y"
-      snap-grid="{y: 30}">
+      snap-grid="{y: 30}"
+      on-drag="vm.tempTimeChanged(event, y * 30)"
+      on-drag-end="vm.timeChanged(event, y * 30)">
 
       <span class="cal-hours">
-        <span ng-show="event.top == 0"><span ng-bind="event.startsAt | date:'d MMM'"></span>, </span>
-        <span ng-bind="event.startsAt | date:'HH:mm'"></span>
+        <span ng-show="event.top == 0"><span ng-bind="(event.tempStartsAt || event.startsAt) | date:'d MMM'"></span>, </span>
+        <span ng-bind="(event.tempStartsAt || event.startsAt) | date:'HH:mm'"></span>
       </span>
       <a href="javascript:;" class="event-item" ng-click="onEventClick({calendarEvent: event})">
         <span ng-bind="event.title | calendarTruncateEventTitle:20:event.height"></span>
