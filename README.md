@@ -58,7 +58,7 @@ npm install --save angular-bootstrap-calendar
 You will then need to include the JS and CSS files for the plugin:
 
 ```
-<link rel="stylesheet" href="bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.min.css">
+<link href="bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.min.css" rel="stylesheet">
 <script src="bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.min.js"></script>
 ```
 
@@ -78,6 +78,7 @@ There is a single directive exposed to create the calendar, use it like so:
     events="events"
     view-title="calendarTitle"
     on-event-click="eventClicked(calendarEvent)"
+    on-event-drop="calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
     edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
     delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
     on-edit-event-click="eventEdited(calendarEvent)"
