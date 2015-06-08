@@ -49,7 +49,7 @@
             snap-grid="vm.showTimes ? {x: vm.dayColumnDimensions.width, y: 30} : {x: vm.dayColumnDimensions.width}"
             on-drag="vm.tempTimeChanged(event, y)"
             on-drag-end="vm.weekDragged(event, x, y)">
-            <strong ng-bind="(event.tempStartsAt || event.startsAt) | date:'HH:mm'"></strong>
+            <strong ng-bind="(event.tempStartsAt || event.startsAt) | date:'HH:mm'" ng-show="vm.showTimes"></strong>
             <a
               href="javascript:;"
               ng-click="onEventClick({calendarEvent: event})"
