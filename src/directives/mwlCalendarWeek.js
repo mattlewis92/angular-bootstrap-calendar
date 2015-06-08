@@ -2,9 +2,11 @@
 
 angular
   .module('mwl.calendar')
-  .controller('MwlCalendarWeekCtrl', function($scope, moment, calendarHelper) {
+  .controller('MwlCalendarWeekCtrl', function($scope, moment, calendarHelper, calendarConfig) {
 
     var vm = this;
+
+    vm.showTimes = calendarConfig.showTimesOnWeekView;
 
     $scope.$on('calendar.refreshView', function() {
       vm.dayViewHeight = calendarHelper.getDayViewHeight(

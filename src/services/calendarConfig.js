@@ -38,6 +38,7 @@ angular
     var dateFormatter = 'angular';
     var defaultDateFormats = angular.copy(defaultFormats[dateFormatter].date);
     var defaultTitleFormats = angular.copy(defaultFormats[dateFormatter].title);
+    var showTimesOnWeekView = false;
 
     var i18nStrings = {
       eventsLabel: 'Events',
@@ -78,13 +79,19 @@ angular
       return configProvider;
     };
 
+    configProvider.showTimesOnWeekView = function(value) {
+      showTimesOnWeekView = value; //experimental, and doesn't account for event end dates
+      return configProvider;
+    };
+
     configProvider.$get = function() {
       return {
         dateFormats: defaultDateFormats,
         titleFormats: defaultTitleFormats,
         i18nStrings: i18nStrings,
         displayAllMonthEvents: displayAllMonthEvents,
-        dateFormatter: dateFormatter
+        dateFormatter: dateFormatter,
+        showTimesOnWeekView: showTimesOnWeekView
       };
     };
 

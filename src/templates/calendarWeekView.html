@@ -1,4 +1,4 @@
-<div class="cal-day-box cal-week-box">
+<div class="cal-week-box" ng-class="{'cal-day-box': vm.showTimes}">
   <div class="cal-row-fluid cal-row-head">
 
     <div
@@ -26,12 +26,13 @@
 
   </div>
 
-  <div class="cal-day-panel clearfix" ng-style="{height: vm.dayViewHeight + 'px'}">
+  <div class="cal-day-panel clearfix" ng-style="{height: vm.showTimes ? (vm.dayViewHeight + 'px') : 'auto'}">
 
     <mwl-calendar-hour-list
       day-view-start="dayViewStart"
       day-view-end="dayViewEnd"
-      day-view-split="dayViewSplit">
+      day-view-split="dayViewSplit"
+      ng-if="vm.showTimes">
     </mwl-calendar-hour-list>
 
     <div class="row">
