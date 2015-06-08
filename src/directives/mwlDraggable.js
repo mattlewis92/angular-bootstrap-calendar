@@ -62,8 +62,8 @@ angular
 
         if (canDrag()) {
           var elm = angular.element(event.target);
-          var x = (parseFloat(elm.attr('data-x')) || 0) + event.dx;
-          var y = (parseFloat(elm.attr('data-y')) || 0) + event.dy;
+          var x = (parseFloat(elm.attr('data-x')) || 0) + (event.dx || 0);
+          var y = (parseFloat(elm.attr('data-y')) || 0) + (event.dy || 0);
 
           switch ($parse($attrs.axis)($scope)) {
             case 'x':
