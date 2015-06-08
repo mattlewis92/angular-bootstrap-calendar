@@ -8,7 +8,7 @@
     ng-mouseenter="vm.highlightEvent(event, true)"
     ng-mouseleave="vm.highlightEvent(event, false)"
     tooltip-append-to-body="true"
-    tooltip="{{ (event.startsAt | date:'HH:mm') + ' - ' + event.title }}"
+    tooltip-html-unsafe="{{ (event.startsAt | date:'HH:mm') + ' - ' + event.title }}"
     mwl-draggable="event.editable !== false"
     drop-data="{event: event}">
   </a>

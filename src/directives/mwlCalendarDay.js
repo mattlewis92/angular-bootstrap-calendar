@@ -2,11 +2,12 @@
 
 angular
   .module('mwl.calendar')
-  .controller('MwlCalendarDayCtrl', function($scope, $timeout, moment, calendarHelper, calendarConfig) {
+  .controller('MwlCalendarDayCtrl', function($scope, $timeout, $sce, moment, calendarHelper, calendarConfig) {
 
     var vm = this;
 
     vm.calendarConfig = calendarConfig;
+    vm.$sce = $sce;
 
     $scope.$on('calendar.refreshView', function() {
       vm.dayViewHeight = calendarHelper.getDayViewHeight(

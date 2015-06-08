@@ -28,7 +28,7 @@
         <span ng-bind="(event.tempStartsAt || event.startsAt) | date:'HH:mm'"></span>
       </span>
       <a href="javascript:;" class="event-item" ng-click="onEventClick({calendarEvent: event})">
-        <span ng-bind="event.title | calendarTruncateEventTitle:20:event.height"></span>
+        <span ng-bind-html="vm.$sce.trustAsHtml(event.title) | calendarTruncateEventTitle:20:event.height"></span>
       </a>
 
     </div>

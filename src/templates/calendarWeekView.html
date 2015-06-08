@@ -54,8 +54,8 @@
               href="javascript:;"
               ng-click="onEventClick({calendarEvent: event})"
               class="event-item"
-              ng-bind="event.title"
-              tooltip="{{ event.title }}"
+              ng-bind-html="vm.$sce.trustAsHtml(event.title)"
+              tooltip-html-unsafe="{{ event.title }}"
               tooltip-placement="left"
               tooltip-append-to-body="true">
             </a>
