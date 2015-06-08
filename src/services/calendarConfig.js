@@ -80,7 +80,7 @@ angular
     };
 
     configProvider.showTimesOnWeekView = function(value) {
-      showTimesOnWeekView = value; //experimental, and doesn't account for event end dates
+      showTimesOnWeekView = value; //experimental, and ignores the event end date
       return configProvider;
     };
 

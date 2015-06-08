@@ -14,19 +14,42 @@ angular
         $scope.dayViewEnd,
         $scope.dayViewSplit
       );
-      vm.view = calendarHelper.getWeekView($scope.events, $scope.currentDay);
+      if (vm.showTimes) {
+        vm.view = calendarHelper.getWeekViewWithTimes(
+          $scope.events,
+          $scope.currentDay,
+          $scope.dayViewStart,
+          $scope.dayViewEnd,
+          $scope.dayViewSplit
+        );
+      } else {
+        vm.view = calendarHelper.getWeekView($scope.events, $scope.currentDay);
+      }
     });
 
-    vm.weekDragged = function(event, daysDiff) {
+    vm.weekDragged = function(event, daysDiff, minuteChunksMoved) {
 
       var newStart = moment(event.startsAt).add(daysDiff, 'days');
       var newEnd = moment(event.endsAt).add(daysDiff, 'days');
+
+      if (minuteChunksMoved) {
+        var minutesDiff = minuteChunksMoved * $scope.dayViewSplit;
+        newStart = newStart.add(minutesDiff, 'minutes');
+        newEnd = newEnd.add(minutesDiff, 'minutes');
+      }
+
+      delete event.tempStartsAt;
 
       $scope.onEventDrop({
         calendarEvent: event,
         calendarNewEventStart: newStart.toDate(),
         calendarNewEventEnd: newEnd.toDate()
       });
+    };
+
+    vm.tempTimeChanged = function(event, minuteChunksMoved) {
+      var minutesDiff = minuteChunksMoved * $scope.dayViewSplit;
+      event.tempStartsAt = moment(event.startsAt).add(minutesDiff, 'minutes').toDate();
     };
 
   })

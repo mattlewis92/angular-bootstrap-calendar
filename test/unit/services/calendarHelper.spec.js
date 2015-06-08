@@ -471,9 +471,9 @@ describe('calendarHelper', function() {
       dayView = calendarHelper.getDayView(
         dayEvents,
         calendarDay,
-        moment('00:00', 'HH:mm').hours(),
-        moment('23:00', 'HH:mm').hours(),
-        60
+        '00:00',
+        '23:00',
+        30
       );
     });
 
@@ -508,9 +508,9 @@ describe('calendarHelper', function() {
           endsAt: new Date('October 20, 2015 11:00:00')
         }],
         calendarDay,
-        moment('00:00', 'HH:mm').hours(),
-        moment('23:00', 'HH:mm').hours(),
-        60
+        '00:00',
+        '23:00',
+        30
       );
       expect(dayView).to.eql([]);
     });

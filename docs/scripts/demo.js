@@ -5,7 +5,7 @@ angular
   .controller('MainCtrl', function ($scope, $modal, moment) {
 
     //These variables MUST be set as a minimum for the calendar to work
-    $scope.calendarView = 'week';
+    $scope.calendarView = 'month';
     $scope.calendarDay = new Date();
     $scope.events = [
       {

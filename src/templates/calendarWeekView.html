@@ -41,12 +41,14 @@
           class="cal-row-fluid "
           ng-repeat="event in vm.view.events track by event.$id">
           <div
-            ng-class="'cal-cell' + event.daySpan + ' cal-offset' + event.dayOffset + ' day-highlight dh-event-' + event.type + ' ' + event.cssClass"
+            ng-class="'cal-cell' + (vm.showTimes ? 1 : event.daySpan) + ' cal-offset' + event.dayOffset + ' day-highlight dh-event-' + event.type + ' ' + event.cssClass"
+            ng-style="{top: (event.top + 2) + 'px', position: vm.showTimes ? 'absolute' : 'inherit'}"
             data-event-class
             mwl-draggable="event.editable !== false"
-            axis="x"
-            snap-grid="{x: vm.dayColumnDimensions.width}"
-            on-drag-end="vm.weekDragged(event, x)">
+            axis="vm.showTimes ? 'xy' : 'x'"
+            snap-grid="vm.showTimes ? {x: vm.dayColumnDimensions.width, y: 30} : {x: vm.dayColumnDimensions.width}"
+            on-drag="vm.tempTimeChanged(event, y)"
+            on-drag-end="vm.weekDragged(event, x, y)">
             <strong ng-bind="(event.tempStartsAt || event.startsAt) | date:'HH:mm'"></strong>
             <a
               href="javascript:;"

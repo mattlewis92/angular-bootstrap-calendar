@@ -18,15 +18,15 @@ angular
       vm.view = calendarHelper.getDayView(
         $scope.events,
         $scope.currentDay,
-        moment($scope.dayViewStart || '00:00', 'HH:mm').hours(),
-        moment($scope.dayViewEnd || '23:00', 'HH:mm').hours(),
-        (60 / $scope.dayViewSplit) * 30
+        $scope.dayViewStart,
+        $scope.dayViewEnd,
+        $scope.dayViewSplit
       );
 
     });
 
-    vm.timeChanged = function(event, chunksMoved) {
-      var minutesDiff = chunksMoved * $scope.dayViewSplit;
+    vm.timeChanged = function(event, minuteChunksMoved) {
+      var minutesDiff = minuteChunksMoved * $scope.dayViewSplit;
       var newStart = moment(event.startsAt).add(minutesDiff, 'minutes');
       var newEnd = moment(event.endsAt).add(minutesDiff, 'minutes');
       delete event.tempStartsAt;
@@ -38,8 +38,8 @@ angular
       });
     };
 
-    vm.tempTimeChanged = function(event, chunksMoved) {
-      var minutesDiff = chunksMoved * $scope.dayViewSplit;
+    vm.tempTimeChanged = function(event, minuteChunksMoved) {
+      var minutesDiff = minuteChunksMoved * $scope.dayViewSplit;
       event.tempStartsAt = moment(event.startsAt).add(minutesDiff, 'minutes').toDate();
     };
 

@@ -65,7 +65,7 @@ angular
           var x = (parseFloat(elm.attr('data-x')) || 0) + event.dx;
           var y = (parseFloat(elm.attr('data-y')) || 0) + event.dy;
 
-          switch ($attrs.axis) {
+          switch ($parse($attrs.axis)($scope)) {
             case 'x':
               y = 0;
               break;

@@ -207,8 +207,11 @@ angular
 
     }
 
-    function getDayView(events, currentDay, dayStartHour, dayEndHour, hourHeight) {
+    function getDayView(events, currentDay, dayViewStart, dayViewEnd, dayViewSplit) {
 
+      var dayStartHour = moment(dayViewStart || '00:00', 'HH:mm').hours();
+      var dayEndHour = moment(dayViewEnd || '23:00', 'HH:mm').hours();
+      var hourHeight = (60 / dayViewSplit) * 30;
       var calendarStart = moment(currentDay).startOf('day').add(dayStartHour, 'hours');
       var calendarEnd = moment(currentDay).startOf('day').add(dayEndHour, 'hours');
       var calendarHeight = (dayEndHour - dayStartHour + 1) * hourHeight;
@@ -282,6 +285,26 @@ angular
 
     }
 
+    function getWeekViewWithTimes(events, currentDay, dayViewStart, dayViewEnd, dayViewSplit) {
+      var weekView = getWeekView(events, currentDay);
+      var newEvents = [];
+      weekView.days.forEach(function(day) {
+        var dayEvents = weekView.events.filter(function(event) {
+          return moment(event.startsAt).startOf('day').isSame(moment(day.date).startOf('day'));
+        });
+        var newDayEvents = getDayView(
+          dayEvents,
+          day.date,
+          dayViewStart,
+          dayViewEnd,
+          dayViewSplit
+        );
+        newEvents = newEvents.concat(newDayEvents);
+      });
+      weekView.events = newEvents;
+      return weekView;
+    }
+
     function getDayViewHeight(dayViewStart, dayViewEnd, dayViewSplit) {
       var dayViewStartM = moment(dayViewStart || '00:00', 'HH:mm');
       var dayViewEndM = moment(dayViewEnd || '23:00', 'HH:mm');
@@ -295,6 +318,7 @@ angular
       getMonthView: getMonthView,
       getWeekView: getWeekView,
       getDayView: getDayView,
+      getWeekViewWithTimes: getWeekViewWithTimes,
       getDayViewHeight: getDayViewHeight,
       adjustEndDateFromStartDiff: adjustEndDateFromStartDiff,
       formatDate: formatDate,
