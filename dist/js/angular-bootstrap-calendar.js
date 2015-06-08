@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-calendar - A pure AngularJS bootstrap themed responsive calendar that can display events and has views for year, month, week and day
- * @version v0.11.1
+ * @version v0.11.2
  * @link https://github.com/mattlewis92/angular-bootstrap-calendar
  * @license MIT
  */
@@ -335,7 +335,9 @@
                     hour: 'ha',
                     day: 'd MMM',
                     month: 'MMMM',
-                    weekDay: 'EEEE'
+                    weekDay: 'EEEE',
+                    time: 'HH:mm',
+                    datetime: 'MMM d, h:mm a'
                 },
                 title: {
                     day: 'EEEE d MMMM, yyyy',
@@ -349,7 +351,9 @@
                     hour: 'ha',
                     day: 'D MMM',
                     month: 'MMMM',
-                    weekDay: 'dddd'
+                    weekDay: 'dddd',
+                    time: 'HH:mm',
+                    datetime: 'MMM D, h:mm a'
                 },
                 title: {
                     day: 'dddd D MMMM, YYYY',
@@ -461,6 +465,21 @@
                     return input.slice(Math.max(0, begin + limit), begin);
                 }
             };
+        }
+    ]);
+    'use strict';
+    angular.module('mwl.calendar').filter('calendarDate', [
+        'calendarHelper',
+        'calendarConfig',
+        function (calendarHelper, calendarConfig) {
+            function calendarDate(date, format, getFromConfig) {
+                if (getFromConfig === true) {
+                    format = calendarConfig.dateFormats[format];
+                }
+                return calendarHelper.formatDate(date, format);
+            }
+            calendarDate.$stateful = true;
+            return calendarDate;
         }
     ]);
     'use strict';

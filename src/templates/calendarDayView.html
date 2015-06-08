@@ -24,8 +24,8 @@
       on-drag-end="vm.timeChanged(event, y)">
 
       <span class="cal-hours">
-        <span ng-show="event.top == 0"><span ng-bind="(event.tempStartsAt || event.startsAt) | date:'d MMM'"></span>, </span>
-        <span ng-bind="(event.tempStartsAt || event.startsAt) | date:'HH:mm'"></span>
+        <span ng-show="event.top == 0"><span ng-bind="(event.tempStartsAt || event.startsAt) | calendarDate:'day':true"></span>, </span>
+        <span ng-bind="(event.tempStartsAt || event.startsAt) | calendarDate:'time':true"></span>
       </span>
       <a href="javascript:;" class="event-item" ng-click="onEventClick({calendarEvent: event})">
         <span ng-bind-html="vm.$sce.trustAsHtml(event.title) | calendarTruncateEventTitle:20:event.height"></span>
