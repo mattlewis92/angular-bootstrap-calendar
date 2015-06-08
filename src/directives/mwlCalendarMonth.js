@@ -62,6 +62,23 @@ angular
       });
 
     };
+
+    vm.handleEventDrop = function(event, newDayDate) {
+
+      var newStart = moment(event.startsAt)
+        .date(moment(newDayDate).date())
+        .month(moment(newDayDate).month());
+
+      var newEnd = calendarHelper.adjustEndDateFromStartDiff(event.startsAt, newStart, event.endsAt);
+
+      $scope.onEventDrop({
+        calendarEvent: event,
+        calendarDate: newDayDate,
+        calendarNewEventStart: newStart.toDate(),
+        calendarNewEventEnd: newEnd.toDate()
+      });
+    };
+
   })
   .directive('mwlCalendarMonth', function() {
 
@@ -75,6 +92,7 @@ angular
         onEventClick: '=',
         onEditEventClick: '=',
         onDeleteEventClick: '=',
+        onEventDrop: '=',
         editEventHtml: '=',
         deleteEventHtml: '=',
         autoOpen: '=',

@@ -67,6 +67,10 @@ angular
       showModal('Deleted', event);
     };
 
+    $scope.eventDropped = function(event) {
+      showModal('Dropped', event);
+    };
+
     $scope.toggle = function($event, field, event) {
       $event.preventDefault();
       $event.stopPropagation();

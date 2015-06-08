@@ -2,7 +2,7 @@
 
 angular
   .module('mwl.calendar')
-  .controller('MwlCalendarCtrl', function($scope, $timeout, moment, calendarTitle, calendarDebounce) {
+  .controller('MwlCalendarCtrl', function($scope, $timeout, $window, $locale, moment, calendarTitle, calendarDebounce) {
 
     var vm = this;
 
@@ -38,6 +38,11 @@ angular
         $scope.viewTitle = calendarTitle[$scope.view]($scope.currentDay);
       }
 
+      $scope.events = $scope.events.map(function(event, index) {
+        Object.defineProperty(event, '$id', {enumerable: false, value: index});
+        return event;
+      });
+
       //if on-timespan-click="calendarDay = calendarDate" is set then dont update the view as nothing needs to change
       var currentDate = moment($scope.currentDay);
       var shouldUpdate = true;
@@ -55,7 +60,7 @@ angular
 
     //Auto update the calendar when the locale changes
     var unbindLocaleWatcher = $scope.$watch(function() {
-      return moment.locale();
+      return moment.locale() + $locale.id;
     }, refreshCalendar);
 
     var unbindOnDestroy = [];
@@ -89,6 +94,7 @@ angular
         deleteEventHtml: '=',
         autoOpen: '=',
         onEventClick: '&',
+        onEventDrop: '&',
         onEditEventClick: '&',
         onDeleteEventClick: '&',
         onTimespanClick: '&',

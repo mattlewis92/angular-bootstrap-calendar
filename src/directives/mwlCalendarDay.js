@@ -25,6 +25,24 @@ angular
 
     });
 
+    vm.timeChanged = function(event, chunksMoved) {
+      var minutesDiff = chunksMoved * $scope.dayViewSplit;
+      var newStart = moment(event.startsAt).add(minutesDiff, 'minutes');
+      var newEnd = moment(event.endsAt).add(minutesDiff, 'minutes');
+      delete event.tempStartsAt;
+
+      $scope.onEventDrop({
+        calendarEvent: event,
+        calendarNewEventStart: newStart.toDate(),
+        calendarNewEventEnd: newEnd.toDate()
+      });
+    };
+
+    vm.tempTimeChanged = function(event, chunksMoved) {
+      var minutesDiff = chunksMoved * $scope.dayViewSplit;
+      event.tempStartsAt = moment(event.startsAt).add(minutesDiff, 'minutes').toDate();
+    };
+
   })
   .directive('mwlCalendarDay', function() {
 
@@ -36,6 +54,7 @@ angular
         events: '=',
         currentDay: '=',
         onEventClick: '=',
+        onEventDrop: '=',
         dayViewStart: '=',
         dayViewEnd: '=',
         dayViewSplit: '='

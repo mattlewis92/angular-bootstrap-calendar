@@ -92,8 +92,11 @@
   position: absolute;
   bottom: 0;
   left: 0;
-  overflow: hidden;
+  z-index: 1000;
 }
 .cal-slide-content ul.unstyled {
   margin-bottom: 0;
+}
+.cal-slide-content ul li.dragging-active .event-item {
+  color: black;
 }

@@ -39,6 +39,18 @@ angular
 
     };
 
+    vm.handleEventDrop = function(event, newMonthDate) {
+      var newStart = moment(event.startsAt).month(moment(newMonthDate).month());
+      var newEnd = calendarHelper.adjustEndDateFromStartDiff(event.startsAt, newStart, event.endsAt);
+
+      $scope.onEventDrop({
+        calendarEvent: event,
+        calendarDate: newMonthDate,
+        calendarNewEventStart: newStart.toDate(),
+        calendarNewEventEnd: newEnd.toDate()
+      });
+    };
+
   })
   .directive('mwlCalendarYear', function() {
 
@@ -50,6 +62,7 @@ angular
         events: '=',
         currentDay: '=',
         onEventClick: '=',
+        onEventDrop: '=',
         onEditEventClick: '=',
         onDeleteEventClick: '=',
         editEventHtml: '=',

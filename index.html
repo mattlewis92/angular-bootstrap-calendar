@@ -88,6 +88,7 @@
             view-title="calendarTitle"
             current-day="calendarDay"
             on-event-click="eventClicked(calendarEvent)"
+            on-event-drop="eventDropped(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
             edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
             delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
             on-edit-event-click="eventEdited(calendarEvent)"
@@ -175,6 +176,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.0/moment.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
     <script src="//cdn.jsdelivr.net/angular.bootstrap/0.12.1/ui-bootstrap-tpls.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/interact.js/1.2.4/interact.min.js"></script>
     <script src="src/module.js"></script>
     <script src="src/directives/mwlCalendar.js"></script>
     <script src="src/filters/calendarTruncateEventTitle.js"></script>
@@ -184,6 +186,7 @@
     <script src="src/services/calendarHelper.js"></script>
     <script src="src/services/calendarDebounce.js"></script>
     <script src="src/services/moment.js"></script>
+    <script src="src/services/interact.js"></script>
     <script src="src/directives/mwlCollapseFallback.js"></script>
     <script src="src/directives/mwlDateModifier.js"></script>
     <script src="src/directives/mwlCalendarYear.js"></script>
@@ -192,6 +195,9 @@
     <script src="src/directives/mwlCalendarDay.js"></script>
     <script src="src/directives/mwlCalendarSlideBox.js"></script>
     <script src="src/directives/mwlCalendarHourList.js"></script>
+    <script src="src/directives/mwlDraggable.js"></script>
+    <script src="src/directives/mwlDroppable.js"></script>
+    <script src="src/directives/mwlElementDimensions.js"></script>
     <script src="docs/scripts/demo.js"></script>
 </body>
 </html>

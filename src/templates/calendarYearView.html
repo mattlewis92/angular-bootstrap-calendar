@@ -6,7 +6,9 @@
         ng-repeat="month in vm.view | calendarLimitTo:4:rowOffset track by $index"
         ng-init="monthIndex = vm.view.indexOf(month)"
         ng-click="vm.monthClicked(month)"
-        ng-class="{pointer: month.events.length > 0, 'cal-day-today': month.isToday}">
+        ng-class="{pointer: month.events.length > 0, 'cal-day-today': month.isToday}"
+        mwl-droppable
+        on-drop="vm.handleEventDrop(dropData.event, month.date)">
 
         <span
           class="pull-right"

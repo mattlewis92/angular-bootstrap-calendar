@@ -8,7 +8,8 @@
         'cal-day-weekend': day.isWeekend,
         'cal-day-past': day.isPast,
         'cal-day-today': day.isToday,
-        'cal-day-future': day.isFuture}">
+        'cal-day-future': day.isFuture}"
+      mwl-element-dimensions="vm.dayColumnDimensions">
 
       <span ng-bind="day.weekDayLabel"></span>
       <br>
@@ -37,22 +38,29 @@
       <div class="col-xs-12">
         <div
           class="cal-row-fluid "
-          ng-repeat="event in vm.view.events track by $index">
+          ng-repeat="event in vm.view.events track by event.$id">
           <div
             ng-class="'cal-cell' + event.daySpan + ' cal-offset' + event.dayOffset + ' day-highlight dh-event-' + event.type + ' ' + event.cssClass"
-            data-event-class>
+            data-event-class
+            mwl-draggable="event.editable !== false"
+            axis="x"
+            snap-grid="{x: vm.dayColumnDimensions.width}"
+            on-drag-end="vm.weekDragged(event, x)">
+            <strong ng-bind="(event.tempStartsAt || event.startsAt) | date:'HH:mm'"></strong>
             <a
               href="javascript:;"
               ng-click="onEventClick({calendarEvent: event})"
               class="event-item"
-              ng-bind="event.title">
+              ng-bind="event.title"
+              tooltip="{{ event.title }}"
+              tooltip-placement="left"
+              tooltip-append-to-body="true">
             </a>
           </div>
         </div>
       </div>
+
     </div>
 
   </div>
-
-
 </div>

@@ -2,7 +2,7 @@
 
 angular
   .module('mwl.calendar')
-  .controller('MwlCalendarWeekCtrl', function($scope, calendarHelper) {
+  .controller('MwlCalendarWeekCtrl', function($scope, moment, calendarHelper) {
 
     var vm = this;
 
@@ -15,6 +15,18 @@ angular
       vm.view = calendarHelper.getWeekView($scope.events, $scope.currentDay);
     });
 
+    vm.weekDragged = function(event, daysDiff) {
+
+      var newStart = moment(event.startsAt).add(daysDiff, 'days');
+      var newEnd = moment(event.endsAt).add(daysDiff, 'days');
+
+      $scope.onEventDrop({
+        calendarEvent: event,
+        calendarNewEventStart: newStart.toDate(),
+        calendarNewEventEnd: newEnd.toDate()
+      });
+    };
+
   })
   .directive('mwlCalendarWeek', function() {
 
@@ -26,6 +38,7 @@ angular
         events: '=',
         currentDay: '=',
         onEventClick: '=',
+        onEventDrop: '=',
         dayViewStart: '=',
         dayViewEnd: '=',
         dayViewSplit: '='
