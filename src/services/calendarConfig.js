@@ -10,7 +10,9 @@ angular
           hour: 'ha',
           day: 'd MMM',
           month: 'MMMM',
-          weekDay: 'EEEE'
+          weekDay: 'EEEE',
+          time: 'HH:mm',
+          datetime: 'MMM d, h:mm a'
         },
         title: {
           day: 'EEEE d MMMM, yyyy',
@@ -24,7 +26,9 @@ angular
           hour: 'ha',
           day: 'D MMM',
           month: 'MMMM',
-          weekDay: 'dddd'
+          weekDay: 'dddd',
+          time: 'HH:mm',
+          datetime: 'MMM D, h:mm a'
         },
         title: {
           day: 'dddd D MMMM, YYYY',

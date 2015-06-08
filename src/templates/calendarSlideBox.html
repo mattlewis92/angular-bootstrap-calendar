@@ -14,8 +14,8 @@
           class="event-item"
           ng-click="onEventClick({calendarEvent: event})">
           <span ng-bind-html="vm.$sce.trustAsHtml(event.title)"></span>
-          <span ng-show="isMonthView">(<span ng-bind="event.startsAt | date:'shortTime'"></span>)</span>
-          <span ng-show="isYearView">(<span ng-bind="event.startsAt | date:'MMM d, h:mm a'"></span>)</span>
+          <span ng-show="isMonthView">(<span ng-bind="event.startsAt | calendarDate:'time':true"></span>)</span>
+          <span ng-show="isYearView">(<span ng-bind="event.startsAt | calendarDate:'datetime':true"></span>)</span>
         </a>
 
         <a
