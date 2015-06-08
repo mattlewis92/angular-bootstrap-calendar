@@ -283,10 +283,10 @@ angular
     }
 
     function getDayViewHeight(dayViewStart, dayViewEnd, dayViewSplit) {
-      var dayViewStart = moment(dayViewStart || '00:00', 'HH:mm');
-      var dayViewEnd = moment(dayViewEnd || '23:00', 'HH:mm');
+      var dayViewStartM = moment(dayViewStart || '00:00', 'HH:mm');
+      var dayViewEndM = moment(dayViewEnd || '23:00', 'HH:mm');
       var hourHeight = (60 / dayViewSplit) * 30;
-      return ((dayViewEnd.diff(dayViewStart, 'hours') + 1) * hourHeight) + 2;
+      return ((dayViewEndM.diff(dayViewStartM, 'hours') + 1) * hourHeight) + 2;
     }
 
     return {
