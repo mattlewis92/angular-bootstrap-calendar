@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-calendar - A pure AngularJS bootstrap themed responsive calendar that can display events and has views for year, month, week and day
- * @version v0.10.7
+ * @version v0.11.0
  * @link https://github.com/mattlewis92/angular-bootstrap-calendar
  * @license MIT
  */
@@ -208,10 +208,13 @@
   position: absolute;
   bottom: 0;
   left: 0;
-  overflow: hidden;
+  z-index: 1000;
 }
 .cal-slide-content ul.unstyled {
   margin-bottom: 0;
+}
+.cal-slide-content ul li.dragging-active .event-item {
+  color: black;
 }
 .cal-week-box {
   position: relative;
@@ -219,46 +222,28 @@
 .cal-week-box [data-event-class] {
   white-space: nowrap;
   height: 30px;
-  margin: 1px 1px;
   line-height: 30px;
   text-overflow: ellipsis;
   overflow: hidden;
-  padding-left: 10px;
+  padding-top: 0px !important;
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+  font-size: 12px;
+  padding: 0 3px !important;
 }
-.cal-week-box .cal-column {
-  position: absolute;
-  height: 100%;
-  z-index: -1;
+.cal-week-box .cal-day-panel {
+  border: 0px !important;
 }
-.cal-week-box .arrow-before,
-.cal-week-box .arrow-after {
-  position: relative;
+.cal-week-box.cal-day-box .cal-row-head {
+  padding-left: 60px;
 }
-.cal-week-box .arrow-after:after {
-  content: "";
-  position: absolute;
-  top: 0px;
-  width: 0;
-  height: 0;
-  right: 0;
-  border-top: 15px solid #ffffff;
-  border-left: 8px solid;
-  border-bottom: 15px solid #FFFFFF;
-}
-.cal-week-box .arrow-before:before {
-  content: "";
-  position: absolute;
-  top: 0px;
-  width: 0;
-  height: 0;
-  left: 1px;
-  border-top: 15px solid transparent;
-  border-left: 8px solid #FFFFFF;
-  border-bottom: 15px solid transparent;
+.cal-week-box.cal-day-box .cal-day-panel {
+  overflow-x: hidden;
 }
 .cal-day-box {
   text-wrap: none;
   overflow-x: auto !important;
+  overflow-y: hidden;
 }
 .cal-day-box .cal-day-hour-part {
   height: 30px;
@@ -271,7 +256,8 @@
   height: 30px;
 }
 .cal-day-box .cal-hours {
-  font-weight: bolder;
+  font-weight: bold;
+  font-size: 12px;
 }
 .cal-day-box .cal-day-hour:nth-child(odd) {
   background-color: #fafafa;
@@ -279,6 +265,7 @@
 .cal-day-box .cal-day-panel {
   position: relative;
   padding-left: 60px;
+  border: solid 1px #e1e1e1;
 }
 .cal-day-box .cal-day-panel-hour {
   position: absolute;
@@ -289,9 +276,11 @@
   position: absolute;
   width: 150px;
   overflow: hidden;
+  padding: 2px 3px !important;
 }
 .cal-day-box .day-event a {
   font-size: 12px;
+  text-overflow: ellipsis;
 }
 .cal-day-box .day-highlight {
   padding-top: 2px;
@@ -409,7 +398,9 @@
   height: 100px;
 }
 [class*="cal-cell"]:hover,
-.cell-focus {
+.cell-focus,
+[class*="cal-cell"] .drop-active,
+.cal-cell.drop-active {
   background-color: #ededed;
 }
 .cal-year-box [class*="span"],
