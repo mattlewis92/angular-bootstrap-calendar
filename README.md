@@ -38,10 +38,11 @@ Pull requests are welcome.
 
 The calendar has a few dependencies, these are as follows, and must be included BEFORE the plugin files:
 
-* [AngularJS](https://angularjs.org/) 1.2+
+* [AngularJS](https://angularjs.org/) 1.2.x, 1.3.x or 1.4.x are all supported
 * [Bootstrap](http://getbootstrap.com/) 3+ (CSS only)
 * [Moment.js](http://momentjs.com/)
 * [ui-bootstrap](http://angular-ui.github.io/bootstrap/) (optional, include for collapse animations and tooltips on the year and month views. Please note that if using angular 1.4.x that ui-bootstrap animations are broken for ui-bootstrap 0.13.0 and you should use ui-bootstrap 0.12.1 instead)
+* [interact.js](http://interactjs.io/) (optional, include to allow drag and drop on the calendar)
 
 It is recommended that you install the plugin and its dependencies through bower:
 
@@ -57,7 +58,7 @@ npm install --save angular-bootstrap-calendar
 You will then need to include the JS and CSS files for the plugin:
 
 ```
-<link rel="stylesheet" href="bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.min.css">
+<link href="bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.min.css" rel="stylesheet">
 <script src="bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.min.js"></script>
 ```
 
@@ -77,6 +78,7 @@ There is a single directive exposed to create the calendar, use it like so:
     events="events"
     view-title="calendarTitle"
     on-event-click="eventClicked(calendarEvent)"
+    on-event-drop="calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
     edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
     delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
     on-edit-event-click="eventEdited(calendarEvent)"
@@ -109,10 +111,12 @@ $scope.events = [
     title: 'My event title', // The title of the event
     type: 'info', // The type of the event (determines its color). Can be important, warning, info, inverse, success or special
     startsAt: new Date(2013,5,1,1), // A javascript date object for when the event starts
-    endsAt: new Date(2014,8,26,15), // A javascript date object for when the event ends
-    editable: false, // If edit-event-html is set and this field is explicitly set to false then dont make it editable
+    endsAt: new Date(2014,8,26,15), // Optional - a javascript date object for when the event ends
+    editable: false, // If edit-event-html is set and this field is explicitly set to false then dont make it editable. If set to false will also prevent the event from being dragged and dropped.
     deletable: false, // If delete-event-html is set and this field is explicitly set to false then dont make it deleteable
-    incrementsBadgeTotal: true //If set to false then will not count towards the badge total amount on the month and year view
+    incrementsBadgeTotal: true, //If set to false then will not count towards the badge total amount on the month and year view
+    recursOn: 'year', // If set the event will recur on the given period. Valid values are year or month
+    cssClass: 'a-css-class-name' //A CSS class (or more, just separate with spaces) that will be added to the event when it is displayed on each view. Useful for marking an event as selected / active etc
   }
 ];
 ```
@@ -126,6 +130,10 @@ This variable will be assigned to the calendar title. If you want to change the 
 ### on-event-click 
 
 This expression is called when an event is clicked on the calendar. calendarEvent contains the calendar event that was clicked on.
+
+### on-event-drop
+
+This expression is called when an event is dragged and dropped into a different date / time on the calendar. The available parameters are: calendarEvent, calendarNewEventStart and calendarNewEventEnd. The directive won't change the event object and leaves that up to you to implement. Set event.editable to false to disable drag and drop on a particular event. Please note drag and drop is only available by including the [interact.js](http://interactjs.io/) library.
 
 ### edit-event-html 
 
@@ -199,11 +207,24 @@ There is also a helper directive that you can use for the next, today and previo
 
 ## Internationalization and localization
 
-The calendar directive uses moment.js to produce all months and days of the week etc. Therefore to change the language of the calendar just [follow this guide](http://momentjs.com/docs/#/i18n/).
+You can either use angular's date filter or moment.js to format dates. The default is to use angular. You can change the formatter to be moment like so:
 
-tl;dr include the appropriate moment locale file (or all of them) and call ```moment.locale('YOUR_LOCALE_STRING')```.
+```javascript
+angular.module('myModule')
+  .config(function(calendarConfigProvider) {
+  
+    calendarConfigProvider.setDateFormatter('moment'); // use moment to format dates
+ 
+  });
+```   
 
-To set Monday as the first day of the week configure it in moment like so:
+Then you just need to include the appropriate locale files for your app. 
+
+If you want to dynamically change the locale for angular and not include all of the available angular locale files [try this library](https://github.com/lgalfaso/angular-dynamic-locale).
+
+Otherwise if using moment you can call `moment.locale('YOUR_LOCALE_STRING')` to change the locale and the calendar will auto update.
+
+To set Monday as the first day of the week, configure it in moment like so (even if using angular for formatting dates):
 ```javascript
 moment.locale('en', {
   week : {
@@ -214,11 +235,13 @@ moment.locale('en', {
 
 ## Configuring date formats
 
-You can easily customise the date formats and i18n strings used throughout the calendar by using the calendarConfigProvider. Please note that all formats are those used by moment.js. Example usage:
+You can easily customise the date formats and i18n strings used throughout the calendar by using the calendarConfigProvider. Please note that these example formats are those used by moment.js and these won't work if using angular as the date formatter. Example usage:
 
 ```javascript
 angular.module('myModule')
   .config(function(calendarConfigProvider) {
+  
+    calendarConfigProvider.setDateFormatter('moment'); // use either moment or angular to format dates on the calendar. Default angular. Setting this will override any date formats you have already set.
   
     calendarConfigProvider.setDateFormats({
       hour: 'HH:mm' //this will configure the hour view to display in 24 hour format rather than the default of 12 hour
@@ -233,6 +256,8 @@ angular.module('myModule')
       timeLabel: 'Time' //This will set the time label on the time view
     });
     
+    calendarConfigProvider.setDisplayAllMonthEvents(true); //This will display all events on a month view even if they're not in the current month. Default false.
+
   });
 ```
 

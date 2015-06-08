@@ -2,14 +2,18 @@
   <div class="cal-slide-content cal-event-list">
     <ul class="unstyled list-unstyled">
 
-      <li ng-repeat="event in events track by $index">
+      <li
+        ng-repeat="event in events | orderBy:'startsAt' track by event.$id"
+        ng-class="event.cssClass"
+        mwl-draggable="event.editable !== false"
+        drop-data="{event: event}">
         <span class="pull-left event" ng-class="'event-' + event.type"></span>
         &nbsp;
         <a
           href="javascript:;"
           class="event-item"
           ng-click="onEventClick({calendarEvent: event})">
-          <span ng-bind="event.title"></span>
+          <span ng-bind-html="vm.$sce.trustAsHtml(event.title)"></span>
           <span ng-show="isMonthView">(<span ng-bind="event.startsAt | date:'shortTime'"></span>)</span>
           <span ng-show="isYearView">(<span ng-bind="event.startsAt | date:'MMM d, h:mm a'"></span>)</span>
         </a>

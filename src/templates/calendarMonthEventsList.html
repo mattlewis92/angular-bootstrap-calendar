@@ -1,13 +1,15 @@
 <div class="events-list" ng-show="day.events.length > 0">
   <a
+    ng-repeat="event in day.events | orderBy:'startsAt' track by event.$id"
     href="javascript:;"
     ng-click="onEventClick({calendarEvent: event})"
-    ng-repeat="event in day.events track by $index"
     class="pull-left event"
-    ng-class="'event-' + event.type"
+    ng-class="'event-' + event.type + ' ' + event.cssClass"
     ng-mouseenter="vm.highlightEvent(event, true)"
     ng-mouseleave="vm.highlightEvent(event, false)"
     tooltip-append-to-body="true"
-    tooltip="{{ event.title }}"
-    ></a>
+    tooltip-html-unsafe="{{ (event.startsAt | date:'HH:mm') + ' - ' + event.title }}"
+    mwl-draggable="event.editable !== false"
+    drop-data="{event: event}">
+  </a>
 </div>

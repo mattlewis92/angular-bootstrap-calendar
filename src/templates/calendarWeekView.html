@@ -1,4 +1,4 @@
-<div class="cal-week-box">
+<div class="cal-week-box" ng-class="{'cal-day-box': vm.showTimes}">
   <div class="cal-row-fluid cal-row-head">
 
     <div
@@ -8,7 +8,8 @@
         'cal-day-weekend': day.isWeekend,
         'cal-day-past': day.isPast,
         'cal-day-today': day.isToday,
-        'cal-day-future': day.isFuture}">
+        'cal-day-future': day.isFuture}"
+      mwl-element-dimensions="vm.dayColumnDimensions">
 
       <span ng-bind="day.weekDayLabel"></span>
       <br>
@@ -25,19 +26,44 @@
 
   </div>
 
-  <div
-    class="cal-row-fluid"
-    ng-repeat="event in vm.view.events track by $index">
-    <div
-      ng-class="'cal-cell' + event.daySpan + ' cal-offset' + event.dayOffset + ' day-highlight dh-event-' + event.type"
-      data-event-class>
-      <a
-        href="javascript:;"
-        ng-click="onEventClick({calendarEvent: event})"
-        class="cal-event-week"
-        ng-bind="event.title">
-      </a>
-    </div>
-  </div>
+  <div class="cal-day-panel clearfix" ng-style="{height: vm.showTimes ? (vm.dayViewHeight + 'px') : 'auto'}">
 
+    <mwl-calendar-hour-list
+      day-view-start="dayViewStart"
+      day-view-end="dayViewEnd"
+      day-view-split="dayViewSplit"
+      ng-if="vm.showTimes">
+    </mwl-calendar-hour-list>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <div
+          class="cal-row-fluid "
+          ng-repeat="event in vm.view.events track by event.$id">
+          <div
+            ng-class="'cal-cell' + (vm.showTimes ? 1 : event.daySpan) + ' cal-offset' + event.dayOffset + ' day-highlight dh-event-' + event.type + ' ' + event.cssClass"
+            ng-style="{top: (event.top + 2) + 'px', position: vm.showTimes ? 'absolute' : 'inherit'}"
+            data-event-class
+            mwl-draggable="event.editable !== false"
+            axis="vm.showTimes ? 'xy' : 'x'"
+            snap-grid="vm.showTimes ? {x: vm.dayColumnDimensions.width, y: 30} : {x: vm.dayColumnDimensions.width}"
+            on-drag="vm.tempTimeChanged(event, y)"
+            on-drag-end="vm.weekDragged(event, x, y)">
+            <strong ng-bind="(event.tempStartsAt || event.startsAt) | date:'HH:mm'" ng-show="vm.showTimes"></strong>
+            <a
+              href="javascript:;"
+              ng-click="onEventClick({calendarEvent: event})"
+              class="event-item"
+              ng-bind-html="vm.$sce.trustAsHtml(event.title)"
+              tooltip-html-unsafe="{{ event.title }}"
+              tooltip-placement="left"
+              tooltip-append-to-body="true">
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
 </div>

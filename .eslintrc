@@ -26,7 +26,9 @@
     "space-in-parens": [2, "never"],
     "space-unary-ops": [2, { "words": true, "nonwords": false }],
     "max-depth": [2, 4],
-    "max-len": [2, 160, 4]
+    "max-len": [2, 160, 4],
+    "angular/ng_controller_name": [2, "/[A-Z].*Ctrl/"],
+    "angular/ng_controller_as": 0
   },
   "globals": {
     "window": true,
@@ -35,5 +37,8 @@
   },
   "envs": [
     "browser"
+  ],
+  "plugins": [
+    "angular"
   ]
 }

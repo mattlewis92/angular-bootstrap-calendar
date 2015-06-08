@@ -1,6 +1,8 @@
 .cal-day-box {
   text-wrap: none;
   overflow-x: auto !important;
+  overflow-y: hidden;
+
   .cal-day-hour-part {
     height: 30px;
     box-sizing: border-box;
@@ -14,7 +16,8 @@
     }
   }
   .cal-hours {
-    font-weight: bolder;
+    font-weight: bold;
+    font-size: 12px;
   }
   .cal-day-hour:nth-child(odd) {
     background-color: @rowHover;
@@ -22,6 +25,7 @@
   .cal-day-panel {
     position: relative;
     padding-left: 60px;
+    border: solid 1px #e1e1e1;
   }
   .cal-day-panel-hour {
     position: absolute;
@@ -32,9 +36,11 @@
     position: absolute;
     width: 150px;
     overflow: hidden;
+    padding: 2px 3px !important;
 
     a {
       font-size: 12px;
+      text-overflow: ellipsis;
     }
 
   }

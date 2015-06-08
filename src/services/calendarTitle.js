@@ -2,10 +2,10 @@
 
 angular
   .module('mwl.calendar')
-  .factory('calendarTitle', function(moment, calendarConfig) {
+  .factory('calendarTitle', function(moment, calendarConfig, calendarHelper) {
 
     function day(currentDay) {
-      return moment(currentDay).format(calendarConfig.titleFormats.day);
+      return calendarHelper.formatDate(currentDay, calendarConfig.titleFormats.day);
     }
 
     function week(currentDay) {
@@ -14,11 +14,11 @@ angular
     }
 
     function month(currentDay) {
-      return moment(currentDay).format(calendarConfig.titleFormats.month);
+      return calendarHelper.formatDate(currentDay, calendarConfig.titleFormats.month);
     }
 
     function year(currentDay) {
-      return moment(currentDay).format(calendarConfig.titleFormats.year);
+      return calendarHelper.formatDate(currentDay, calendarConfig.titleFormats.year);
     }
 
     return {

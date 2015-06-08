@@ -1,0 +1,37 @@
+<div class="cal-day-panel-hour">
+
+  <div class="cal-day-hour" ng-repeat="hour in vm.hours track by $index">
+
+    <div class="row-fluid cal-day-hour-part">
+      <div class="span1 col-xs-1"><strong ng-bind="hour.label"></strong></div>
+      <div class="span11 col-xs-11"></div>
+    </div>
+
+    <div class="row-fluid cal-day-hour-part">
+      <div class="span1 col-xs-1"></div>
+      <div class="span11 col-xs-11"></div>
+    </div>
+
+    <div class="row-fluid cal-day-hour-part" ng-show="vm.dayViewSplit < 30">
+      <div class="span1 col-xs-1"></div>
+      <div class="span11 col-xs-11"></div>
+    </div>
+
+    <div class="row-fluid cal-day-hour-part" ng-show="vm.dayViewSplit < 30">
+      <div class="span1 col-xs-1"></div>
+      <div class="span11 col-xs-11"></div>
+    </div>
+
+    <div class="row-fluid cal-day-hour-part" ng-show="vm.dayViewSplit < 15">
+      <div class="span1 col-xs-1"></div>
+      <div class="span11 col-xs-11"></div>
+    </div>
+
+    <div class="row-fluid cal-day-hour-part" ng-show="vm.dayViewSplit < 15">
+      <div class="span1 col-xs-1"></div>
+      <div class="span11 col-xs-11"></div>
+    </div>
+
+  </div>
+
+</div>
