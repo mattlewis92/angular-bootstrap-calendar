@@ -77,7 +77,7 @@ angular
             default:
           }
 
-          if (!$window.getComputedStyle(elm[0]).position) {
+          if ($window.getComputedStyle(elm[0]).position === 'static') {
             elm.css('position', 'relative');
           }
 
