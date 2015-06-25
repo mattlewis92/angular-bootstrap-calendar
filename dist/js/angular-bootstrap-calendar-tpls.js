@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-calendar - A pure AngularJS bootstrap themed responsive calendar that can display events and has views for year, month, week and day
- * @version v0.11.2
+ * @version v0.11.3
  * @link https://github.com/mattlewis92/angular-bootstrap-calendar
  * @license MIT
  */
@@ -17,7 +17,7 @@
             $templateCache.put('src/templates/calendarMonthEventsList.html', '<div class="events-list" ng-show="day.events.length > 0"><a ng-repeat="event in day.events | orderBy:\'startsAt\' track by event.$id" href="javascript:;" ng-click="onEventClick({calendarEvent: event})" class="pull-left event" ng-class="\'event-\' + event.type + \' \' + event.cssClass" ng-mouseenter="vm.highlightEvent(event, true)" ng-mouseleave="vm.highlightEvent(event, false)" tooltip-append-to-body="true" tooltip-html-unsafe="{{ (event.startsAt | calendarDate:\'time\':true) + \' - \' + event.title }}" mwl-draggable="event.editable !== false" drop-data="{event: event}"></a></div>');
             $templateCache.put('src/templates/calendarMonthView.html', '<div class="cal-row-fluid cal-row-head"><div class="cal-cell1" ng-repeat="day in vm.weekDays track by $index" ng-bind="day"></div></div><div class="cal-month-box"><div ng-repeat="rowOffset in vm.monthOffsets track by rowOffset"><div class="cal-row-fluid cal-before-eventlist"><div ng-repeat="day in vm.view | calendarLimitTo:7:rowOffset track by $index" ng-init="dayIndex = vm.view.indexOf(day)" class="cal-cell1 cal-cell {{ day.highlightClass }}" ng-click="vm.dayClicked(day)" ng-class="{pointer: day.events.length > 0}"><div ng-include="\'src/templates/calendarMonthDay.html\'"></div></div></div><mwl-calendar-slide-box is-open="vm.openRowIndex === $index && vm.view[vm.openDayIndex].events.length > 0" events="vm.view[vm.openDayIndex].events" on-event-click="onEventClick" edit-event-html="editEventHtml" on-edit-event-click="onEditEventClick" delete-event-html="deleteEventHtml" on-delete-event-click="onDeleteEventClick"></mwl-calendar-slide-box></div></div>');
             $templateCache.put('src/templates/calendarSlideBox.html', '<div class="cal-slide-box" collapse="vm.shouldCollapse" mwl-collapse-fallback="vm.shouldCollapse"><div class="cal-slide-content cal-event-list"><ul class="unstyled list-unstyled"><li ng-repeat="event in events | orderBy:\'startsAt\' track by event.$id" ng-class="event.cssClass" mwl-draggable="event.editable !== false" drop-data="{event: event}"><span class="pull-left event" ng-class="\'event-\' + event.type"></span> &nbsp; <a href="javascript:;" class="event-item" ng-click="onEventClick({calendarEvent: event})"><span ng-bind-html="vm.$sce.trustAsHtml(event.title)"></span> <span ng-show="isMonthView">(<span ng-bind="event.startsAt | calendarDate:\'time\':true"></span>)</span> <span ng-show="isYearView">(<span ng-bind="event.startsAt | calendarDate:\'datetime\':true"></span>)</span></a> <a href="javascript:;" class="event-item-edit" ng-if="editEventHtml && event.editable !== false" ng-bind-html="vm.$sce.trustAsHtml(editEventHtml)" ng-click="onEditEventClick({calendarEvent: event})"></a> <a href="javascript:;" class="event-item-delete" ng-if="deleteEventHtml && event.deletable !== false" ng-bind-html="vm.$sce.trustAsHtml(deleteEventHtml)" ng-click="onDeleteEventClick({calendarEvent: event})"></a></li></ul></div></div>');
-            $templateCache.put('src/templates/calendarWeekView.html', '<div class="cal-week-box" ng-class="{\'cal-day-box\': vm.showTimes}"><div class="cal-row-fluid cal-row-head"><div class="cal-cell1" ng-repeat="day in vm.view.days track by $index" ng-class="{\n        \'cal-day-weekend\': day.isWeekend,\n        \'cal-day-past\': day.isPast,\n        \'cal-day-today\': day.isToday,\n        \'cal-day-future\': day.isFuture}" mwl-element-dimensions="vm.dayColumnDimensions"><span ng-bind="day.weekDayLabel"></span><br><small><span data-cal-date ng-click="vm.calendarCtrl.drillDown(day.date)" class="pointer" ng-bind="day.dayLabel"></span></small></div></div><div class="cal-day-panel clearfix" ng-style="{height: vm.showTimes ? (vm.dayViewHeight + \'px\') : \'auto\'}"><mwl-calendar-hour-list day-view-start="dayViewStart" day-view-end="dayViewEnd" day-view-split="dayViewSplit" ng-if="vm.showTimes"></mwl-calendar-hour-list><div class="row"><div class="col-xs-12"><div class="cal-row-fluid" ng-repeat="event in vm.view.events track by event.$id"><div ng-class="\'cal-cell\' + (vm.showTimes ? 1 : event.daySpan) + \' cal-offset\' + event.dayOffset + \' day-highlight dh-event-\' + event.type + \' \' + event.cssClass" ng-style="{top: (event.top + 2) + \'px\', position: vm.showTimes ? \'absolute\' : \'inherit\'}" data-event-class mwl-draggable="event.editable !== false" axis="vm.showTimes ? \'xy\' : \'x\'" snap-grid="vm.showTimes ? {x: vm.dayColumnDimensions.width, y: 30} : {x: vm.dayColumnDimensions.width}" on-drag="vm.tempTimeChanged(event, y)" on-drag-end="vm.weekDragged(event, x, y)"><strong ng-bind="(event.tempStartsAt || event.startsAt) | calendarDate:\'time\':true" ng-show="vm.showTimes"></strong> <a href="javascript:;" ng-click="onEventClick({calendarEvent: event})" class="event-item" ng-bind-html="vm.$sce.trustAsHtml(event.title)" tooltip-html-unsafe="{{ event.title }}" tooltip-placement="left" tooltip-append-to-body="true"></a></div></div></div></div></div></div>');
+            $templateCache.put('src/templates/calendarWeekView.html', '<div class="cal-week-box" ng-class="{\'cal-day-box\': vm.showTimes}"><div class="cal-row-fluid cal-row-head"><div class="cal-cell1" ng-repeat="day in vm.view.days track by $index" ng-class="{\n        \'cal-day-weekend\': day.isWeekend,\n        \'cal-day-past\': day.isPast,\n        \'cal-day-today\': day.isToday,\n        \'cal-day-future\': day.isFuture}" mwl-element-dimensions="vm.dayColumnDimensions"><span ng-bind="day.weekDayLabel"></span><br><small><span data-cal-date ng-click="vm.calendarCtrl.drillDown(day.date)" class="pointer" ng-bind="day.dayLabel"></span></small></div></div><div class="cal-day-panel clearfix" ng-style="{height: vm.showTimes ? (vm.dayViewHeight + \'px\') : \'auto\'}"><mwl-calendar-hour-list day-view-start="dayViewStart" day-view-end="dayViewEnd" day-view-split="dayViewSplit" ng-if="vm.showTimes"></mwl-calendar-hour-list><div class="row"><div class="col-xs-12"><div class="cal-row-fluid" ng-repeat="event in vm.view.events track by event.$id"><div ng-class="\'cal-cell\' + (vm.showTimes ? 1 : event.daySpan) + \' cal-offset\' + event.dayOffset + \' day-highlight dh-event-\' + event.type + \' \' + event.cssClass" ng-style="{top: vm.showTimes ? ((event.top + 2) + \'px\') : \'auto\', position: vm.showTimes ? \'absolute\' : \'inherit\'}" data-event-class mwl-draggable="event.editable !== false" axis="vm.showTimes ? \'xy\' : \'x\'" snap-grid="vm.showTimes ? {x: vm.dayColumnDimensions.width, y: 30} : {x: vm.dayColumnDimensions.width}" on-drag="vm.tempTimeChanged(event, y)" on-drag-end="vm.weekDragged(event, x, y)"><strong ng-bind="(event.tempStartsAt || event.startsAt) | calendarDate:\'time\':true" ng-show="vm.showTimes"></strong> <a href="javascript:;" ng-click="onEventClick({calendarEvent: event})" class="event-item" ng-bind-html="vm.$sce.trustAsHtml(event.title)" tooltip-html-unsafe="{{ event.title }}" tooltip-placement="left" tooltip-append-to-body="true"></a></div></div></div></div></div></div>');
             $templateCache.put('src/templates/calendarYearView.html', '<div class="cal-year-box"><div ng-repeat="rowOffset in [0, 4, 8] track by rowOffset"><div class="row cal-before-eventlist"><div class="span3 col-md-3 col-xs-6 cal-cell" ng-repeat="month in vm.view | calendarLimitTo:4:rowOffset track by $index" ng-init="monthIndex = vm.view.indexOf(month)" ng-click="vm.monthClicked(month)" ng-class="{pointer: month.events.length > 0, \'cal-day-today\': month.isToday}" mwl-droppable on-drop="vm.handleEventDrop(dropData.event, month.date)"><span class="pull-right" data-cal-date ng-click="vm.calendarCtrl.drillDown(month.date)" ng-bind="month.label"></span> <small class="cal-events-num badge badge-important pull-left" ng-show="month.badgeTotal > 0" ng-bind="month.badgeTotal"></small><div class="cal-day-tick" ng-show="monthIndex === vm.openMonthIndex && vm.view[vm.openMonthIndex].events.length > 0"><i class="glyphicon glyphicon-chevron-up"></i> <i class="fa fa-chevron-up"></i></div></div></div><mwl-calendar-slide-box is-open="vm.openRowIndex === $index && vm.view[vm.openMonthIndex].events.length > 0" events="vm.view[vm.openMonthIndex].events" on-event-click="onEventClick" edit-event-html="editEventHtml" on-edit-event-click="onEditEventClick" delete-event-html="deleteEventHtml" on-delete-event-click="onDeleteEventClick"></mwl-calendar-slide-box></div></div>');
         }
     ]);
@@ -725,7 +725,7 @@
         function ($scope, moment, calendarHelper) {
             var vm = this;
             var firstRun = true;
-            $scope.$on('calendar.refreshView', function () {
+            var unbindListener = $scope.$on('calendar.refreshView', function () {
                 vm.view = calendarHelper.getYearView($scope.events, $scope.currentDay);
                 //Auto open the calendar to the current day if set
                 if ($scope.autoOpen && firstRun) {
@@ -736,6 +736,9 @@
                         }
                     });
                 }
+            });
+            $scope.$on('$destroy', function () {
+                unbindListener();
             });
             vm.monthClicked = function (month, monthClickedFirstRun) {
                 if (!monthClickedFirstRun) {
@@ -796,13 +799,16 @@
             var vm = this;
             vm.showTimes = calendarConfig.showTimesOnWeekView;
             vm.$sce = $sce;
-            $scope.$on('calendar.refreshView', function () {
+            var unbindListener = $scope.$on('calendar.refreshView', function () {
                 vm.dayViewHeight = calendarHelper.getDayViewHeight($scope.dayViewStart, $scope.dayViewEnd, $scope.dayViewSplit);
                 if (vm.showTimes) {
                     vm.view = calendarHelper.getWeekViewWithTimes($scope.events, $scope.currentDay, $scope.dayViewStart, $scope.dayViewEnd, $scope.dayViewSplit);
                 } else {
                     vm.view = calendarHelper.getWeekView($scope.events, $scope.currentDay);
                 }
+            });
+            $scope.$on('$destroy', function () {
+                unbindListener();
             });
             vm.weekDragged = function (event, daysDiff, minuteChunksMoved) {
                 var newStart = moment(event.startsAt).add(daysDiff, 'days');
@@ -892,7 +898,7 @@
         function ($scope, moment, calendarHelper) {
             var vm = this;
             var firstRun = true;
-            $scope.$on('calendar.refreshView', function () {
+            var unbindListener = $scope.$on('calendar.refreshView', function () {
                 vm.weekDays = calendarHelper.getWeekDayNames();
                 vm.view = calendarHelper.getMonthView($scope.events, $scope.currentDay);
                 var rows = Math.floor(vm.view.length / 7);
@@ -909,6 +915,9 @@
                         }
                     });
                 }
+            });
+            $scope.$on('$destroy', function () {
+                unbindListener();
             });
             vm.dayClicked = function (day, dayClickedFirstRun) {
                 if (!dayClickedFirstRun) {
@@ -990,11 +999,14 @@
                 }
             }
             var originalLocale = moment.locale();
-            $scope.$on('calendar.refreshView', function () {
+            var unbindListener = $scope.$on('calendar.refreshView', function () {
                 if (originalLocale !== moment.locale()) {
                     originalLocale = moment.locale();
                     updateDays();
                 }
+            });
+            $scope.$on('$destroy', function () {
+                unbindListener();
             });
             updateDays();
         }
@@ -1022,9 +1034,12 @@
             var vm = this;
             vm.calendarConfig = calendarConfig;
             vm.$sce = $sce;
-            $scope.$on('calendar.refreshView', function () {
+            var unbindListener = $scope.$on('calendar.refreshView', function () {
                 vm.dayViewHeight = calendarHelper.getDayViewHeight($scope.dayViewStart, $scope.dayViewEnd, $scope.dayViewSplit);
                 vm.view = calendarHelper.getDayView($scope.events, $scope.currentDay, $scope.dayViewStart, $scope.dayViewEnd, $scope.dayViewSplit);
+            });
+            $scope.$on('$destroy', function () {
+                unbindListener();
             });
             vm.timeChanged = function (event, minuteChunksMoved) {
                 var minutesDiff = minuteChunksMoved * $scope.dayViewSplit;
@@ -1122,9 +1137,11 @@
             var unbindOnDestroy = [];
             unbindOnDestroy.push(unbindLocaleWatcher);
             //Refresh the calendar when any of these variables change.
+            /* eslint-disable angular/ng_on_watch */
             unbindOnDestroy.push($scope.$watch('currentDay', refreshCalendar));
             unbindOnDestroy.push($scope.$watch('view', refreshCalendar));
             unbindOnDestroy.push($scope.$watch('events', refreshCalendar, true));
+            /* eslint-enable angular/ng_on_watch */
             //Remove any watchers when the calendar is destroyed
             var unbindDestroyListener = $scope.$on('$destroy', function () {
                 unbindOnDestroy.forEach(function (unbind) {
