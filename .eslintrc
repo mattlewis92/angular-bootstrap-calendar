@@ -1,6 +1,6 @@
 {
   "rules": {
-    "quotes": "single",
+    "quotes": [2, "single"],
     "global-strict": 0,
     "no-underscore-dangle": 0,
     "camelcase": [2, {"properties": "never"}],

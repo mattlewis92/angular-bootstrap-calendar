@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-calendar - A pure AngularJS bootstrap themed responsive calendar that can display events and has views for year, month, week and day
- * @version v0.11.2
+ * @version v0.11.3
  * @link https://github.com/mattlewis92/angular-bootstrap-calendar
  * @license MIT
  */
@@ -711,7 +711,7 @@
         function ($scope, moment, calendarHelper) {
             var vm = this;
             var firstRun = true;
-            $scope.$on('calendar.refreshView', function () {
+            var unbindListener = $scope.$on('calendar.refreshView', function () {
                 vm.view = calendarHelper.getYearView($scope.events, $scope.currentDay);
                 //Auto open the calendar to the current day if set
                 if ($scope.autoOpen && firstRun) {
@@ -722,6 +722,9 @@
                         }
                     });
                 }
+            });
+            $scope.$on('$destroy', function () {
+                unbindListener();
             });
             vm.monthClicked = function (month, monthClickedFirstRun) {
                 if (!monthClickedFirstRun) {
@@ -782,13 +785,16 @@
             var vm = this;
             vm.showTimes = calendarConfig.showTimesOnWeekView;
             vm.$sce = $sce;
-            $scope.$on('calendar.refreshView', function () {
+            var unbindListener = $scope.$on('calendar.refreshView', function () {
                 vm.dayViewHeight = calendarHelper.getDayViewHeight($scope.dayViewStart, $scope.dayViewEnd, $scope.dayViewSplit);
                 if (vm.showTimes) {
                     vm.view = calendarHelper.getWeekViewWithTimes($scope.events, $scope.currentDay, $scope.dayViewStart, $scope.dayViewEnd, $scope.dayViewSplit);
                 } else {
                     vm.view = calendarHelper.getWeekView($scope.events, $scope.currentDay);
                 }
+            });
+            $scope.$on('$destroy', function () {
+                unbindListener();
             });
             vm.weekDragged = function (event, daysDiff, minuteChunksMoved) {
                 var newStart = moment(event.startsAt).add(daysDiff, 'days');
@@ -878,7 +884,7 @@
         function ($scope, moment, calendarHelper) {
             var vm = this;
             var firstRun = true;
-            $scope.$on('calendar.refreshView', function () {
+            var unbindListener = $scope.$on('calendar.refreshView', function () {
                 vm.weekDays = calendarHelper.getWeekDayNames();
                 vm.view = calendarHelper.getMonthView($scope.events, $scope.currentDay);
                 var rows = Math.floor(vm.view.length / 7);
@@ -895,6 +901,9 @@
                         }
                     });
                 }
+            });
+            $scope.$on('$destroy', function () {
+                unbindListener();
             });
             vm.dayClicked = function (day, dayClickedFirstRun) {
                 if (!dayClickedFirstRun) {
@@ -976,11 +985,14 @@
                 }
             }
             var originalLocale = moment.locale();
-            $scope.$on('calendar.refreshView', function () {
+            var unbindListener = $scope.$on('calendar.refreshView', function () {
                 if (originalLocale !== moment.locale()) {
                     originalLocale = moment.locale();
                     updateDays();
                 }
+            });
+            $scope.$on('$destroy', function () {
+                unbindListener();
             });
             updateDays();
         }
@@ -1008,9 +1020,12 @@
             var vm = this;
             vm.calendarConfig = calendarConfig;
             vm.$sce = $sce;
-            $scope.$on('calendar.refreshView', function () {
+            var unbindListener = $scope.$on('calendar.refreshView', function () {
                 vm.dayViewHeight = calendarHelper.getDayViewHeight($scope.dayViewStart, $scope.dayViewEnd, $scope.dayViewSplit);
                 vm.view = calendarHelper.getDayView($scope.events, $scope.currentDay, $scope.dayViewStart, $scope.dayViewEnd, $scope.dayViewSplit);
+            });
+            $scope.$on('$destroy', function () {
+                unbindListener();
             });
             vm.timeChanged = function (event, minuteChunksMoved) {
                 var minutesDiff = minuteChunksMoved * $scope.dayViewSplit;
@@ -1108,9 +1123,11 @@
             var unbindOnDestroy = [];
             unbindOnDestroy.push(unbindLocaleWatcher);
             //Refresh the calendar when any of these variables change.
+            /* eslint-disable angular/ng_on_watch */
             unbindOnDestroy.push($scope.$watch('currentDay', refreshCalendar));
             unbindOnDestroy.push($scope.$watch('view', refreshCalendar));
             unbindOnDestroy.push($scope.$watch('events', refreshCalendar, true));
+            /* eslint-enable angular/ng_on_watch */
             //Remove any watchers when the calendar is destroyed
             var unbindDestroyListener = $scope.$on('$destroy', function () {
                 unbindOnDestroy.forEach(function (unbind) {

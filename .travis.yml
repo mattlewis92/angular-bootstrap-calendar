@@ -10,3 +10,6 @@ before_script:
   - bower --version
 
 script: gulp ci
+
+notifications:
+  email: false
