@@ -110,8 +110,6 @@ function buildJS(withTemplates) {
   ) : gulp.src('build/calendar.js');
 
   return stream
-    .pipe($.sort())
-    .pipe($.angularFilesort())
     .pipe($.sourcemaps.init({
       loadMaps: true
     }))
