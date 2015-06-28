@@ -50,11 +50,6 @@ It is recommended that you install the plugin and its dependencies through bower
 bower install --save angular-bootstrap-calendar
 ```
 
-but it is also possible to install through npm so you can use with browserify etc:
-```
-npm install --save angular-bootstrap-calendar
-```
-
 You will then need to include the JS and CSS files for the plugin:
 
 ```
@@ -65,7 +60,18 @@ You will then need to include the JS and CSS files for the plugin:
 And finally add the module dependency in your AngularJS app (you can remove ui.bootstrap if you don't want the extra dependency - it is only required for collapse animations and tooltips):
 
 ```javascript
-angular.module('myModule', ['mwl.calendar', 'ui.bootstrap']);
+angular.module('myApp', ['mwl.calendar', 'ui.bootstrap']);
+```
+
+Alternatively you can install through npm:
+```
+npm install --save angular-bootstrap-calendar
+```
+
+Then add as a dependency to your app:
+
+```javascript
+angular.module('myApp', [require('mwl.calendar'), require('angular-bootstrap')]);
 ```
 
 ## Documentation
