@@ -2,12 +2,14 @@
 
 angular
   .module('demo', ['mwl.calendar', 'ui.bootstrap'])
-  .controller('MainCtrl', function ($scope, $modal, moment) {
+  .controller('MainCtrl', function ($modal, moment) {
+
+    var vm = this;
 
     //These variables MUST be set as a minimum for the calendar to work
-    $scope.calendarView = 'month';
-    $scope.calendarDay = new Date();
-    $scope.events = [
+    vm.calendarView = 'month';
+    vm.calendarDay = new Date();
+    vm.events = [
       {
         title: 'An event',
         type: 'warning',
@@ -37,7 +39,7 @@ angular
 
     for (var i = 0; i < 1000; i++) {
       var start = new Date(currentYear,random(0, 11),random(1, 28),random(0, 24),random(0, 59));
-      $scope.events.push({
+     vm.events.push({
         title: 'Event ' + i,
         type: 'warning',
         startsAt: start,
@@ -48,30 +50,32 @@ angular
     function showModal(action, event) {
       $modal.open({
         templateUrl: 'modalContent.html',
-        controller: function($scope) {
-          $scope.action = action;
-          $scope.event = event;
-        }
+        controller: function() {
+          var vm = this;
+          vm.action = action;
+          vm.event = event;
+        },
+        controllerAs: 'vm'
       });
     }
 
-    $scope.eventClicked = function(event) {
+    vm.eventClicked = function(event) {
       showModal('Clicked', event);
     };
 
-    $scope.eventEdited = function(event) {
+    vm.eventEdited = function(event) {
       showModal('Edited', event);
     };
 
-    $scope.eventDeleted = function(event) {
+    vm.eventDeleted = function(event) {
       showModal('Deleted', event);
     };
 
-    $scope.eventDropped = function(event) {
+    vm.eventDropped = function(event) {
       showModal('Dropped', event);
     };
 
-    $scope.toggle = function($event, field, event) {
+    vm.toggle = function($event, field, event) {
       $event.preventDefault();
       $event.stopPropagation();
       event[field] = !event[field];
