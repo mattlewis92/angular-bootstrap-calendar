@@ -2,7 +2,7 @@
 
 angular
   .module('mwl.calendar')
-  .controller('MwlResizeableCtrl', function($element, $scope, $parse, $attrs, $timeout, interact) {
+  .controller('MwlResizeableCtrl', function($element, $scope, $parse, $attrs, interact) {
 
     if (!interact) {
       return;
@@ -42,6 +42,7 @@ angular
     }
 
     var originalDimensions = {};
+    var originalDimensionsStyle = {};
     var resizeEdge;
 
     interact($element[0]).resizable({
@@ -53,7 +54,9 @@ angular
           resizeEdge = 'end';
           var elm = angular.element(event.target);
           originalDimensions.height = elm[0].offsetHeight;
-          originalDimensions.width = elm[0].offsetWidth
+          originalDimensions.width = elm[0].offsetWidth;
+          originalDimensionsStyle.height = elm.css('height');
+          originalDimensionsStyle.width = elm.css('width');
         }
 
       },
@@ -95,22 +98,21 @@ angular
         if (canResize()) {
 
           var elm = angular.element(event.target);
+          var unitsResized = getUnitsResized(resizeEdge, elm, snapGridDimensions);
+
+          elm
+            .data('x', null)
+            .data('y', null)
+            .css({
+              transform: null,
+              width: originalDimensionsStyle.width,
+              height: originalDimensionsStyle.height
+            });
 
           if ($attrs.onResizeEnd) {
-            $parse($attrs.onResizeEnd)($scope, getUnitsResized(resizeEdge, elm, snapGridDimensions));
+            $parse($attrs.onResizeEnd)($scope, unitsResized);
             $scope.$apply();
           }
-
-          $timeout(function() {
-            elm
-              .data('x', null)
-              .data('y', null)
-              .css({
-                transform: null,
-                width: originalDimensions.width + 'px',
-                height: originalDimensions.height + 'px'
-              });
-          });
         }
 
       }

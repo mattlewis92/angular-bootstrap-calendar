@@ -30,7 +30,7 @@ angular
       unbindListener();
     });
 
-    vm.timeChanged = function(event, minuteChunksMoved) {
+    vm.eventDragComplete = function(event, minuteChunksMoved) {
       var minutesDiff = minuteChunksMoved * $scope.dayViewSplit;
       var newStart = moment(event.startsAt).add(minutesDiff, 'minutes');
       var newEnd = moment(event.endsAt).add(minutesDiff, 'minutes');
@@ -43,9 +43,34 @@ angular
       });
     };
 
-    vm.tempTimeChanged = function(event, minuteChunksMoved) {
+    vm.eventDragged = function(event, minuteChunksMoved) {
       var minutesDiff = minuteChunksMoved * $scope.dayViewSplit;
       event.tempStartsAt = moment(event.startsAt).add(minutesDiff, 'minutes').toDate();
+    };
+
+    vm.eventResizeComplete = function(event, edge, minuteChunksMoved) {
+      var minutesDiff = minuteChunksMoved * $scope.dayViewSplit;
+      var start = moment(event.startsAt);
+      var end = moment(event.endsAt);
+      if (edge === 'start') {
+        start.add(minutesDiff, 'minutes');
+      } else {
+        end.add(minutesDiff, 'minutes');
+      }
+      delete event.tempStartsAt;
+
+      $scope.onEventDrop({
+        calendarEvent: event,
+        calendarNewEventStart: start.toDate(),
+        calendarNewEventEnd: end.toDate()
+      });
+    };
+
+    vm.eventResized = function(event, edge, minuteChunksMoved) {
+      var minutesDiff = minuteChunksMoved * $scope.dayViewSplit;
+      if (edge === 'start') {
+        event.tempStartsAt = moment(event.startsAt).add(minutesDiff, 'minutes').toDate();
+      }
     };
 
   })

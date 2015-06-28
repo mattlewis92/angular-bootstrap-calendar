@@ -52,6 +52,24 @@ angular
       });
     };
 
+    vm.weekResized = function(event, edge, daysDiff) {
+
+      var start = moment(event.startsAt);
+      var end = moment(event.endsAt);
+      if (edge === 'start') {
+        start.add(daysDiff, 'days');
+      } else {
+        end.add(daysDiff, 'days');
+      }
+
+      $scope.onEventDrop({
+        calendarEvent: event,
+        calendarNewEventStart: start.toDate(),
+        calendarNewEventEnd: end.toDate()
+      });
+
+    };
+
     vm.tempTimeChanged = function(event, minuteChunksMoved) {
       var minutesDiff = minuteChunksMoved * $scope.dayViewSplit;
       event.tempStartsAt = moment(event.startsAt).add(minutesDiff, 'minutes').toDate();
