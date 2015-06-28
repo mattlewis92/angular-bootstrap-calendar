@@ -1,5 +1,7 @@
 'use strict';
 
+var angular = require('angular');
+
 angular
   .module('mwl.calendar')
   .controller('MwlCalendarCtrl', function($scope, $timeout, $window, $locale, moment, calendarTitle, calendarDebounce) {
@@ -96,11 +98,12 @@ angular
         deleteEventHtml: '=',
         autoOpen: '=',
         onEventClick: '&',
-        onEventDrop: '&',
+        onEventTimesChanged: '&',
         onEditEventClick: '&',
         onDeleteEventClick: '&',
         onTimespanClick: '&',
         onDrillDownClick: '&',
+        cellModifier: '&',
         dayViewStart: '@',
         dayViewEnd: '@',
         dayViewSplit: '@'

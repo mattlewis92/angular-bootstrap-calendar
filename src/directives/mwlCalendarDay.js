@@ -1,5 +1,7 @@
 'use strict';
 
+var angular = require('angular');
+
 angular
   .module('mwl.calendar')
   .controller('MwlCalendarDayCtrl', function($scope, $timeout, $sce, moment, calendarHelper, calendarConfig) {
@@ -30,22 +32,47 @@ angular
       unbindListener();
     });
 
-    vm.timeChanged = function(event, minuteChunksMoved) {
+    vm.eventDragComplete = function(event, minuteChunksMoved) {
       var minutesDiff = minuteChunksMoved * $scope.dayViewSplit;
       var newStart = moment(event.startsAt).add(minutesDiff, 'minutes');
       var newEnd = moment(event.endsAt).add(minutesDiff, 'minutes');
       delete event.tempStartsAt;
 
-      $scope.onEventDrop({
+      $scope.onEventTimesChanged({
         calendarEvent: event,
         calendarNewEventStart: newStart.toDate(),
         calendarNewEventEnd: newEnd.toDate()
       });
     };
 
-    vm.tempTimeChanged = function(event, minuteChunksMoved) {
+    vm.eventDragged = function(event, minuteChunksMoved) {
       var minutesDiff = minuteChunksMoved * $scope.dayViewSplit;
       event.tempStartsAt = moment(event.startsAt).add(minutesDiff, 'minutes').toDate();
+    };
+
+    vm.eventResizeComplete = function(event, edge, minuteChunksMoved) {
+      var minutesDiff = minuteChunksMoved * $scope.dayViewSplit;
+      var start = moment(event.startsAt);
+      var end = moment(event.endsAt);
+      if (edge === 'start') {
+        start.add(minutesDiff, 'minutes');
+      } else {
+        end.add(minutesDiff, 'minutes');
+      }
+      delete event.tempStartsAt;
+
+      $scope.onEventTimesChanged({
+        calendarEvent: event,
+        calendarNewEventStart: start.toDate(),
+        calendarNewEventEnd: end.toDate()
+      });
+    };
+
+    vm.eventResized = function(event, edge, minuteChunksMoved) {
+      var minutesDiff = minuteChunksMoved * $scope.dayViewSplit;
+      if (edge === 'start') {
+        event.tempStartsAt = moment(event.startsAt).add(minutesDiff, 'minutes').toDate();
+      }
     };
 
   })
@@ -59,7 +86,7 @@ angular
         events: '=',
         currentDay: '=',
         onEventClick: '=',
-        onEventDrop: '=',
+        onEventTimesChanged: '=',
         dayViewStart: '=',
         dayViewEnd: '=',
         dayViewSplit: '='

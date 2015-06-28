@@ -34,9 +34,9 @@
 
     <div class="container-fluid">
 
-      <div class="row" ng-controller="MainCtrl" id="demo">
+      <div class="row" ng-controller="MainCtrl as vm" id="demo">
         <div class="col-md-8 col-md-offset-2">
-          <h2 class="text-center">{{ calendarTitle }}</h2>
+          <h2 class="text-center">{{ vm.calendarTitle }}</h2>
 
           <div class="row">
 
@@ -46,22 +46,22 @@
                 <button
                   class="btn btn-primary"
                   mwl-date-modifier
-                  date="calendarDay"
-                  decrement="calendarView">
+                  date="vm.calendarDay"
+                  decrement="vm.calendarView">
                   Previous
                 </button>
                 <button
                   class="btn btn-default"
                   mwl-date-modifier
-                  date="calendarDay"
+                  date="vm.calendarDay"
                   set-to-today>
                   Today
                 </button>
                 <button
                   class="btn btn-primary"
                   mwl-date-modifier
-                  date="calendarDay"
-                  increment="calendarView">
+                  date="vm.calendarDay"
+                  increment="vm.calendarView">
                   Next
                 </button>
               </div>
@@ -71,10 +71,10 @@
 
             <div class="col-md-6 text-center">
               <div class="btn-group">
-                <label class="btn btn-primary" ng-model="calendarView" btn-radio="'year'">Year</label>
-                <label class="btn btn-primary" ng-model="calendarView" btn-radio="'month'">Month</label>
-                <label class="btn btn-primary" ng-model="calendarView" btn-radio="'week'">Week</label>
-                <label class="btn btn-primary" ng-model="calendarView" btn-radio="'day'">Day</label>
+                <label class="btn btn-primary" ng-model="vm.calendarView" btn-radio="'year'">Year</label>
+                <label class="btn btn-primary" ng-model="vm.calendarView" btn-radio="'month'">Month</label>
+                <label class="btn btn-primary" ng-model="vm.calendarView" btn-radio="'week'">Week</label>
+                <label class="btn btn-primary" ng-model="vm.calendarView" btn-radio="'day'">Day</label>
               </div>
             </div>
 
@@ -83,20 +83,21 @@
           <br>
 
           <mwl-calendar
-            events="events"
-            view="calendarView"
-            view-title="calendarTitle"
-            current-day="calendarDay"
-            on-event-click="eventClicked(calendarEvent)"
-            on-event-drop="eventDropped(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
+            events="vm.events"
+            view="vm.calendarView"
+            view-title="vm.calendarTitle"
+            current-day="vm.calendarDay"
+            on-event-click="vm.eventClicked(calendarEvent)"
+            on-event-times-changed="vm.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
             edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
             delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
-            on-edit-event-click="eventEdited(calendarEvent)"
-            on-delete-event-click="eventDeleted(calendarEvent)"
+            on-edit-event-click="vm.eventEdited(calendarEvent)"
+            on-delete-event-click="vm.eventDeleted(calendarEvent)"
             auto-open="true"
             day-view-start="06:00"
             day-view-end="22:00"
-            day-view-split="30">
+            day-view-split="30"
+            cell-modifier="vm.modifyCell(calendarCell)">
           </mwl-calendar>
 
           <br><br><br>
@@ -106,8 +107,8 @@
               <h3 class="modal-title">Event action occurred!</h3>
             </div>
             <div class="modal-body">
-              <p>Action: <pre>{{ action }}</pre></p>
-              <p>Event: <pre>{{ event | json }}</pre></p>
+              <p>Action: <pre>{{ vm.action }}</pre></p>
+              <p>Event: <pre>{{ vm.event | json }}</pre></p>
             </div>
             <div class="modal-footer">
               <button class="btn btn-primary" ng-click="$close()">OK</button>
@@ -116,7 +117,7 @@
 
           <h3 id="event-editor">
             Edit events
-            <button class="btn btn-primary pull-right" ng-click="events.push({title: 'New event', type: 'important'})">Add new</button>
+            <button class="btn btn-primary pull-right" ng-click="vm.events.push({title: 'New event', type: 'important', draggable: true, resizable: true})">Add new</button>
             <div class="clearfix"></div>
           </h3>
 
@@ -133,7 +134,7 @@
             </thead>
 
             <tbody>
-              <tr ng-repeat="event in events track by $index">
+              <tr ng-repeat="event in vm.events track by $index">
                 <td><input type="text" class="form-control" ng-model="event.title"></td>
                 <td>
                   <select ng-model="event.type" class="form-control">
@@ -163,7 +164,7 @@
                   </p>
                   <timepicker ng-model="event.endsAt" hour-step="1" minute-step="15" show-meridian="true"></timepicker>
                 </td>
-                <td><button class="btn btn-danger" ng-click="events.splice($index, 1)">Delete</button></td>
+                <td><button class="btn btn-danger" ng-click="vm.events.splice($index, 1)">Delete</button></td>
               </tr>
             </tbody>
 

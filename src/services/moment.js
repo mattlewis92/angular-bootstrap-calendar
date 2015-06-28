@@ -1,5 +1,8 @@
 'use strict';
 
+var angular = require('angular');
+var moment = require('moment');
+
 angular
   .module('mwl.calendar')
-  .constant('moment', window.moment); //eslint-disable-line angular/ng_window_service
+  .constant('moment', moment);

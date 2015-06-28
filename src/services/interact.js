@@ -1,5 +1,13 @@
 'use strict';
 
+var angular = require('angular');
+var interact;
+try {
+  interact = require('interact.js');
+} catch (e) {
+  interact = null;
+}
+
 angular
   .module('mwl.calendar')
-  .constant('interact', window.interact); //eslint-disable-line angular/ng_window_service
+  .constant('interact', interact);

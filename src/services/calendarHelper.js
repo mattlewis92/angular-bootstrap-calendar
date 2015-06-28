@@ -1,5 +1,7 @@
 'use strict';
 
+var angular = require('angular');
+
 angular
   .module('mwl.calendar')
   .factory('calendarHelper', function(dateFilter, moment, calendarConfig) {
@@ -86,7 +88,7 @@ angular
       return weekdays;
     }
 
-    function getYearView(events, currentDay) {
+    function getYearView(events, currentDay, cellModifier) {
 
       var view = [];
       var eventsInPeriod = getEventsInPeriod(currentDay, 'year', events);
@@ -96,14 +98,16 @@ angular
         var startPeriod = month.clone();
         var endPeriod = startPeriod.clone().endOf('month');
         var periodEvents = filterEventsInPeriod(eventsInPeriod, startPeriod, endPeriod);
-        view.push({
+        var cell = {
           label: formatDate(startPeriod, calendarConfig.dateFormats.month),
           isToday: startPeriod.isSame(moment().startOf('month')),
           events: periodEvents,
           date: startPeriod,
           badgeTotal: getBadgeTotal(periodEvents)
-        });
+        };
 
+        cellModifier({calendarCell: cell});
+        view.push(cell);
         month.add(1, 'month');
         count++;
       }
@@ -112,7 +116,7 @@ angular
 
     }
 
-    function getMonthView(events, currentDay) {
+    function getMonthView(events, currentDay, cellModifier) {
 
       var startOfMonth = moment(currentDay).startOf('month');
       var day = startOfMonth.clone().startOf('week');
@@ -134,7 +138,7 @@ angular
           monthEvents = filterEventsInPeriod(eventsInPeriod, day, day.clone().endOf('day'));
         }
 
-        view.push({
+        var cell = {
           label: day.date(),
           date: day.clone(),
           inMonth: inMonth,
@@ -144,7 +148,11 @@ angular
           isWeekend: [0, 6].indexOf(day.day()) > -1,
           events: monthEvents,
           badgeTotal: getBadgeTotal(monthEvents)
-        });
+        };
+
+        cellModifier({calendarCell: cell});
+
+        view.push(cell);
 
         day.add(1, 'day');
       }

@@ -1,5 +1,7 @@
 'use strict';
 
+var angular = require('angular');
+
 angular
   .module('mwl.calendar')
   .controller('MwlCalendarYearCtrl', function($scope, moment, calendarHelper) {
@@ -8,7 +10,7 @@ angular
     var firstRun = true;
 
     var unbindListener = $scope.$on('calendar.refreshView', function() {
-      vm.view = calendarHelper.getYearView($scope.events, $scope.currentDay);
+      vm.view = calendarHelper.getYearView($scope.events, $scope.currentDay, $scope.cellModifier);
 
       //Auto open the calendar to the current day if set
       if ($scope.autoOpen && firstRun) {
@@ -47,7 +49,7 @@ angular
       var newStart = moment(event.startsAt).month(moment(newMonthDate).month());
       var newEnd = calendarHelper.adjustEndDateFromStartDiff(event.startsAt, newStart, event.endsAt);
 
-      $scope.onEventDrop({
+      $scope.onEventTimesChanged({
         calendarEvent: event,
         calendarDate: newMonthDate,
         calendarNewEventStart: newStart.toDate(),
@@ -66,13 +68,14 @@ angular
         events: '=',
         currentDay: '=',
         onEventClick: '=',
-        onEventDrop: '=',
+        onEventTimesChanged: '=',
         onEditEventClick: '=',
         onDeleteEventClick: '=',
         editEventHtml: '=',
         deleteEventHtml: '=',
         autoOpen: '=',
-        onTimespanClick: '='
+        onTimespanClick: '=',
+        cellModifier: '='
       },
       controller: 'MwlCalendarYearCtrl as vm',
       link: function(scope, element, attrs, calendarCtrl) {

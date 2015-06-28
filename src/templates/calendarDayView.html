@@ -17,11 +17,15 @@
       ng-class="'dh-event-' + event.type + ' ' + event.cssClass"
       ng-repeat="event in vm.view track by event.$id"
       ng-style="{top: event.top + 'px', left: event.left + 60 + 'px', height: event.height + 'px'}"
-      mwl-draggable="event.editable !== false"
+      mwl-draggable="event.draggable === true"
       axis="y"
       snap-grid="{y: 30}"
-      on-drag="vm.tempTimeChanged(event, y)"
-      on-drag-end="vm.timeChanged(event, y)">
+      on-drag="vm.eventDragged(event, y)"
+      on-drag-end="vm.eventDragComplete(event, y)"
+      mwl-resizable="event.resizable === true"
+      resize-edges="{top: true, bottom: true}"
+      on-resize="vm.eventResized(event, edge, y)"
+      on-resize-end="vm.eventResizeComplete(event, edge, y)">
 
       <span class="cal-hours">
         <span ng-show="event.top == 0"><span ng-bind="(event.tempStartsAt || event.startsAt) | calendarDate:'day':true"></span>, </span>

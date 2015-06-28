@@ -1,5 +1,7 @@
 'use strict';
 
+var angular = require('angular');
+
 angular
   .module('mwl.calendar')
   .controller('MwlCalendarWeekCtrl', function($scope, $sce, moment, calendarHelper, calendarConfig) {
@@ -45,11 +47,29 @@ angular
 
       delete event.tempStartsAt;
 
-      $scope.onEventDrop({
+      $scope.onEventTimesChanged({
         calendarEvent: event,
         calendarNewEventStart: newStart.toDate(),
         calendarNewEventEnd: newEnd.toDate()
       });
+    };
+
+    vm.weekResized = function(event, edge, daysDiff) {
+
+      var start = moment(event.startsAt);
+      var end = moment(event.endsAt);
+      if (edge === 'start') {
+        start.add(daysDiff, 'days');
+      } else {
+        end.add(daysDiff, 'days');
+      }
+
+      $scope.onEventTimesChanged({
+        calendarEvent: event,
+        calendarNewEventStart: start.toDate(),
+        calendarNewEventEnd: end.toDate()
+      });
+
     };
 
     vm.tempTimeChanged = function(event, minuteChunksMoved) {
@@ -68,7 +88,7 @@ angular
         events: '=',
         currentDay: '=',
         onEventClick: '=',
-        onEventDrop: '=',
+        onEventTimesChanged: '=',
         dayViewStart: '=',
         dayViewEnd: '=',
         dayViewSplit: '='

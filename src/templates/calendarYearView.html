@@ -2,7 +2,7 @@
   <div ng-repeat="rowOffset in [0, 4, 8] track by rowOffset">
     <div class="row cal-before-eventlist">
       <div
-        class="span3 col-md-3 col-xs-6 cal-cell"
+        class="span3 col-md-3 col-xs-6 cal-cell {{ day.cssClass }}"
         ng-repeat="month in vm.view | calendarLimitTo:4:rowOffset track by $index"
         ng-init="monthIndex = vm.view.indexOf(month)"
         ng-click="vm.monthClicked(month)"

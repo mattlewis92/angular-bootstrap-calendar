@@ -30,14 +30,10 @@
     "angular/ng_controller_name": [2, "/[A-Z].*Ctrl/"],
     "angular/ng_controller_as": 0
   },
-  "globals": {
-    "window": true,
-    "angular": true,
-    "module": true
+  "env": {
+    "browser": true,
+    "node": true
   },
-  "envs": [
-    "browser"
-  ],
   "plugins": [
     "angular"
   ]

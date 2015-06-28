@@ -78,7 +78,7 @@ There is a single directive exposed to create the calendar, use it like so:
     events="events"
     view-title="calendarTitle"
     on-event-click="eventClicked(calendarEvent)"
-    on-event-drop="calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
+    on-event-times-changed="calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
     edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
     delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
     on-edit-event-click="eventEdited(calendarEvent)"
@@ -112,8 +112,10 @@ $scope.events = [
     type: 'info', // The type of the event (determines its color). Can be important, warning, info, inverse, success or special
     startsAt: new Date(2013,5,1,1), // A javascript date object for when the event starts
     endsAt: new Date(2014,8,26,15), // Optional - a javascript date object for when the event ends
-    editable: false, // If edit-event-html is set and this field is explicitly set to false then dont make it editable. If set to false will also prevent the event from being dragged and dropped.
+    editable: false, // If edit-event-html is set and this field is explicitly set to false then dont make it editable.
     deletable: false, // If delete-event-html is set and this field is explicitly set to false then dont make it deleteable
+    draggable: true, //Allow an event to be dragged and dropped
+    resizable: true, //Allow an event to be resizable
     incrementsBadgeTotal: true, //If set to false then will not count towards the badge total amount on the month and year view
     recursOn: 'year', // If set the event will recur on the given period. Valid values are year or month
     cssClass: 'a-css-class-name' //A CSS class (or more, just separate with spaces) that will be added to the event when it is displayed on each view. Useful for marking an event as selected / active etc
@@ -131,9 +133,9 @@ This variable will be assigned to the calendar title. If you want to change the 
 
 This expression is called when an event is clicked on the calendar. calendarEvent contains the calendar event that was clicked on.
 
-### on-event-drop
+### on-event-times-changed
 
-This expression is called when an event is dragged and dropped into a different date / time on the calendar. The available parameters are: calendarEvent, calendarNewEventStart and calendarNewEventEnd. The directive won't change the event object and leaves that up to you to implement. Set event.editable to false to disable drag and drop on a particular event. Please note drag and drop is only available by including the [interact.js](http://interactjs.io/) library.
+This expression is called when an event is dragged and dropped or resized into a different date / time on the calendar. The available parameters are: calendarEvent, calendarNewEventStart and calendarNewEventEnd. The directive won't change the event object and leaves that up to you to implement. Set event.editable to false to disable drag and drop on a particular event. Please note drag and drop is only available by including the [interact.js](http://interactjs.io/) library.
 
 ### edit-event-html 
 
@@ -174,6 +176,9 @@ The number of chunks to split the day view hours up into. Can be either 10, 15 o
 ### on-drill-down-click
 
 An optional expression that is evaluated when the drilldown (clicking on a date to change the view) is triggered. Return false from the expression function to disable the drilldown. calendarDate is available as the date that was selected. calendarNextView is the view that the calendar will be changed to.  
+
+### cell-modifier
+An optional expression that is evaluated on each cell generated for the year and month views. calendarCell is an object containing the current cell data which you can modify (see the calendarHelper service source code or just console.log it to see what data is available). If you add the cssClass property it will be applied to the cell.
 
 ## The mwl-date-modifier directive
 
