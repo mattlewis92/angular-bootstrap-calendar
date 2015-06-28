@@ -21,7 +21,9 @@
       axis="y"
       snap-grid="{y: 30}"
       on-drag="vm.tempTimeChanged(event, y)"
-      on-drag-end="vm.timeChanged(event, y)">
+      on-drag-end="vm.timeChanged(event, y)"
+      mwl-resizeable-disabled="event.editable !== false"
+      resize-edges="{top: true, bottom: true}">
 
       <span class="cal-hours">
         <span ng-show="event.top == 0"><span ng-bind="(event.tempStartsAt || event.startsAt) | calendarDate:'day':true"></span>, </span>
