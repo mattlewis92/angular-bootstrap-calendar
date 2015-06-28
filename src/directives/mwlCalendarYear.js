@@ -8,7 +8,7 @@ angular
     var firstRun = true;
 
     var unbindListener = $scope.$on('calendar.refreshView', function() {
-      vm.view = calendarHelper.getYearView($scope.events, $scope.currentDay);
+      vm.view = calendarHelper.getYearView($scope.events, $scope.currentDay, $scope.cellModifier);
 
       //Auto open the calendar to the current day if set
       if ($scope.autoOpen && firstRun) {
@@ -72,7 +72,8 @@ angular
         editEventHtml: '=',
         deleteEventHtml: '=',
         autoOpen: '=',
-        onTimespanClick: '='
+        onTimespanClick: '=',
+        cellModifier: '='
       },
       controller: 'MwlCalendarYearCtrl as vm',
       link: function(scope, element, attrs, calendarCtrl) {

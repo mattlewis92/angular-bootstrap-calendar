@@ -11,7 +11,7 @@ angular
 
       vm.weekDays = calendarHelper.getWeekDayNames();
 
-      vm.view = calendarHelper.getMonthView($scope.events, $scope.currentDay);
+      vm.view = calendarHelper.getMonthView($scope.events, $scope.currentDay, $scope.cellModifier);
       var rows = Math.floor(vm.view.length / 7);
       vm.monthOffsets = [];
       for (var i = 0; i < rows; i++) {
@@ -100,7 +100,8 @@ angular
         editEventHtml: '=',
         deleteEventHtml: '=',
         autoOpen: '=',
-        onTimespanClick: '='
+        onTimespanClick: '=',
+        cellModifier: '='
       },
       controller: 'MwlCalendarMonthCtrl as vm',
       link: function(scope, element, attrs, calendarCtrl) {

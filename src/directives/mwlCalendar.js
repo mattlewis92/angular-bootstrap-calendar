@@ -101,6 +101,7 @@ angular
         onDeleteEventClick: '&',
         onTimespanClick: '&',
         onDrillDownClick: '&',
+        cellModifier: '&',
         dayViewStart: '@',
         dayViewEnd: '@',
         dayViewSplit: '@'

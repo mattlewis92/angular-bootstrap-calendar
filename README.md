@@ -175,6 +175,9 @@ The number of chunks to split the day view hours up into. Can be either 10, 15 o
 
 An optional expression that is evaluated when the drilldown (clicking on a date to change the view) is triggered. Return false from the expression function to disable the drilldown. calendarDate is available as the date that was selected. calendarNextView is the view that the calendar will be changed to.  
 
+### cell-modifier
+An optional expression that is evaluated on each cell generated for the year and month views. calendarCell is an object containing the current cell data which you can modify (see the calendarHelper service source code or just console.log it to see what data is available). If you add the cssClass property it will be applied to the cell.
+
 ## The mwl-date-modifier directive
 
 There is also a helper directive that you can use for the next, today and previous buttons. Use it like so:
