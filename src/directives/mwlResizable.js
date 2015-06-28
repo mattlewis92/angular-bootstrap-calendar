@@ -2,7 +2,7 @@
 
 angular
   .module('mwl.calendar')
-  .controller('MwlResizeableCtrl', function($element, $scope, $parse, $attrs, interact) {
+  .controller('MwlResizableCtrl', function($element, $scope, $parse, $attrs, interact) {
 
     if (!interact) {
       return;
@@ -19,7 +19,7 @@ angular
     }
 
     function canResize() {
-      return $parse($attrs.mwlResizeable)($scope);
+      return $parse($attrs.mwlResizable)($scope);
     }
 
     function getUnitsResized(edge, elm, gridDimensions) {
@@ -124,11 +124,11 @@ angular
     });
 
   })
-  .directive('mwlResizeable', function() {
+  .directive('mwlResizable', function() {
 
     return {
       restrict: 'A',
-      controller: 'MwlResizeableCtrl'
+      controller: 'MwlResizableCtrl'
     };
 
   });

@@ -44,12 +44,12 @@
             ng-class="'cal-cell' + (vm.showTimes ? 1 : event.daySpan) + ' cal-offset' + event.dayOffset + ' day-highlight dh-event-' + event.type + ' ' + event.cssClass"
             ng-style="{top: vm.showTimes ? ((event.top + 2) + 'px') : 'auto', position: vm.showTimes ? 'absolute' : 'inherit'}"
             data-event-class
-            mwl-draggable="event.editable !== false"
+            mwl-draggable="event.draggable === true"
             axis="vm.showTimes ? 'xy' : 'x'"
             snap-grid="vm.showTimes ? {x: vm.dayColumnDimensions.width, y: 30} : {x: vm.dayColumnDimensions.width}"
             on-drag="vm.tempTimeChanged(event, y)"
             on-drag-end="vm.weekDragged(event, x, y)"
-            mwl-resizeable="event.editable !== false && !vm.showTimes"
+            mwl-resizable="event.resizable === true && !vm.showTimes"
             resize-edges="{left: true, right: true}"
             on-resize-end="vm.weekResized(event, edge, x)">
             <strong ng-bind="(event.tempStartsAt || event.startsAt) | calendarDate:'time':true" ng-show="vm.showTimes"></strong>
