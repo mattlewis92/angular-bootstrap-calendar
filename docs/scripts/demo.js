@@ -71,8 +71,8 @@ angular
       showModal('Deleted', event);
     };
 
-    vm.eventDropped = function(event) {
-      showModal('Dropped', event);
+    vm.eventTimesChanged = function(event) {
+      showModal('Dropped or resized', event);
     };
 
     vm.toggle = function($event, field, event) {

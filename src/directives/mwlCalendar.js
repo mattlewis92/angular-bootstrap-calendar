@@ -96,7 +96,7 @@ angular
         deleteEventHtml: '=',
         autoOpen: '=',
         onEventClick: '&',
-        onEventDrop: '&',
+        onEventTimesChanged: '&',
         onEditEventClick: '&',
         onDeleteEventClick: '&',
         onTimespanClick: '&',

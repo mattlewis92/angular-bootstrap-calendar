@@ -75,7 +75,7 @@ angular
 
       var newEnd = calendarHelper.adjustEndDateFromStartDiff(event.startsAt, newStart, event.endsAt);
 
-      $scope.onEventDrop({
+      $scope.onEventTimesChanged({
         calendarEvent: event,
         calendarDate: newDayDate,
         calendarNewEventStart: newStart.toDate(),
@@ -96,7 +96,7 @@ angular
         onEventClick: '=',
         onEditEventClick: '=',
         onDeleteEventClick: '=',
-        onEventDrop: '=',
+        onEventTimesChanged: '=',
         editEventHtml: '=',
         deleteEventHtml: '=',
         autoOpen: '=',

@@ -47,7 +47,7 @@ angular
       var newStart = moment(event.startsAt).month(moment(newMonthDate).month());
       var newEnd = calendarHelper.adjustEndDateFromStartDiff(event.startsAt, newStart, event.endsAt);
 
-      $scope.onEventDrop({
+      $scope.onEventTimesChanged({
         calendarEvent: event,
         calendarDate: newMonthDate,
         calendarNewEventStart: newStart.toDate(),
@@ -66,7 +66,7 @@ angular
         events: '=',
         currentDay: '=',
         onEventClick: '=',
-        onEventDrop: '=',
+        onEventTimesChanged: '=',
         onEditEventClick: '=',
         onDeleteEventClick: '=',
         editEventHtml: '=',

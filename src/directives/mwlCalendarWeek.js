@@ -45,7 +45,7 @@ angular
 
       delete event.tempStartsAt;
 
-      $scope.onEventDrop({
+      $scope.onEventTimesChanged({
         calendarEvent: event,
         calendarNewEventStart: newStart.toDate(),
         calendarNewEventEnd: newEnd.toDate()
@@ -62,7 +62,7 @@ angular
         end.add(daysDiff, 'days');
       }
 
-      $scope.onEventDrop({
+      $scope.onEventTimesChanged({
         calendarEvent: event,
         calendarNewEventStart: start.toDate(),
         calendarNewEventEnd: end.toDate()
@@ -86,7 +86,7 @@ angular
         events: '=',
         currentDay: '=',
         onEventClick: '=',
-        onEventDrop: '=',
+        onEventTimesChanged: '=',
         dayViewStart: '=',
         dayViewEnd: '=',
         dayViewSplit: '='
