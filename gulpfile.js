@@ -4,24 +4,25 @@ var open = require('open');
 var runSequence = require('run-sequence');
 var bowerFiles = require('main-bower-files');
 var series = require('stream-series');
+var webpack = require('webpack-stream');
 
 gulp.task('watch', ['server'], function() {
   $.livereload.listen();
   gulp.start('test:watch');
   gulp.watch('src/less/*.less', ['less']);
-  gulp.watch('src/**/*.js', ['eslint']);
+  gulp.watch('src/**/*.js', ['eslint', 'webpack']);
   gulp.watch('src/templates/**/*.html', ['htmlhint']);
   gulp.watch('css/*.css').on('change', $.livereload.changed);
   gulp.watch([
     './index.html',
     './docs/scripts/*.js',
     './docs/styles/*.css',
-    './src/**/*.js',
+    './build/**/*.js',
     './src/templates/**']
   ).on('change', $.livereload.changed);
 });
 
-gulp.task('server', function() {
+gulp.task('server', ['less', 'webpack'], function() {
   $.connect.server({
     root: ['./'],
     port: 8000,
@@ -34,9 +35,27 @@ gulp.task('server', function() {
 gulp.task('less', function() {
   return gulp.src('src/less/calendar.less')
     .pipe($.plumber())
+    .pipe($.sourcemaps.init())
     .pipe($.less())
     .pipe($.rename('calendar.css'))
-    .pipe(gulp.dest('css'))
+    .pipe($.sourcemaps.write('.'))
+    .pipe(gulp.dest('build'));
+});
+
+gulp.task('webpack', function() {
+  return gulp.src('index.js')
+    .pipe(webpack({
+      output: {
+        filename: 'calendar.js'
+      },
+      externals: {
+        angular: 'angular',
+        moment: 'moment',
+        'interact.js': 'interact'
+      },
+      devtool: 'source-map'
+    }))
+    .pipe(gulp.dest('build'));
 });
 
 var pkg = require('./bower.json');
@@ -86,17 +105,18 @@ function buildJS(withTemplates) {
   var unminfilename = withTemplates ? 'angular-bootstrap-calendar-tpls.js' : 'angular-bootstrap-calendar.js';
 
   var stream = withTemplates ? series(
-    gulp.src('src/**/*.js'),
+    gulp.src('build/calendar.js'),
     getTemplates()
-  ) : gulp.src('src/**/*.js');
+  ) : gulp.src('build/calendar.js');
 
   return stream
     .pipe($.sort())
     .pipe($.angularFilesort())
-    .pipe($.sourcemaps.init())
+    .pipe($.sourcemaps.init({
+      loadMaps: true
+    }))
     .pipe($.ngAnnotate())
     .pipe($.concat(unminfilename))
-    .pipe($.wrapJs('(function(window, angular) {\n%= body %\n }) (window, angular);'))
     .pipe($.header(banner, { pkg : pkg } ))
     .pipe(gulp.dest('dist/js'))
     .pipe($.uglify())
@@ -106,7 +126,7 @@ function buildJS(withTemplates) {
     .pipe(gulp.dest('dist/js'));
 }
 
-gulp.task('js-tpls', function() {
+gulp.task('js-tpls', ['webpack'], function() {
   return buildJS(true);
 });
 
@@ -178,7 +198,7 @@ function runTests(action, onDistCode) {
   if (onDistCode) {
     var appJs = gulp.src('dist/js/angular-bootstrap-calendar-tpls.min.js');
   } else {
-    var appJs = gulp.src('src/**/*.js').pipe($.sort()).pipe($.angularFilesort());
+    var appJs = gulp.src('build/calendar.js');
   }
   var templates = gulp.src('src/templates/*.html');
   var karmaSetup = gulp.src('test/karma.setup.js');
@@ -191,13 +211,13 @@ function runTests(action, onDistCode) {
     }));
 }
 
-gulp.task('test:src', function() {
+gulp.task('test:src', ['webpack'], function() {
   return runTests('run').on('error', function(err) {
     throw err;
   });
 });
 
-gulp.task('test:dist', function() {
+gulp.task('test:dist', ['js'], function() {
   return runTests('run', true).on('error', function(err) {
     throw err;
   });

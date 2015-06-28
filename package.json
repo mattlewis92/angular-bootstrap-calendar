@@ -33,7 +33,6 @@
     "gulp-sourcemaps": "~1.5.2",
     "gulp-tag-version": "~1.2.1",
     "gulp-uglify": "~1.2.0",
-    "gulp-wrap-js": "~0.3.0",
     "karma": "~0.12.31",
     "karma-chai-plugins": "~0.6.0",
     "karma-chrome-launcher": "~0.2.0",
@@ -45,14 +44,15 @@
     "open": "0.0.5",
     "phantomjs": "~1.9.17",
     "run-sequence": "~1.1.0",
-    "stream-series": "~0.1.1"
+    "stream-series": "~0.1.1",
+    "webpack-stream": "~2.0.0"
   },
   "engines": {
     "node": ">=0.12.0"
   },
-  "browser": "dist/js/angular-bootstrap-calendar-tpls.js",
   "main": "index.js",
   "optionalDependencies": {
-    "angular-bootstrap": "~0.12.0"
+    "angular-bootstrap": "~0.12.0",
+    "interact.js": "~1.2.4"
   }
 }

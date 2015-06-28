@@ -1,5 +1,7 @@
 'use strict';
 
+var angular = require('angular');
+
 angular
   .module('mwl.calendar')
   .controller('MwlResizableCtrl', function($element, $scope, $parse, $attrs, interact) {
@@ -17,6 +19,10 @@ angular
         ]
       };
     }
+
+    var originalDimensions = {};
+    var originalDimensionsStyle = {};
+    var resizeEdge;
 
     function canResize() {
       return $parse($attrs.mwlResizable)($scope);
@@ -40,10 +46,6 @@ angular
       }
       return unitsResized;
     }
-
-    var originalDimensions = {};
-    var originalDimensionsStyle = {};
-    var resizeEdge;
 
     interact($element[0]).resizable({
       edges: $parse($attrs.resizeEdges)($scope),

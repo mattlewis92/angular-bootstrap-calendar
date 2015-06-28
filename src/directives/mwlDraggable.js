@@ -1,5 +1,7 @@
 'use strict';
 
+var angular = require('angular');
+
 angular
   .module('mwl.calendar')
   .controller('MwlDraggableCtrl', function($element, $scope, $window, $parse, $attrs, $timeout, interact) {
