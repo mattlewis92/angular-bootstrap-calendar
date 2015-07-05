@@ -31,7 +31,8 @@ module.exports = {
   entry: __dirname + '/src/entry.js',
   output: {
     path: __dirname + '/dist/js',
-    filename: jsFilename
+    filename: jsFilename,
+    libraryTarget: 'umd'
   },
   externals: {
     angular: 'angular',
