@@ -16,7 +16,8 @@ var webpackConfig = {
     }],
     loaders: [{
       test: /\.html$/,
-      loader: 'html'
+      loader: 'html',
+      exclude: /node_modules/
     }]
   },
   plugins: [

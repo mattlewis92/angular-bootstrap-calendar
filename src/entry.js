@@ -1,5 +1,7 @@
 'use strict';
 
+require('./less/calendar.less');
+
 function requireAll(r) {
   r.keys().forEach(r);
 }

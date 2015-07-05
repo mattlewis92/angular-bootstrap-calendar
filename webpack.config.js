@@ -1,6 +1,5 @@
 var open = require('open');
 var karma = require('karma');
-var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var PORT = 8000;
 
@@ -13,13 +12,10 @@ karma.server.start({
 });
 
 module.exports = {
-  entry: {
-    'angular-bootstrap-calendar': __dirname + '/src/entry.js',
-    style: __dirname + '/src/less/calendar.less'
-  },
+  entry: __dirname + '/src/entry.js',
   devtool: 'cheap-module-eval-source-map',
   output: {
-    filename: '[name].js'
+    filename: 'angular-bootstrap-calendar.js'
   },
   module: {
     preLoaders: [{
@@ -29,10 +25,12 @@ module.exports = {
     }],
     loaders: [{
       test: /\.less$/,
-      loader: ExtractTextPlugin.extract('style-loader', 'css?sourceMap!less?sourceMap')
+      loader: ExtractTextPlugin.extract('style-loader', 'css?sourceMap!less?sourceMap'),
+      exclude: /node_modules/
     }, {
       test: /\.html$/,
-      loader: 'html'
+      loader: 'html',
+      exclude: /node_modules/
     }]
   },
   plugins: [
