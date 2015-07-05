@@ -1,8 +1,7 @@
 {
   "rules": {
     "quotes": [2, "single"],
-    "global-strict": 0,
-    "no-underscore-dangle": 0,
+    "strict": [2, "global"],
     "camelcase": [2, {"properties": "never"}],
     "brace-style": [2, "1tbs"],
     "default-case": 2,
