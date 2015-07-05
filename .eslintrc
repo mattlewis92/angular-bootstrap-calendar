@@ -5,7 +5,6 @@
     "angular/ng_controller_as": 0
   },
   "env": {
-    "browser": true,
     "node": true
   },
   "plugins": [
