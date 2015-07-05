@@ -38,7 +38,7 @@ module.exports = {
     moment: 'moment',
     'interact.js': 'interact'
   },
-  devtool: 'source-map',
+  devtool: MIN ? 'source-map' : null,
   module: {
     preLoaders: [{
       test: /.*\.js$/,
