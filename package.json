@@ -39,7 +39,8 @@
   "engines": {
     "node": ">=0.12.0"
   },
-  "main": "src/entry.js",
+  "webpack": "src/entry.js",
+  "browser": "dist/js/angular-bootstrap-calendar-tpls.js",
   "optionalDependencies": {
     "angular-bootstrap": "~0.12.0",
     "interact.js": "~1.2.4"
