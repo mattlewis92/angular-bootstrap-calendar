@@ -1,6 +1,7 @@
 var open = require('open');
 var karma = require('karma');
 var webpack = require('webpack');
+var WebpackNotifierPlugin = require('webpack-notifier');
 var PORT = 8000;
 
 open('http://localhost:' + PORT);
@@ -39,6 +40,7 @@ module.exports = {
     hot: true
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new WebpackNotifierPlugin()
   ]
 };
