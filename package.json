@@ -8,10 +8,12 @@
     "moment": "~2.10.3"
   },
   "devDependencies": {
+    "css-loader": "~0.15.1",
     "eslint": "~0.24.0",
     "eslint-config-mwl": "~0.1.0",
     "eslint-loader": "~0.14.1",
     "eslint-plugin-angular": "0.0.15",
+    "extract-text-webpack-plugin": "~0.8.2",
     "gulp": "~3.9.0",
     "gulp-angular-templatecache": "~1.7.0",
     "gulp-bump": "~0.3.0",
@@ -39,6 +41,8 @@
     "karma-mocha": "~0.2.0",
     "karma-ng-html2js-preprocessor": "~0.1.2",
     "karma-phantomjs-launcher": "~0.2.0",
+    "less": "~2.5.1",
+    "less-loader": "~2.2.0",
     "main-bower-files": "~2.8.0",
     "mocha": "~2.2.1",
     "node-libs-browser": "~0.5.2",
@@ -46,6 +50,7 @@
     "phantomjs": "~1.9.17",
     "run-sequence": "~1.1.0",
     "stream-series": "~0.1.1",
+    "style-loader": "~0.12.3",
     "webpack": "~1.10.1",
     "webpack-dev-server": "~1.10.1",
     "webpack-stream": "~2.0.0"
@@ -53,7 +58,7 @@
   "engines": {
     "node": ">=0.12.0"
   },
-  "main": "src/index.js",
+  "main": "src/entry.js",
   "optionalDependencies": {
     "angular-bootstrap": "~0.12.0",
     "interact.js": "~1.2.4"
@@ -65,6 +70,6 @@
     "build:unmin": "./node_modules/webpack/bin/webpack.js --config webpack.config.build.js",
     "build:min": "./node_modules/webpack/bin/webpack.js -p --config webpack.config.build.js",
     "build": "npm run build:unmin && npm run build:min",
-    "watch": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --port 8000 --inline"
+    "watch": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js"
   }
 }
