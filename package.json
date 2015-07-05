@@ -40,7 +40,6 @@
   "engines": {
     "node": ">=0.12.0"
   },
-  "webpack": "src/entry.js",
   "browser": "dist/js/angular-bootstrap-calendar-tpls.js",
   "optionalDependencies": {
     "angular-bootstrap": "~0.12.0",
