@@ -1,6 +1,7 @@
 {
   "name": "angular-bootstrap-calendar",
   "version": "0.12.0",
+  "license": "MIT",
   "repository": "git@github.com:mattlewis92/angular-bootstrap-calendar.git",
   "dependencies": {
     "angular": ">=1.2.0 <1.5",
@@ -8,6 +9,7 @@
     "moment": "~2.10.3"
   },
   "devDependencies": {
+    "angular-mocks": "~1.4.1",
     "css-loader": "~0.15.1",
     "eslint": "~0.24.0",
     "eslint-config-mwl": "~0.1.0",
@@ -41,16 +43,20 @@
     "karma-mocha": "~0.2.0",
     "karma-ng-html2js-preprocessor": "~0.1.2",
     "karma-phantomjs-launcher": "~0.2.0",
+    "karma-sourcemap-loader": "~0.3.5",
+    "karma-webpack": "~1.5.1",
     "less": "~2.5.1",
     "less-loader": "~2.2.0",
     "main-bower-files": "~2.8.0",
     "mocha": "~2.2.1",
+    "ng-annotate-loader": "0.0.4",
     "node-libs-browser": "~0.5.2",
     "open": "0.0.5",
     "phantomjs": "~1.9.17",
     "run-sequence": "~1.1.0",
     "stream-series": "~0.1.1",
     "style-loader": "~0.12.3",
+    "uglify-loader": "~1.2.0",
     "webpack": "~1.10.1",
     "webpack-dev-server": "~1.10.1",
     "webpack-stream": "~2.0.0"

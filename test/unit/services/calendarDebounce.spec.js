@@ -1,3 +1,8 @@
+'use strict';
+
+var angular = require('angular');
+beforeEach(angular.mock.module('mwl.calendar'));
+
 describe('calendarDebounce', function() {
 
   var calendarDebounce, $timeout;
