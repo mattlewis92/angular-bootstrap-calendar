@@ -10,9 +10,13 @@ var webpackConfig = {
   devtool: 'inline-source-map',
   module: {
     preLoaders: [{
-      test: /(src|test).*\.js$/,
+      test: /\.js$/,
       loaders: ['eslint'],
       exclude: /node_modules/
+    }],
+    loaders: [{
+      test: /\.html$/,
+      loader: 'html'
     }]
   },
   plugins: [
@@ -22,11 +26,11 @@ var webpackConfig = {
 };
 
 if (MIN) {
-  webpackConfig.module.loaders = [{
+  webpackConfig.module.loaders.push({
     test: /.*src.*\.js$/,
     loaders: ['uglify', 'ng-annotate'],
     exclude: /node_modules/
-  }];
+  });
 }
 
 module.exports = function(config) {
@@ -51,12 +55,7 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      './src/templates/*.html': ['ng-html2js'],
       'test/unit/entry.js': ['webpack', 'sourcemap']
-    },
-
-    ngHtml2JsPreprocessor: {
-      moduleName: 'mwl.calendar'
     },
 
     webpack: webpackConfig,

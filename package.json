@@ -37,6 +37,7 @@
     "gulp-sourcemaps": "~1.5.2",
     "gulp-tag-version": "~1.2.1",
     "gulp-uglify": "~1.2.0",
+    "html-loader": "~0.3.0",
     "karma": "~0.12.31",
     "karma-chai-plugins": "~0.6.0",
     "karma-chrome-launcher": "~0.2.0",

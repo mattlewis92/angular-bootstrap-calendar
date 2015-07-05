@@ -44,7 +44,7 @@ angular
 
     return {
       restrict: 'EA',
-      templateUrl: 'src/templates/calendarHourList.html',
+      template: require('./../templates/calendarHourList.html'),
       controller: 'MwlCalendarHourListCtrl as vm',
       scope: {
         dayViewStart: '=',
