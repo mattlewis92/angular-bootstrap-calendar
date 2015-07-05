@@ -1,6 +1,6 @@
 var open = require('open');
 var karma = require('karma');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var webpack = require('webpack');
 var PORT = 8000;
 
 open('http://localhost:' + PORT);
@@ -25,7 +25,7 @@ module.exports = {
     }],
     loaders: [{
       test: /\.less$/,
-      loader: ExtractTextPlugin.extract('style-loader', 'css?sourceMap!less?sourceMap'),
+      loader: 'style!css!less',
       exclude: /node_modules/
     }, {
       test: /\.html$/,
@@ -33,11 +33,12 @@ module.exports = {
       exclude: /node_modules/
     }]
   },
-  plugins: [
-    new ExtractTextPlugin('angular-bootstrap-calendar.css')
-  ],
   devServer: {
     port: PORT,
-    inline: true
-  }
+    inline: true,
+    hot: true
+  },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin()
+  ]
 };
