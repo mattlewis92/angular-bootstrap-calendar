@@ -9,6 +9,7 @@
   },
   "devDependencies": {
     "eslint": "~0.24.0",
+    "eslint-config-mwl": "~0.1.0",
     "eslint-plugin-angular": "0.0.15",
     "gulp": "~3.9.0",
     "gulp-angular-templatecache": "~1.7.0",
