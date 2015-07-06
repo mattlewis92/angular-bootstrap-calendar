@@ -18,6 +18,11 @@ var webpackConfig = {
       test: /\.html$/,
       loader: 'html',
       exclude: /node_modules/
+    }],
+    postLoaders: [{
+      test: /\.js$/,
+      exclude: /(test|node_modules)\//,
+      loader: 'istanbul-instrumenter'
     }]
   },
   plugins: [
@@ -59,12 +64,20 @@ module.exports = function(config) {
       'test/unit/entry.js': ['webpack', 'sourcemap']
     },
 
+    coverageReporter: {
+      reporters: [{
+        type: 'text-summary'
+      }, {
+        type: 'html'
+      }]
+    },
+
     webpack: webpackConfig,
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    reporters: ['progress', 'coverage'],
 
     // web server port
     port: 9876,
