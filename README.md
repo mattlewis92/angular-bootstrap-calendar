@@ -284,7 +284,7 @@ http://mattlewis92.github.io/angular-bootstrap-calendar/
 * Install local dev dependencies: `npm install` while current directory is this repo
 
 ### Development server
-Run `npm run watch` to start a development server on port 8000 with auto reload. 
+Run `npm run dev` to start a development server on port 8000 with auto reload + run tests. 
 
 ### Testing
 Run `npm run test:min` to run tests once or `npm run test:watch` to continually run tests (this is automatic when you start `npm run watch`). 

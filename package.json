@@ -54,6 +54,6 @@
     "build:unmin:exclude-templates": "./node_modules/webpack/bin/webpack.js --config webpack.config.build.js --exclude-templates",
     "build:min:exclude-templates": "./node_modules/webpack/bin/webpack.js -p --config webpack.config.build.js --exclude-templates",
     "build": "npm run build:unmin && npm run build:min && npm run build:unmin:exclude-templates && npm run build:min:exclude-templates",
-    "watch": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js"
+    "dev": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js"
   }
 }
