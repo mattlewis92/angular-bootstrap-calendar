@@ -37,7 +37,12 @@ module.exports = {
   externals: {
     angular: 'angular',
     moment: 'moment',
-    'interact.js': 'interact'
+    'interact.js': {
+      root: 'interact',
+      commonjs: 'interact.js',
+      commonjs2: 'interact.js',
+      amd: 'interact.js'
+    }
   },
   devtool: MIN ? 'source-map' : null,
   module: {
