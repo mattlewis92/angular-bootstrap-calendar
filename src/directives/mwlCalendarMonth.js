@@ -7,7 +7,6 @@ angular
   .controller('MwlCalendarMonthCtrl', function($scope, moment, calendarHelper) {
 
     var vm = this;
-    var firstRun = true;
 
     var unbindListener = $scope.$on('calendar.refreshView', function() {
 
@@ -21,10 +20,9 @@ angular
       }
 
       //Auto open the calendar to the current day if set
-      if ($scope.autoOpen && firstRun) {
-        firstRun = false;
+      if ($scope.autoOpen) {
         vm.view.forEach(function(day) {
-          if (day.inMonth && moment($scope.currentDay).startOf('day').isSame(day.date)) {
+          if (day.inMonth && moment($scope.currentDay).startOf('day').isSame(day.date) && !vm.openDayIndex) {
             vm.dayClicked(day, true);
           }
         });
@@ -89,7 +87,7 @@ angular
   .directive('mwlCalendarMonth', function() {
 
     return {
-      templateUrl: 'src/templates/calendarMonthView.html',
+      template: require('./../templates/calendarMonthView.html'),
       restrict: 'EA',
       require: '^mwlCalendar',
       scope: {

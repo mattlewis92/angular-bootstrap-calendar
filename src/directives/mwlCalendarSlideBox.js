@@ -23,7 +23,7 @@ angular
 
     return {
       restrict: 'EA',
-      templateUrl: 'src/templates/calendarSlideBox.html',
+      template: require('./../templates/calendarSlideBox.html'),
       replace: true,
       controller: 'MwlCalendarSlideBoxCtrl as vm',
       require: ['^?mwlCalendarMonth', '^?mwlCalendarYear'],

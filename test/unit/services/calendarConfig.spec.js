@@ -1,8 +1,13 @@
+'use strict';
+
+var angular = require('angular');
+beforeEach(angular.mock.module('mwl.calendar'));
+
 describe('calendarConfig', function() {
 
   var calendarConfig;
 
-  beforeEach(module('mwl.calendar', function(calendarConfigProvider) {
+  beforeEach(angular.mock.module('mwl.calendar', function(calendarConfigProvider) {
     calendarConfigProvider.setDateFormats({
       hour: 'HA'
     }).setTitleFormats({

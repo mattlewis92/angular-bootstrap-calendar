@@ -1,0 +1,6 @@
+{
+  "extends": "mwl/test",
+  "rules": {
+    "no-undefined": 0
+  }
+}

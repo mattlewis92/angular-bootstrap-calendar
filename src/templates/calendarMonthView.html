@@ -1,3 +1,59 @@
+<script type="text/ng-template" id="calendarMonthEventsList.html">
+  <div class="events-list" ng-show="day.events.length > 0">
+    <a
+      ng-repeat="event in day.events | orderBy:'startsAt' track by event.$id"
+      href="javascript:;"
+      ng-click="onEventClick({calendarEvent: event})"
+      class="pull-left event"
+      ng-class="'event-' + event.type + ' ' + event.cssClass"
+      ng-mouseenter="vm.highlightEvent(event, true)"
+      ng-mouseleave="vm.highlightEvent(event, false)"
+      tooltip-append-to-body="true"
+      tooltip-html-unsafe="{{ (event.startsAt | calendarDate:'time':true) + ' - ' + event.title }}"
+      mwl-draggable="event.draggable === true"
+      drop-data="{event: event}">
+    </a>
+  </div>
+</script>
+
+<script type="text/ng-template" id="calendarMonthDay.html">
+  <div
+    mwl-droppable
+    on-drop="vm.handleEventDrop(dropData.event, day.date)"
+    class="cal-month-day {{ day.cssClass }}"
+    ng-class="{
+            'cal-day-outmonth': !day.inMonth,
+            'cal-day-inmonth': day.inMonth,
+            'cal-day-weekend': day.isWeekend,
+            'cal-day-past': day.isPast,
+            'cal-day-today': day.isToday,
+            'cal-day-future': day.isFuture
+          }">
+
+    <small
+      class="cal-events-num badge badge-important pull-left"
+      ng-show="day.badgeTotal > 0"
+      ng-bind="day.badgeTotal">
+    </small>
+
+  <span
+    class="pull-right"
+    data-cal-date
+    ng-click="vm.calendarCtrl.drillDown(day.date)"
+    ng-bind="day.label">
+  </span>
+
+    <div class="cal-day-tick" ng-show="dayIndex === vm.openDayIndex && vm.view[vm.openDayIndex].events.length > 0">
+      <i class="glyphicon glyphicon-chevron-up"></i>
+      <i class="fa fa-chevron-up"></i>
+    </div>
+
+    <div ng-include="'calendarMonthEventsList.html'"></div>
+
+  </div>
+
+</script>
+
 <div class="cal-row-fluid cal-row-head">
 
   <div class="cal-cell1" ng-repeat="day in vm.weekDays track by $index" ng-bind="day"></div>
@@ -13,7 +69,7 @@
         class="cal-cell1 cal-cell {{ day.highlightClass }}"
         ng-click="vm.dayClicked(day)"
         ng-class="{pointer: day.events.length > 0}">
-        <div ng-include="'src/templates/calendarMonthDay.html'"></div>
+        <div ng-include="'calendarMonthDay.html'"></div>
       </div>
     </div>
 

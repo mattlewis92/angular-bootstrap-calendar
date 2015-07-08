@@ -1,6 +1,44 @@
 // Karma configuration
 // Generated on Thu Mar 19 2015 17:35:54 GMT+0000 (GMT)
 
+var webpack = require('webpack');
+var WATCH = process.argv.indexOf('--watch') > -1;
+var MIN = process.argv.indexOf('--min') > -1;
+
+var webpackConfig = {
+  cache: true,
+  devtool: 'inline-source-map',
+  module: {
+    preLoaders: [{
+      test: /\.js$/,
+      loaders: ['eslint'],
+      exclude: /node_modules/
+    }],
+    loaders: [{
+      test: /\.html$/,
+      loader: 'html',
+      exclude: /node_modules/
+    }],
+    postLoaders: [{
+      test: /\.js$/,
+      exclude: /(test|node_modules)/,
+      loader: 'istanbul-instrumenter'
+    }]
+  },
+  plugins: [
+    new webpack.optimize.DedupePlugin(),
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
+  ]
+};
+
+if (MIN) {
+  webpackConfig.module.loaders.push({
+    test: /.*src.*\.js$/,
+    loaders: ['uglify', 'ng-annotate'],
+    exclude: /node_modules/
+  });
+}
+
 module.exports = function(config) {
   config.set({
 
@@ -11,17 +49,9 @@ module.exports = function(config) {
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['mocha', 'chai', 'chai-as-promised', 'sinon-chai', 'chai-things'],
 
-    // these plugins will be require() by Karma
-    plugins: [
-      'karma-ng-html2js-preprocessor',
-      'karma-mocha',
-      'karma-chai-plugins',
-      'karma-chrome-launcher',
-      'karma-phantomjs-launcher'
-    ],
-
     // list of files / patterns to load in the browser
     files: [
+      'test/unit/entry.js'
     ],
 
     // list of files to exclude
@@ -31,17 +61,23 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      './src/templates/*.html': ['ng-html2js']
+      'test/unit/entry.js': ['webpack', 'sourcemap']
     },
 
-    ngHtml2JsPreprocessor: {
-      moduleName: 'mwl.calendar'
+    coverageReporter: {
+      reporters: [{
+        type: 'text-summary'
+      }, {
+        type: 'html'
+      }]
     },
+
+    webpack: webpackConfig,
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    reporters: ['progress', 'coverage'],
 
     // web server port
     port: 9876,
@@ -54,7 +90,7 @@ module.exports = function(config) {
     logLevel: config.LOG_INFO,
 
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: false,
+    autoWatch: WATCH,
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
@@ -62,6 +98,6 @@ module.exports = function(config) {
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: true
+    singleRun: !WATCH
   });
 };

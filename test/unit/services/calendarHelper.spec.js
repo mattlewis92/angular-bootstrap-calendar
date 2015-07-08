@@ -1,3 +1,9 @@
+'use strict';
+
+var angular = require('angular');
+var moment = require('moment');
+beforeEach(angular.mock.module('mwl.calendar'));
+
 describe('calendarHelper', function() {
 
   var calendarHelper, events, clock, calendarDay, calendarConfig;
@@ -124,10 +130,10 @@ describe('calendarHelper', function() {
       expect(weekdays).to.eql(['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']);
     });
 
-    it('should get the days of the week starting at monday', inject(function(moment) {
+    it('should get the days of the week starting at monday', inject(function() {
       moment.locale('en', {
-        week : {
-          dow : 1 // Monday is the first day of the week
+        week: {
+          dow: 1 // Monday is the first day of the week
         }
       });
 
@@ -135,8 +141,8 @@ describe('calendarHelper', function() {
       expect(weekdays).to.eql(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']);
 
       moment.locale('en', {
-        week : {
-          dow : 0 // Sunday is the first day of the week
+        week: {
+          dow: 0 // Sunday is the first day of the week
         }
       });
     }));
@@ -203,7 +209,7 @@ describe('calendarHelper', function() {
 
     it('should set the correct label for each day', function() {
       var expectedLabels = [27, 28, 29, 30];
-      for(var i = 1; i <= 31; i++) {
+      for (var i = 1; i <= 31; i++) {
         expectedLabels.push(i);
       }
       monthView.forEach(function(month, index) {
@@ -257,7 +263,7 @@ describe('calendarHelper', function() {
 
     it('should set the isToday flag to false', function() {
       monthView.forEach(function(month, index) {
-        if (index != 23) {
+        if (index !== 23) {
           expect(month.isToday).to.be.false;
         }
       });

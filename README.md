@@ -5,14 +5,12 @@
 [![npm version](https://badge.fury.io/js/angular-bootstrap-calendar.svg)](http://badge.fury.io/js/angular-bootstrap-calendar)
 [![Dependency Status](https://david-dm.org/mattlewis92/angular-bootstrap-calendar.svg)](https://david-dm.org/mattlewis92/angular-bootstrap-calendar)
 [![devDependency Status](https://david-dm.org/mattlewis92/angular-bootstrap-calendar/dev-status.svg)](https://david-dm.org/mattlewis92/angular-bootstrap-calendar#info=devDependencies)
-[![optionalDependency Status](https://david-dm.org/mattlewis92/angular-bootstrap-calendar/optional-status.svg)](https://david-dm.org/mattlewis92/angular-bootstrap-calendar#info=optionalDependencies)
 [![Codacy Badge](https://www.codacy.com/project/badge/92f23ec92cfb4594b0b94b39dc3d3ebb)](https://www.codacy.com/app/matt-lewis-private/angular-bootstrap-calendar)
 [![GitHub issues](https://img.shields.io/github/issues/mattlewis92/angular-bootstrap-calendar.svg)](https://github.com/mattlewis92/angular-bootstrap-calendar/issues)
-[![GitHub forks](https://img.shields.io/github/forks/mattlewis92/angular-bootstrap-calendar.svg)](https://github.com/mattlewis92/angular-bootstrap-calendar/network)
 [![GitHub stars](https://img.shields.io/github/stars/mattlewis92/angular-bootstrap-calendar.svg)](https://github.com/mattlewis92/angular-bootstrap-calendar/stargazers)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/mattlewis92/angular-bootstrap-calendar/master/LICENSE)
 
-## Please see the [release notes](https://github.com/mattlewis92/angular-bootstrap-calendar/releases/tag/0.10.0) for upgrading from 0.9.x to 0.10.x as there are many breaking changes.
+## Please see the [release notes](https://github.com/mattlewis92/angular-bootstrap-calendar/releases) for new features and breaking changes.
 
 ## Table of contents
 
@@ -43,16 +41,12 @@ The calendar has a few dependencies, these are as follows, and must be included 
 * [Moment.js](http://momentjs.com/)
 * [ui-bootstrap](http://angular-ui.github.io/bootstrap/) (optional, include for collapse animations and tooltips on the year and month views. Please note that if using angular 1.4.x that ui-bootstrap animations are broken for ui-bootstrap 0.13.0 and you should use ui-bootstrap 0.12.1 instead)
 * [interact.js](http://interactjs.io/) (optional, include to allow drag and drop on the calendar)
+* [ngTouch](https://docs.angularjs.org/api/ngTouch) (optional, include if using the calendar on mobile devices)
 
 It is recommended that you install the plugin and its dependencies through bower:
 
 ```
 bower install --save angular-bootstrap-calendar
-```
-
-but it is also possible to install through npm so you can use with browserify etc:
-```
-npm install --save angular-bootstrap-calendar
 ```
 
 You will then need to include the JS and CSS files for the plugin:
@@ -65,7 +59,18 @@ You will then need to include the JS and CSS files for the plugin:
 And finally add the module dependency in your AngularJS app (you can remove ui.bootstrap if you don't want the extra dependency - it is only required for collapse animations and tooltips):
 
 ```javascript
-angular.module('myModule', ['mwl.calendar', 'ui.bootstrap']);
+angular.module('myApp', ['mwl.calendar', 'ui.bootstrap']);
+```
+
+Alternatively you can install through npm:
+```
+npm install --save angular-bootstrap-calendar
+```
+
+Then add as a dependency to your app:
+
+```javascript
+angular.module('myApp', [require('angular-bootstrap-calendar'), require('angular-bootstrap')]);
 ```
 
 ## Documentation
@@ -276,17 +281,16 @@ http://mattlewis92.github.io/angular-bootstrap-calendar/
 
 ### Prepare your environment
 * Install [Node.js](http://nodejs.org/) and NPM (should come with)
-* Install global dev dependencies: `npm install -g gulp`
 * Install local dev dependencies: `npm install` while current directory is this repo
 
 ### Development server
-Run `gulp watch` to start a development server on port 8000 with livereload. 
+Run `npm run dev` to start a development server on port 8000 with auto reload + run tests. 
 
 ### Testing
-Run `gulp test:src` to run tests once or `test:watch` to continually run tests (this is automatic when you run `gulp watch`). 
+Run `npm run test:min` to run tests once or `npm run test:watch` to continually run tests (this is automatic when you start `npm run watch`). 
 
 ### Build
-Run `gulp build` to build the project files in the dist folder
+Run `npm run build` to build the project files in the dist folder
 
 ## License
 

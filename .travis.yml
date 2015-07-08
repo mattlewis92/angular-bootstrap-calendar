@@ -3,13 +3,7 @@ language: node_js
 node_js:
   - '0.12'
 
-before_script:
-  - npm install -gq bower
-  - bower install --dev --config.interactive=0
-  - gulp --version
-  - bower --version
-
-script: gulp ci
+script: npm run test:min
 
 notifications:
   email: false

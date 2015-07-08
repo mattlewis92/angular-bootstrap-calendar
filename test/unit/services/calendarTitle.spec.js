@@ -1,7 +1,12 @@
+'use strict';
+
+var angular = require('angular');
+beforeEach(angular.mock.module('mwl.calendar'));
+
 describe('calendarConfig', function() {
 
   var calendarTitle;
-  var calendarDay = new Date(2015, 04, 01);
+  var calendarDay = new Date(2015, 4, 1);
 
   beforeEach(inject(function(_calendarTitle_) {
     calendarTitle = _calendarTitle_;

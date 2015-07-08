@@ -1,9 +1,10 @@
 /**
  * angular-bootstrap-calendar - A pure AngularJS bootstrap themed responsive calendar that can display events and has views for year, month, week and day
- * @version v0.12.0
+ * @version v0.12.1
  * @link https://github.com/mattlewis92/angular-bootstrap-calendar
  * @license MIT
  */
+
 [class*="cal-cell"] {
   float: left;
   margin-left: 0;
