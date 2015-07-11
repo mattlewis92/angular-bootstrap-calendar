@@ -2,7 +2,8 @@
   "extends": "mwl",
   "rules": {
     "angular/ng_controller_name": [2, "/[A-Z].*Ctrl/"],
-    "angular/ng_controller_as": 0
+    "angular/ng_controller_as": 0,
+    "angular/ng_on_watch": 0
   },
   "env": {
     "node": true

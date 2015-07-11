@@ -11,7 +11,7 @@ angular
     vm.calendarConfig = calendarConfig;
     vm.$sce = $sce;
 
-    var unbindListener = $scope.$on('calendar.refreshView', function() {
+    $scope.$on('calendar.refreshView', function() {
       vm.dayViewHeight = calendarHelper.getDayViewHeight(
         $scope.dayViewStart,
         $scope.dayViewEnd,
@@ -26,10 +26,6 @@ angular
         $scope.dayViewSplit
       );
 
-    });
-
-    $scope.$on('$destroy', function() {
-      unbindListener();
     });
 
     vm.eventDragComplete = function(event, minuteChunksMoved) {

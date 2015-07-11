@@ -11,7 +11,7 @@ angular
     vm.showTimes = calendarConfig.showTimesOnWeekView;
     vm.$sce = $sce;
 
-    var unbindListener = $scope.$on('calendar.refreshView', function() {
+    $scope.$on('calendar.refreshView', function() {
       vm.dayViewHeight = calendarHelper.getDayViewHeight(
         $scope.dayViewStart,
         $scope.dayViewEnd,
@@ -28,10 +28,6 @@ angular
       } else {
         vm.view = calendarHelper.getWeekView($scope.events, $scope.currentDay);
       }
-    });
-
-    $scope.$on('$destroy', function() {
-      unbindListener();
     });
 
     vm.weekDragged = function(event, daysDiff, minuteChunksMoved) {

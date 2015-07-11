@@ -8,7 +8,7 @@ angular
 
     var vm = this;
 
-    var unbindListener = $scope.$on('calendar.refreshView', function() {
+    $scope.$on('calendar.refreshView', function() {
 
       vm.weekDays = calendarHelper.getWeekDayNames();
 
@@ -28,10 +28,6 @@ angular
         });
       }
 
-    });
-
-    $scope.$on('$destroy', function() {
-      unbindListener();
     });
 
     vm.dayClicked = function(day, dayClickedFirstRun) {

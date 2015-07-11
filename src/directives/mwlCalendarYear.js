@@ -8,7 +8,7 @@ angular
 
     var vm = this;
 
-    var unbindListener = $scope.$on('calendar.refreshView', function() {
+    $scope.$on('calendar.refreshView', function() {
       vm.view = calendarHelper.getYearView($scope.events, $scope.currentDay, $scope.cellModifier);
 
       //Auto open the calendar to the current day if set
@@ -20,10 +20,6 @@ angular
         });
       }
 
-    });
-
-    $scope.$on('$destroy', function() {
-      unbindListener();
     });
 
     vm.monthClicked = function(month, monthClickedFirstRun) {

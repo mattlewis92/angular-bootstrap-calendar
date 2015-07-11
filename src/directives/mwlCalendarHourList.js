@@ -24,17 +24,13 @@ angular
 
     var originalLocale = moment.locale();
 
-    var unbindListener = $scope.$on('calendar.refreshView', function() {
+    $scope.$on('calendar.refreshView', function() {
 
       if (originalLocale !== moment.locale()) {
         originalLocale = moment.locale();
         updateDays();
       }
 
-    });
-
-    $scope.$on('$destroy', function() {
-      unbindListener();
     });
 
     updateDays();

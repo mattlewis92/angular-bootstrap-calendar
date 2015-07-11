@@ -9,13 +9,8 @@ angular
     var vm = this;
     vm.$sce = $sce;
 
-    var unbindWatcher = $scope.$watch('isOpen', function(isOpen) {
+    $scope.$watch('isOpen', function(isOpen) {
       vm.shouldCollapse = !isOpen;
-    });
-
-    var unbindDestroy = $scope.$on('$destroy', function() {
-      unbindDestroy();
-      unbindWatcher();
     });
 
   })

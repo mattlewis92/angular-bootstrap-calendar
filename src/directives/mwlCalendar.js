@@ -61,27 +61,14 @@ angular
     }, 50);
 
     //Auto update the calendar when the locale changes
-    var unbindLocaleWatcher = $scope.$watch(function() {
+    $scope.$watch(function() {
       return moment.locale() + $locale.id;
     }, refreshCalendar);
 
-    var unbindOnDestroy = [];
-    unbindOnDestroy.push(unbindLocaleWatcher);
-
     //Refresh the calendar when any of these variables change.
-    /* eslint-disable angular/ng_on_watch */
-    unbindOnDestroy.push($scope.$watch('currentDay', refreshCalendar));
-    unbindOnDestroy.push($scope.$watch('view', refreshCalendar));
-    unbindOnDestroy.push($scope.$watch('events', refreshCalendar, true));
-    /* eslint-enable angular/ng_on_watch */
-
-    //Remove any watchers when the calendar is destroyed
-    var unbindDestroyListener = $scope.$on('$destroy', function() {
-      unbindOnDestroy.forEach(function(unbind) {
-        unbind();
-      });
-    });
-    unbindOnDestroy.push(unbindDestroyListener);
+    $scope.$watch('currentDay', refreshCalendar);
+    $scope.$watch('view', refreshCalendar);
+    $scope.$watch('events', refreshCalendar, true);
 
   })
   .directive('mwlCalendar', function() {
