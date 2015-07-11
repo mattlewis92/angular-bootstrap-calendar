@@ -52,14 +52,15 @@
     "interact.js": "~1.2.4"
   },
   "scripts": {
-    "test:unmin": "node ./node_modules/karma/bin/karma start",
-    "test:min": "node ./node_modules/karma/bin/karma start --min",
-    "test:watch": "node ./node_modules/karma/bin/karma start --watch",
-    "build:unmin": "node ./node_modules/webpack/bin/webpack.js --config webpack.config.build.js",
-    "build:min": "node ./node_modules/webpack/bin/webpack.js -p --config webpack.config.build.js",
-    "build:unmin:exclude-templates": "node ./node_modules/webpack/bin/webpack.js --config webpack.config.build.js --exclude-templates",
-    "build:min:exclude-templates": "node ./node_modules/webpack/bin/webpack.js -p --config webpack.config.build.js --exclude-templates",
+    "test": "npm run test:min",
+    "test:unmin": "karma start",
+    "test:min": "karma start --min",
+    "test:watch": "karma start --watch",
+    "build:unmin": "webpack --config webpack.config.build.js",
+    "build:min": "webpack -p --config webpack.config.build.js",
+    "build:unmin:exclude-templates": "webpack --config webpack.config.build.js --exclude-templates",
+    "build:min:exclude-templates": "webpack -p --config webpack.config.build.js --exclude-templates",
     "build": "npm run build:unmin && npm run build:min && npm run build:unmin:exclude-templates && npm run build:min:exclude-templates",
-    "dev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js"
+    "start": "webpack-dev-server"
   }
 }
