@@ -4,7 +4,7 @@ var angular = require('angular');
 
 angular
   .module('mwl.calendar')
-  .controller('MwlCalendarCtrl', function($scope, $timeout, $window, $locale, moment, calendarTitle, calendarDebounce) {
+  .controller('MwlCalendarCtrl', function($scope, $timeout, $window, $locale, moment, calendarTitle) {
 
     var vm = this;
 
@@ -34,14 +34,13 @@ angular
     var previousDate = moment($scope.currentDay);
     var previousView = angular.copy($scope.view);
 
-    //Use a debounce to prevent it being called 3 times on initialisation
-    var refreshCalendar = calendarDebounce(function() {
+    function refreshCalendar() {
       if (calendarTitle[$scope.view]) {
         $scope.viewTitle = calendarTitle[$scope.view]($scope.currentDay);
       }
 
       $scope.events = $scope.events.map(function(event, index) {
-        Object.defineProperty(event, '$id', {enumerable: false, value: index});
+        Object.defineProperty(event, '$id', {enumerable: false, configurable: true, value: index});
         return event;
       });
 
@@ -58,17 +57,26 @@ angular
       if (shouldUpdate) {
         $scope.$broadcast('calendar.refreshView');
       }
-    });
+    }
 
-    //Auto update the calendar when the locale changes
-    $scope.$watch(function() {
-      return moment.locale() + $locale.id;
-    }, refreshCalendar);
+    var eventsWatched = false;
 
     //Refresh the calendar when any of these variables change.
-    $scope.$watch('currentDay', refreshCalendar);
-    $scope.$watch('view', refreshCalendar);
-    $scope.$watch('events', refreshCalendar, true);
+    $scope.$watchGroup([
+      'currentDay',
+      'view',
+      function() {
+        return moment.locale() + $locale.id; //Auto update the calendar when the locale changes
+      }
+    ], function() {
+      if (!eventsWatched) {
+        eventsWatched = true;
+        //need to deep watch events hence why it isn't included in the watch group
+        $scope.$watch('events', refreshCalendar, true); //this will call refreshCalendar when the watcher starts (i.e. now)
+      } else {
+        refreshCalendar();
+      }
+    });
 
   })
   .directive('mwlCalendar', function() {
