@@ -121,6 +121,28 @@ describe('calendarHelper', function() {
       expect(isInPeriod).to.be.true;
     });
 
+    it('should throw an error when recursOn is an invalid value', function() {
+
+      expect(function() {
+        calendarHelper.eventIsInPeriod({
+          startsAt: new Date(),
+          endsAt: new Date(),
+          recursOn: 'invalid'
+        }, periodStart, periodEnd);
+      }).to.throw();
+
+    });
+
+    it('should use the event start time as the end time when no end time is passed', function() {
+
+      var isInPeriod = calendarHelper.eventIsInPeriod({
+        startsAt: new Date('January 3, 2015 00:00:00')
+      }, periodStart, periodEnd);
+
+      expect(isInPeriod).to.be.true;
+
+    });
+
   });
 
   describe('getWeekDayNames', function() {
