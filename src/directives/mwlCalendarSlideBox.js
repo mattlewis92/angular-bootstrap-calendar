@@ -4,14 +4,10 @@ var angular = require('angular');
 
 angular
   .module('mwl.calendar')
-  .controller('MwlCalendarSlideBoxCtrl', function($scope, $sce) {
+  .controller('MwlCalendarSlideBoxCtrl', function($sce) {
 
     var vm = this;
     vm.$sce = $sce;
-
-    $scope.$watch('isOpen', function(isOpen) {
-      vm.shouldCollapse = !isOpen;
-    });
 
   })
   .directive('mwlCalendarSlideBox', function() {
