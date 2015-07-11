@@ -33,6 +33,12 @@ angular
 
     });
 
+    $scope.$watch(function() {
+      return $scope.dayViewStart + $scope.dayViewEnd + $scope.dayViewSplit;
+    }, function() {
+      updateDays();
+    });
+
     updateDays();
 
   })
