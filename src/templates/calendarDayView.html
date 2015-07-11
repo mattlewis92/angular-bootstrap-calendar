@@ -18,7 +18,7 @@
       ng-repeat="event in vm.view track by event.$id"
       ng-style="{top: event.top + 'px', left: event.left + 60 + 'px', height: event.height + 'px'}"
       mwl-draggable="event.draggable === true"
-      axis="y"
+      axis="'y'"
       snap-grid="{y: 30}"
       on-drag="vm.eventDragged(event, y)"
       on-drag-end="vm.eventDragComplete(event, y)"
