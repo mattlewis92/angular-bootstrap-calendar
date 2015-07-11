@@ -58,7 +58,7 @@ angular
       if (shouldUpdate) {
         $scope.$broadcast('calendar.refreshView');
       }
-    }, 50);
+    });
 
     //Auto update the calendar when the locale changes
     $scope.$watch(function() {
