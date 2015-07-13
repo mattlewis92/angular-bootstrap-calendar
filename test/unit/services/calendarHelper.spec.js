@@ -551,4 +551,91 @@ describe('calendarHelper', function() {
 
   });
 
+  describe('getDayViewHeight', function() {
+    var dayViewHeight;
+
+    beforeEach(function() {
+      dayViewHeight = calendarHelper.getDayViewHeight('01:00', '22:00', 10);
+    });
+
+    it('should calculate the height of the day view', function() {
+      expect(dayViewHeight).to.equal(3962);
+    });
+  });
+
+  describe('getWeekViewWithTimes', function() {
+    var weekViewWithTimes;
+
+    beforeEach(function() {
+      var dayEvents = [{
+        startsAt: new Date('October 19, 2015 11:00:00'),
+        endsAt: new Date('October 21, 2015 11:00:00')
+      }, {
+        startsAt: new Date('October 20, 2015 11:00:00'),
+        endsAt: new Date('October 21, 2015 11:00:00')
+      }, {
+        startsAt: new Date('October 20, 2015 11:00:00'),
+        endsAt: new Date('October 20, 2015 12:00:00')
+      }];
+
+      weekViewWithTimes = calendarHelper.getWeekViewWithTimes(
+        dayEvents,
+        calendarDay,
+        '00:00',
+        '23:00',
+        30
+      );
+    });
+
+    it('should calculate the week view with times', function() {
+      var expectedEventsWeekView = [
+        {
+          startsAt: new Date('October 19, 2015 11:00:00'),
+          endsAt: new Date('October 21, 2015 11:00:00'),
+          daySpan: 3,
+          dayOffset: 1,
+          top: 658,
+          height: 782,
+          left: 0
+        },
+        {
+          startsAt: new Date('October 20, 2015 11:00:00'),
+          endsAt: new Date('October 21, 2015 11:00:00'),
+          daySpan: 2,
+          dayOffset: 2,
+          top: 658,
+          height: 782,
+          left: 0
+        },
+        {
+          startsAt: new Date('October 20, 2015 11:00:00'),
+          endsAt: new Date('October 20, 2015 12:00:00'),
+          daySpan: 1,
+          dayOffset: 2,
+          top: 658,
+          height: 60,
+          left: 150
+        }
+      ];
+
+      expect(weekViewWithTimes.days.length).to.equal(7);
+      expect(weekViewWithTimes.events).to.eql(expectedEventsWeekView);
+    });
+  });
+
+  describe('formatDate', function() {
+    it('should format a date using angular dateFilter', function() {
+      calendarConfig.dateFormatter = 'angular';
+      var formattedDate = calendarHelper.formatDate(new Date(), 'yyyy-mm-dd');
+      expect(formattedDate).to.equal('2015-10-20');
+    });
+
+    it('should format a date using moment format', function() {
+      calendarConfig.dateFormatter = 'moment';
+      var formattedDate = calendarHelper.formatDate(new Date(), 'YYYY-MM-DD');
+      expect(formattedDate).to.equal('2015-10-20');
+    });
+
+  });
+
 });
