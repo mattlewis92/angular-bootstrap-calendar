@@ -32,7 +32,7 @@ angular
     };
 
     var previousDate = moment($scope.currentDay);
-    var previousView = angular.copy($scope.view);
+    var previousView = $scope.view;
 
     function refreshCalendar() {
       if (calendarTitle[$scope.view]) {
@@ -44,15 +44,18 @@ angular
         return event;
       });
 
-      //if on-timespan-click="calendarDay = calendarDate" is set then dont update the view as nothing needs to change
+      //if on-timespan-click="calendarDay = calendarDate" is set then don't update the view as nothing needs to change
       var currentDate = moment($scope.currentDay);
       var shouldUpdate = true;
-      if (previousDate.clone().startOf($scope.view).isSame(currentDate.clone().startOf($scope.view)) && !previousDate.isSame(currentDate) &&
-        $scope.view === previousView) {
+      if (
+        previousDate.clone().startOf($scope.view).isSame(currentDate.clone().startOf($scope.view)) &&
+        !previousDate.isSame(currentDate) &&
+        $scope.view === previousView
+      ) {
         shouldUpdate = false;
       }
       previousDate = currentDate;
-      previousView = angular.copy($scope.view);
+      previousView = $scope.view;
 
       if (shouldUpdate) {
         $scope.$broadcast('calendar.refreshView');
