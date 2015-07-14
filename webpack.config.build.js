@@ -50,6 +50,10 @@ module.exports = {
       test: /.*\.js$/,
       loaders: ['eslint'],
       exclude: /node_modules/
+    }, {
+      test: /\.html$/,
+      loader: 'htmlhint',
+      exclude: /node_modules/
     }],
     loaders: [{
       test: /.*\.js$/,
