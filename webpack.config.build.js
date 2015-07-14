@@ -41,7 +41,7 @@ module.exports = {
       root: 'interact',
       commonjs: 'interact.js',
       commonjs2: 'interact.js',
-      amd: 'interact.js'
+      amd: 'interact'
     }
   },
   devtool: MIN ? 'source-map' : null,
