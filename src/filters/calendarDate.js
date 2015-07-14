@@ -16,6 +16,8 @@ angular
 
     }
 
+    // This is stateful because the locale can change as well
+    // as calendarConfig.dateFormats which would change the value outside of this filter
     calendarDate.$stateful = true;
 
     return calendarDate;
