@@ -41,8 +41,6 @@ angular
       updateDays();
     });
 
-    updateDays();
-
   })
   .directive('mwlCalendarHourList', function() {
 
