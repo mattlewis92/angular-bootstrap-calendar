@@ -4,7 +4,7 @@ var angular = require('angular');
 
 angular
   .module('mwl.calendar')
-  .controller('MwlCalendarCtrl', function($scope, $timeout, $window, $locale, moment, calendarTitle) {
+  .controller('MwlCalendarCtrl', function($scope, $timeout, $window, $attrs, $locale, moment, calendarTitle) {
 
     var vm = this;
 
@@ -35,7 +35,7 @@ angular
     var previousView = $scope.view;
 
     function refreshCalendar() {
-      if (calendarTitle[$scope.view]) {
+      if (calendarTitle[$scope.view] && angular.isDefined($attrs.viewTitle)) {
         $scope.viewTitle = calendarTitle[$scope.view]($scope.currentDay);
       }
 
@@ -90,7 +90,7 @@ angular
       scope: {
         events: '=',
         view: '=',
-        viewTitle: '=',
+        viewTitle: '=?',
         currentDay: '=',
         editEventHtml: '=',
         deleteEventHtml: '=',
