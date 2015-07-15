@@ -100,15 +100,15 @@ describe('mwlCalendar directive', function() {
   it('allow to change the view', function() {
     var myDate = new Date();
     MwlCalendarCtrl.changeView('day', myDate);
-    expect(directiveScope.view).to.equal('day');
-    expect(directiveScope.currentDay).to.equal(myDate);
+    expect(MwlCalendarCtrl.view).to.equal('day');
+    expect(MwlCalendarCtrl.currentDay).to.equal(myDate);
   });
 
   it('should allow to drill down', function() {
     var myDate = new Date();
     MwlCalendarCtrl.drillDown(myDate);
-    expect(directiveScope.view).to.equal('day');
-    expect(directiveScope.currentDay).to.eql(myDate);
+    expect(MwlCalendarCtrl.view).to.equal('day');
+    expect(MwlCalendarCtrl.currentDay).to.eql(myDate);
   });
 
   it('should refresh the calendar when appropriate', function() {

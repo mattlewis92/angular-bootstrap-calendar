@@ -9,9 +9,9 @@ angular
     var dayViewStart, dayViewEnd;
 
     function updateDays() {
-      dayViewStart = moment($scope.dayViewStart || '00:00', 'HH:mm');
-      dayViewEnd = moment($scope.dayViewEnd || '23:00', 'HH:mm');
-      vm.dayViewSplit = parseInt($scope.dayViewSplit);
+      dayViewStart = moment(vm.dayViewStart || '00:00', 'HH:mm');
+      dayViewEnd = moment(vm.dayViewEnd || '23:00', 'HH:mm');
+      vm.dayViewSplit = parseInt(vm.dayViewSplit);
       vm.hours = [];
       var dayCounter = moment(dayViewStart);
       for (var i = 0; i <= dayViewEnd.diff(dayViewStart, 'hours'); i++) {
@@ -34,9 +34,9 @@ angular
     });
 
     $scope.$watchGroup([
-      'dayViewStart',
-      'dayViewEnd',
-      'dayViewSplit'
+      'vm.dayViewStart',
+      'vm.dayViewEnd',
+      'vm.dayViewSplit'
     ], function() {
       updateDays();
     });
@@ -52,7 +52,8 @@ angular
         dayViewStart: '=',
         dayViewEnd: '=',
         dayViewSplit: '='
-      }
+      },
+      bindToController: true
     };
 
   });

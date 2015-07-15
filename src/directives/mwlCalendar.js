@@ -8,11 +8,11 @@ angular
 
     var vm = this;
 
-    $scope.events = $scope.events || [];
+    vm.events = vm.events || [];
 
     vm.changeView = function(view, newDay) {
-      $scope.view = view;
-      $scope.currentDay = newDay;
+      vm.view = view;
+      vm.currentDay = newDay;
     };
 
     vm.drillDown = function(date) {
@@ -25,37 +25,37 @@ angular
         week: 'day'
       };
 
-      if ($scope.onDrillDownClick({calendarDate: rawDate, calendarNextView: nextView[$scope.view]}) !== false) {
-        vm.changeView(nextView[$scope.view], rawDate);
+      if (vm.onDrillDownClick({calendarDate: rawDate, calendarNextView: nextView[vm.view]}) !== false) {
+        vm.changeView(nextView[vm.view], rawDate);
       }
 
     };
 
-    var previousDate = moment($scope.currentDay);
-    var previousView = $scope.view;
+    var previousDate = moment(vm.currentDay);
+    var previousView = vm.view;
 
     function refreshCalendar() {
-      if (calendarTitle[$scope.view] && angular.isDefined($attrs.viewTitle)) {
-        $scope.viewTitle = calendarTitle[$scope.view]($scope.currentDay);
+      if (calendarTitle[vm.view] && angular.isDefined($attrs.viewTitle)) {
+        vm.viewTitle = calendarTitle[vm.view](vm.currentDay);
       }
 
-      $scope.events = $scope.events.map(function(event, index) {
+      vm.events = vm.events.map(function(event, index) {
         Object.defineProperty(event, '$id', {enumerable: false, configurable: true, value: index});
         return event;
       });
 
       //if on-timespan-click="calendarDay = calendarDate" is set then don't update the view as nothing needs to change
-      var currentDate = moment($scope.currentDay);
+      var currentDate = moment(vm.currentDay);
       var shouldUpdate = true;
       if (
-        previousDate.clone().startOf($scope.view).isSame(currentDate.clone().startOf($scope.view)) &&
+        previousDate.clone().startOf(vm.view).isSame(currentDate.clone().startOf(vm.view)) &&
         !previousDate.isSame(currentDate) &&
-        $scope.view === previousView
+        vm.view === previousView
       ) {
         shouldUpdate = false;
       }
       previousDate = currentDate;
-      previousView = $scope.view;
+      previousView = vm.view;
 
       if (shouldUpdate) {
         $scope.$broadcast('calendar.refreshView');
@@ -66,8 +66,8 @@ angular
 
     //Refresh the calendar when any of these variables change.
     $scope.$watchGroup([
-      'currentDay',
-      'view',
+      'vm.currentDay',
+      'vm.view',
       function() {
         return moment.locale() + $locale.id; //Auto update the calendar when the locale changes
       }
@@ -75,7 +75,7 @@ angular
       if (!eventsWatched) {
         eventsWatched = true;
         //need to deep watch events hence why it isn't included in the watch group
-        $scope.$watch('events', refreshCalendar, true); //this will call refreshCalendar when the watcher starts (i.e. now)
+        $scope.$watch('vm.events', refreshCalendar, true); //this will call refreshCalendar when the watcher starts (i.e. now)
       } else {
         refreshCalendar();
       }
@@ -106,7 +106,8 @@ angular
         dayViewEnd: '@',
         dayViewSplit: '@'
       },
-      controller: 'MwlCalendarCtrl as vm'
+      controller: 'MwlCalendarCtrl as vm',
+      bindToController: true
     };
 
   });

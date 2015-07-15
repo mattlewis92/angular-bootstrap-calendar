@@ -1,58 +1,58 @@
-<div class="cal-context" ng-switch="view">
+<div class="cal-context" ng-switch="vm.view">
 
   <div class="alert alert-danger" ng-switch-default>The value passed to the view attribute of the calendar is not set</div>
 
-  <div class="alert alert-danger" ng-hide="currentDay">The value passed to current-day attribute of the calendar is not set</div>
+  <div class="alert alert-danger" ng-hide="vm.currentDay">The value passed to current-day attribute of the calendar is not set</div>
 
   <mwl-calendar-year
-    events="events"
-    current-day="currentDay"
-    on-event-click="onEventClick"
-    on-event-times-changed="onEventTimesChanged"
-    on-edit-event-click="onEditEventClick"
-    on-delete-event-click="onDeleteEventClick"
-    on-timespan-click="onTimespanClick"
-    edit-event-html="editEventHtml"
-    delete-event-html="deleteEventHtml"
-    auto-open="autoOpen"
-    cell-modifier="cellModifier"
+    events="vm.events"
+    current-day="vm.currentDay"
+    on-event-click="vm.onEventClick"
+    on-event-times-changed="vm.onEventTimesChanged"
+    on-edit-event-click="vm.onEditEventClick"
+    on-delete-event-click="vm.onDeleteEventClick"
+    on-timespan-click="vm.onTimespanClick"
+    edit-event-html="vm.editEventHtml"
+    delete-event-html="vm.deleteEventHtml"
+    auto-open="vm.autoOpen"
+    cell-modifier="vm.cellModifier"
     ng-switch-when="year"
   ></mwl-calendar-year>
 
   <mwl-calendar-month
-    events="events"
-    current-day="currentDay"
-    on-event-click="onEventClick"
-    on-event-times-changed="onEventTimesChanged"
-    on-edit-event-click="onEditEventClick"
-    on-delete-event-click="onDeleteEventClick"
-    on-timespan-click="onTimespanClick"
-    edit-event-html="editEventHtml"
-    delete-event-html="deleteEventHtml"
-    auto-open="autoOpen"
-    cell-modifier="cellModifier"
+    events="vm.events"
+    current-day="vm.currentDay"
+    on-event-click="vm.onEventClick"
+    on-event-times-changed="vm.onEventTimesChanged"
+    on-edit-event-click="vm.onEditEventClick"
+    on-delete-event-click="vm.onDeleteEventClick"
+    on-timespan-click="vm.onTimespanClick"
+    edit-event-html="vm.editEventHtml"
+    delete-event-html="vm.deleteEventHtml"
+    auto-open="vm.autoOpen"
+    cell-modifier="vm.cellModifier"
     ng-switch-when="month"
     ></mwl-calendar-month>
 
   <mwl-calendar-week
-    events="events"
-    current-day="currentDay"
-    on-event-click="onEventClick"
-    on-event-times-changed="onEventTimesChanged"
-    day-view-start="dayViewStart"
-    day-view-end="dayViewEnd"
-    day-view-split="dayViewSplit || 30"
+    events="vm.events"
+    current-day="vm.currentDay"
+    on-event-click="vm.onEventClick"
+    on-event-times-changed="vm.onEventTimesChanged"
+    day-view-start="vm.dayViewStart"
+    day-view-end="vm.dayViewEnd"
+    day-view-split="vm.dayViewSplit"
     ng-switch-when="week"
     ></mwl-calendar-week>
 
   <mwl-calendar-day
-    events="events"
-    current-day="currentDay"
-    on-event-click="onEventClick"
-    on-event-times-changed="onEventTimesChanged"
-    day-view-start="dayViewStart"
-    day-view-end="dayViewEnd"
-    day-view-split="dayViewSplit || 30"
+    events="vm.events"
+    current-day="vm.currentDay"
+    on-event-click="vm.onEventClick"
+    on-event-times-changed="vm.onEventTimesChanged"
+    day-view-start="vm.dayViewStart"
+    day-view-end="vm.dayViewEnd"
+    day-view-split="vm.dayViewSplit"
     ng-switch-when="day"
     ></mwl-calendar-day>
 </div>
