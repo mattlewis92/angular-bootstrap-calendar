@@ -1,9 +1,9 @@
-<div class="cal-slide-box" collapse="!isOpen" mwl-collapse-fallback="!isOpen">
+<div class="cal-slide-box" collapse="!vm.isOpen" mwl-collapse-fallback="!vm.isOpen">
   <div class="cal-slide-content cal-event-list">
     <ul class="unstyled list-unstyled">
 
       <li
-        ng-repeat="event in events | orderBy:'startsAt' track by event.$id"
+        ng-repeat="event in vm.events | orderBy:'startsAt' track by event.$id"
         ng-class="event.cssClass"
         mwl-draggable="event.draggable === true"
         drop-data="{event: event}">
@@ -12,7 +12,7 @@
         <a
           href="javascript:;"
           class="event-item"
-          ng-click="onEventClick({calendarEvent: event})">
+          ng-click="vm.onEventClick({calendarEvent: event})">
           <span ng-bind-html="vm.$sce.trustAsHtml(event.title)"></span>
           <span ng-show="isMonthView">(<span ng-bind="event.startsAt | calendarDate:'time':true"></span>)</span>
           <span ng-show="isYearView">(<span ng-bind="event.startsAt | calendarDate:'datetime':true"></span>)</span>
@@ -21,17 +21,17 @@
         <a
           href="javascript:;"
           class="event-item-edit"
-          ng-if="editEventHtml && event.editable !== false"
-          ng-bind-html="vm.$sce.trustAsHtml(editEventHtml)"
-          ng-click="onEditEventClick({calendarEvent: event})">
+          ng-if="vm.editEventHtml && event.editable !== false"
+          ng-bind-html="vm.$sce.trustAsHtml(vm.editEventHtml)"
+          ng-click="vm.onEditEventClick({calendarEvent: event})">
         </a>
 
         <a
           href="javascript:;"
           class="event-item-delete"
-          ng-if="deleteEventHtml && event.deletable !== false"
-          ng-bind-html="vm.$sce.trustAsHtml(deleteEventHtml)"
-          ng-click="onDeleteEventClick({calendarEvent: event})">
+          ng-if="vm.deleteEventHtml && event.deletable !== false"
+          ng-bind-html="vm.$sce.trustAsHtml(vm.deleteEventHtml)"
+          ng-click="vm.onDeleteEventClick({calendarEvent: event})">
         </a>
       </li>
 

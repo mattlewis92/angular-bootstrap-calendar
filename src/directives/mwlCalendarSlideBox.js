@@ -30,7 +30,8 @@ angular
         onEditEventClick: '=',
         deleteEventHtml: '=',
         onDeleteEventClick: '='
-      }
+      },
+      bindToController: true
     };
 
   });
