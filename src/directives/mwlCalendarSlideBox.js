@@ -4,19 +4,10 @@ var angular = require('angular');
 
 angular
   .module('mwl.calendar')
-  .controller('MwlCalendarSlideBoxCtrl', function($scope, $sce) {
+  .controller('MwlCalendarSlideBoxCtrl', function($sce) {
 
     var vm = this;
     vm.$sce = $sce;
-
-    var unbindWatcher = $scope.$watch('isOpen', function(isOpen) {
-      vm.shouldCollapse = !isOpen;
-    });
-
-    var unbindDestroy = $scope.$on('$destroy', function() {
-      unbindDestroy();
-      unbindWatcher();
-    });
 
   })
   .directive('mwlCalendarSlideBox', function() {
@@ -39,7 +30,8 @@ angular
         onEditEventClick: '=',
         deleteEventHtml: '=',
         onDeleteEventClick: '='
-      }
+      },
+      bindToController: true
     };
 
   });

@@ -36,11 +36,11 @@
     <mwl-calendar-slide-box
       is-open="vm.openRowIndex === $index && vm.view[vm.openMonthIndex].events.length > 0"
       events="vm.view[vm.openMonthIndex].events"
-      on-event-click="onEventClick"
-      edit-event-html="editEventHtml"
-      on-edit-event-click="onEditEventClick"
-      delete-event-html="deleteEventHtml"
-      on-delete-event-click="onDeleteEventClick">
+      on-event-click="vm.onEventClick"
+      edit-event-html="vm.editEventHtml"
+      on-edit-event-click="vm.onEditEventClick"
+      delete-event-html="vm.deleteEventHtml"
+      on-delete-event-click="vm.onDeleteEventClick">
     </mwl-calendar-slide-box>
 
   </div>

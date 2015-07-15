@@ -8,11 +8,11 @@ angular
 
     var vm = this;
 
-    var unbindListener = $scope.$on('calendar.refreshView', function() {
+    $scope.$on('calendar.refreshView', function() {
 
       vm.weekDays = calendarHelper.getWeekDayNames();
 
-      vm.view = calendarHelper.getMonthView($scope.events, $scope.currentDay, $scope.cellModifier);
+      vm.view = calendarHelper.getMonthView(vm.events, vm.currentDay, vm.cellModifier);
       var rows = Math.floor(vm.view.length / 7);
       vm.monthOffsets = [];
       for (var i = 0; i < rows; i++) {
@@ -20,9 +20,9 @@ angular
       }
 
       //Auto open the calendar to the current day if set
-      if ($scope.autoOpen) {
+      if (vm.autoOpen) {
         vm.view.forEach(function(day) {
-          if (day.inMonth && moment($scope.currentDay).startOf('day').isSame(day.date) && !vm.openDayIndex) {
+          if (day.inMonth && moment(vm.currentDay).startOf('day').isSame(day.date) && !vm.openDayIndex) {
             vm.dayClicked(day, true);
           }
         });
@@ -30,14 +30,10 @@ angular
 
     });
 
-    $scope.$on('$destroy', function() {
-      unbindListener();
-    });
-
     vm.dayClicked = function(day, dayClickedFirstRun) {
 
       if (!dayClickedFirstRun) {
-        $scope.onTimespanClick({
+        vm.onTimespanClick({
           calendarDate: day.date.toDate()
         });
       }
@@ -75,7 +71,7 @@ angular
 
       var newEnd = calendarHelper.adjustEndDateFromStartDiff(event.startsAt, newStart, event.endsAt);
 
-      $scope.onEventTimesChanged({
+      vm.onEventTimesChanged({
         calendarEvent: event,
         calendarDate: newDayDate,
         calendarNewEventStart: newStart.toDate(),
@@ -106,7 +102,8 @@ angular
       controller: 'MwlCalendarMonthCtrl as vm',
       link: function(scope, element, attrs, calendarCtrl) {
         scope.vm.calendarCtrl = calendarCtrl;
-      }
+      },
+      bindToController: true
     };
 
   });

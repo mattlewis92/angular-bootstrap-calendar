@@ -5,17 +5,13 @@ var angular = require('angular');
 angular
   .module('mwl.calendar')
   .controller('MwlCollapseFallbackCtrl', function($scope, $attrs, $element) {
-    var unbindWatcher = $scope.$watch($attrs.mwlCollapseFallback, function(shouldCollapse) {
+
+    $scope.$watch($attrs.mwlCollapseFallback, function(shouldCollapse) {
       if (shouldCollapse) {
         $element.addClass('ng-hide');
       } else {
         $element.removeClass('ng-hide');
       }
-    });
-
-    var unbindDestroy = $scope.$on('$destroy', function() {
-      unbindDestroy();
-      unbindWatcher();
     });
 
   })

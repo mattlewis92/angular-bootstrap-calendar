@@ -41,7 +41,7 @@ module.exports = {
       root: 'interact',
       commonjs: 'interact.js',
       commonjs2: 'interact.js',
-      amd: 'interact.js'
+      amd: 'interact'
     }
   },
   devtool: MIN ? 'source-map' : null,
@@ -49,6 +49,10 @@ module.exports = {
     preLoaders: [{
       test: /.*\.js$/,
       loaders: ['eslint'],
+      exclude: /node_modules/
+    }, {
+      test: /\.html$/,
+      loader: 'htmlhint',
       exclude: /node_modules/
     }],
     loaders: [{

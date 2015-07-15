@@ -120,8 +120,7 @@ angular
       }
     });
 
-    var unbindDestroy = $scope.$on('$destroy', function() {
-      unbindDestroy();
+    $scope.$on('$destroy', function() {
       interact($element[0]).unset();
     });
 

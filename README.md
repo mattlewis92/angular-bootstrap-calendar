@@ -36,7 +36,7 @@ Pull requests are welcome.
 
 The calendar has a few dependencies, these are as follows, and must be included BEFORE the plugin files:
 
-* [AngularJS](https://angularjs.org/) 1.2.x, 1.3.x or 1.4.x are all supported
+* [AngularJS](https://angularjs.org/) 1.3.x or 1.4.x are supported
 * [Bootstrap](http://getbootstrap.com/) 3+ (CSS only)
 * [Moment.js](http://momentjs.com/)
 * [ui-bootstrap](http://angular-ui.github.io/bootstrap/) (optional, include for collapse animations and tooltips on the year and month views. Please note that if using angular 1.4.x that ui-bootstrap animations are broken for ui-bootstrap 0.13.0 and you should use ui-bootstrap 0.12.1 instead)
@@ -284,10 +284,10 @@ http://mattlewis92.github.io/angular-bootstrap-calendar/
 * Install local dev dependencies: `npm install` while current directory is this repo
 
 ### Development server
-Run `npm run dev` to start a development server on port 8000 with auto reload + run tests. 
+Run `npm start` to start a development server on port 8000 with auto reload + run tests. 
 
 ### Testing
-Run `npm run test:min` to run tests once or `npm run test:watch` to continually run tests (this is automatic when you start `npm run watch`). 
+Run `npm test` to run tests once or `npm run test:watch` to continually run tests (this is automatic when you run `npm start`). 
 
 ### Build
 Run `npm run build` to build the project files in the dist folder

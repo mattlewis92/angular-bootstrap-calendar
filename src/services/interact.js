@@ -5,6 +5,7 @@ var interact;
 try {
   interact = require('interact.js');
 } catch (e) {
+  /* istanbul ignore next */
   interact = null;
 }
 

@@ -9,9 +9,9 @@ angular
     var dayViewStart, dayViewEnd;
 
     function updateDays() {
-      dayViewStart = moment($scope.dayViewStart || '00:00', 'HH:mm');
-      dayViewEnd = moment($scope.dayViewEnd || '23:00', 'HH:mm');
-      vm.dayViewSplit = parseInt($scope.dayViewSplit);
+      dayViewStart = moment(vm.dayViewStart || '00:00', 'HH:mm');
+      dayViewEnd = moment(vm.dayViewEnd || '23:00', 'HH:mm');
+      vm.dayViewSplit = parseInt(vm.dayViewSplit);
       vm.hours = [];
       var dayCounter = moment(dayViewStart);
       for (var i = 0; i <= dayViewEnd.diff(dayViewStart, 'hours'); i++) {
@@ -24,7 +24,7 @@ angular
 
     var originalLocale = moment.locale();
 
-    var unbindListener = $scope.$on('calendar.refreshView', function() {
+    $scope.$on('calendar.refreshView', function() {
 
       if (originalLocale !== moment.locale()) {
         originalLocale = moment.locale();
@@ -33,11 +33,13 @@ angular
 
     });
 
-    $scope.$on('$destroy', function() {
-      unbindListener();
+    $scope.$watchGroup([
+      'vm.dayViewStart',
+      'vm.dayViewEnd',
+      'vm.dayViewSplit'
+    ], function() {
+      updateDays();
     });
-
-    updateDays();
 
   })
   .directive('mwlCalendarHourList', function() {
@@ -50,7 +52,8 @@ angular
         dayViewStart: '=',
         dayViewEnd: '=',
         dayViewSplit: '='
-      }
+      },
+      bindToController: true
     };
 
   });

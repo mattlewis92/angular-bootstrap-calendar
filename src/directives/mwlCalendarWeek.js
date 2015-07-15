@@ -11,27 +11,24 @@ angular
     vm.showTimes = calendarConfig.showTimesOnWeekView;
     vm.$sce = $sce;
 
-    var unbindListener = $scope.$on('calendar.refreshView', function() {
+    $scope.$on('calendar.refreshView', function() {
+      vm.dayViewSplit = vm.dayViewSplit || 30;
       vm.dayViewHeight = calendarHelper.getDayViewHeight(
-        $scope.dayViewStart,
-        $scope.dayViewEnd,
-        $scope.dayViewSplit
+        vm.dayViewStart,
+        vm.dayViewEnd,
+        vm.dayViewSplit
       );
       if (vm.showTimes) {
         vm.view = calendarHelper.getWeekViewWithTimes(
-          $scope.events,
-          $scope.currentDay,
-          $scope.dayViewStart,
-          $scope.dayViewEnd,
-          $scope.dayViewSplit
+          vm.events,
+          vm.currentDay,
+          vm.dayViewStart,
+          vm.dayViewEnd,
+          vm.dayViewSplit
         );
       } else {
-        vm.view = calendarHelper.getWeekView($scope.events, $scope.currentDay);
+        vm.view = calendarHelper.getWeekView(vm.events, vm.currentDay);
       }
-    });
-
-    $scope.$on('$destroy', function() {
-      unbindListener();
     });
 
     vm.weekDragged = function(event, daysDiff, minuteChunksMoved) {
@@ -40,14 +37,14 @@ angular
       var newEnd = moment(event.endsAt).add(daysDiff, 'days');
 
       if (minuteChunksMoved) {
-        var minutesDiff = minuteChunksMoved * $scope.dayViewSplit;
+        var minutesDiff = minuteChunksMoved * vm.dayViewSplit;
         newStart = newStart.add(minutesDiff, 'minutes');
         newEnd = newEnd.add(minutesDiff, 'minutes');
       }
 
       delete event.tempStartsAt;
 
-      $scope.onEventTimesChanged({
+      vm.onEventTimesChanged({
         calendarEvent: event,
         calendarNewEventStart: newStart.toDate(),
         calendarNewEventEnd: newEnd.toDate()
@@ -64,7 +61,7 @@ angular
         end.add(daysDiff, 'days');
       }
 
-      $scope.onEventTimesChanged({
+      vm.onEventTimesChanged({
         calendarEvent: event,
         calendarNewEventStart: start.toDate(),
         calendarNewEventEnd: end.toDate()
@@ -73,7 +70,7 @@ angular
     };
 
     vm.tempTimeChanged = function(event, minuteChunksMoved) {
-      var minutesDiff = minuteChunksMoved * $scope.dayViewSplit;
+      var minutesDiff = minuteChunksMoved * vm.dayViewSplit;
       event.tempStartsAt = moment(event.startsAt).add(minutesDiff, 'minutes').toDate();
     };
 
@@ -96,7 +93,8 @@ angular
       controller: 'MwlCalendarWeekCtrl as vm',
       link: function(scope, element, attrs, calendarCtrl) {
         scope.vm.calendarCtrl = calendarCtrl;
-      }
+      },
+      bindToController: true
     };
 
   });

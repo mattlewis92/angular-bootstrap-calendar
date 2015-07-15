@@ -6,13 +6,15 @@ angular
   .module('mwl.calendar')
   .controller('MwlDateModifierCtrl', function($element, $attrs, $scope, moment) {
 
+    var vm = this;
+
     function onClick() {
       if (angular.isDefined($attrs.setToToday)) {
-        $scope.date = new Date();
+        vm.date = new Date();
       } else if (angular.isDefined($attrs.increment)) {
-        $scope.date = moment($scope.date).add(1, $scope.increment).toDate();
+        vm.date = moment(vm.date).add(1, vm.increment).toDate();
       } else if (angular.isDefined($attrs.decrement)) {
-        $scope.date = moment($scope.date).subtract(1, $scope.decrement).toDate();
+        vm.date = moment(vm.date).subtract(1, vm.decrement).toDate();
       }
       $scope.$apply();
     }
@@ -28,12 +30,13 @@ angular
 
     return {
       restrict: 'A',
-      controller: 'MwlDateModifierCtrl',
+      controller: 'MwlDateModifierCtrl as vm',
       scope: {
         date: '=',
         increment: '=',
         decrement: '='
-      }
+      },
+      bindToController: true
     };
 
   });

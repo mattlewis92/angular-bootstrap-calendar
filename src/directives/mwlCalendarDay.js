@@ -11,34 +11,31 @@ angular
     vm.calendarConfig = calendarConfig;
     vm.$sce = $sce;
 
-    var unbindListener = $scope.$on('calendar.refreshView', function() {
+    $scope.$on('calendar.refreshView', function() {
+      vm.dayViewSplit = vm.dayViewSplit || 30;
       vm.dayViewHeight = calendarHelper.getDayViewHeight(
-        $scope.dayViewStart,
-        $scope.dayViewEnd,
-        $scope.dayViewSplit
+        vm.dayViewStart,
+        vm.dayViewEnd,
+        vm.dayViewSplit
       );
 
       vm.view = calendarHelper.getDayView(
-        $scope.events,
-        $scope.currentDay,
-        $scope.dayViewStart,
-        $scope.dayViewEnd,
-        $scope.dayViewSplit
+        vm.events,
+        vm.currentDay,
+        vm.dayViewStart,
+        vm.dayViewEnd,
+        vm.dayViewSplit
       );
 
     });
 
-    $scope.$on('$destroy', function() {
-      unbindListener();
-    });
-
     vm.eventDragComplete = function(event, minuteChunksMoved) {
-      var minutesDiff = minuteChunksMoved * $scope.dayViewSplit;
+      var minutesDiff = minuteChunksMoved * vm.dayViewSplit;
       var newStart = moment(event.startsAt).add(minutesDiff, 'minutes');
       var newEnd = moment(event.endsAt).add(minutesDiff, 'minutes');
       delete event.tempStartsAt;
 
-      $scope.onEventTimesChanged({
+      vm.onEventTimesChanged({
         calendarEvent: event,
         calendarNewEventStart: newStart.toDate(),
         calendarNewEventEnd: newEnd.toDate()
@@ -46,12 +43,12 @@ angular
     };
 
     vm.eventDragged = function(event, minuteChunksMoved) {
-      var minutesDiff = minuteChunksMoved * $scope.dayViewSplit;
+      var minutesDiff = minuteChunksMoved * vm.dayViewSplit;
       event.tempStartsAt = moment(event.startsAt).add(minutesDiff, 'minutes').toDate();
     };
 
     vm.eventResizeComplete = function(event, edge, minuteChunksMoved) {
-      var minutesDiff = minuteChunksMoved * $scope.dayViewSplit;
+      var minutesDiff = minuteChunksMoved * vm.dayViewSplit;
       var start = moment(event.startsAt);
       var end = moment(event.endsAt);
       if (edge === 'start') {
@@ -61,7 +58,7 @@ angular
       }
       delete event.tempStartsAt;
 
-      $scope.onEventTimesChanged({
+      vm.onEventTimesChanged({
         calendarEvent: event,
         calendarNewEventStart: start.toDate(),
         calendarNewEventEnd: end.toDate()
@@ -69,7 +66,7 @@ angular
     };
 
     vm.eventResized = function(event, edge, minuteChunksMoved) {
-      var minutesDiff = minuteChunksMoved * $scope.dayViewSplit;
+      var minutesDiff = minuteChunksMoved * vm.dayViewSplit;
       if (edge === 'start') {
         event.tempStartsAt = moment(event.startsAt).add(minutesDiff, 'minutes').toDate();
       }
@@ -91,7 +88,8 @@ angular
         dayViewEnd: '=',
         dayViewSplit: '='
       },
-      controller: 'MwlCalendarDayCtrl as vm'
+      controller: 'MwlCalendarDayCtrl as vm',
+      bindToController: true
     };
 
   });
