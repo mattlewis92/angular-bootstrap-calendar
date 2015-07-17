@@ -108,12 +108,10 @@ angular
             $scope.$apply();
           }
 
-          $timeout(function() {
-            translateElement(elm, null)
-              .removeAttr('data-x')
-              .removeAttr('data-y')
-              .removeClass('dragging-active');
-          }, 50);
+          translateElement(elm, null)
+            .removeAttr('data-x')
+            .removeAttr('data-y')
+            .removeClass('dragging-active');
         }
 
       }

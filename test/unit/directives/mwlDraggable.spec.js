@@ -10,7 +10,6 @@ describe('mwlDraggable directive', function() {
     interactInstance,
     draggableOptions,
     elementTarget,
-    $timeout,
     $window,
     $compile,
     template =
@@ -41,8 +40,7 @@ describe('mwlDraggable directive', function() {
     $provide.constant('interact', interact);
   }));
 
-  beforeEach(angular.mock.inject(function(_$compile_, _$rootScope_, _$window_, _$timeout_) {
-    $timeout = _$timeout_;
+  beforeEach(angular.mock.inject(function(_$compile_, _$rootScope_, _$window_) {
     $window = _$window_;
     $compile = _$compile_;
     $rootScope = _$rootScope_;
@@ -106,7 +104,6 @@ describe('mwlDraggable directive', function() {
     draggableOptions.onstart(event);
     draggableOptions.onmove(event);
     draggableOptions.onend(event);
-    $timeout.flush();
     expect(angular.element(event.target).hasClass('dragging-active')).to.be.false;
     expect(angular.element(event.target).css('pointerEvents')).to.equal('auto');
     expect(scope.onDragEnd).to.have.been.calledWith(0, 6);

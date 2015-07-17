@@ -4,7 +4,7 @@ var angular = require('angular');
 
 angular
   .module('mwl.calendar')
-  .controller('MwlCalendarCtrl', function($scope, $timeout, $window, $attrs, $locale, moment, calendarTitle) {
+  .controller('MwlCalendarCtrl', function($scope, $log, $timeout, $window, $attrs, $locale, moment, calendarTitle) {
 
     var vm = this;
 
@@ -34,12 +34,33 @@ angular
     var previousDate = moment(vm.currentDay);
     var previousView = vm.view;
 
+    function eventIsValid(event) {
+      if (!event.startsAt) {
+        $log.warn('Bootstrap calendar: ', 'Event is missing the startsAt field', event);
+      }
+
+      if (!angular.isDate(event.startsAt)) {
+        $log.warn('Bootstrap calendar: ', 'Event startsAt should be a javascript date object', event);
+      }
+
+      if (angular.isDefined(event.endsAt)) {
+        if (!angular.isDate(event.endsAt)) {
+          $log.warn('Bootstrap calendar: ', 'Event endsAt should be a javascript date object', event);
+        }
+        if (moment(event.startsAt).isAfter(moment(event.endsAt))) {
+          $log.warn('Bootstrap calendar: ', 'Event cannot start after it finishes', event);
+        }
+      }
+
+      return true;
+    }
+
     function refreshCalendar() {
       if (calendarTitle[vm.view] && angular.isDefined($attrs.viewTitle)) {
         vm.viewTitle = calendarTitle[vm.view](vm.currentDay);
       }
 
-      vm.events = vm.events.map(function(event, index) {
+      vm.events = vm.events.filter(eventIsValid).map(function(event, index) {
         Object.defineProperty(event, '$id', {enumerable: false, configurable: true, value: index});
         return event;
       });
