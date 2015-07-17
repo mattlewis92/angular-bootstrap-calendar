@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-calendar - A pure AngularJS bootstrap themed responsive calendar that can display events and has views for year, month, week and day
- * @version v0.14.0
+ * @version v0.14.1
  * @link https://github.com/mattlewis92/angular-bootstrap-calendar
  * @license MIT
  */
@@ -155,7 +155,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	angular
 	  .module('mwl.calendar')
-	  .controller('MwlCalendarCtrl', ["$scope", "$timeout", "$window", "$attrs", "$locale", "moment", "calendarTitle", function($scope, $timeout, $window, $attrs, $locale, moment, calendarTitle) {
+	  .controller('MwlCalendarCtrl', ["$scope", "$log", "$timeout", "$window", "$attrs", "$locale", "moment", "calendarTitle", function($scope, $log, $timeout, $window, $attrs, $locale, moment, calendarTitle) {
 
 	    var vm = this;
 
@@ -185,12 +185,33 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var previousDate = moment(vm.currentDay);
 	    var previousView = vm.view;
 
+	    function eventIsValid(event) {
+	      if (!event.startsAt) {
+	        $log.warn('Bootstrap calendar: ', 'Event is missing the startsAt field', event);
+	      }
+
+	      if (!angular.isDate(event.startsAt)) {
+	        $log.warn('Bootstrap calendar: ', 'Event startsAt should be a javascript date object', event);
+	      }
+
+	      if (angular.isDefined(event.endsAt)) {
+	        if (!angular.isDate(event.endsAt)) {
+	          $log.warn('Bootstrap calendar: ', 'Event endsAt should be a javascript date object', event);
+	        }
+	        if (moment(event.startsAt).isAfter(moment(event.endsAt))) {
+	          $log.warn('Bootstrap calendar: ', 'Event cannot start after it finishes', event);
+	        }
+	      }
+
+	      return true;
+	    }
+
 	    function refreshCalendar() {
 	      if (calendarTitle[vm.view] && angular.isDefined($attrs.viewTitle)) {
 	        vm.viewTitle = calendarTitle[vm.view](vm.currentDay);
 	      }
 
-	      vm.events = vm.events.map(function(event, index) {
+	      vm.events = vm.events.filter(eventIsValid).map(function(event, index) {
 	        Object.defineProperty(event, '$id', {enumerable: false, configurable: true, value: index});
 	        return event;
 	      });
@@ -1020,12 +1041,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	            $scope.$apply();
 	          }
 
-	          $timeout(function() {
-	            translateElement(elm, null)
-	              .removeAttr('data-x')
-	              .removeAttr('data-y')
-	              .removeClass('dragging-active');
-	          }, 50);
+	          translateElement(elm, null)
+	            .removeAttr('data-x')
+	            .removeAttr('data-y')
+	            .removeClass('dragging-active');
 	        }
 
 	      }
