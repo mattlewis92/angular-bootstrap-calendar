@@ -150,7 +150,7 @@
                   <p class="input-group" style="max-width: 250px">
                     <input type="text" class="form-control" readonly datepicker-popup="medium" ng-model="event.startsAt" is-open="event.startOpen" close-text="Close" />
                     <span class="input-group-btn">
-                      <button type="button" class="btn btn-default" ng-click="toggle($event, 'startOpen', event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                      <button type="button" class="btn btn-default" ng-click="vm.toggle($event, 'startOpen', event)"><i class="glyphicon glyphicon-calendar"></i></button>
                     </span>
                   </p>
                   <timepicker ng-model="event.startsAt" hour-step="1" minute-step="15" show-meridian="true"></timepicker>
@@ -159,7 +159,7 @@
                   <p class="input-group" style="max-width: 250px">
                     <input type="text" class="form-control" readonly datepicker-popup="medium" ng-model="event.endsAt" is-open="event.endOpen" close-text="Close" />
                     <span class="input-group-btn">
-                      <button type="button" class="btn btn-default" ng-click="toggle($event, 'endOpen', event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                      <button type="button" class="btn btn-default" ng-click="vm.toggle($event, 'endOpen', event)"><i class="glyphicon glyphicon-calendar"></i></button>
                     </span>
                   </p>
                   <timepicker ng-model="event.endsAt" hour-step="1" minute-step="15" show-meridian="true"></timepicker>
