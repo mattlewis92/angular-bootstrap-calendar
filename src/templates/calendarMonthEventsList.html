@@ -2,7 +2,7 @@
   <a
     ng-repeat="event in day.events | orderBy:'startsAt' track by event.$id"
     href="javascript:;"
-    ng-click="onEventClick({calendarEvent: event})"
+    ng-click="vm.onEventClick({calendarEvent: event})"
     class="pull-left event"
     ng-class="'event-' + event.type + ' ' + event.cssClass"
     ng-mouseenter="vm.highlightEvent(event, true)"
