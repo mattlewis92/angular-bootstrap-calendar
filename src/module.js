@@ -9,9 +9,12 @@ function requireAll(r) {
 
 angular //eslint-disable-line angular/ng_module_getter
   .module(MODULE_NAME, [])
-  .run(function($templateCache) {
-    $templateCache.put('calendarMonthEventsList.html', require('./templates/calendarMonthEventsList.html'));
-    $templateCache.put('calendarMonthDay.html', require('./templates/calendarMonthDay.html'));
+  .constant('calendarUseTemplates', EXCLUDE_TEMPLATES === false)
+  .run(function($templateCache, calendarUseTemplates) {
+    if (calendarUseTemplates) {
+      $templateCache.put('calendarMonthEventsList.html', require('./templates/calendarMonthEventsList.html'));
+      $templateCache.put('calendarMonthDay.html', require('./templates/calendarMonthDay.html'));
+    }
   });
 
 requireAll(require.context('./directives', true, /\.js$/));

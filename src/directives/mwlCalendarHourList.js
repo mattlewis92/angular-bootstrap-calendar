@@ -42,11 +42,11 @@ angular
     });
 
   })
-  .directive('mwlCalendarHourList', function() {
+  .directive('mwlCalendarHourList', function(calendarUseTemplates) {
 
     return {
       restrict: 'EA',
-      template: require('./../templates/calendarHourList.html'),
+      template: calendarUseTemplates ? require('./../templates/calendarHourList.html') : '',
       controller: 'MwlCalendarHourListCtrl as vm',
       scope: {
         dayViewStart: '=',

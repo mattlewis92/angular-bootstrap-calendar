@@ -75,7 +75,10 @@ module.exports = {
       raw: true,
       entryOnly: true
     }),
-    new ExtractTextPlugin('../css/' + cssFilename)
+    new ExtractTextPlugin('../css/' + cssFilename),
+    new webpack.DefinePlugin({
+      EXCLUDE_TEMPLATES: EXCLUDE_TEMPLATES
+    })
   ]
 };
 

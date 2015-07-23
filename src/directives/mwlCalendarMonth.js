@@ -80,10 +80,10 @@ angular
     };
 
   })
-  .directive('mwlCalendarMonth', function() {
+  .directive('mwlCalendarMonth', function(calendarUseTemplates) {
 
     return {
-      template: require('./../templates/calendarMonthView.html'),
+      template: calendarUseTemplates ? require('./../templates/calendarMonthView.html') : '',
       restrict: 'EA',
       require: '^mwlCalendar',
       scope: {

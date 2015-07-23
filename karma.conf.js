@@ -31,7 +31,10 @@ var webpackConfig = {
   },
   plugins: [
     new webpack.optimize.DedupePlugin(),
-    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new webpack.DefinePlugin({
+      EXCLUDE_TEMPLATES: false
+    })
   ]
 };
 
