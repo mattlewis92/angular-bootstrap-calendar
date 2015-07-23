@@ -103,10 +103,10 @@ angular
     });
 
   })
-  .directive('mwlCalendar', function() {
+  .directive('mwlCalendar', function(calendarUseTemplates) {
 
     return {
-      template: require('./../templates/calendar.html'),
+      template: calendarUseTemplates ? require('./../templates/calendar.html') : '',
       restrict: 'EA',
       scope: {
         events: '=',

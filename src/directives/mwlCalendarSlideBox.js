@@ -10,11 +10,11 @@ angular
     vm.$sce = $sce;
 
   })
-  .directive('mwlCalendarSlideBox', function() {
+  .directive('mwlCalendarSlideBox', function(calendarUseTemplates) {
 
     return {
       restrict: 'EA',
-      template: require('./../templates/calendarSlideBox.html'),
+      template: calendarUseTemplates ? require('./../templates/calendarSlideBox.html') : '',
       replace: true,
       controller: 'MwlCalendarSlideBoxCtrl as vm',
       require: ['^?mwlCalendarMonth', '^?mwlCalendarYear'],

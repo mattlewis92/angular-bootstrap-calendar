@@ -9,5 +9,8 @@
   },
   "plugins": [
     "angular"
-  ]
+  ],
+  "globals": {
+    "EXCLUDE_TEMPLATES": true
+  }
 }

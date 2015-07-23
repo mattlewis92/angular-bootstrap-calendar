@@ -45,6 +45,9 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new WebpackNotifierPlugin()
+    new WebpackNotifierPlugin(),
+    new webpack.DefinePlugin({
+      EXCLUDE_TEMPLATES: false
+    })
   ]
 };
