@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-calendar - A pure AngularJS bootstrap themed responsive calendar that can display events and has views for year, month, week and day
- * @version v0.14.2
+ * @version v0.14.3
  * @link https://github.com/mattlewis92/angular-bootstrap-calendar
  * @license MIT
  */
@@ -99,9 +99,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	angular //eslint-disable-line angular/ng_module_getter
 	  .module(MODULE_NAME, [])
-	  .run(["$templateCache", function($templateCache) {
-	    $templateCache.put('calendarMonthEventsList.html', __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./templates/calendarMonthEventsList.html\""); e.code = 'MODULE_NOT_FOUND'; throw e; }())));
-	    $templateCache.put('calendarMonthDay.html', __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./templates/calendarMonthDay.html\""); e.code = 'MODULE_NOT_FOUND'; throw e; }())));
+	  .constant('calendarUseTemplates', (true) === false)
+	  .run(["$templateCache", "calendarUseTemplates", function($templateCache, calendarUseTemplates) {
+	    if (calendarUseTemplates) {
+	      $templateCache.put('calendarMonthEventsList.html', __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./templates/calendarMonthEventsList.html\""); e.code = 'MODULE_NOT_FOUND'; throw e; }())));
+	      $templateCache.put('calendarMonthDay.html', __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./templates/calendarMonthDay.html\""); e.code = 'MODULE_NOT_FOUND'; throw e; }())));
+	    }
 	  }]);
 
 	requireAll(__webpack_require__(14));
@@ -259,10 +262,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    });
 
 	  }])
-	  .directive('mwlCalendar', function() {
+	  .directive('mwlCalendar', ["calendarUseTemplates", function(calendarUseTemplates) {
 
 	    return {
-	      template: __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./../templates/calendar.html\""); e.code = 'MODULE_NOT_FOUND'; throw e; }())),
+	      template: calendarUseTemplates ? __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./../templates/calendar.html\""); e.code = 'MODULE_NOT_FOUND'; throw e; }())) : '',
 	      restrict: 'EA',
 	      scope: {
 	        events: '=',
@@ -287,7 +290,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      bindToController: true
 	    };
 
-	  });
+	  }]);
 
 
 /***/ },
@@ -369,10 +372,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 
 	  }])
-	  .directive('mwlCalendarDay', function() {
+	  .directive('mwlCalendarDay', ["calendarUseTemplates", function(calendarUseTemplates) {
 
 	    return {
-	      template: __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./../templates/calendarDayView.html\""); e.code = 'MODULE_NOT_FOUND'; throw e; }())),
+	      template: calendarUseTemplates ? __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./../templates/calendarDayView.html\""); e.code = 'MODULE_NOT_FOUND'; throw e; }())) : '',
 	      restrict: 'EA',
 	      require: '^mwlCalendar',
 	      scope: {
@@ -388,7 +391,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      bindToController: true
 	    };
 
-	  });
+	  }]);
 
 
 /***/ },
@@ -439,11 +442,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    });
 
 	  }])
-	  .directive('mwlCalendarHourList', function() {
+	  .directive('mwlCalendarHourList', ["calendarUseTemplates", function(calendarUseTemplates) {
 
 	    return {
 	      restrict: 'EA',
-	      template: __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./../templates/calendarHourList.html\""); e.code = 'MODULE_NOT_FOUND'; throw e; }())),
+	      template: calendarUseTemplates ? __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./../templates/calendarHourList.html\""); e.code = 'MODULE_NOT_FOUND'; throw e; }())) : '',
 	      controller: 'MwlCalendarHourListCtrl as vm',
 	      scope: {
 	        dayViewStart: '=',
@@ -453,7 +456,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      bindToController: true
 	    };
 
-	  });
+	  }]);
 
 
 /***/ },
@@ -542,10 +545,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 
 	  }])
-	  .directive('mwlCalendarMonth', function() {
+	  .directive('mwlCalendarMonth', ["calendarUseTemplates", function(calendarUseTemplates) {
 
 	    return {
-	      template: __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./../templates/calendarMonthView.html\""); e.code = 'MODULE_NOT_FOUND'; throw e; }())),
+	      template: calendarUseTemplates ? __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./../templates/calendarMonthView.html\""); e.code = 'MODULE_NOT_FOUND'; throw e; }())) : '',
 	      restrict: 'EA',
 	      require: '^mwlCalendar',
 	      scope: {
@@ -568,7 +571,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      bindToController: true
 	    };
 
-	  });
+	  }]);
 
 
 /***/ },
@@ -587,11 +590,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    vm.$sce = $sce;
 
 	  }])
-	  .directive('mwlCalendarSlideBox', function() {
+	  .directive('mwlCalendarSlideBox', ["calendarUseTemplates", function(calendarUseTemplates) {
 
 	    return {
 	      restrict: 'EA',
-	      template: __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./../templates/calendarSlideBox.html\""); e.code = 'MODULE_NOT_FOUND'; throw e; }())),
+	      template: calendarUseTemplates ? __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./../templates/calendarSlideBox.html\""); e.code = 'MODULE_NOT_FOUND'; throw e; }())) : '',
 	      replace: true,
 	      controller: 'MwlCalendarSlideBoxCtrl as vm',
 	      require: ['^?mwlCalendarMonth', '^?mwlCalendarYear'],
@@ -611,7 +614,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      bindToController: true
 	    };
 
-	  });
+	  }]);
 
 
 /***/ },
@@ -695,10 +698,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 
 	  }])
-	  .directive('mwlCalendarWeek', function() {
+	  .directive('mwlCalendarWeek', ["calendarUseTemplates", function(calendarUseTemplates) {
 
 	    return {
-	      template: __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./../templates/calendarWeekView.html\""); e.code = 'MODULE_NOT_FOUND'; throw e; }())),
+	      template: calendarUseTemplates ? __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./../templates/calendarWeekView.html\""); e.code = 'MODULE_NOT_FOUND'; throw e; }())) : '',
 	      restrict: 'EA',
 	      require: '^mwlCalendar',
 	      scope: {
@@ -717,7 +720,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      bindToController: true
 	    };
 
-	  });
+	  }]);
 
 
 /***/ },
@@ -778,10 +781,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 
 	  }])
-	  .directive('mwlCalendarYear', function() {
+	  .directive('mwlCalendarYear', ["calendarUseTemplates", function(calendarUseTemplates) {
 
 	    return {
-	      template: __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./../templates/calendarYearView.html\""); e.code = 'MODULE_NOT_FOUND'; throw e; }())),
+	      template: calendarUseTemplates ? __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./../templates/calendarYearView.html\""); e.code = 'MODULE_NOT_FOUND'; throw e; }())) : '',
 	      restrict: 'EA',
 	      require: '^mwlCalendar',
 	      scope: {
@@ -804,7 +807,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      bindToController: true
 	    };
 
-	  });
+	  }]);
 
 
 /***/ },

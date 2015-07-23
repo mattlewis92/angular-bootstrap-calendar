@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-calendar - A pure AngularJS bootstrap themed responsive calendar that can display events and has views for year, month, week and day
- * @version v0.14.2
+ * @version v0.14.3
  * @link https://github.com/mattlewis92/angular-bootstrap-calendar
  * @license MIT
  */
@@ -99,9 +99,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	angular //eslint-disable-line angular/ng_module_getter
 	  .module(MODULE_NAME, [])
-	  .run(["$templateCache", function($templateCache) {
-	    $templateCache.put('calendarMonthEventsList.html', __webpack_require__(14));
-	    $templateCache.put('calendarMonthDay.html', __webpack_require__(15));
+	  .constant('calendarUseTemplates', (false) === false)
+	  .run(["$templateCache", "calendarUseTemplates", function($templateCache, calendarUseTemplates) {
+	    if (calendarUseTemplates) {
+	      $templateCache.put('calendarMonthEventsList.html', __webpack_require__(14));
+	      $templateCache.put('calendarMonthDay.html', __webpack_require__(15));
+	    }
 	  }]);
 
 	requireAll(__webpack_require__(16));
@@ -121,7 +124,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 14 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"events-list\" ng-show=\"day.events.length > 0\">\n  <a\n    ng-repeat=\"event in day.events | orderBy:'startsAt' track by event.$id\"\n    href=\"javascript:;\"\n    ng-click=\"onEventClick({calendarEvent: event})\"\n    class=\"pull-left event\"\n    ng-class=\"'event-' + event.type + ' ' + event.cssClass\"\n    ng-mouseenter=\"vm.highlightEvent(event, true)\"\n    ng-mouseleave=\"vm.highlightEvent(event, false)\"\n    tooltip-append-to-body=\"true\"\n    tooltip-html-unsafe=\"{{ (event.startsAt | calendarDate:'time':true) + ' - ' + event.title }}\"\n    mwl-draggable=\"event.draggable === true\"\n    drop-data=\"{event: event}\">\n  </a>\n</div>\n";
+	module.exports = "<div class=\"events-list\" ng-show=\"day.events.length > 0\">\n  <a\n    ng-repeat=\"event in day.events | orderBy:'startsAt' track by event.$id\"\n    href=\"javascript:;\"\n    ng-click=\"vm.onEventClick({calendarEvent: event})\"\n    class=\"pull-left event\"\n    ng-class=\"'event-' + event.type + ' ' + event.cssClass\"\n    ng-mouseenter=\"vm.highlightEvent(event, true)\"\n    ng-mouseleave=\"vm.highlightEvent(event, false)\"\n    tooltip-append-to-body=\"true\"\n    tooltip-html-unsafe=\"{{ (event.startsAt | calendarDate:'time':true) + ' - ' + event.title }}\"\n    mwl-draggable=\"event.draggable === true\"\n    drop-data=\"{event: event}\">\n  </a>\n</div>\n";
 
 /***/ },
 /* 15 */
@@ -271,10 +274,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    });
 
 	  }])
-	  .directive('mwlCalendar', function() {
+	  .directive('mwlCalendar', ["calendarUseTemplates", function(calendarUseTemplates) {
 
 	    return {
-	      template: __webpack_require__(18),
+	      template: calendarUseTemplates ? __webpack_require__(18) : '',
 	      restrict: 'EA',
 	      scope: {
 	        events: '=',
@@ -299,7 +302,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      bindToController: true
 	    };
 
-	  });
+	  }]);
 
 
 /***/ },
@@ -387,10 +390,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 
 	  }])
-	  .directive('mwlCalendarDay', function() {
+	  .directive('mwlCalendarDay', ["calendarUseTemplates", function(calendarUseTemplates) {
 
 	    return {
-	      template: __webpack_require__(20),
+	      template: calendarUseTemplates ? __webpack_require__(20) : '',
 	      restrict: 'EA',
 	      require: '^mwlCalendar',
 	      scope: {
@@ -406,7 +409,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      bindToController: true
 	    };
 
-	  });
+	  }]);
 
 
 /***/ },
@@ -463,11 +466,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    });
 
 	  }])
-	  .directive('mwlCalendarHourList', function() {
+	  .directive('mwlCalendarHourList', ["calendarUseTemplates", function(calendarUseTemplates) {
 
 	    return {
 	      restrict: 'EA',
-	      template: __webpack_require__(22),
+	      template: calendarUseTemplates ? __webpack_require__(22) : '',
 	      controller: 'MwlCalendarHourListCtrl as vm',
 	      scope: {
 	        dayViewStart: '=',
@@ -477,7 +480,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      bindToController: true
 	    };
 
-	  });
+	  }]);
 
 
 /***/ },
@@ -572,10 +575,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 
 	  }])
-	  .directive('mwlCalendarMonth', function() {
+	  .directive('mwlCalendarMonth', ["calendarUseTemplates", function(calendarUseTemplates) {
 
 	    return {
-	      template: __webpack_require__(24),
+	      template: calendarUseTemplates ? __webpack_require__(24) : '',
 	      restrict: 'EA',
 	      require: '^mwlCalendar',
 	      scope: {
@@ -598,7 +601,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      bindToController: true
 	    };
 
-	  });
+	  }]);
 
 
 /***/ },
@@ -623,11 +626,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    vm.$sce = $sce;
 
 	  }])
-	  .directive('mwlCalendarSlideBox', function() {
+	  .directive('mwlCalendarSlideBox', ["calendarUseTemplates", function(calendarUseTemplates) {
 
 	    return {
 	      restrict: 'EA',
-	      template: __webpack_require__(26),
+	      template: calendarUseTemplates ? __webpack_require__(26) : '',
 	      replace: true,
 	      controller: 'MwlCalendarSlideBoxCtrl as vm',
 	      require: ['^?mwlCalendarMonth', '^?mwlCalendarYear'],
@@ -647,7 +650,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      bindToController: true
 	    };
 
-	  });
+	  }]);
 
 
 /***/ },
@@ -737,10 +740,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 
 	  }])
-	  .directive('mwlCalendarWeek', function() {
+	  .directive('mwlCalendarWeek', ["calendarUseTemplates", function(calendarUseTemplates) {
 
 	    return {
-	      template: __webpack_require__(28),
+	      template: calendarUseTemplates ? __webpack_require__(28) : '',
 	      restrict: 'EA',
 	      require: '^mwlCalendar',
 	      scope: {
@@ -759,7 +762,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      bindToController: true
 	    };
 
-	  });
+	  }]);
 
 
 /***/ },
@@ -826,10 +829,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 
 	  }])
-	  .directive('mwlCalendarYear', function() {
+	  .directive('mwlCalendarYear', ["calendarUseTemplates", function(calendarUseTemplates) {
 
 	    return {
-	      template: __webpack_require__(30),
+	      template: calendarUseTemplates ? __webpack_require__(30) : '',
 	      restrict: 'EA',
 	      require: '^mwlCalendar',
 	      scope: {
@@ -852,7 +855,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      bindToController: true
 	    };
 
-	  });
+	  }]);
 
 
 /***/ },
