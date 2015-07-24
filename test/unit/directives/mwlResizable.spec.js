@@ -18,7 +18,6 @@ describe('mwlresizable directive', function() {
       'on-resize-start="onResizeStart()" ' +
       'on-resize-end="onResizeEnd(x, y)" ' +
       'on-resize="onResize(x, y)" ' +
-      'drop-data="dropData"' +
       '></div>';
 
   function prepareScope(vm) {
