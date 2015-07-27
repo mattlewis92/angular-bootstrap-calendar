@@ -106,6 +106,9 @@ describe('mwlDraggable directive', function() {
     draggableOptions.onend(event);
     expect(angular.element(event.target).hasClass('dragging-active')).to.be.false;
     expect(angular.element(event.target).css('pointerEvents')).to.equal('auto');
+    expect(angular.element(event.target).css('transform')).to.equal('');
+    expect(angular.element(event.target).css('-webkit-transform')).to.equal('');
+    expect(angular.element(event.target).css('-ms-transform')).to.equal('');
     expect(scope.onDragEnd).to.have.been.calledWith(0, 6);
   });
 

@@ -105,7 +105,7 @@ describe('mwlresizable directive', function() {
 
   it('should handle on resize end', function() {
     var event = {
-      target: angular.element('<div></div>')[0],
+      target: angular.element('<div style="width: 30px; height: 30px;"></div>')[0],
       rect: {
         width: 0,
         height: 120
@@ -120,6 +120,9 @@ describe('mwlresizable directive', function() {
     resizableOptions.onmove(event);
     resizableOptions.onend(event);
     expect(scope.onResizeEnd).to.have.been.calledWith(0, 4);
+    expect(angular.element(event.target).css('transform')).to.eql('');
+    expect(angular.element(event.target).css('width')).to.eql('30px');
+    expect(angular.element(event.target).css('height')).to.eql('30px');
   });
 
   it('should unset interact when scope gets destroyed', function() {
