@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-calendar - A pure AngularJS bootstrap themed responsive calendar that can display events and has views for year, month, week and day
- * @version v0.14.4
+ * @version v0.14.5
  * @link https://github.com/mattlewis92/angular-bootstrap-calendar
  * @license MIT
  */
@@ -91,27 +91,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	'use strict';
 
 	var angular = __webpack_require__(13);
-	var MODULE_NAME = 'mwl.calendar';
 
 	function requireAll(r) {
 	  r.keys().forEach(r);
 	}
 
-	angular //eslint-disable-line angular/ng_module_getter
-	  .module(MODULE_NAME, [])
+	module.exports = angular
+	  .module('mwl.calendar', [])
 	  .constant('calendarUseTemplates', (false) === false)
 	  .run(["$templateCache", "calendarUseTemplates", function($templateCache, calendarUseTemplates) {
 	    if (calendarUseTemplates) {
 	      $templateCache.put('calendarMonthEventsList.html', __webpack_require__(14));
 	      $templateCache.put('calendarMonthDay.html', __webpack_require__(15));
 	    }
-	  }]);
+	  }]).name;
 
 	requireAll(__webpack_require__(16));
 	requireAll(__webpack_require__(37));
 	requireAll(__webpack_require__(41));
-
-	module.exports = MODULE_NAME;
 
 
 /***/ },
@@ -624,10 +621,18 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	angular
 	  .module('mwl.calendar')
-	  .controller('MwlCalendarSlideBoxCtrl', ["$sce", function($sce) {
+	  .controller('MwlCalendarSlideBoxCtrl', ["$sce", "$scope", "$timeout", function($sce, $scope, $timeout) {
 
 	    var vm = this;
 	    vm.$sce = $sce;
+
+	    vm.isCollapsed = true;
+	    $scope.$watch('vm.isOpen', function(isOpen) {
+	      //events must be populated first to set the element height before animation will work
+	      $timeout(function() {
+	        vm.isCollapsed = !isOpen;
+	      });
+	    });
 
 	  }])
 	  .directive('mwlCalendarSlideBox', ["calendarUseTemplates", function(calendarUseTemplates) {
@@ -661,7 +666,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 26 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"cal-slide-box\" collapse=\"!vm.isOpen\" mwl-collapse-fallback=\"!vm.isOpen\">\n  <div class=\"cal-slide-content cal-event-list\">\n    <ul class=\"unstyled list-unstyled\">\n\n      <li\n        ng-repeat=\"event in vm.events | orderBy:'startsAt' track by event.$id\"\n        ng-class=\"event.cssClass\"\n        mwl-draggable=\"event.draggable === true\"\n        drop-data=\"{event: event}\">\n        <span class=\"pull-left event\" ng-class=\"'event-' + event.type\"></span>\n        &nbsp;\n        <a\n          href=\"javascript:;\"\n          class=\"event-item\"\n          ng-click=\"vm.onEventClick({calendarEvent: event})\">\n          <span ng-bind-html=\"vm.$sce.trustAsHtml(event.title)\"></span>\n          <span ng-show=\"isMonthView\">(<span ng-bind=\"event.startsAt | calendarDate:'time':true\"></span>)</span>\n          <span ng-show=\"isYearView\">(<span ng-bind=\"event.startsAt | calendarDate:'datetime':true\"></span>)</span>\n        </a>\n\n        <a\n          href=\"javascript:;\"\n          class=\"event-item-edit\"\n          ng-if=\"vm.editEventHtml && event.editable !== false\"\n          ng-bind-html=\"vm.$sce.trustAsHtml(vm.editEventHtml)\"\n          ng-click=\"vm.onEditEventClick({calendarEvent: event})\">\n        </a>\n\n        <a\n          href=\"javascript:;\"\n          class=\"event-item-delete\"\n          ng-if=\"vm.deleteEventHtml && event.deletable !== false\"\n          ng-bind-html=\"vm.$sce.trustAsHtml(vm.deleteEventHtml)\"\n          ng-click=\"vm.onDeleteEventClick({calendarEvent: event})\">\n        </a>\n      </li>\n\n    </ul>\n  </div>\n</div>\n";
+	module.exports = "<div class=\"cal-slide-box\" collapse=\"vm.isCollapsed\" mwl-collapse-fallback=\"vm.isCollapsed\">\n  <div class=\"cal-slide-content cal-event-list\">\n    <ul class=\"unstyled list-unstyled\">\n\n      <li\n        ng-repeat=\"event in vm.events | orderBy:'startsAt' track by event.$id\"\n        ng-class=\"event.cssClass\"\n        mwl-draggable=\"event.draggable === true\"\n        drop-data=\"{event: event}\">\n        <span class=\"pull-left event\" ng-class=\"'event-' + event.type\"></span>\n        &nbsp;\n        <a\n          href=\"javascript:;\"\n          class=\"event-item\"\n          ng-click=\"vm.onEventClick({calendarEvent: event})\">\n          <span ng-bind-html=\"vm.$sce.trustAsHtml(event.title)\"></span>\n          <span ng-show=\"isMonthView\">(<span ng-bind=\"event.startsAt | calendarDate:'time':true\"></span>)</span>\n          <span ng-show=\"isYearView\">(<span ng-bind=\"event.startsAt | calendarDate:'datetime':true\"></span>)</span>\n        </a>\n\n        <a\n          href=\"javascript:;\"\n          class=\"event-item-edit\"\n          ng-if=\"vm.editEventHtml && event.editable !== false\"\n          ng-bind-html=\"vm.$sce.trustAsHtml(vm.editEventHtml)\"\n          ng-click=\"vm.onEditEventClick({calendarEvent: event})\">\n        </a>\n\n        <a\n          href=\"javascript:;\"\n          class=\"event-item-delete\"\n          ng-if=\"vm.deleteEventHtml && event.deletable !== false\"\n          ng-bind-html=\"vm.$sce.trustAsHtml(vm.deleteEventHtml)\"\n          ng-click=\"vm.onDeleteEventClick({calendarEvent: event})\">\n        </a>\n      </li>\n\n    </ul>\n  </div>\n</div>\n";
 
 /***/ },
 /* 27 */
