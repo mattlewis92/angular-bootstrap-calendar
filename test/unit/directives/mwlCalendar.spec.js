@@ -8,7 +8,10 @@ describe('mwlCalendar directive', function() {
     element,
     scope,
     $rootScope,
+    $timeout,
     directiveScope,
+    MwlCalendarMonthCtrl,
+    clock,
     template =
     '<mwl-calendar ' +
       'events="vm.events" ' +
@@ -85,16 +88,19 @@ describe('mwlCalendar directive', function() {
 
   beforeEach(angular.mock.module('mwl.calendar'));
 
-  beforeEach(angular.mock.inject(function($compile, _$rootScope_) {
+  beforeEach(angular.mock.inject(function($compile, _$rootScope_, _$timeout_) {
     $rootScope = _$rootScope_;
+    $timeout = _$timeout_;
     scope = $rootScope.$new();
     scope.vm = {};
+    clock = sinon.useFakeTimers(new Date(2015, 4, 1).getTime());
     prepareScope(scope.vm);
 
     element = $compile(template)(scope);
     scope.$apply();
     directiveScope = element.isolateScope();
     MwlCalendarCtrl = directiveScope.vm;
+    MwlCalendarMonthCtrl = element.find('mwl-calendar-month').isolateScope().vm;
   }));
 
   it('allow to change the view', function() {
@@ -116,10 +122,23 @@ describe('mwlCalendar directive', function() {
     scope.vm.calendarDay = new Date();
     scope.vm.events[0].title = 'hello event 1';
     scope.$apply();
+    $timeout.flush();
     expect(spy).to.have.been.calledWith('calendar.refreshView');
-
     scope.vm.events[0].title = 'hello event 01';
     scope.$apply();
+  });
+
+  it('should allow a new event reference to be set', function() {
+    scope.vm.events = [];
+    scope.$apply();
+    $timeout.flush();
+    MwlCalendarMonthCtrl.view.forEach(function(day) {
+      expect(day.events).to.eql([]);
+    });
+  });
+
+  afterEach(function() {
+    clock.restore();
   });
 
 });
