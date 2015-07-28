@@ -56,6 +56,7 @@ angular
     }
 
     function refreshCalendar() {
+
       if (calendarTitle[vm.view] && angular.isDefined($attrs.viewTitle)) {
         vm.viewTitle = calendarTitle[vm.view](vm.currentDay);
       }
@@ -79,7 +80,10 @@ angular
       previousView = vm.view;
 
       if (shouldUpdate) {
-        $scope.$broadcast('calendar.refreshView');
+        // a $timeout is required as $broadcast is synchronous so if a new events array is set the calendar won't update
+        $timeout(function() {
+          $scope.$broadcast('calendar.refreshView');
+        });
       }
     }
 

@@ -22,9 +22,9 @@ angular
 
     function translateElement(elm, transformValue) {
       return elm
-        .css('transform', transformValue)
         .css('-ms-transform', transformValue)
-        .css('-webkit-transform', transformValue);
+        .css('-webkit-transform', transformValue)
+        .css('transform', transformValue);
     }
 
     function canDrag() {
@@ -108,7 +108,7 @@ angular
             $scope.$apply();
           }
 
-          translateElement(elm, null)
+          translateElement(elm, '')
             .removeAttr('data-x')
             .removeAttr('data-y')
             .removeClass('dragging-active');

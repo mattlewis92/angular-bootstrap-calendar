@@ -3,7 +3,7 @@
 var angular = require('angular');
 beforeEach(angular.mock.module('mwl.calendar'));
 
-describe('calendarConfig', function() {
+describe('calendarTitle', function() {
 
   var calendarTitle;
   var calendarDay = new Date(2015, 4, 1);

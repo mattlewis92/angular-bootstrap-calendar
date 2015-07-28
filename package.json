@@ -1,6 +1,6 @@
 {
   "name": "angular-bootstrap-calendar",
-  "version": "0.14.3",
+  "version": "0.14.4",
   "license": "MIT",
   "repository": "git@github.com:mattlewis92/angular-bootstrap-calendar.git",
   "peerDependencies": {
@@ -15,7 +15,7 @@
     "eslint": "~0.24.0",
     "eslint-config-mwl": "~0.1.0",
     "eslint-loader": "~0.14.1",
-    "eslint-plugin-angular": "0.0.15",
+    "eslint-plugin-angular": "~0.2.0",
     "extract-text-webpack-plugin": "~0.8.2",
     "html-loader": "~0.3.0",
     "htmlhint-loader": "~0.1.0",
