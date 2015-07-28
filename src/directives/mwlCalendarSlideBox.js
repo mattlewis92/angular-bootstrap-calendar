@@ -4,10 +4,18 @@ var angular = require('angular');
 
 angular
   .module('mwl.calendar')
-  .controller('MwlCalendarSlideBoxCtrl', function($sce) {
+  .controller('MwlCalendarSlideBoxCtrl', function($sce, $scope, $timeout) {
 
     var vm = this;
     vm.$sce = $sce;
+
+    vm.isCollapsed = true;
+    $scope.$watch('vm.isOpen', function(isOpen) {
+      //events must be populated first to set the element height before animation will work
+      $timeout(function() {
+        vm.isCollapsed = !isOpen;
+      });
+    });
 
   })
   .directive('mwlCalendarSlideBox', function(calendarUseTemplates) {

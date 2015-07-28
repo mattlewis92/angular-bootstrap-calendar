@@ -1,7 +1,7 @@
 'use strict';
 
 angular
-  .module('demo', ['mwl.calendar', 'ui.bootstrap', 'ngTouch'])
+  .module('demo', ['mwl.calendar', 'ui.bootstrap', 'ngTouch', 'ngAnimate'])
   .controller('MainCtrl', function ($modal, moment) {
 
     var vm = this;
