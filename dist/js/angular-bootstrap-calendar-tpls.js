@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-calendar - A pure AngularJS bootstrap themed responsive calendar that can display events and has views for year, month, week and day
- * @version v0.14.3
+ * @version v0.14.4
  * @link https://github.com/mattlewis92/angular-bootstrap-calendar
  * @license MIT
  */
@@ -227,6 +227,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    function refreshCalendar() {
+
 	      if (calendarTitle[vm.view] && angular.isDefined($attrs.viewTitle)) {
 	        vm.viewTitle = calendarTitle[vm.view](vm.currentDay);
 	      }
@@ -250,7 +251,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      previousView = vm.view;
 
 	      if (shouldUpdate) {
-	        $scope.$broadcast('calendar.refreshView');
+	        // a $timeout is required as $broadcast is synchronous so if a new events array is set the calendar won't update
+	        $timeout(function() {
+	          $scope.$broadcast('calendar.refreshView');
+	        });
 	      }
 	    }
 
@@ -975,9 +979,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function translateElement(elm, transformValue) {
 	      return elm
-	        .css('transform', transformValue)
 	        .css('-ms-transform', transformValue)
-	        .css('-webkit-transform', transformValue);
+	        .css('-webkit-transform', transformValue)
+	        .css('transform', transformValue);
 	    }
 
 	    function canDrag() {
@@ -1061,7 +1065,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            $scope.$apply();
 	          }
 
-	          translateElement(elm, null)
+	          translateElement(elm, '')
 	            .removeAttr('data-x')
 	            .removeAttr('data-y')
 	            .removeClass('dragging-active');
@@ -1274,7 +1278,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            .data('x', null)
 	            .data('y', null)
 	            .css({
-	              transform: null,
+	              transform: '',
 	              width: originalDimensionsStyle.width,
 	              height: originalDimensionsStyle.height
 	            });
