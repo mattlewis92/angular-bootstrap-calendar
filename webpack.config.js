@@ -44,6 +44,7 @@ module.exports = {
     hot: true
   },
   plugins: [
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new webpack.HotModuleReplacementPlugin(),
     new WebpackNotifierPlugin(),
     new webpack.DefinePlugin({
