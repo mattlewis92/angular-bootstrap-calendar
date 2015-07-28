@@ -2,7 +2,7 @@
 
 var angular = require('angular');
 
-describe('mwlCalendarSlideBox directive', function() {
+describe('mwlElementDimensions directive', function() {
   var element,
     scope,
     $rootScope,

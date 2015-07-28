@@ -106,7 +106,7 @@ angular
             .data('x', null)
             .data('y', null)
             .css({
-              transform: null,
+              transform: '',
               width: originalDimensionsStyle.width,
               height: originalDimensionsStyle.height
             });

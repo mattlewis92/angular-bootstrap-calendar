@@ -2,7 +2,7 @@
 
 var angular = require('angular');
 
-describe('mwldropzone directive', function() {
+describe('mwlDroppable directive', function() {
   var element,
     scope,
     $rootScope,
