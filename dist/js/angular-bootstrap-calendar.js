@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-calendar - A pure AngularJS bootstrap themed responsive calendar that can display events and has views for year, month, week and day
- * @version v0.14.4
+ * @version v0.14.5
  * @link https://github.com/mattlewis92/angular-bootstrap-calendar
  * @license MIT
  */
@@ -91,27 +91,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	'use strict';
 
 	var angular = __webpack_require__(13);
-	var MODULE_NAME = 'mwl.calendar';
 
 	function requireAll(r) {
 	  r.keys().forEach(r);
 	}
 
-	angular //eslint-disable-line angular/ng_module_getter
-	  .module(MODULE_NAME, [])
+	module.exports = angular
+	  .module('mwl.calendar', [])
 	  .constant('calendarUseTemplates', (true) === false)
 	  .run(["$templateCache", "calendarUseTemplates", function($templateCache, calendarUseTemplates) {
 	    if (calendarUseTemplates) {
 	      $templateCache.put('calendarMonthEventsList.html', __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./templates/calendarMonthEventsList.html\""); e.code = 'MODULE_NOT_FOUND'; throw e; }())));
 	      $templateCache.put('calendarMonthDay.html', __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./templates/calendarMonthDay.html\""); e.code = 'MODULE_NOT_FOUND'; throw e; }())));
 	    }
-	  }]);
+	  }]).name;
 
 	requireAll(__webpack_require__(14));
 	requireAll(__webpack_require__(28));
 	requireAll(__webpack_require__(32));
-
-	module.exports = MODULE_NAME;
 
 
 /***/ },
@@ -588,10 +585,18 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	angular
 	  .module('mwl.calendar')
-	  .controller('MwlCalendarSlideBoxCtrl', ["$sce", function($sce) {
+	  .controller('MwlCalendarSlideBoxCtrl', ["$sce", "$scope", "$timeout", function($sce, $scope, $timeout) {
 
 	    var vm = this;
 	    vm.$sce = $sce;
+
+	    vm.isCollapsed = true;
+	    $scope.$watch('vm.isOpen', function(isOpen) {
+	      //events must be populated first to set the element height before animation will work
+	      $timeout(function() {
+	        vm.isCollapsed = !isOpen;
+	      });
+	    });
 
 	  }])
 	  .directive('mwlCalendarSlideBox', ["calendarUseTemplates", function(calendarUseTemplates) {
