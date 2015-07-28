@@ -70,7 +70,7 @@ npm install --save angular-bootstrap-calendar
 Then add as a dependency to your app:
 
 ```javascript
-angular.module('myApp', [require('angular-bootstrap-calendar'), require('angular-bootstrap')]);
+angular.module('myApp', [require('angular-bootstrap-calendar'), require('angular-ui-bootstrap')]);
 ```
 
 ## Documentation
