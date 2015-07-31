@@ -254,7 +254,7 @@ angular.module('myModule')
     calendarConfigProvider.setDateFormatter('moment'); // use either moment or angular to format dates on the calendar. Default angular. Setting this will override any date formats you have already set.
   
     calendarConfigProvider.setDateFormats({
-      hour: 'HH:mm' //this will configure the hour view to display in 24 hour format rather than the default of 12 hour
+      hour: 'HH:mm' // this will configure times on the day view to display in 24 hour format rather than the default of 12 hour
     });
     
     calendarConfigProvider.setTitleFormats({
