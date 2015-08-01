@@ -67,6 +67,11 @@ Alternatively you can install through npm:
 npm install --save angular-bootstrap-calendar
 ```
 
+Or if using npm 3+ where peer dependencies aren't automatically installed:
+```
+npm install --save angular-bootstrap-calendar angular bootstrap moment angular-ui-bootstrap
+```
+
 Then add as a dependency to your app:
 
 ```javascript
