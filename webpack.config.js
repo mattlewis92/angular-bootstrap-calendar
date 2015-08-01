@@ -6,11 +6,13 @@ var PORT = 8000;
 
 open('http://localhost:' + PORT);
 
-karma.server.start({
+var server = new karma.Server({
   configFile: __dirname + '/karma.conf.js',
   autoWatch: true,
   singleRun: false
 });
+
+server.start();
 
 module.exports = {
   entry: __dirname + '/src/entry.js',
