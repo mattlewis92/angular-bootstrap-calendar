@@ -99,6 +99,16 @@ describe('mwlCalendarDay directive', function() {
     });
   });
 
+  it('should call the callback function when you finish dragging an event with no endsAt', function() {
+    delete scope.events[0].endsAt;
+    MwlCalendarCtrl.eventDragComplete(scope.events[0], 1);
+    expect(showModal).to.have.been.calledWith('Dropped or resized', {
+      calendarEvent: scope.events[0],
+      calendarNewEventStart: new Date(2015, 3, 24, 8, 30),
+      calendarNewEventEnd: null
+    });
+  });
+
   it('should update the temporary start position while dragging', function() {
       MwlCalendarCtrl.eventDragged(scope.events[0], 1);
       expect(scope.events[0].tempStartsAt).to.eql(new Date(2015, 3, 24, 8, 30));
