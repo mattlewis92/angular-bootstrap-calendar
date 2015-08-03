@@ -146,4 +146,15 @@ describe('mwlCalendarMonth directive', function() {
     });
   });
 
+  it('should call the callback function when you finish dropping an event with no end date', function() {
+    delete scope.events[0].endsAt;
+    MwlCalendarCtrl.handleEventDrop(scope.events[0], calendarDay);
+    expect(showModal).to.have.been.calledWith('Dropped or resized', {
+      calendarEvent: scope.events[0],
+      calendarDate: new Date(2015, 4, 1),
+      calendarNewEventStart: new Date(2015, 4, 1, 8, 0),
+      calendarNewEventEnd: null
+    });
+  });
+
 });
