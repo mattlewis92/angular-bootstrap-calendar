@@ -75,7 +75,7 @@ angular
         calendarEvent: event,
         calendarDate: newDayDate,
         calendarNewEventStart: newStart.toDate(),
-        calendarNewEventEnd: newEnd.toDate()
+        calendarNewEventEnd: newEnd ? newEnd.toDate() : null
       });
     };
 

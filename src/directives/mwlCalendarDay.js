@@ -38,7 +38,7 @@ angular
       vm.onEventTimesChanged({
         calendarEvent: event,
         calendarNewEventStart: newStart.toDate(),
-        calendarNewEventEnd: newEnd.toDate()
+        calendarNewEventEnd: event.endsAt ? newEnd.toDate() : null
       });
     };
 

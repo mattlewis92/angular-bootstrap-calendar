@@ -114,6 +114,16 @@ describe('mwlCalendarWeek directive', function() {
     });
   });
 
+  it('should call the callback function when you finish dragging and event with no ends at', function() {
+    delete scope.events[0].endsAt;
+    MwlCalendarCtrl.weekDragged(scope.events[0], 1, 0);
+    expect(showModal).to.have.been.calledWith('Dropped or resized', {
+      calendarEvent: scope.events[0],
+      calendarNewEventStart: new Date(2015, 3, 25, 8, 0),
+      calendarNewEventEnd: null
+    });
+  });
+
   it('should update the temporary start position while dragging', function() {
     MwlCalendarCtrl.tempTimeChanged(scope.events[0], 1);
     expect(scope.events[0].tempStartsAt).to.eql(new Date(2015, 3, 24, 8, 30));

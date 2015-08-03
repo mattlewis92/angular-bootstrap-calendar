@@ -67,10 +67,15 @@ Alternatively you can install through npm:
 npm install --save angular-bootstrap-calendar
 ```
 
+Or if using npm 3+ where peer dependencies aren't automatically installed:
+```
+npm install --save angular-bootstrap-calendar angular bootstrap moment angular-ui-bootstrap
+```
+
 Then add as a dependency to your app:
 
 ```javascript
-angular.module('myApp', [require('angular-bootstrap-calendar'), require('angular-bootstrap')]);
+angular.module('myApp', [require('angular-bootstrap-calendar'), require('angular-ui-bootstrap')]);
 ```
 
 ## Documentation
@@ -254,7 +259,7 @@ angular.module('myModule')
     calendarConfigProvider.setDateFormatter('moment'); // use either moment or angular to format dates on the calendar. Default angular. Setting this will override any date formats you have already set.
   
     calendarConfigProvider.setDateFormats({
-      hour: 'HH:mm' //this will configure the hour view to display in 24 hour format rather than the default of 12 hour
+      hour: 'HH:mm' // this will configure times on the day view to display in 24 hour format rather than the default of 12 hour
     });
     
     calendarConfigProvider.setTitleFormats({

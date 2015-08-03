@@ -22,7 +22,7 @@
       snap-grid="{y: 30}"
       on-drag="vm.eventDragged(event, y)"
       on-drag-end="vm.eventDragComplete(event, y)"
-      mwl-resizable="event.resizable === true"
+      mwl-resizable="event.resizable === true && event.endsAt"
       resize-edges="{top: true, bottom: true}"
       on-resize="vm.eventResized(event, edge, y)"
       on-resize-end="vm.eventResizeComplete(event, edge, y)">

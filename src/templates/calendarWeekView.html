@@ -49,7 +49,7 @@
             snap-grid="vm.showTimes ? {x: vm.dayColumnDimensions.width, y: 30} : {x: vm.dayColumnDimensions.width}"
             on-drag="vm.tempTimeChanged(event, y)"
             on-drag-end="vm.weekDragged(event, x, y)"
-            mwl-resizable="event.resizable === true && !vm.showTimes"
+            mwl-resizable="event.resizable === true && event.endsAt && !vm.showTimes"
             resize-edges="{left: true, right: true}"
             on-resize-end="vm.weekResized(event, edge, x)">
             <strong ng-bind="(event.tempStartsAt || event.startsAt) | calendarDate:'time':true" ng-show="vm.showTimes"></strong>
