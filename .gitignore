@@ -1,6 +1,5 @@
 node_modules
 .tmp
 .idea
-docs/bower_components
 build
 coverage
