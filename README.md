@@ -101,7 +101,7 @@ An explanation of the properties is as follows:
 
 ### view (required attribute)
 
-This variable is a string that can be either 'year', 'month', 'week' or 'day. Changing it will change the view of the calendar.
+This variable is a string that can be either `year`, `month`, `week` or `day`. Changing it will change the view of the calendar.
 
 For the calendar to display this variable needs to be set like so:
 ```javascript
@@ -137,15 +137,15 @@ The 4 properties listed are required for all events.
 
 ### view-title
 
-This variable will be assigned to the calendar title. If you want to change the formatting you can use the calendarConfigProvider or just override the appropriate method in the calendarTitle factory.
+This variable will be assigned to the calendar title. If you want to change the formatting you can use the `calendarConfigProvider` or just override the appropriate method in the `calendarTitle` factory.
 
 ### on-event-click 
 
-This expression is called when an event is clicked on the calendar. calendarEvent contains the calendar event that was clicked on.
+This expression is called when an event is clicked on the calendar. `calendarEvent` can be used in the expression and contains the calendar event that was clicked on.
 
 ### on-event-times-changed
 
-This expression is called when an event is dragged and dropped or resized into a different date / time on the calendar. The available parameters are: calendarEvent, calendarNewEventStart and calendarNewEventEnd. The directive won't change the event object and leaves that up to you to implement. Set event.editable to false to disable drag and drop on a particular event. Please note drag and drop is only available by including the [interact.js](http://interactjs.io/) library.
+This expression is called when an event is dragged and dropped or resized into a different date / time on the calendar. The available values that are passed to the expression are: `calendarEvent`, `calendarNewEventStart` and `calendarNewEventEnd`. The directive won't change the event object and leaves that up to you to implement. Please note drag and drop is only available by including the [interact.js](http://interactjs.io/) library.
 
 ### edit-event-html 
 
@@ -157,15 +157,15 @@ If provided this piece of html will be displayed next to an event on the year an
 
 ### on-edit-event-click 
 
-This expression is called when an event edit link is clicked on the calendar. calendarEvent contains the calendar event that was clicked on.
+This expression is called when an event edit link is clicked on the calendar. `calendarEvent` can be used in the expression and contains the calendar event that was clicked on.
 
 ### on-delete-event-click 
 
-This expression is called when an event delete link is clicked on the calendar. calendarEvent contains the calendar event that was clicked on.
+This expression is called when an event delete link is clicked on the calendar. `calendarEvent` can be used in the expression and contains the calendar event that was clicked on.
 
 ### on-timespan-click
 
-This expression is called when a month or day on the calendar is clicked. calendarDate contains the start of the month or day that was clicked on.
+This expression is called when a month or day on the calendar is clicked. `calendarDate` can be used in the expression and  contains the start of the month or day that was clicked on.
 
 ### auto-open
 
@@ -185,10 +185,10 @@ The number of chunks to split the day view hours up into. Can be either 10, 15 o
 
 ### on-drill-down-click
 
-An optional expression that is evaluated when the drilldown (clicking on a date to change the view) is triggered. Return false from the expression function to disable the drilldown. calendarDate is available as the date that was selected. calendarNextView is the view that the calendar will be changed to.  
+An optional expression that is evaluated when the drilldown (clicking on a date to change the view) is triggered. Return false from the expression function to disable the drilldown. `calendarDate` can be used in the expression and contains the date that was selected. `calendarNextView` is the view that the calendar will be changed to.  
 
 ### cell-modifier
-An optional expression that is evaluated on each cell generated for the year and month views. calendarCell is an object containing the current cell data which you can modify (see the calendarHelper service source code or just console.log it to see what data is available). If you add the cssClass property it will be applied to the cell.
+An optional expression that is evaluated on each cell generated for the year and month views. `calendarCell` can be used in the expression and is an object containing the current cell data which you can modify (see the `calendarHelper` service source code or just console.log it to see what data is available). If you add the `cssClass` property it will be applied to the cell.
 
 ## The mwl-date-modifier directive
 
@@ -250,7 +250,7 @@ moment.locale('en', {
 
 ## Configuring date formats
 
-You can easily customise the date formats and i18n strings used throughout the calendar by using the calendarConfigProvider. Please note that these example formats are those used by moment.js and these won't work if using angular as the date formatter. Example usage:
+You can easily customise the date formats and i18n strings used throughout the calendar by using the `calendarConfigProvider`. Please note that these example formats are those used by moment.js and these won't work if using angular as the date formatter. Example usage:
 
 ```javascript
 angular.module('myModule')
