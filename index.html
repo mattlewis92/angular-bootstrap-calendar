@@ -117,7 +117,11 @@
 
           <h3 id="event-editor">
             Edit events
-            <button class="btn btn-primary pull-right" ng-click="vm.events.push({title: 'New event', type: 'important', draggable: true, resizable: true})">Add new</button>
+            <button
+              class="btn btn-primary pull-right"
+              ng-click="vm.events.push({title: 'New event', type: 'important', draggable: true, resizable: true})">
+              Add new
+            </button>
             <div class="clearfix"></div>
           </h3>
 
@@ -135,7 +139,12 @@
 
             <tbody>
               <tr ng-repeat="event in vm.events track by $index">
-                <td><input type="text" class="form-control" ng-model="event.title"></td>
+                <td>
+                  <input
+                    type="text"
+                    class="form-control"
+                    ng-model="event.title">
+                </td>
                 <td>
                   <select ng-model="event.type" class="form-control">
                     <option value="important">Important</option>
@@ -148,23 +157,63 @@
                 </td>
                 <td>
                   <p class="input-group" style="max-width: 250px">
-                    <input type="text" class="form-control" readonly datepicker-popup="medium" ng-model="event.startsAt" is-open="event.startOpen" close-text="Close" />
+                    <input
+                      type="text"
+                      class="form-control"
+                      readonly
+                      datepicker-popup="dd MMMM yyyy"
+                      ng-model="event.startsAt"
+                      is-open="event.startOpen"
+                      close-text="Close" >
                     <span class="input-group-btn">
-                      <button type="button" class="btn btn-default" ng-click="vm.toggle($event, 'startOpen', event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                      <button
+                        type="button"
+                        class="btn btn-default"
+                        ng-click="vm.toggle($event, 'startOpen', event)">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                      </button>
                     </span>
                   </p>
-                  <timepicker ng-model="event.startsAt" hour-step="1" minute-step="15" show-meridian="true"></timepicker>
+                  <timepicker
+                    ng-model="event.startsAt"
+                    hour-step="1"
+                    minute-step="15"
+                    show-meridian="true">
+                  </timepicker>
                 </td>
                 <td>
                   <p class="input-group" style="max-width: 250px">
-                    <input type="text" class="form-control" readonly datepicker-popup="medium" ng-model="event.endsAt" is-open="event.endOpen" close-text="Close" />
+                    <input
+                      type="text"
+                      class="form-control"
+                      readonly
+                      datepicker-popup="dd MMMM yyyy"
+                      ng-model="event.endsAt"
+                      is-open="event.endOpen"
+                      close-text="Close">
                     <span class="input-group-btn">
-                      <button type="button" class="btn btn-default" ng-click="vm.toggle($event, 'endOpen', event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                      <button
+                        type="button"
+                        class="btn btn-default"
+                        ng-click="vm.toggle($event, 'endOpen', event)">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                      </button>
                     </span>
                   </p>
-                  <timepicker ng-model="event.endsAt" hour-step="1" minute-step="15" show-meridian="true"></timepicker>
+                  <timepicker
+                    ng-model="event.endsAt"
+                    hour-step="1"
+                    minute-step="15"
+                    show-meridian="true">
+                  </timepicker>
                 </td>
-                <td><button class="btn btn-danger" ng-click="vm.events.splice($index, 1)">Delete</button></td>
+                <td>
+                  <button
+                    class="btn btn-danger"
+                    ng-click="vm.events.splice($index, 1)">
+                    Delete
+                  </button>
+                </td>
               </tr>
             </tbody>
 
@@ -175,9 +224,9 @@
     </div>
 
     <script src="angular-bootstrap-calendar.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-touch.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-animate.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.1/ui-bootstrap-tpls.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-touch.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-animate.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.3/ui-bootstrap-tpls.min.js"></script>
     <script src="docs/scripts/demo.js"></script>
 </body>
 </html>
