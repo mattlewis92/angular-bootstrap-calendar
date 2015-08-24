@@ -46,6 +46,11 @@ if (MIN) {
   });
 }
 
+var browsers = ['PhantomJS2'];
+if (process.env.CI) { //phantomjs2 doesnt work on travis, but is way faster to run test locally
+  browsers = ['PhantomJS'];
+}
+
 module.exports = function(config) {
   config.set({
 
@@ -101,7 +106,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['PhantomJS'],
+    browsers: browsers,
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits

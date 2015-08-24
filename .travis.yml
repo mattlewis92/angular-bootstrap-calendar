@@ -7,3 +7,6 @@ script: npm run test:min
 
 notifications:
   email: false
+
+env:
+  - CI=true
