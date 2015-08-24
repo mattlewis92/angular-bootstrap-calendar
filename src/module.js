@@ -11,8 +11,8 @@ module.exports = angular
   .constant('calendarUseTemplates', EXCLUDE_TEMPLATES === false)
   .run(function($templateCache, calendarUseTemplates) {
     if (calendarUseTemplates) {
-      $templateCache.put('calendarMonthEventsList.html', require('./templates/calendarMonthEventsList.html'));
-      $templateCache.put('calendarMonthDay.html', require('./templates/calendarMonthDay.html'));
+      $templateCache.put('calendarMonthCellEvents.html', require('./templates/calendarMonthCellEvents.html'));
+      $templateCache.put('calendarMonthCell.html', require('./templates/calendarMonthCell.html'));
     }
   }).name;
 
