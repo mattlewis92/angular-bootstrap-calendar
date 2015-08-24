@@ -129,7 +129,9 @@ angular
         cellModifier: '&',
         dayViewStart: '@',
         dayViewEnd: '@',
-        dayViewSplit: '@'
+        dayViewSplit: '@',
+        monthCellTemplateUrl: '@',
+        monthCellEventsTemplateUrl: '@'
       },
       controller: 'MwlCalendarCtrl as vm',
       bindToController: true

@@ -97,7 +97,9 @@ angular
         deleteEventHtml: '=',
         autoOpen: '=',
         onTimespanClick: '=',
-        cellModifier: '='
+        cellModifier: '=',
+        cellTemplateUrl: '@',
+        cellEventsTemplateUrl: '@'
       },
       controller: 'MwlCalendarMonthCtrl as vm',
       link: function(scope, element, attrs, calendarCtrl) {

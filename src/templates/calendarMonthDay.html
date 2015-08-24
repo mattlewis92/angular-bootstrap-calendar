@@ -29,6 +29,6 @@
     <i class="fa fa-chevron-up"></i>
   </div>
 
-  <div ng-include="'calendarMonthEventsList.html'"></div>
+  <ng-include src="vm.cellEventsTemplateUrl || 'calendarMonthEventsList.html'"></ng-include>
 
 </div>
