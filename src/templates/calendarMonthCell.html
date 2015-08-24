@@ -31,4 +31,8 @@
 
   <ng-include src="vm.cellEventsTemplateUrl || 'calendarMonthCellEvents.html'"></ng-include>
 
+  <div id="cal-week-box" ng-if="$first && rowHovered">
+    Week {{ day.date.week() }}
+  </div>
+
 </div>
