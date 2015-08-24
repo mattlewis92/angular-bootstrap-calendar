@@ -165,7 +165,7 @@ This expression is called when an event delete link is clicked on the calendar. 
 
 ### on-timespan-click
 
-This expression is called when a month or day on the calendar is clicked. `calendarDate` can be used in the expression and  contains the start of the month or day that was clicked on.
+This expression is called when a month, day or hour on the calendar is clicked on the year, month and day views respectively. `calendarDate` can be used in the expression and contains the start of the month, day or hour that was clicked on.
 
 ### auto-open
 
