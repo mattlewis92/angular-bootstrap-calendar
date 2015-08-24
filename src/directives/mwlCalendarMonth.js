@@ -4,9 +4,10 @@ var angular = require('angular');
 
 angular
   .module('mwl.calendar')
-  .controller('MwlCalendarMonthCtrl', function($scope, moment, calendarHelper) {
+  .controller('MwlCalendarMonthCtrl', function($scope, moment, calendarHelper, calendarConfig) {
 
     var vm = this;
+    vm.calendarConfig = calendarConfig;
 
     $scope.$on('calendar.refreshView', function() {
 

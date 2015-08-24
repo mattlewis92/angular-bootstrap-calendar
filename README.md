@@ -279,6 +279,8 @@ angular.module('myModule')
     
     calendarConfigProvider.setDisplayAllMonthEvents(true); //This will display all events on a month view even if they're not in the current month. Default false.
 
+    calendarConfigProvider.setDisplayEventEndTimes(true); //This will display event end times on the month and year views. Default false.
+
   });
 ```
 

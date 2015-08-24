@@ -20,6 +20,7 @@ describe('calendarConfig', function() {
     }).setI18nStrings({
       eventsLabel: 'Changed'
     }).setDisplayAllMonthEvents(true)
+      .setDisplayEventEndTimes(true)
       .showTimesOnWeekView(true);
   }));
 
@@ -45,8 +46,14 @@ describe('calendarConfig', function() {
     });
   });
 
-  describe('setDisplayAllMonthEvents ', function() {
+  describe('setDisplayAllMonthEvents', function() {
     it('should have changed the visibility of all month event', function() {
+      expect(calendarConfig.displayAllMonthEvents).to.be.true;
+    });
+  });
+
+  describe('setDisplayEventEndTimes', function() {
+    it('should have enabled event end times', function() {
       expect(calendarConfig.displayAllMonthEvents).to.be.true;
     });
   });

@@ -44,14 +44,14 @@ angular
     var dateFormatter = 'angular';
     var defaultDateFormats = angular.copy(defaultFormats[dateFormatter].date);
     var defaultTitleFormats = angular.copy(defaultFormats[dateFormatter].title);
+    var displayEventEndTimes = false;
     var showTimesOnWeekView = false;
+    var displayAllMonthEvents = false;
 
     var i18nStrings = {
       eventsLabel: 'Events',
       timeLabel: 'Time'
     };
-
-    var displayAllMonthEvents = false;
 
     var configProvider = this;
 
@@ -72,6 +72,11 @@ angular
 
     configProvider.setDisplayAllMonthEvents = function(value) {
       displayAllMonthEvents = value;
+      return configProvider;
+    };
+
+    configProvider.setDisplayEventEndTimes = function(value) {
+      displayEventEndTimes = value;
       return configProvider;
     };
 
@@ -96,6 +101,7 @@ angular
         titleFormats: defaultTitleFormats,
         i18nStrings: i18nStrings,
         displayAllMonthEvents: displayAllMonthEvents,
+        displayEventEndTimes: displayEventEndTimes,
         dateFormatter: dateFormatter,
         showTimesOnWeekView: showTimesOnWeekView
       };
