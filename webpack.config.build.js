@@ -1,10 +1,13 @@
+'use strict';
+
 var webpack = require('webpack');
 var ejs = require('ejs');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var EXCLUDE_TEMPLATES = process.argv.indexOf('--exclude-templates') > -1;
 var MIN = process.argv.indexOf('-p') > -1;
-var jsFilename = cssFilename = 'angular-bootstrap-calendar';
+var cssFilename, jsFilename;
+jsFilename = cssFilename = 'angular-bootstrap-calendar';
 if (!EXCLUDE_TEMPLATES) {
   jsFilename += '-tpls';
 }

@@ -1,5 +1,4 @@
-// Karma configuration
-// Generated on Thu Mar 19 2015 17:35:54 GMT+0000 (GMT)
+'use strict';
 
 var webpack = require('webpack');
 var WATCH = process.argv.indexOf('--watch') > -1;
