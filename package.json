@@ -15,7 +15,7 @@
     "eslint": "~1.2.1",
     "eslint-config-mwl": "~0.3.0",
     "eslint-loader": "~1.0.0",
-    "eslint-plugin-angular": "~0.7.0",
+    "eslint-plugin-angular": "~0.8.0",
     "extract-text-webpack-plugin": "~0.8.2",
     "html-loader": "~0.3.0",
     "htmlhint-loader": "~0.1.0",
@@ -37,7 +37,7 @@
     "phantomjs": "~1.9.17",
     "style-loader": "~0.12.3",
     "uglify-loader": "~1.2.0",
-    "webpack": "~1.11.0",
+    "webpack": "~1.12.0",
     "webpack-dev-server": "~1.10.1",
     "webpack-notifier": "~1.2.1"
   },
