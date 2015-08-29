@@ -31,6 +31,8 @@
     delete-event-html="vm.deleteEventHtml"
     auto-open="vm.autoOpen"
     cell-modifier="vm.cellModifier"
+    cell-template-url="{{ vm.monthCellTemplateUrl }}"
+    cell-events-template-url="{{ vm.monthCellEventsTemplateUrl }}"
     ng-switch-when="month"
     ></mwl-calendar-month>
 
@@ -50,6 +52,7 @@
     current-day="vm.currentDay"
     on-event-click="vm.onEventClick"
     on-event-times-changed="vm.onEventTimesChanged"
+    on-timespan-click="vm.onTimespanClick"
     day-view-start="vm.dayViewStart"
     day-view-end="vm.dayViewEnd"
     day-view-split="vm.dayViewSplit"

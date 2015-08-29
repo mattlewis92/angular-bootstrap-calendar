@@ -1,7 +1,11 @@
 {
   "extends": "mwl",
   "rules": {
-    "angular/ng_controller_name": [2, "/[A-Z].*Ctrl/"]
+    "angular/ng_controller_name": [2, "/[A-Z].*Ctrl/"],
+    "angular/ng_deferred": 2,
+    "angular/ng_directive_name": [2, "mwl"],
+    "angular/ng_empty_controller": 2,
+    "angular/ng_di_unused": 2
   },
   "env": {
     "node": true

@@ -13,10 +13,15 @@ angular
       dayViewEnd = moment(vm.dayViewEnd || '23:00', 'HH:mm');
       vm.dayViewSplit = parseInt(vm.dayViewSplit);
       vm.hours = [];
-      var dayCounter = moment(dayViewStart);
+      var dayCounter = moment(vm.currentDay)
+        .clone()
+        .hours(dayViewStart.hours())
+        .minutes(dayViewStart.minutes())
+        .seconds(dayViewStart.seconds());
       for (var i = 0; i <= dayViewEnd.diff(dayViewStart, 'hours'); i++) {
         vm.hours.push({
-          label: calendarHelper.formatDate(dayCounter, calendarConfig.dateFormats.hour)
+          label: calendarHelper.formatDate(dayCounter, calendarConfig.dateFormats.hour),
+          date: dayCounter.clone()
         });
         dayCounter.add(1, 'hour');
       }
@@ -36,7 +41,8 @@ angular
     $scope.$watchGroup([
       'vm.dayViewStart',
       'vm.dayViewEnd',
-      'vm.dayViewSplit'
+      'vm.dayViewSplit',
+      'vm.currentDay'
     ], function() {
       updateDays();
     });
@@ -49,9 +55,11 @@ angular
       template: calendarUseTemplates ? require('./../templates/calendarHourList.html') : '',
       controller: 'MwlCalendarHourListCtrl as vm',
       scope: {
+        currentDay: '=',
         dayViewStart: '=',
         dayViewEnd: '=',
-        dayViewSplit: '='
+        dayViewSplit: '=',
+        onTimespanClick: '='
       },
       bindToController: true
     };

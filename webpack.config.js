@@ -1,3 +1,5 @@
+'use strict';
+
 var open = require('open');
 var karma = require('karma');
 var webpack = require('webpack');

@@ -1,5 +1,4 @@
-// Karma configuration
-// Generated on Thu Mar 19 2015 17:35:54 GMT+0000 (GMT)
+'use strict';
 
 var webpack = require('webpack');
 var WATCH = process.argv.indexOf('--watch') > -1;
@@ -44,6 +43,11 @@ if (MIN) {
     loaders: ['uglify', 'ng-annotate'],
     exclude: /node_modules/
   });
+}
+
+var browsers = ['PhantomJS2'];
+if (process.env.CI) { //phantomjs2 doesnt work on travis, but is way faster to run test locally
+  browsers = ['PhantomJS'];
 }
 
 module.exports = function(config) {
@@ -101,7 +105,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['PhantomJS'],
+    browsers: browsers,
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits

@@ -4,9 +4,10 @@ var angular = require('angular');
 
 angular
   .module('mwl.calendar')
-  .controller('MwlCalendarMonthCtrl', function($scope, moment, calendarHelper) {
+  .controller('MwlCalendarMonthCtrl', function($scope, moment, calendarHelper, calendarConfig) {
 
     var vm = this;
+    vm.calendarConfig = calendarConfig;
 
     $scope.$on('calendar.refreshView', function() {
 
@@ -97,7 +98,9 @@ angular
         deleteEventHtml: '=',
         autoOpen: '=',
         onTimespanClick: '=',
-        cellModifier: '='
+        cellModifier: '=',
+        cellTemplateUrl: '@',
+        cellEventsTemplateUrl: '@'
       },
       controller: 'MwlCalendarMonthCtrl as vm',
       link: function(scope, element, attrs, calendarCtrl) {

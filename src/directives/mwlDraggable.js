@@ -4,7 +4,7 @@ var angular = require('angular');
 
 angular
   .module('mwl.calendar')
-  .controller('MwlDraggableCtrl', function($element, $scope, $window, $parse, $attrs, $timeout, interact) {
+  .controller('MwlDraggableCtrl', function($element, $scope, $window, $parse, $attrs, interact) {
 
     if (!interact) {
       return;

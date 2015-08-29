@@ -11,6 +11,7 @@ describe('mwlCalendarMonth directive', function() {
     directiveScope,
     showModal,
     calendarHelper,
+    $templateCache,
     template =
       '<mwl-calendar-month ' +
       'events="events" ' +
@@ -22,6 +23,8 @@ describe('mwlCalendarMonth directive', function() {
       'auto-open="autoOpen"' +
       'on-timespan-click="onTimeSpanClick"' +
       'day-view-split="dayViewSplit || 30" ' +
+      'cell-template-url="{{ monthCellTemplateUrl }}" ' +
+      'cell-events-template-url="{{ monthCellEventsTemplateUrl }}" ' +
       '></mwl-calendar-month>';
   var calendarDay = new Date(2015, 4, 1);
 
@@ -34,6 +37,7 @@ describe('mwlCalendarMonth directive', function() {
     vm.dayViewsplit = 30;
     vm.events = [
       {
+        $id: 0,
         title: 'An event',
         type: 'warning',
         startsAt: moment(calendarDay).startOf('week').subtract(2, 'days').add(8, 'hours').toDate(),
@@ -41,6 +45,7 @@ describe('mwlCalendarMonth directive', function() {
         draggable: true,
         resizable: true
       }, {
+        $id: 1,
         title: '<i class="glyphicon glyphicon-asterisk"></i> <span class="text-primary">Another event</span>, with a <i>html</i> title',
         type: 'info',
         startsAt: moment(calendarDay).subtract(1, 'day').toDate(),
@@ -48,6 +53,7 @@ describe('mwlCalendarMonth directive', function() {
         draggable: true,
         resizable: true
       }, {
+        $id: 2,
         title: 'This is a really long event title that occurs on every year',
         type: 'important',
         startsAt: moment(calendarDay).startOf('day').add(7, 'hours').toDate(),
@@ -75,8 +81,9 @@ describe('mwlCalendarMonth directive', function() {
 
   beforeEach(angular.mock.module('mwl.calendar'));
 
-  beforeEach(angular.mock.inject(function($compile, _$rootScope_, _calendarHelper_) {
+  beforeEach(angular.mock.inject(function($compile, _$rootScope_, _calendarHelper_, _$templateCache_) {
     $rootScope = _$rootScope_;
+    $templateCache = _$templateCache_;
     calendarHelper = _calendarHelper_;
     scope = $rootScope.$new();
     prepareScope(scope);
@@ -155,6 +162,26 @@ describe('mwlCalendarMonth directive', function() {
       calendarNewEventStart: new Date(2015, 4, 1, 8, 0),
       calendarNewEventEnd: null
     });
+  });
+
+  it('should use a custom cell url', function() {
+    var templatePath = 'customMonthCell.html';
+    $templateCache.put(templatePath, '<my-custom-cell>Hello world!</my-custom-cell>');
+    scope.monthCellTemplateUrl = templatePath;
+    MwlCalendarCtrl.cellModifier = angular.noop;
+    scope.$broadcast('calendar.refreshView');
+    scope.$apply();
+    expect(element.find('my-custom-cell').length).to.be.at.least(1);
+  });
+
+  it('should use a custom cell events url', function() {
+    var templatePath = 'customMonthCellEvents.html';
+    $templateCache.put(templatePath, '<my-custom-events>Hello world!</my-custom-events>');
+    scope.monthCellEventsTemplateUrl = templatePath;
+    MwlCalendarCtrl.cellModifier = angular.noop;
+    scope.$broadcast('calendar.refreshView');
+    scope.$apply();
+    expect(element.find('my-custom-events').length).to.be.at.least(1);
   });
 
 });
