@@ -133,7 +133,7 @@ $scope.events = [
 ];
 ```
 
-The 4 properties listed are required for all events.
+`title`, `type` and `startsAt` are required for all events.
 
 ### view-title
 
