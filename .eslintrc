@@ -1,11 +1,11 @@
 {
   "extends": "mwl",
   "rules": {
-    "angular/ng_controller_name": [2, "/[A-Z].*Ctrl/"],
-    "angular/ng_deferred": 2,
-    "angular/ng_directive_name": [2, "mwl"],
-    "angular/ng_empty_controller": 2,
-    "angular/ng_di_unused": 2
+    "angular/controller-name": [2, "/[A-Z].*Ctrl/"],
+    "angular/deferred": 2,
+    "angular/directive-name": [2, "mwl"],
+    "angular/empty-controller": 2,
+    "angular/di-unused": 2
   },
   "env": {
     "node": true
