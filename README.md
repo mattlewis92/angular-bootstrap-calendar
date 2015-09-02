@@ -210,7 +210,7 @@ app.config(function($provide) {
 });
 ```
 
-For more info on using decorators see this [great guide](http://angular-tips.com/blog/2013/09/experiment-decorating-directives/);
+For more info on using decorators see this [great guide](http://angular-tips.com/blog/2013/09/experiment-decorating-directives/).
 
 ## The mwl-date-modifier directive
 
