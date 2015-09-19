@@ -201,7 +201,7 @@ All templates apart from the month cell templates are linked to directives so yo
 ```
 //This will change the slide box directive template to one of your choosing
 app.config(function($provide) {
-  $provide.decorator('mwlSlideBoxDirective', function($delegate) {
+  $provide.decorator('mwlCalendarSlideBoxDirective', function($delegate) {
     var directive = $delegate[0];
     delete directive.template; //the calendar uses template instead of template-url so you need to delete this
     directive.templateUrl = 'path/to/my/slide/box/template.html';
