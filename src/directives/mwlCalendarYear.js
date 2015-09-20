@@ -22,10 +22,16 @@ angular
 
     });
 
-    vm.monthClicked = function(month, monthClickedFirstRun) {
+    vm.monthClicked = function(month, monthClickedFirstRun, $event) {
 
       if (!monthClickedFirstRun) {
-        vm.onTimespanClick({calendarDate: month.date.toDate()});
+        vm.onTimespanClick({
+          calendarDate: month.date.toDate(),
+          $event: $event
+        });
+        if ($event && $event.defaultPrevented) {
+          return;
+        }
       }
 
       vm.openRowIndex = null;

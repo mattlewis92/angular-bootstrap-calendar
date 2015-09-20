@@ -31,12 +31,16 @@ angular
 
     });
 
-    vm.dayClicked = function(day, dayClickedFirstRun) {
+    vm.dayClicked = function(day, dayClickedFirstRun, $event) {
 
       if (!dayClickedFirstRun) {
         vm.onTimespanClick({
-          calendarDate: day.date.toDate()
+          calendarDate: day.date.toDate(),
+          $event: $event
         });
+        if ($event && $event.defaultPrevented) {
+          return;
+        }
       }
 
       vm.openRowIndex = null;

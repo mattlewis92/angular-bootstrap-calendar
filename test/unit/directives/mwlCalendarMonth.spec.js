@@ -115,12 +115,24 @@ describe('mwlCalendarMonth directive', function() {
     //Open event list
     expect(MwlCalendarCtrl.openRowIndex).to.equal(0);
     expect(MwlCalendarCtrl.openDayIndex).to.equal(0);
-    expect(showModal).to.have.been.calledWith('Day clicked', {calendarDate: MwlCalendarCtrl.view[0].date.toDate()});
+    expect(showModal).to.have.been.calledWith('Day clicked', {
+      calendarDate: MwlCalendarCtrl.view[0].date.toDate(),
+      $event: undefined
+    });
 
     //Close event list
     MwlCalendarCtrl.dayClicked(MwlCalendarCtrl.view[0]);
     expect(MwlCalendarCtrl.openRowIndex).to.equal(null);
     expect(MwlCalendarCtrl.openDayIndex).to.equal(null);
+  });
+
+  it('should disable the slidebox if the click event is prevented', function() {
+    expect(MwlCalendarCtrl.openRowIndex).to.be.undefined;
+    expect(MwlCalendarCtrl.openDayIndex).to.be.undefined;
+    MwlCalendarCtrl.view = [{date: moment(calendarDay), inMonth: true}];
+    MwlCalendarCtrl.dayClicked(MwlCalendarCtrl.view[0], false, {defaultPrevented: true});
+    expect(MwlCalendarCtrl.openRowIndex).to.be.undefined;
+    expect(MwlCalendarCtrl.openDayIndex).to.be.undefined;
   });
 
   it('should highlight an event across multiple days', function() {
