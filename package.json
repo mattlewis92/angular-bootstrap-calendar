@@ -46,9 +46,7 @@
   },
   "webpack": "src/entry.js",
   "browser": "dist/js/angular-bootstrap-calendar-tpls.js",
-  "style": [
-    "dist/css/angular-bootstrap-calendar.css"
-  ],
+  "style": "dist/css/angular-bootstrap-calendar.css",
   "optionalDependencies": {
     "angular-ui-bootstrap": "~0.13.1",
     "interact.js": "~1.2.4",
