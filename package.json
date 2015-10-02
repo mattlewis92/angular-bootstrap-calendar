@@ -44,7 +44,6 @@
   "engines": {
     "node": ">=0.12.0"
   },
-  "webpack": "src/entry.js",
   "browser": "dist/js/angular-bootstrap-calendar-tpls.js",
   "style": "dist/css/angular-bootstrap-calendar.css",
   "optionalDependencies": {
