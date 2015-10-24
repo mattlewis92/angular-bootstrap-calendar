@@ -34,7 +34,8 @@ module.exports = {
   output: {
     path: __dirname + '/dist/js',
     filename: jsFilename,
-    libraryTarget: 'umd'
+    libraryTarget: 'umd',
+    library: 'angularBootstrapCalendarModuleName'
   },
   externals: {
     angular: 'angular',
