@@ -1,14 +1,14 @@
 'use strict';
 
-var open = require('open');
-var karma = require('karma');
-var webpack = require('webpack');
-var WebpackNotifierPlugin = require('webpack-notifier');
-var PORT = 8000;
+const open = require('open');
+const karma = require('karma');
+const webpack = require('webpack');
+const WebpackNotifierPlugin = require('webpack-notifier');
+const PORT = 8000;
 
 open('http://localhost:' + PORT);
 
-var server = new karma.Server({
+const server = new karma.Server({
   configFile: __dirname + '/karma.conf.js',
   autoWatch: true,
   singleRun: false

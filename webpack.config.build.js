@@ -1,12 +1,11 @@
 'use strict';
 
-var webpack = require('webpack');
-var ejs = require('ejs');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-var EXCLUDE_TEMPLATES = process.argv.indexOf('--exclude-templates') > -1;
-var MIN = process.argv.indexOf('-p') > -1;
-var cssFilename, jsFilename;
+const EXCLUDE_TEMPLATES = process.argv.indexOf('--exclude-templates') > -1;
+const MIN = process.argv.indexOf('-p') > -1;
+let cssFilename, jsFilename;
 jsFilename = cssFilename = 'angular-bootstrap-calendar';
 if (!EXCLUDE_TEMPLATES) {
   jsFilename += '-tpls';
@@ -19,15 +18,15 @@ jsFilename += '.js';
 cssFilename += '.css';
 
 function getBanner() {
-  var pkg = require('./bower.json');
-  var banner = ['/**',
-    ' * <%= pkg.name %> - <%= pkg.description %>',
-    ' * @version v<%= pkg.version %>',
-    ' * @link <%= pkg.homepage %>',
-    ' * @license <%= pkg.license %>',
-    ' */',
-    ''].join('\n');
-  return ejs.render(banner, {pkg: pkg});
+  const pkg = require('./bower.json');
+  return `
+/**
+ * ${pkg.name} - ${pkg.description}
+ * @version v${pkg.version}
+ * @link ${pkg.homepage}
+ * @license ${pkg.license}
+ */
+ `.trim();
 }
 
 module.exports = {
@@ -35,7 +34,8 @@ module.exports = {
   output: {
     path: __dirname + '/dist/js',
     filename: jsFilename,
-    libraryTarget: 'umd'
+    libraryTarget: 'umd',
+    library: 'angularBootstrapCalendarModuleName'
   },
   externals: {
     angular: 'angular',

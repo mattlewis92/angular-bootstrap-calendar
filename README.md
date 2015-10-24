@@ -10,8 +10,6 @@
 [![GitHub stars](https://img.shields.io/github/stars/mattlewis92/angular-bootstrap-calendar.svg)](https://github.com/mattlewis92/angular-bootstrap-calendar/stargazers)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/mattlewis92/angular-bootstrap-calendar/master/LICENSE)
 
-## Please see the [release notes](https://github.com/mattlewis92/angular-bootstrap-calendar/releases) for new features and breaking changes.
-
 ## Table of contents
 
 - [About](#about)
