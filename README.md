@@ -198,13 +198,13 @@ An interpolated string template url that can be used to override the default mon
 All templates apart from the month cell templates are linked to directives so you can change any template and use your own using a decorator like so:
 ```
 //This will change the slide box directive template to one of your choosing
-app.config(function($provide) {
-  $provide.decorator('mwlCalendarSlideBoxDirective', function($delegate) {
+app.config(['$provide', function($provide) {
+  $provide.decorator('mwlCalendarSlideBoxDirective', ['$delegate', function($delegate) {
     var directive = $delegate[0];
     delete directive.template; //the calendar uses template instead of template-url so you need to delete this
     directive.templateUrl = 'path/to/my/slide/box/template.html';
     return $delegate;
-  });
+  }]);
 });
 ```
 
