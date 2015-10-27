@@ -205,7 +205,7 @@ app.config(['$provide', function($provide) {
     directive.templateUrl = 'path/to/my/slide/box/template.html';
     return $delegate;
   }]);
-});
+}]);
 ```
 
 For more info on using decorators see this [great guide](http://angular-tips.com/blog/2013/09/experiment-decorating-directives/).
