@@ -17,7 +17,7 @@ angular
   })
   .directive('mwlCollapseFallback', function($injector) {
 
-    if ($injector.has('collapseDirective')) {
+    if ($injector.has('uibCollapseDirective')) {
       return {};
     }
 
