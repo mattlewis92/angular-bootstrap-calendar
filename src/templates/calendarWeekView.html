@@ -59,7 +59,7 @@
               ng-click="vm.onEventClick({calendarEvent: event})"
               class="event-item"
               ng-bind-html="vm.$sce.trustAsHtml(event.title)"
-              tooltip-html-unsafe="{{ event.title }}"
+              uib-tooltip-html="event.title | calendarTrustAsHtml"
               tooltip-placement="left"
               tooltip-append-to-body="true">
             </a>

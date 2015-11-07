@@ -2,7 +2,7 @@
 
 angular
   .module('demo', ['mwl.calendar', 'ui.bootstrap', 'ngTouch', 'ngAnimate'])
-  .controller('MainCtrl', function ($modal, moment) {
+  .controller('MainCtrl', function ($uibModal, moment) {
 
     var vm = this;
 
@@ -35,6 +35,8 @@ angular
       }
     ];
 
+    vm.isCellOpen = true;
+
     /*
      var currentYear = moment().year();
      var currentMonth = moment().month();
@@ -54,7 +56,7 @@ angular
     }*/
 
     function showModal(action, event) {
-      $modal.open({
+      $uibModal.open({
         templateUrl: 'modalContent.html',
         controller: function() {
           var vm = this;

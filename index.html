@@ -72,10 +72,10 @@
 
             <div class="col-md-6 text-center">
               <div class="btn-group">
-                <label class="btn btn-primary" ng-model="vm.calendarView" btn-radio="'year'">Year</label>
-                <label class="btn btn-primary" ng-model="vm.calendarView" btn-radio="'month'">Month</label>
-                <label class="btn btn-primary" ng-model="vm.calendarView" btn-radio="'week'">Week</label>
-                <label class="btn btn-primary" ng-model="vm.calendarView" btn-radio="'day'">Day</label>
+                <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'year'">Year</label>
+                <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'month'">Month</label>
+                <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'week'">Week</label>
+                <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'day'">Day</label>
               </div>
             </div>
 
@@ -94,7 +94,7 @@
             delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
             on-edit-event-click="vm.eventEdited(calendarEvent)"
             on-delete-event-click="vm.eventDeleted(calendarEvent)"
-            auto-open="true"
+            cell-is-open="vm.isCellOpen"
             day-view-start="06:00"
             day-view-end="22:00"
             day-view-split="30"
@@ -162,7 +162,7 @@
                       type="text"
                       class="form-control"
                       readonly
-                      datepicker-popup="dd MMMM yyyy"
+                      uib-datepicker-popup="dd MMMM yyyy"
                       ng-model="event.startsAt"
                       is-open="event.startOpen"
                       close-text="Close" >
@@ -175,12 +175,12 @@
                       </button>
                     </span>
                   </p>
-                  <timepicker
+                  <uib-timepicker
                     ng-model="event.startsAt"
                     hour-step="1"
                     minute-step="15"
                     show-meridian="true">
-                  </timepicker>
+                  </uib-timepicker>
                 </td>
                 <td>
                   <p class="input-group" style="max-width: 250px">
@@ -188,7 +188,7 @@
                       type="text"
                       class="form-control"
                       readonly
-                      datepicker-popup="dd MMMM yyyy"
+                      uib-datepicker-popup="dd MMMM yyyy"
                       ng-model="event.endsAt"
                       is-open="event.endOpen"
                       close-text="Close">
@@ -201,12 +201,12 @@
                       </button>
                     </span>
                   </p>
-                  <timepicker
+                  <uib-timepicker
                     ng-model="event.endsAt"
                     hour-step="1"
                     minute-step="15"
                     show-meridian="true">
-                  </timepicker>
+                  </uib-timepicker>
                 </td>
                 <td>
                   <button
@@ -223,13 +223,13 @@
       </div>
 
     </div>
-    
+
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/interact.js/1.2.4/interact.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular-touch.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular-animate.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.4/ui-bootstrap-tpls.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.min.js"></script>
     <script src="dist/js/angular-bootstrap-calendar-tpls.min.js"></script>
     <script src="demo/demo.js"></script>
 </body>

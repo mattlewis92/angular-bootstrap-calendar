@@ -50,7 +50,8 @@ angular
 
     var i18nStrings = {
       eventsLabel: 'Events',
-      timeLabel: 'Time'
+      timeLabel: 'Time',
+      weekNumber: 'Week {week}'
     };
 
     var configProvider = this;

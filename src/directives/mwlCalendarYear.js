@@ -12,9 +12,10 @@ angular
       vm.view = calendarHelper.getYearView(vm.events, vm.currentDay, vm.cellModifier);
 
       //Auto open the calendar to the current day if set
-      if (vm.autoOpen) {
+      vm.openMonthIndex = null;
+      if (vm.cellIsOpen) {
         vm.view.forEach(function(month) {
-          if (moment(vm.currentDay).startOf('month').isSame(month.date) && !vm.openMonthIndex) {
+          if (moment(vm.currentDay).startOf('month').isSame(month.date)) {
             vm.monthClicked(month, true);
           }
         });
@@ -38,9 +39,11 @@ angular
       var monthIndex = vm.view.indexOf(month);
       if (monthIndex === vm.openMonthIndex) { //the month has been clicked and is already open
         vm.openMonthIndex = null; //close the open month
+        vm.cellIsOpen = false;
       } else {
         vm.openMonthIndex = monthIndex;
         vm.openRowIndex = Math.floor(monthIndex / 4);
+        vm.cellIsOpen = true;
       }
 
     };
@@ -73,7 +76,7 @@ angular
         onDeleteEventClick: '=',
         editEventHtml: '=',
         deleteEventHtml: '=',
-        autoOpen: '=',
+        cellIsOpen: '=',
         onTimespanClick: '=',
         cellModifier: '='
       },

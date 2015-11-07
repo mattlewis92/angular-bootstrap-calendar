@@ -37,11 +37,11 @@ The calendar has a few dependencies, these are as follows, and must be included 
 * [AngularJS](https://angularjs.org/) 1.3.x or 1.4.x are supported
 * [Bootstrap](http://getbootstrap.com/) 3+ (CSS only)
 * [Moment.js](http://momentjs.com/)
-* [ui-bootstrap](http://angular-ui.github.io/bootstrap/) (optional, include for collapse animations and tooltips on the year and month views.
+* [ui-bootstrap](http://angular-ui.github.io/bootstrap/) (0.14.0+, optional, include for collapse animations and tooltips.
 * [interact.js](http://interactjs.io/) (optional, include to allow drag and drop on the calendar)
 * [ngTouch](https://docs.angularjs.org/api/ngTouch) (optional, include if using the calendar on mobile devices)
 
-It is recommended that you install the plugin and its dependencies through bower:
+You can install through bower:
 
 ```
 bower install --save angular-bootstrap-calendar
@@ -91,7 +91,7 @@ There is a single directive exposed to create the calendar, use it like so:
     delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
     on-edit-event-click="eventEdited(calendarEvent)"
     on-delete-event-click="eventDeleted(calendarEvent)"
-    auto-open="true">
+    cell-is-open="true">
 </mwl-calendar>
 ```
 
@@ -165,9 +165,9 @@ This expression is called when an event delete link is clicked on the calendar. 
 
 This expression is called when a month, day or hour on the calendar is clicked on the year, month and day views respectively. `calendarDate` can be used in the expression and contains the start of the month, day or hour that was clicked on.
 
-### auto-open
+### cell-is-open
 
-Whether to auto open the year and month view breakdown to the current year / month. Default: false
+A 2 way bound variable that when set to true will open the year or month view cell that corresponds to the date passed to the date object passed to `current-day`.
 
 ### day-view-start
 
@@ -186,26 +186,30 @@ The number of chunks to split the day view hours up into. Can be either 10, 15 o
 An optional expression that is evaluated when the drilldown (clicking on a date to change the view) is triggered. Return false from the expression function to disable the drilldown. `calendarDate` can be used in the expression and contains the date that was selected. `calendarNextView` is the view that the calendar will be changed to.  
 
 ### cell-modifier
+
 An optional expression that is evaluated on each cell generated for the year and month views. `calendarCell` can be used in the expression and is an object containing the current cell data which you can modify (see the `calendarHelper` service source code or just console.log it to see what data is available). If you add the `cssClass` property it will be applied to the cell.
 
 ### month-cell-template-url
+
 An interpolated string template url that can be used to override the default month cell template.
 
 ### month-cell-events-template-url
+
 An interpolated string template url that can be used to override the default month cell events.
 
 ## Custom directive templates
+
 All templates apart from the month cell templates are linked to directives so you can change any template and use your own using a decorator like so:
 ```
 //This will change the slide box directive template to one of your choosing
-app.config(function($provide) {
-  $provide.decorator('mwlCalendarSlideBoxDirective', function($delegate) {
+app.config(['$provide', function($provide) {
+  $provide.decorator('mwlCalendarSlideBoxDirective', ['$delegate', function($delegate) {
     var directive = $delegate[0];
     delete directive.template; //the calendar uses template instead of template-url so you need to delete this
     directive.templateUrl = 'path/to/my/slide/box/template.html';
     return $delegate;
-  });
-});
+  }]);
+}]);
 ```
 
 For more info on using decorators see this [great guide](http://angular-tips.com/blog/2013/09/experiment-decorating-directives/).
