@@ -21,9 +21,10 @@ angular
       }
 
       //Auto open the calendar to the current day if set
-      if (vm.autoOpen) {
+      vm.openDayIndex = null;
+      if (vm.cellIsOpen) {
         vm.view.forEach(function(day) {
-          if (day.inMonth && moment(vm.currentDay).startOf('day').isSame(day.date) && !vm.openDayIndex) {
+          if (day.inMonth && moment(vm.currentDay).startOf('day').isSame(day.date)) {
             vm.dayClicked(day, true);
           }
         });
@@ -47,9 +48,11 @@ angular
       var dayIndex = vm.view.indexOf(day);
       if (dayIndex === vm.openDayIndex) { //the day has been clicked and is already open
         vm.openDayIndex = null; //close the open day
+        vm.cellIsOpen = false;
       } else {
         vm.openDayIndex = dayIndex;
         vm.openRowIndex = Math.floor(dayIndex / 7);
+        vm.cellIsOpen = true;
       }
 
     };
@@ -100,7 +103,7 @@ angular
         onEventTimesChanged: '=',
         editEventHtml: '=',
         deleteEventHtml: '=',
-        autoOpen: '=',
+        cellIsOpen: '=',
         onTimespanClick: '=',
         cellModifier: '=',
         cellTemplateUrl: '@',

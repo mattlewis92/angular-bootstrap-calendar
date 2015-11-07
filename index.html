@@ -93,7 +93,7 @@
             delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
             on-edit-event-click="vm.eventEdited(calendarEvent)"
             on-delete-event-click="vm.eventDeleted(calendarEvent)"
-            auto-open="true"
+            cell-is-open="vm.isCellOpen"
             day-view-start="06:00"
             day-view-end="22:00"
             day-view-split="30"

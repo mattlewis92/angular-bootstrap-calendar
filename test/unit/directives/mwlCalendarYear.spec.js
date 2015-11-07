@@ -19,7 +19,7 @@ describe('mwlCalendarYear directive', function() {
       'on-event-times-changed="onEventTimesChanged" ' +
       'day-view-start="dayViewStart" ' +
       'day-view-end="dayViewEnd" ' +
-      'auto-open="autoOpen"' +
+      'cell-is-open="cellIsOpen"' +
       'on-timespan-click="onTimeSpanClick"' +
       'day-view-split="dayViewSplit || 30" ' +
       '></mwl-calendar-year>';
@@ -28,7 +28,7 @@ describe('mwlCalendarYear directive', function() {
   function prepareScope(vm) {
     //These variables MUST be set as a minimum for the calendar to work
     vm.currentDay = calendarDay;
-    vm.autoOpen = true;
+    vm.cellIsOpen = true;
     vm.dayViewStart = '06:00';
     vm.dayViewEnd = '22:00';
     vm.dayViewsplit = 30;

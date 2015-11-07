@@ -93,6 +93,7 @@ angular
     $scope.$watchGroup([
       'vm.currentDay',
       'vm.view',
+      'vm.cellIsOpen',
       function() {
         return moment.locale() + $locale.id; //Auto update the calendar when the locale changes
       }
@@ -119,7 +120,7 @@ angular
         currentDay: '=',
         editEventHtml: '=',
         deleteEventHtml: '=',
-        autoOpen: '=',
+        cellIsOpen: '=',
         onEventClick: '&',
         onEventTimesChanged: '&',
         onEditEventClick: '&',

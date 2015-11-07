@@ -35,6 +35,8 @@ angular
       }
     ];
 
+    vm.isCellOpen = true;
+
     /*
      var currentYear = moment().year();
      var currentMonth = moment().month();
