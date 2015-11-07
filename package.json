@@ -36,8 +36,10 @@
     "node-libs-browser": "~0.5.2",
     "open": "0.0.5",
     "phantomjs": "~1.9.17",
+    "pre-git": "~1.0.0",
     "style-loader": "~0.13.0",
     "uglify-loader": "~1.2.0",
+    "validate-commit-msg": "~1.0.0",
     "webpack": "~1.12.0",
     "webpack-dev-server": "~1.12.0",
     "webpack-notifier": "~1.2.1"
@@ -63,9 +65,16 @@
     "build:min:exclude-templates": "webpack -p --config webpack.config.build.js --exclude-templates",
     "build": "npm run build:unmin && npm run build:min && npm run build:unmin:exclude-templates && npm run build:min:exclude-templates",
     "start": "webpack-dev-server",
-    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -w"
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -w",
+    "commit": "git cz"
   },
   "czConfig": {
     "path": "./node_modules/cz-conventional-changelog"
+  },
+  "config": {
+    "pre-git": {
+      "commit-msg": "node ./node_modules/validate-commit-msg",
+      "post-commit": "git status"
+    }
   }
 }
