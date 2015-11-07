@@ -34,7 +34,7 @@ describe('mwlCollapseFallback directive', function() {
 
   describe('when it is not required', function() {
     beforeEach(angular.mock.module(function($provide) {
-      $provide.value('collapseDirective', {});
+      $provide.value('uibCollapseDirective', {});
     }));
 
     beforeEach(angular.mock.inject(function($compile, _$rootScope_) {
