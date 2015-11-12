@@ -37,6 +37,10 @@ var webpackConfig = {
   ]
 };
 
+if (!WATCH) {
+  webpackConfig.plugins.push(new webpack.NoErrorsPlugin());
+}
+
 if (MIN) {
   webpackConfig.module.loaders.push({
     test: /.*src.*\.js$/,
