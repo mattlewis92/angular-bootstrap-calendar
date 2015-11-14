@@ -68,10 +68,10 @@
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -w",
     "commit": "git cz"
   },
-  "czConfig": {
-    "path": "./node_modules/cz-conventional-changelog"
-  },
   "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    },
     "pre-git": {
       "commit-msg": "node ./node_modules/validate-commit-msg",
       "post-commit": "git status",
