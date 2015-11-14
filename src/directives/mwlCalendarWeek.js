@@ -99,7 +99,6 @@ angular
       }
     };
 
-
   })
   .directive('mwlCalendarWeek', function(calendarUseTemplates) {
 
