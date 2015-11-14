@@ -145,6 +145,56 @@ describe('calendarHelper', function() {
 
   });
 
+  describe('getCrossingsCount', function() {
+    var dayEvents;
+
+    beforeEach(function() {
+      dayEvents = [{
+        $id: 1,
+        startsAt: new Date('November 11, 2015 02:00:00'),
+        endsAt: new Date('November 11, 2015 06:00:00')
+      }, {
+        $id: 2,
+        startsAt: new Date('November 11, 2015 06:00:00'),
+        endsAt: new Date('November 11, 2015 10:00:00')
+      }];
+    });
+
+    it('should have 1 crossing', function() {
+      var event = {
+        $id: 3,
+        startsAt: new Date('November 11, 2015 01:00:00'),
+        endsAt: new Date('November 11, 2015 03:00:00')
+      };
+      dayEvents.push(event);
+
+      expect(calendarHelper.getCrossingsCount(event, dayEvents)).to.eql(1);
+    });
+
+    it('should have 2 crossings', function() {
+      var event = {
+        $id: 3,
+        startsAt: new Date('November 11, 2015 05:00:00'),
+        endsAt: new Date('November 11, 2015 07:00:00')
+      };
+      dayEvents.push(event);
+
+      expect(calendarHelper.getCrossingsCount(event, dayEvents)).to.eql(2);
+    });
+
+    it('should have no crossings', function() {
+      var event = {
+        $id: 3,
+        startsAt: new Date('November 11, 2015 10:00:00'),
+        endsAt: new Date('November 11, 2015 12:00:00')
+      };
+      dayEvents.push(event);
+
+      expect(calendarHelper.getCrossingsCount(event, dayEvents)).to.eql(0);
+    });
+
+  });
+
   describe('getWeekDayNames', function() {
 
     it('should get the days of the week starting at sunday', function() {
@@ -563,20 +613,65 @@ describe('calendarHelper', function() {
     });
   });
 
+  describe('eventsComparer', function() {
+    var a, b, c;
+
+    beforeEach(function() {
+      a = {
+        startsAt: new Date('October 20, 2015 11:00:00'),
+        endsAt: new Date('October 20, 2015 13:00:00')
+      };
+      b = {
+        startsAt: new Date('October 20, 2015 11:00:00'),
+        endsAt: new Date('October 20, 2015 12:00:00')
+      };
+      c = {
+        startsAt: new Date('October 20, 2015 11:00:00'),
+        endsAt: new Date('October 20, 2015 13:00:00')
+      };
+    });
+
+    it('eventA should be before eventB', function() {
+      expect(calendarHelper.eventsComparer(a, b)).to.equal(-1);
+    });
+
+    it('eventB should be after eventA', function() {
+      expect(calendarHelper.eventsComparer(b, a)).to.equal(1);
+    });
+
+    it('eventA should be equal eventC', function() {
+      expect(calendarHelper.eventsComparer(a, c)).to.equal(0);
+    });
+  });
+
   describe('getWeekViewWithTimes', function() {
-    var weekViewWithTimes;
+    var weekViewWithTimes, weekView;
 
     beforeEach(function() {
       var dayEvents = [{
+        $id: 1,
         startsAt: new Date('October 19, 2015 11:00:00'),
         endsAt: new Date('October 21, 2015 11:00:00')
       }, {
+        $id: 2,
         startsAt: new Date('October 20, 2015 11:00:00'),
         endsAt: new Date('October 21, 2015 11:00:00')
       }, {
+        $id: 3,
         startsAt: new Date('October 20, 2015 11:00:00'),
         endsAt: new Date('October 20, 2015 12:00:00')
+      },
+      {
+        $id: 4,
+        startsAt: new Date('October 20, 2015 11:00:00'),
+        endsAt: new Date('October 20, 2015 13:00:00')
       }];
+
+      weekView = calendarHelper.getWeekView(
+        dayEvents,
+        calendarDay,
+        true
+      );
 
       weekViewWithTimes = calendarHelper.getWeekViewWithTimes(
         dayEvents,
@@ -588,38 +683,53 @@ describe('calendarHelper', function() {
     });
 
     it('should calculate the week view with times', function() {
+      var baseBucketWidth = 14.285714285714285;
+
       var expectedEventsWeekView = [
         {
+          $id: 1,
           startsAt: new Date('October 19, 2015 11:00:00'),
           endsAt: new Date('October 21, 2015 11:00:00'),
           daySpan: 3,
-          dayOffset: 1,
-          top: 658,
-          height: 782,
-          left: 0
+          dayOffset: 1
         },
         {
+          $id: 2,
           startsAt: new Date('October 20, 2015 11:00:00'),
           endsAt: new Date('October 21, 2015 11:00:00'),
           daySpan: 2,
+          dayOffset: 2
+        }
+      ];
+
+      var expectedEventsWeekViewWithTimes = [
+        {
+          $id: 4,
+          startsAt: new Date('October 20, 2015 11:00:00'),
+          endsAt: new Date('October 20, 2015 13:00:00'),
+          daySpan: 1,
           dayOffset: 2,
           top: 658,
-          height: 782,
-          left: 0
+          height: 120,
+          left: 0,
+          width: baseBucketWidth / 2
         },
         {
+          $id: 3,
           startsAt: new Date('October 20, 2015 11:00:00'),
           endsAt: new Date('October 20, 2015 12:00:00'),
           daySpan: 1,
           dayOffset: 2,
           top: 658,
           height: 60,
-          left: 150
+          left: baseBucketWidth / 2,
+          width: baseBucketWidth / 2
         }
       ];
 
       expect(weekViewWithTimes.days.length).to.equal(7);
-      expect(weekViewWithTimes.events).to.eql(expectedEventsWeekView);
+      expect(weekView.events).to.eql(expectedEventsWeekView);
+      expect(weekViewWithTimes.events).to.eql(expectedEventsWeekViewWithTimes);
     });
   });
 
