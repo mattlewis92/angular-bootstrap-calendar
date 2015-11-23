@@ -113,7 +113,8 @@ angular
         onEventTimesChanged: '=',
         dayViewStart: '=',
         dayViewEnd: '=',
-        dayViewSplit: '='
+        dayViewSplit: '=',
+        onTimespanClick: '='
       },
       controller: 'MwlCalendarWeekCtrl as vm',
       link: function(scope, element, attrs, calendarCtrl) {
