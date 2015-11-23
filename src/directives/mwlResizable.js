@@ -4,7 +4,7 @@ var angular = require('angular');
 
 angular
   .module('mwl.calendar')
-  .controller('MwlResizableCtrl', function($element, $scope, $parse, $attrs, interact) {
+  .controller('MwlResizableCtrl', function($element, $scope, $parse, $attrs, $timeout, interact) {
 
     if (!interact) {
       return;
@@ -102,14 +102,16 @@ angular
           var elm = angular.element(event.target);
           var unitsResized = getUnitsResized(resizeEdge, elm, snapGridDimensions);
 
-          elm
-            .data('x', null)
-            .data('y', null)
-            .css({
-              transform: '',
-              width: originalDimensionsStyle.width,
-              height: originalDimensionsStyle.height
-            });
+          $timeout(function() {
+            elm
+              .data('x', null)
+              .data('y', null)
+              .css({
+                transform: '',
+                width: originalDimensionsStyle.width,
+                height: originalDimensionsStyle.height
+              });
+          });
 
           if ($attrs.onResizeEnd) {
             $parse($attrs.onResizeEnd)($scope, unitsResized);
