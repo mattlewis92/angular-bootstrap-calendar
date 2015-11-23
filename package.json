@@ -74,10 +74,7 @@
     },
     "pre-git": {
       "commit-msg": "node ./node_modules/validate-commit-msg",
-      "post-commit": "git status",
-      "pre-commit": [],
-      "pre-push": [],
-      "post-merge": []
+      "post-commit": "git status"
     }
   }
 }
