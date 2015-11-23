@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-calendar - A pure AngularJS bootstrap themed responsive calendar that can display events and has views for year, month, week and day
- * @version v0.17.0
+ * @version v0.17.1
  * @link https://github.com/mattlewis92/angular-bootstrap-calendar
  * @license MIT
  */
@@ -498,8 +498,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 
 	      //Auto open the calendar to the current day if set
-	      vm.openDayIndex = null;
-	      if (vm.cellIsOpen) {
+	      if (vm.cellIsOpen && !vm.openRowIndex) {
+	        vm.openDayIndex = null;
 	        vm.view.forEach(function(day) {
 	          if (day.inMonth && moment(vm.currentDay).startOf('day').isSame(day.date)) {
 	            vm.dayClicked(day, true);
@@ -767,7 +767,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        onEventTimesChanged: '=',
 	        dayViewStart: '=',
 	        dayViewEnd: '=',
-	        dayViewSplit: '='
+	        dayViewSplit: '=',
+	        onTimespanClick: '='
 	      },
 	      controller: 'MwlCalendarWeekCtrl as vm',
 	      link: function(scope, element, attrs, calendarCtrl) {
@@ -797,8 +798,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      vm.view = calendarHelper.getYearView(vm.events, vm.currentDay, vm.cellModifier);
 
 	      //Auto open the calendar to the current day if set
-	      vm.openMonthIndex = null;
-	      if (vm.cellIsOpen) {
+	      if (vm.cellIsOpen && !vm.openMonthIndex) {
+	        vm.openMonthIndex = null;
 	        vm.view.forEach(function(month) {
 	          if (moment(vm.currentDay).startOf('month').isSame(month.date)) {
 	            vm.monthClicked(month, true);
@@ -968,7 +969,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	angular
 	  .module('mwl.calendar')
-	  .controller('MwlDraggableCtrl', ["$element", "$scope", "$window", "$parse", "$attrs", "interact", function($element, $scope, $window, $parse, $attrs, interact) {
+	  .controller('MwlDraggableCtrl', ["$element", "$scope", "$window", "$parse", "$attrs", "$timeout", "interact", function($element, $scope, $window, $parse, $attrs, $timeout, interact) {
 
 	    if (!interact) {
 	      return;
@@ -1072,10 +1073,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	            $scope.$apply();
 	          }
 
-	          translateElement(elm, '')
-	            .removeAttr('data-x')
-	            .removeAttr('data-y')
-	            .removeClass('dragging-active');
+	          $timeout(function() {
+	            translateElement(elm, '')
+	              .removeAttr('data-x')
+	              .removeAttr('data-y')
+	              .removeClass('dragging-active');
+	          });
 	        }
 
 	      }
@@ -1183,7 +1186,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	angular
 	  .module('mwl.calendar')
-	  .controller('MwlResizableCtrl', ["$element", "$scope", "$parse", "$attrs", "interact", function($element, $scope, $parse, $attrs, interact) {
+	  .controller('MwlResizableCtrl', ["$element", "$scope", "$parse", "$attrs", "$timeout", "interact", function($element, $scope, $parse, $attrs, $timeout, interact) {
 
 	    if (!interact) {
 	      return;
@@ -1281,14 +1284,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	          var elm = angular.element(event.target);
 	          var unitsResized = getUnitsResized(resizeEdge, elm, snapGridDimensions);
 
-	          elm
-	            .data('x', null)
-	            .data('y', null)
-	            .css({
-	              transform: '',
-	              width: originalDimensionsStyle.width,
-	              height: originalDimensionsStyle.height
-	            });
+	          $timeout(function() {
+	            elm
+	              .data('x', null)
+	              .data('y', null)
+	              .css({
+	                transform: '',
+	                width: originalDimensionsStyle.width,
+	                height: originalDimensionsStyle.height
+	              });
+	          });
 
 	          if ($attrs.onResizeEnd) {
 	            $parse($attrs.onResizeEnd)($scope, unitsResized);
@@ -1868,6 +1873,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	        return 1;
 	      }
+	      return 1;
 	    }
 
 	    function getDayView(events, currentDay, dayViewStart, dayViewEnd, dayViewSplit, isWeekViewWithTimes) {
