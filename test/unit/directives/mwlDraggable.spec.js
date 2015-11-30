@@ -12,6 +12,7 @@ describe('mwlDraggable directive', function() {
     elementTarget,
     $window,
     $compile,
+    $timeout,
     template =
       '<div ' +
       'mwl-draggable="draggable" ' +
@@ -40,10 +41,11 @@ describe('mwlDraggable directive', function() {
     $provide.constant('interact', interact);
   }));
 
-  beforeEach(angular.mock.inject(function(_$compile_, _$rootScope_, _$window_) {
+  beforeEach(angular.mock.inject(function(_$compile_, _$rootScope_, _$window_, _$timeout_) {
     $window = _$window_;
     $compile = _$compile_;
     $rootScope = _$rootScope_;
+    $timeout = _$timeout_;
     scope = $rootScope.$new();
     prepareScope(scope);
 
@@ -104,11 +106,13 @@ describe('mwlDraggable directive', function() {
     draggableOptions.onstart(event);
     draggableOptions.onmove(event);
     draggableOptions.onend(event);
+    $timeout.flush();
     expect(angular.element(event.target).hasClass('dragging-active')).to.be.false;
     expect(angular.element(event.target).css('pointerEvents')).to.equal('auto');
     expect(angular.element(event.target).css('transform')).to.equal('');
     expect(angular.element(event.target).css('-webkit-transform')).to.equal('');
     expect(angular.element(event.target).css('-ms-transform')).to.equal('');
+    expect(angular.element(event.target).css('z-index')).to.equal('auto');
     expect(scope.onDragEnd).to.have.been.calledWith(0, 6);
   });
 
