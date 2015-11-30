@@ -1,3 +1,13 @@
+<a name="0.17.3"></a>
+## [0.17.3](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.17.2...v0.17.3) (2015-11-30)
+
+
+### Bug Fixes
+
+* **DayView:** Allow dragging day view events to the side for better UX ([e147f6b](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/e147f6b))
+
+
+
 <a name="0.17.2"></a>
 ## [0.17.2](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.17.1...v0.17.2) (2015-11-30)
 
