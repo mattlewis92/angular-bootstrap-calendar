@@ -110,6 +110,7 @@ angular
 
           $timeout(function() {
             translateElement(elm, '')
+              .css('z-index', 'auto')
               .removeAttr('data-x')
               .removeAttr('data-y')
               .removeClass('dragging-active');
