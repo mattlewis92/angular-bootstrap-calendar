@@ -83,19 +83,18 @@ describe('mwlCalendarWeek directive', function() {
 
   it('should get the new week view when calendar refreshes', function() {
     sinon.stub(calendarHelper, 'getDayViewHeight').returns(1000);
-    sinon.stub(calendarHelper, 'getWeekView').returns({events: [{title: 'event1'}, {title: 'oneDayEvent'}]});
-    sinon.stub(calendarHelper, 'getWeekViewWithTimes').returns({events: [{title: 'oneDayEvent'}]});
+    sinon.stub(calendarHelper, 'getWeekView').returns({event: 'event1'});
+    sinon.stub(calendarHelper, 'getWeekViewWithTimes').returns({event: 'event2'});
     scope.$broadcast('calendar.refreshView');
     expect(calendarHelper.getDayViewHeight).to.have.been.calledWith('06:00', '22:00', 30);
     expect(MwlCalendarCtrl.dayViewHeight).to.equal(1000);
-    expect(calendarHelper.getWeekView).to.have.been.calledWith(scope.events, scope.currentDay, false);
-    expect(MwlCalendarCtrl.view).to.eql({events: [{title: 'event1'}, {title: 'oneDayEvent'}]});
+    expect(calendarHelper.getWeekView).to.have.been.calledWith(scope.events, scope.currentDay);
+    expect(MwlCalendarCtrl.view).to.eql({event: 'event1'});
 
     MwlCalendarCtrl.showTimes = true;
     scope.$broadcast('calendar.refreshView');
-    expect(calendarHelper.getWeekView).to.have.been.calledWith(scope.events, scope.currentDay, true);
     expect(calendarHelper.getWeekViewWithTimes).to.have.been.calledWith(scope.events, scope.currentDay, '06:00', '22:00', 30);
-    expect(MwlCalendarCtrl.viewWithTimes).to.eql({events: [{title: 'oneDayEvent'}]});
+    expect(MwlCalendarCtrl.view).to.eql({event: 'event2'});
   });
 
   it('should call the callback function when you finish dragging and event', function() {
