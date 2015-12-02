@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-calendar - A pure AngularJS bootstrap themed responsive calendar that can display events and has views for year, month, week and day
- * @version v0.17.5
+ * @version v0.17.6
  * @link https://github.com/mattlewis92/angular-bootstrap-calendar
  * @license MIT
  */
@@ -485,6 +485,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    var vm = this;
 	    vm.calendarConfig = calendarConfig;
+	    vm.openRowIndex = null;
 
 	    $scope.$on('calendar.refreshView', function() {
 
@@ -498,7 +499,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 
 	      //Auto open the calendar to the current day if set
-	      if (vm.cellIsOpen && !vm.openRowIndex) {
+	      if (vm.cellIsOpen && vm.openRowIndex === null) {
 	        vm.openDayIndex = null;
 	        vm.view.forEach(function(day) {
 	          if (day.inMonth && moment(vm.currentDay).startOf('day').isSame(day.date)) {
@@ -768,12 +769,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  .controller('MwlCalendarYearCtrl', ["$scope", "moment", "calendarHelper", function($scope, moment, calendarHelper) {
 
 	    var vm = this;
+	    vm.openMonthIndex = null;
 
 	    $scope.$on('calendar.refreshView', function() {
 	      vm.view = calendarHelper.getYearView(vm.events, vm.currentDay, vm.cellModifier);
 
 	      //Auto open the calendar to the current day if set
-	      if (vm.cellIsOpen && !vm.openMonthIndex) {
+	      if (vm.cellIsOpen && vm.openMonthIndex === null) {
 	        vm.openMonthIndex = null;
 	        vm.view.forEach(function(month) {
 	          if (moment(vm.currentDay).startOf('month').isSame(month.date)) {
