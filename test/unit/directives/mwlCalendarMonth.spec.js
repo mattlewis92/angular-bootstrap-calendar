@@ -127,11 +127,11 @@ describe('mwlCalendarMonth directive', function() {
   });
 
   it('should disable the slidebox if the click event is prevented', function() {
-    expect(MwlCalendarCtrl.openRowIndex).to.be.undefined;
+    expect(MwlCalendarCtrl.openRowIndex).to.be.null;
     expect(MwlCalendarCtrl.openDayIndex).to.be.undefined;
     MwlCalendarCtrl.view = [{date: moment(calendarDay), inMonth: true}];
     MwlCalendarCtrl.dayClicked(MwlCalendarCtrl.view[0], false, {defaultPrevented: true});
-    expect(MwlCalendarCtrl.openRowIndex).to.be.undefined;
+    expect(MwlCalendarCtrl.openRowIndex).to.be.null;
     expect(MwlCalendarCtrl.openDayIndex).to.be.undefined;
   });
 
