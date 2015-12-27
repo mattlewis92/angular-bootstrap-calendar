@@ -10,3 +10,9 @@ notifications:
 
 env:
   - CI=true
+
+before_install:
+  - pip install codecov
+
+after_success:
+  - codecov
