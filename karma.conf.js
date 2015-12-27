@@ -2,7 +2,6 @@
 
 var webpack = require('webpack');
 var WATCH = process.argv.indexOf('--watch') > -1;
-var MIN = process.argv.indexOf('--min') > -1;
 
 var webpackConfig = {
   cache: true,
@@ -39,14 +38,6 @@ var webpackConfig = {
 
 if (!WATCH) {
   webpackConfig.plugins.push(new webpack.NoErrorsPlugin());
-}
-
-if (MIN) {
-  webpackConfig.module.loaders.push({
-    test: /.*src.*\.js$/,
-    loaders: ['uglify', 'ng-annotate'],
-    exclude: /node_modules/
-  });
 }
 
 module.exports = function(config) {

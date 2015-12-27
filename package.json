@@ -14,7 +14,6 @@
     "bootstrap": "^3.3.6",
     "conventional-changelog": "~0.5.1",
     "css-loader": "~0.23.0",
-    "cz-conventional-changelog": "~1.1.4",
     "eslint": "~1.10.1",
     "eslint-config-mwl": "~0.3.0",
     "eslint-loader": "~1.1.0",
@@ -40,7 +39,6 @@
     "phantomjs": "~1.9.17",
     "pre-git": "~3.1.1",
     "style-loader": "~0.13.0",
-    "uglify-loader": "~1.3.0",
     "webpack": "~1.12.0",
     "webpack-dev-server": "~1.14.0",
     "webpack-notifier": "~1.2.1"
@@ -56,9 +54,7 @@
     "interact.js": "~1.2.4"
   },
   "scripts": {
-    "test": "npm run test:min",
-    "test:unmin": "karma start",
-    "test:min": "karma start --min",
+    "test": "karma start",
     "test:watch": "karma start --watch",
     "build:unmin": "webpack --config webpack.config.build.js",
     "build:min": "webpack -p --config webpack.config.build.js",
