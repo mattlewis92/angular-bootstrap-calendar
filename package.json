@@ -64,19 +64,13 @@
     "build": "npm run build:unmin && npm run build:min && npm run build:unmin:exclude-templates && npm run build:min:exclude-templates",
     "start": "webpack-dev-server",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -w",
-    "commit": "git cz",
+    "commit": "commit-wizard",
     "release": "npm run build && npm run changelog"
   },
   "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    },
     "pre-git": {
       "commit-msg": "conventional",
-      "post-commit": "git status",
-      "pre-commit": [],
-      "pre-push": [],
-      "post-merge": []
+      "post-commit": "git status"
     }
   }
 }
