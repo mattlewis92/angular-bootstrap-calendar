@@ -18,7 +18,7 @@ server.start();
 
 module.exports = {
   entry: __dirname + '/src/entry.js',
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'eval',
   output: {
     filename: 'angular-bootstrap-calendar.js'
   },
