@@ -1,20 +1,12 @@
-sudo: false
-
 language: node_js
 
 node_js:
 - '4.2'
 
-script: npm run test:min
+script: npm test
 
 notifications:
   email: false
 
 env:
   - CI=true
-
-before_install:
-  - pip install codecov
-
-after_success:
-  - codecov
