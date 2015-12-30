@@ -29,6 +29,14 @@ h3 {
   margin-top: 10px;
 }
 
+.sidebar-nav li {
+  margin-bottom: 5px;
+}
+
+.sidebar-nav a:not(.active) {
+  color: #777;
+}
+
 /* Custom page footer */
 .footer {
   padding-top: 19px;

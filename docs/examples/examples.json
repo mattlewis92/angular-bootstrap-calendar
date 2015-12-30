@@ -1,4 +1,10 @@
 [{
   "key": "kitchen-sink",
   "label": "Kitchen sink"
+}, {
+  "key": "optional-event-end-dates",
+  "label": "Optional event end dates"
+}, {
+  "key": "editable-deletable-events",
+  "label": "Editable / deletable events"
 }]

@@ -2,7 +2,7 @@
 
 angular
   .module('mwl.calendar.docs') //you will need to declare your module with the dependencies ['mwl.calendar', 'ui.bootstrap', 'ngAnimate']
-  .controller('KitchenSinkCtrl', function($uibModal, moment) {
+  .controller('KitchenSinkCtrl', function(moment, alert) {
 
     var vm = this;
 
@@ -37,32 +37,20 @@ angular
 
     vm.isCellOpen = true;
 
-    function showModal(action, event) {
-      $uibModal.open({
-        templateUrl: 'modalContent.html',
-        controller: function() {
-          var vm = this;
-          vm.action = action;
-          vm.event = event;
-        },
-        controllerAs: 'vm'
-      });
-    }
-
     vm.eventClicked = function(event) {
-      showModal('Clicked', event);
+      alert.show('Clicked', event);
     };
 
     vm.eventEdited = function(event) {
-      showModal('Edited', event);
+      alert.show('Edited', event);
     };
 
     vm.eventDeleted = function(event) {
-      showModal('Deleted', event);
+      alert.show('Deleted', event);
     };
 
     vm.eventTimesChanged = function(event) {
-      showModal('Dropped or resized', event);
+      alert.show('Dropped or resized', event);
     };
 
     vm.toggle = function($event, field, event) {
