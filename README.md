@@ -135,7 +135,7 @@ $scope.events = [
 
 ### view-title
 
-This variable will be assigned to the calendar title. If you want to change the formatting you can use the `calendarConfigProvider` or just override the appropriate method in the `calendarTitle` factory.
+This variable will be assigned to the calendar title. If you want to change the formatting you can use the `calendarConfig` or just override the appropriate method in the `calendarTitle` factory.
 
 ### on-event-click 
 
@@ -250,9 +250,9 @@ You can either use angular's date filter or moment.js to format dates. The defau
 
 ```javascript
 angular.module('myModule')
-  .config(function(calendarConfigProvider) {
+  .config(function(calendarConfig) {
   
-    calendarConfigProvider.setDateFormatter('moment'); // use moment to format dates
+    calendarConfig.dateFormatter = 'moment'; // use moment to format dates
  
   });
 ```   
@@ -274,30 +274,27 @@ moment.locale('en', {
 
 ## Configuring date formats
 
-You can easily customise the date formats and i18n strings used throughout the calendar by using the `calendarConfigProvider`. Please note that these example formats are those used by moment.js and these won't work if using angular as the date formatter. Example usage:
+You can easily customise the date formats and i18n strings used throughout the calendar by using the `calendarConfig` value. Please note that these example formats are those used by moment.js and these won't work if using angular as the date formatter. Example usage:
 
 ```javascript
 angular.module('myModule')
-  .config(function(calendarConfigProvider) {
+  .config(function(calendarConfig) {
   
-    calendarConfigProvider.setDateFormatter('moment'); // use either moment or angular to format dates on the calendar. Default angular. Setting this will override any date formats you have already set.
+    console.log(calendarConfig); //view all available config
   
-    calendarConfigProvider.setDateFormats({
-      hour: 'HH:mm' // this will configure times on the day view to display in 24 hour format rather than the default of 12 hour
-    });
+    calendarConfig.dateFormatter = 'moment'; //use either moment or angular to format dates on the calendar. Default angular. Setting this will override any date formats you have already set.
+  
+    calendarConfig.allDateFormats.moment.date.hour = 'HH:mm'; //this will configure times on the day view to display in 24 hour format rather than the default of 12 hour
     
-    calendarConfigProvider.setTitleFormats({
-      day: 'ddd D MMM' //this will configure the day view title to be shorter
-    });
+    calendarConfig.allDateFormats.moment.title = 'ddd D MMM'; //this will configure the day view title to be shorter
     
-    calendarConfigProvider.setI18nStrings({
-      eventsLabel: 'Events', //This will set the events label on the day view
-      timeLabel: 'Time' //This will set the time label on the time view
-    });
+    calendarConfig.i18nStrings.eventsLabel = 'Events'; //This will set the events label on the day view
     
-    calendarConfigProvider.setDisplayAllMonthEvents(true); //This will display all events on a month view even if they're not in the current month. Default false.
+    calendarConfig.displayAllMonthEvents = true; //This will display all events on a month view even if they're not in the current month. Default false.
 
-    calendarConfigProvider.setDisplayEventEndTimes(true); //This will display event end times on the month and year views. Default false.
+    calendarConfig.displayEventEndTimes = true; //This will display event end times on the month and year views. Default false.
+
+    calendarConfig.showTimesOnWeekView = true; //Make the week view more like the day view, with the caveat that event end times are ignored.
 
   });
 ```
