@@ -74,6 +74,65 @@
 
       </div>
 
+      <script type="text/ng-template" id="modalContent.html">
+        <div class="modal-header">
+          <h3 class="modal-title">Event action occurred!</h3>
+        </div>
+        <div class="modal-body">
+          <p>Action: <pre>{{ vm.action }}</pre></p>
+          <p>Event: <pre>{{ vm.event | json }}</pre></p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" ng-click="$close()">OK</button>
+        </div>
+      </script>
+
+      <script type="text/ng-template" id="calendarControls.html">
+        <br>
+        <div class="row">
+
+          <div class="col-md-6 text-center">
+            <div class="btn-group">
+
+              <button
+                class="btn btn-primary"
+                mwl-date-modifier
+                date="vm.calendarDay"
+                decrement="vm.calendarView">
+                Previous
+              </button>
+              <button
+                class="btn btn-default"
+                mwl-date-modifier
+                date="vm.calendarDay"
+                set-to-today>
+                Today
+              </button>
+              <button
+                class="btn btn-primary"
+                mwl-date-modifier
+                date="vm.calendarDay"
+                increment="vm.calendarView">
+                Next
+              </button>
+            </div>
+          </div>
+
+          <br class="visible-xs visible-sm">
+
+          <div class="col-md-6 text-center">
+            <div class="btn-group">
+              <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'year'">Year</label>
+              <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'month'">Month</label>
+              <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'week'">Week</label>
+              <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'day'">Day</label>
+            </div>
+          </div>
+
+        </div>
+        <br>
+      </script>
+
       <script src="angular-bootstrap-calendar.js"></script>
       <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular-touch.min.js"></script>
       <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular-animate.min.js"></script>
