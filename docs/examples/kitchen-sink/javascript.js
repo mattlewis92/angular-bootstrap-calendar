@@ -1,8 +1,8 @@
 'use strict';
 
 angular
-  .module('demo', ['mwl.calendar', 'ui.bootstrap', 'ngTouch', 'ngAnimate'])
-  .controller('MainCtrl', function ($uibModal, moment) {
+  .module('mwl.calendar.docs')
+  .controller('KitchenSinkCtrl', function($uibModal, moment) {
 
     var vm = this;
 
@@ -36,24 +36,6 @@ angular
     ];
 
     vm.isCellOpen = true;
-
-    /*
-     var currentYear = moment().year();
-     var currentMonth = moment().month();
-
-    function random(min, max) {
-      return Math.floor((Math.random() * max) + min);
-    }
-
-    for (var i = 0; i < 1000; i++) {
-      var start = new Date(currentYear,random(0, 11),random(1, 28),random(0, 24),random(0, 59));
-     vm.events.push({
-        title: 'Event ' + i,
-        type: 'warning',
-        startsAt: start,
-        endsAt: moment(start).add(2, 'hours').toDate()
-      })
-    }*/
 
     function showModal(action, event) {
       $uibModal.open({
