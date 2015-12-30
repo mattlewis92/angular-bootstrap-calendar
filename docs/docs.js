@@ -2,7 +2,7 @@
 
 angular
   .module('mwl.calendar.docs', ['mwl.calendar', 'ui.bootstrap', 'ngTouch', 'ngAnimate', 'oc.lazyLoad', 'hljs'])
-  .controller('ExamplesCtrl', function($http, $rootScope, $compile, $ocLazyLoad) {
+  .controller('ExamplesCtrl', function($http, $rootScope, $compile, $q, $ocLazyLoad) {
 
     var vm = this;
 
@@ -16,6 +16,7 @@ angular
 
     vm.loadDemo = function(demo) {
       vm.currentDemo = angular.copy(demo);
+      vm.showDemoTab = true;
       var scriptPath = 'docs/examples/' + demo.key + '/javascript.js';
       var markupPath = 'docs/examples/' + demo.key + '/markup.html';
 
@@ -23,10 +24,11 @@ angular
         vm.currentDemo.javascript = result.data;
       });
 
-      loadFile(markupPath).then(function(result) {
-        vm.currentDemo.markup = result.data;
-        return $ocLazyLoad.load(scriptPath);
-      }).then(function() {
+      $q.all({
+        markup: loadFile(markupPath),
+        script: $ocLazyLoad.load(scriptPath)
+      }).then(function(result) {
+        vm.currentDemo.markup = result.markup.data;
         var demoContainer = angular.element(document.getElementById('demoContainer'));
         demoContainer.html(vm.currentDemo.markup);
         var scope = $rootScope.$new();
