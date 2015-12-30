@@ -2,7 +2,7 @@
 
 angular
   .module('mwl.calendar.docs', ['mwl.calendar', 'ui.bootstrap', 'ngTouch', 'ngAnimate', 'oc.lazyLoad', 'hljs'])
-  .controller('ExamplesCtrl', function($http, $rootScope, $compile, $q, $ocLazyLoad) {
+  .controller('ExamplesCtrl', function($http, $rootScope, $compile, $q, $location, $ocLazyLoad) {
 
     var vm = this;
 
@@ -14,23 +14,24 @@ angular
       });
     }
 
-    vm.loadDemo = function(demo) {
-      vm.currentDemo = angular.copy(demo);
+    vm.loadExample = function(demo) {
+      vm.activeExample = angular.copy(demo);
       vm.showDemoTab = true;
+      $location.search('example', demo.key);
       var scriptPath = 'docs/examples/' + demo.key + '/javascript.js';
       var markupPath = 'docs/examples/' + demo.key + '/markup.html';
 
       loadFile(scriptPath).then(function(result) {
-        vm.currentDemo.javascript = result.data;
+        vm.activeExample.javascript = result.data;
       });
 
       $q.all({
         markup: loadFile(markupPath),
         script: $ocLazyLoad.load(scriptPath)
       }).then(function(result) {
-        vm.currentDemo.markup = result.markup.data;
+        vm.activeExample.markup = result.markup.data;
         var demoContainer = angular.element(document.getElementById('demoContainer'));
-        demoContainer.html(vm.currentDemo.markup);
+        demoContainer.html(vm.activeExample.markup);
         var scope = $rootScope.$new();
         $compile(demoContainer)(scope);
       });
@@ -38,8 +39,15 @@ angular
     };
 
     $http.get('docs/examples/examples.json').then(function(result) {
-      vm.demos = result.data;
-      vm.loadDemo(vm.demos[0]);
+      vm.examples = result.data;
+      if ($location.search().example) {
+        var exampleToLoad = vm.examples.filter(function(example) {
+          return example.key === $location.search().example;
+        })[0];
+        vm.loadExample(exampleToLoad);
+      } else {
+        vm.loadExample(vm.examples[0]);
+      }
     });
 
   })

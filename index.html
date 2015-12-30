@@ -45,11 +45,11 @@
             </div>
             <div class="panel-body sidebar-nav">
               <ul class="list-unstyled">
-                <li ng-repeat="demo in vm.demos track by $index">
+                <li ng-repeat="demo in vm.examples track by $index">
                   <a
                     href="javascript:;"
-                    ng-click="vm.loadDemo(demo)"
-                    ng-class="{active: vm.currentDemo.key === demo.key}">
+                    ng-click="vm.loadExample(demo)"
+                    ng-class="{active: vm.activeExample.key === demo.key}">
                     {{ demo.label }}
                   </a>
                 </li>
@@ -58,17 +58,17 @@
           </div>
         </div>
         <div class="col-md-9">
-          <h3>{{ vm.currentDemo.label }}</h3>
+          <h3>{{ vm.activeExample.label }}</h3>
           <div>
             <uib-tabset>
               <uib-tab heading="Demo" active="vm.showDemoTab">
                 <div id="demoContainer"></div>
               </uib-tab>
               <uib-tab heading="JavaScript">
-                <div hljs hljs-source="vm.currentDemo.javascript" hljs-language="javascript"></div>
+                <div hljs hljs-source="vm.activeExample.javascript" hljs-language="javascript"></div>
               </uib-tab>
               <uib-tab heading="Markup">
-                <div hljs hljs-source="vm.currentDemo.markup" hljs-language="html"></div>
+                <div hljs hljs-source="vm.activeExample.markup" hljs-language="html"></div>
               </uib-tab>
             </uib-tabset>
 
