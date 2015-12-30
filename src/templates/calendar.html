@@ -2,11 +2,11 @@
 
   <div class="alert alert-danger" ng-switch-default>The value passed to the view attribute of the calendar is not set</div>
 
-  <div class="alert alert-danger" ng-hide="vm.currentDay">The value passed to current-day attribute of the calendar is not set</div>
+  <div class="alert alert-danger" ng-hide="vm.viewDate">The value passed to view-date attribute of the calendar is not set</div>
 
   <mwl-calendar-year
     events="vm.events"
-    current-day="vm.currentDay"
+    view-date="vm.viewDate"
     on-event-click="vm.onEventClick"
     on-event-times-changed="vm.onEventTimesChanged"
     on-edit-event-click="vm.onEditEventClick"
@@ -21,7 +21,7 @@
 
   <mwl-calendar-month
     events="vm.events"
-    current-day="vm.currentDay"
+    view-date="vm.viewDate"
     on-event-click="vm.onEventClick"
     on-event-times-changed="vm.onEventTimesChanged"
     on-edit-event-click="vm.onEditEventClick"
@@ -38,7 +38,7 @@
 
   <mwl-calendar-week
     events="vm.events"
-    current-day="vm.currentDay"
+    view-date="vm.viewDate"
     on-event-click="vm.onEventClick"
     on-event-times-changed="vm.onEventTimesChanged"
     day-view-start="vm.dayViewStart"
@@ -50,7 +50,7 @@
 
   <mwl-calendar-day
     events="vm.events"
-    current-day="vm.currentDay"
+    view-date="vm.viewDate"
     on-event-click="vm.onEventClick"
     on-event-times-changed="vm.onEventTimesChanged"
     on-timespan-click="vm.onTimespanClick"

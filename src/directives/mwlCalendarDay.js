@@ -21,7 +21,7 @@ angular
 
       vm.view = calendarHelper.getDayView(
         vm.events,
-        vm.currentDay,
+        vm.viewDate,
         vm.dayViewStart,
         vm.dayViewEnd,
         vm.dayViewSplit
@@ -81,7 +81,7 @@ angular
       require: '^mwlCalendar',
       scope: {
         events: '=',
-        currentDay: '=',
+        viewDate: '=',
         onEventClick: '=',
         onEventTimesChanged: '=',
         onTimespanClick: '=',

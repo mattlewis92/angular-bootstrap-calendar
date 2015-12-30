@@ -21,13 +21,13 @@ angular
       if (vm.showTimes) {
         vm.view = calendarHelper.getWeekViewWithTimes(
           vm.events,
-          vm.currentDay,
+          vm.viewDate,
           vm.dayViewStart,
           vm.dayViewEnd,
           vm.dayViewSplit
         );
       } else {
-        vm.view = calendarHelper.getWeekView(vm.events, vm.currentDay);
+        vm.view = calendarHelper.getWeekView(vm.events, vm.viewDate);
       }
     });
 
@@ -83,7 +83,7 @@ angular
       require: '^mwlCalendar',
       scope: {
         events: '=',
-        currentDay: '=',
+        viewDate: '=',
         onEventClick: '=',
         onEventTimesChanged: '=',
         dayViewStart: '=',

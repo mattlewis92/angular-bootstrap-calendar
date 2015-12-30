@@ -13,7 +13,7 @@ angular
       dayViewEnd = moment(vm.dayViewEnd || '23:00', 'HH:mm');
       vm.dayViewSplit = parseInt(vm.dayViewSplit);
       vm.hours = [];
-      var dayCounter = moment(vm.currentDay)
+      var dayCounter = moment(vm.viewDate)
         .clone()
         .hours(dayViewStart.hours())
         .minutes(dayViewStart.minutes())
@@ -42,7 +42,7 @@ angular
       'vm.dayViewStart',
       'vm.dayViewEnd',
       'vm.dayViewSplit',
-      'vm.currentDay'
+      'vm.viewDate'
     ], function() {
       updateDays();
     });
@@ -55,7 +55,7 @@ angular
       template: calendarUseTemplates ? require('./../templates/calendarHourList.html') : '',
       controller: 'MwlCalendarHourListCtrl as vm',
       scope: {
-        currentDay: '=',
+        viewDate: '=',
         dayViewStart: '=',
         dayViewEnd: '=',
         dayViewSplit: '=',

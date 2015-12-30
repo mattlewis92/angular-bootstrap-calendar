@@ -6,21 +6,21 @@ angular
   .module('mwl.calendar')
   .factory('calendarTitle', function(moment, calendarConfig, calendarHelper) {
 
-    function day(currentDay) {
-      return calendarHelper.formatDate(currentDay, calendarConfig.titleFormats.day);
+    function day(viewDate) {
+      return calendarHelper.formatDate(viewDate, calendarConfig.titleFormats.day);
     }
 
-    function week(currentDay) {
+    function week(viewDate) {
       var weekTitleLabel = calendarConfig.titleFormats.week;
-      return weekTitleLabel.replace('{week}', moment(currentDay).week()).replace('{year}', moment(currentDay).format('YYYY'));
+      return weekTitleLabel.replace('{week}', moment(viewDate).week()).replace('{year}', moment(viewDate).format('YYYY'));
     }
 
-    function month(currentDay) {
-      return calendarHelper.formatDate(currentDay, calendarConfig.titleFormats.month);
+    function month(viewDate) {
+      return calendarHelper.formatDate(viewDate, calendarConfig.titleFormats.month);
     }
 
-    function year(currentDay) {
-      return calendarHelper.formatDate(currentDay, calendarConfig.titleFormats.year);
+    function year(viewDate) {
+      return calendarHelper.formatDate(viewDate, calendarConfig.titleFormats.year);
     }
 
     return {

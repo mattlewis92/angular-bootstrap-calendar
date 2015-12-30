@@ -15,7 +15,7 @@ describe('mwlCalendarMonth directive', function() {
     template =
       '<mwl-calendar-month ' +
       'events="events" ' +
-      'current-day="currentDay" ' +
+      'view-date="viewDate" ' +
       'on-event-click="onEventClick" ' +
       'on-event-times-changed="onEventTimesChanged" ' +
       'day-view-start="dayViewStart" ' +
@@ -30,7 +30,7 @@ describe('mwlCalendarMonth directive', function() {
 
   function prepareScope(vm) {
     //These variables MUST be set as a minimum for the calendar to work
-    vm.currentDay = calendarDay;
+    vm.viewDate = calendarDay;
     vm.cellIsOpen = true;
     vm.dayViewStart = '06:00';
     vm.dayViewEnd = '22:00';
@@ -102,7 +102,7 @@ describe('mwlCalendarMonth directive', function() {
     sinon.stub(calendarHelper, 'getWeekViewWithTimes').returns({event: 'event2'});
     scope.$broadcast('calendar.refreshView');
     expect(calendarHelper.getWeekDayNames).to.have.been.called;
-    expect(calendarHelper.getMonthView).to.have.been.calledWith(scope.events, scope.currentDay);
+    expect(calendarHelper.getMonthView).to.have.been.calledWith(scope.events, scope.viewDate);
     expect(MwlCalendarCtrl.weekDays).to.eql(['Mon', 'Tu']);
     expect(MwlCalendarCtrl.view).to.equal(monthView);
     expect(MwlCalendarCtrl.openRowIndex).to.equal(0);

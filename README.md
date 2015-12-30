@@ -82,7 +82,7 @@ There is a single directive exposed to create the calendar, use it like so:
 ```javascript
 <mwl-calendar
     view="calendarView"
-    current-day="calendarDay"
+    view-date="calendarDate"
     events="events"
     view-title="calendarTitle"
     on-event-click="eventClicked(calendarEvent)"
@@ -106,9 +106,9 @@ For the calendar to display this variable needs to be set like so:
 $scope.calendarView = 'month';
 ```
 
-### current-day (required attribute)
+### view-date (required attribute)
 
-This variable holds the current day the calendar is centralised on. Each view will decide on its current year / month / week / day depending on the value of this variable.
+This variable holds the current date the calendar is centralised on. Each view will decide on its current year / month / week / day depending on the value of this variable.
 
 ### events (required attribute)
 
@@ -167,7 +167,7 @@ This expression is called when a month, day or hour on the calendar is clicked o
 
 ### cell-is-open
 
-A 2 way bound variable that when set to true will open the year or month view cell that corresponds to the date passed to the date object passed to `current-day`.
+A 2 way bound variable that when set to true will open the year or month view cell that corresponds to the date passed to the date object passed to `view-date`.
 
 ### day-view-start
 

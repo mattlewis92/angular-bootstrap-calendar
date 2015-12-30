@@ -10,13 +10,13 @@ angular
     vm.openMonthIndex = null;
 
     $scope.$on('calendar.refreshView', function() {
-      vm.view = calendarHelper.getYearView(vm.events, vm.currentDay, vm.cellModifier);
+      vm.view = calendarHelper.getYearView(vm.events, vm.viewDate, vm.cellModifier);
 
       //Auto open the calendar to the current day if set
       if (vm.cellIsOpen && vm.openMonthIndex === null) {
         vm.openMonthIndex = null;
         vm.view.forEach(function(month) {
-          if (moment(vm.currentDay).startOf('month').isSame(month.date)) {
+          if (moment(vm.viewDate).startOf('month').isSame(month.date)) {
             vm.monthClicked(month, true);
           }
         });
@@ -70,7 +70,7 @@ angular
       require: '^mwlCalendar',
       scope: {
         events: '=',
-        currentDay: '=',
+        viewDate: '=',
         onEventClick: '=',
         onEventTimesChanged: '=',
         onEditEventClick: '=',

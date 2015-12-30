@@ -17,7 +17,7 @@ describe('mwlCalendar directive', function() {
       'events="vm.events" ' +
       'view="vm.calendarView" ' +
       'view-title="vm.calendarTitle" ' +
-      'current-day="vm.calendarDay" ' +
+      'view-date="vm.calendarDay" ' +
       'on-event-click="vm.eventClicked(calendarEvent)" ' +
       'on-event-times-changed="vm.eventTimesChanged(calendarEvent); ' +
       'calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd" ' +
@@ -107,14 +107,14 @@ describe('mwlCalendar directive', function() {
     var myDate = new Date();
     MwlCalendarCtrl.changeView('day', myDate);
     expect(MwlCalendarCtrl.view).to.equal('day');
-    expect(MwlCalendarCtrl.currentDay).to.equal(myDate);
+    expect(MwlCalendarCtrl.viewDate).to.equal(myDate);
   });
 
   it('should change the current view', function() {
     var myDate = new Date();
     MwlCalendarCtrl.dateClicked(myDate);
     expect(MwlCalendarCtrl.view).to.equal('day');
-    expect(MwlCalendarCtrl.currentDay).to.eql(myDate);
+    expect(MwlCalendarCtrl.viewDate).to.eql(myDate);
   });
 
   it('should refresh the calendar when appropriate', function() {
