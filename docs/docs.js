@@ -1,7 +1,7 @@
 'use strict';
 
 angular
-  .module('mwl.calendar.docs', ['mwl.calendar', 'ui.bootstrap', 'ngTouch', 'ngAnimate', 'oc.lazyLoad'])
+  .module('mwl.calendar.docs', ['mwl.calendar', 'ui.bootstrap', 'ngTouch', 'ngAnimate', 'oc.lazyLoad', 'hljs'])
   .controller('DocsCtrl', function($http, $rootScope, $compile, $ocLazyLoad) {
 
     var vm = this;
