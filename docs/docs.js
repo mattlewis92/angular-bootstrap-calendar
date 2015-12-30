@@ -2,7 +2,7 @@
 
 angular
   .module('mwl.calendar.docs', ['mwl.calendar', 'ui.bootstrap', 'ngTouch', 'ngAnimate', 'oc.lazyLoad', 'hljs'])
-  .controller('DocsCtrl', function($http, $rootScope, $compile, $ocLazyLoad) {
+  .controller('ExamplesCtrl', function($http, $rootScope, $compile, $ocLazyLoad) {
 
     var vm = this;
 

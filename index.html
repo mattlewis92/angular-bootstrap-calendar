@@ -14,132 +14,140 @@
     <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/github.min.css" rel="stylesheet">
     <link href="docs/docs.css" rel="stylesheet">
   </head>
-  <body ng-app="mwl.calendar.docs" ng-controller="DocsCtrl as vm" ng-cloak>
+  <body ng-app="mwl.calendar.docs" ng-controller="ExamplesCtrl as vm" ng-cloak>
 
-      <a href="https://github.com/mattlewis92/angular-bootstrap-calendar" class="hidden-xs"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 2000" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+    <a href="https://github.com/mattlewis92/angular-bootstrap-calendar" class="hidden-xs"><img
+      style="position: absolute; top: 0; right: 0; border: 0; z-index: 2000"
+      src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+      alt="Fork me on GitHub"
+      data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
 
-      <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <a class="navbar-brand" href="#">Angular Bootstrap Calendar</a>
-          </div>
-          <ul class="nav navbar-nav hidden-xs">
-            <li><a href="https://github.com/mattlewis92/angular-bootstrap-calendar#installation">Installation</a></li>
-            <li><a href="https://github.com/mattlewis92/angular-bootstrap-calendar#documentation">Documentation</a></li>
-            <li class="active"><a href="/">Examples</a></li>
-          </ul>
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Angular Bootstrap Calendar</a>
         </div>
-      </nav>
+        <ul class="nav navbar-nav hidden-xs">
+          <li><a href="https://github.com/mattlewis92/angular-bootstrap-calendar#installation">Installation</a></li>
+          <li><a href="https://github.com/mattlewis92/angular-bootstrap-calendar#documentation">Documentation</a></li>
+          <li class="active"><a href="/">Examples</a></li>
+        </ul>
+      </div>
+    </nav>
 
-      <div class="container-fluid content">
+    <div class="container-fluid content">
 
-        <div class="row">
-          <div class="col-md-3">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                Examples
-              </div>
-              <div class="panel-body sidebar-nav">
-                <ul class="list-unstyled">
-                  <li ng-repeat="demo in vm.demos track by $index">
-                    <a
-                      href="javascript:;"
-                      ng-click="vm.loadDemo(demo)"
-                      ng-class="{active: vm.currentDemo.key === demo.key}">
-                      {{ demo.label }}
-                    </a>
-                  </li>
-                </ul>
-              </div>
+      <div class="row">
+        <div class="col-md-3">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              Examples
+            </div>
+            <div class="panel-body sidebar-nav">
+              <ul class="list-unstyled">
+                <li ng-repeat="demo in vm.demos track by $index">
+                  <a
+                    href="javascript:;"
+                    ng-click="vm.loadDemo(demo)"
+                    ng-class="{active: vm.currentDemo.key === demo.key}">
+                    {{ demo.label }}
+                  </a>
+                </li>
+              </ul>
             </div>
           </div>
-          <div class="col-md-9">
-            <h3>{{ vm.currentDemo.label }}</h3>
-            <div>
-              <uib-tabset>
-                <uib-tab heading="Demo">
-                  <div id="demoContainer"></div>
-                </uib-tab>
-                <uib-tab heading="JavaScript">
-                  <div hljs hljs-source="vm.currentDemo.javascript" hljs-language="javascript"></div>
-                </uib-tab>
-                <uib-tab heading="Markup">
-                  <div hljs hljs-source="vm.currentDemo.markup" hljs-language="html"></div>
-                </uib-tab>
-              </uib-tabset>
+        </div>
+        <div class="col-md-9">
+          <h3>{{ vm.currentDemo.label }}</h3>
+          <div>
+            <uib-tabset>
+              <uib-tab heading="Demo">
+                <div id="demoContainer"></div>
+              </uib-tab>
+              <uib-tab heading="JavaScript">
+                <div hljs hljs-source="vm.currentDemo.javascript" hljs-language="javascript"></div>
+              </uib-tab>
+              <uib-tab heading="Markup">
+                <div hljs hljs-source="vm.currentDemo.markup" hljs-language="html"></div>
+              </uib-tab>
+            </uib-tabset>
 
-            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <script type="text/ng-template" id="modalContent.html">
+      <div class="modal-header">
+        <h3 class="modal-title">Event action occurred!</h3>
+      </div>
+      <div class="modal-body">
+        <p>Action:
+        <pre>{{ vm.action }}</pre>
+        </p>
+        <p>Event:
+        <pre>{{ vm.event | json }}</pre>
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="$close()">OK</button>
+      </div>
+    </script>
+
+    <script type="text/ng-template" id="calendarControls.html">
+      <br>
+      <div class="row">
+
+        <div class="col-md-6 text-center">
+          <div class="btn-group">
+
+            <button
+              class="btn btn-primary"
+              mwl-date-modifier
+              date="vm.calendarDay"
+              decrement="vm.calendarView">
+              Previous
+            </button>
+            <button
+              class="btn btn-default"
+              mwl-date-modifier
+              date="vm.calendarDay"
+              set-to-today>
+              Today
+            </button>
+            <button
+              class="btn btn-primary"
+              mwl-date-modifier
+              date="vm.calendarDay"
+              increment="vm.calendarView">
+              Next
+            </button>
+          </div>
+        </div>
+
+        <br class="visible-xs visible-sm">
+
+        <div class="col-md-6 text-center">
+          <div class="btn-group">
+            <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'year'">Year</label>
+            <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'month'">Month</label>
+            <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'week'">Week</label>
+            <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'day'">Day</label>
           </div>
         </div>
 
       </div>
+      <br>
+    </script>
 
-      <script type="text/ng-template" id="modalContent.html">
-        <div class="modal-header">
-          <h3 class="modal-title">Event action occurred!</h3>
-        </div>
-        <div class="modal-body">
-          <p>Action: <pre>{{ vm.action }}</pre></p>
-          <p>Event: <pre>{{ vm.event | json }}</pre></p>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-primary" ng-click="$close()">OK</button>
-        </div>
-      </script>
-
-      <script type="text/ng-template" id="calendarControls.html">
-        <br>
-        <div class="row">
-
-          <div class="col-md-6 text-center">
-            <div class="btn-group">
-
-              <button
-                class="btn btn-primary"
-                mwl-date-modifier
-                date="vm.calendarDay"
-                decrement="vm.calendarView">
-                Previous
-              </button>
-              <button
-                class="btn btn-default"
-                mwl-date-modifier
-                date="vm.calendarDay"
-                set-to-today>
-                Today
-              </button>
-              <button
-                class="btn btn-primary"
-                mwl-date-modifier
-                date="vm.calendarDay"
-                increment="vm.calendarView">
-                Next
-              </button>
-            </div>
-          </div>
-
-          <br class="visible-xs visible-sm">
-
-          <div class="col-md-6 text-center">
-            <div class="btn-group">
-              <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'year'">Year</label>
-              <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'month'">Month</label>
-              <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'week'">Week</label>
-              <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'day'">Day</label>
-            </div>
-          </div>
-
-        </div>
-        <br>
-      </script>
-
-      <script src="angular-bootstrap-calendar.js"></script>
-      <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular-touch.min.js"></script>
-      <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular-animate.min.js"></script>
-      <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.min.js"></script>
-      <script src="//cdn.rawgit.com/ocombe/ocLazyLoad/master/dist/ocLazyLoad.min.js"></script>
-      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
-      <script src="//cdn.rawgit.com/pc035860/angular-highlightjs/master/build/angular-highlightjs.min.js"></script>
-      <script src="docs/docs.js"></script>
+    <script src="angular-bootstrap-calendar.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular-touch.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular-animate.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.min.js"></script>
+    <script src="//cdn.rawgit.com/ocombe/ocLazyLoad/master/dist/ocLazyLoad.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
+    <script src="//cdn.rawgit.com/pc035860/angular-highlightjs/master/build/angular-highlightjs.min.js"></script>
+    <script src="docs/docs.js"></script>
   </body>
 </html>
