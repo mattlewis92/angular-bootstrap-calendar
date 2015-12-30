@@ -181,9 +181,9 @@ An interpolated string in the form of hh:mm to end the day view at, e.g. setting
 
 The number of chunks to split the day view hours up into. Can be either 10, 15 or 30. Default: 30
 
-### on-drill-down-click
+### on-view-change-click
 
-An optional expression that is evaluated when the drilldown (clicking on a date to change the view) is triggered. Return false from the expression function to disable the drilldown. `calendarDate` can be used in the expression and contains the date that was selected. `calendarNextView` is the view that the calendar will be changed to.  
+An optional expression that is evaluated when the view is changed by clicking on a date. Return false from the expression function to disable the view change. `calendarDate` can be used in the expression and contains the date that was selected. `calendarNextView` is the view that the calendar will be changed to.  
 
 ### cell-modifier
 

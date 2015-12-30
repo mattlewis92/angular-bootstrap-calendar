@@ -15,7 +15,7 @@ angular
       vm.currentDay = newDay;
     };
 
-    vm.drillDown = function(date) {
+    vm.dateClicked = function(date) {
 
       var rawDate = moment(date).toDate();
 
@@ -25,7 +25,7 @@ angular
         week: 'day'
       };
 
-      if (vm.onDrillDownClick({calendarDate: rawDate, calendarNextView: nextView[vm.view]}) !== false) {
+      if (vm.onViewChangeClick({calendarDate: rawDate, calendarNextView: nextView[vm.view]}) !== false) {
         vm.changeView(nextView[vm.view], rawDate);
       }
 
@@ -126,7 +126,7 @@ angular
         onEditEventClick: '&',
         onDeleteEventClick: '&',
         onTimespanClick: '&',
-        onDrillDownClick: '&',
+        onViewChangeClick: '&',
         cellModifier: '&',
         dayViewStart: '@',
         dayViewEnd: '@',

@@ -110,9 +110,9 @@ describe('mwlCalendar directive', function() {
     expect(MwlCalendarCtrl.currentDay).to.equal(myDate);
   });
 
-  it('should allow to drill down', function() {
+  it('should change the current view', function() {
     var myDate = new Date();
-    MwlCalendarCtrl.drillDown(myDate);
+    MwlCalendarCtrl.dateClicked(myDate);
     expect(MwlCalendarCtrl.view).to.equal('day');
     expect(MwlCalendarCtrl.currentDay).to.eql(myDate);
   });
