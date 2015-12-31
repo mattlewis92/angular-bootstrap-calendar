@@ -1,5 +1,3 @@
-'use strict';
-
 angular
   .module('mwl.calendar.docs')
   .controller('OptionalEventEndDatesCtrl', function(moment) {

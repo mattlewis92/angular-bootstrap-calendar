@@ -16,21 +16,16 @@
   </head>
   <body ng-app="mwl.calendar.docs" ng-controller="ExamplesCtrl as vm" ng-cloak>
 
-    <a href="https://github.com/mattlewis92/angular-bootstrap-calendar" class="hidden-xs"><img
-      style="position: absolute; top: 0; right: 0; border: 0; z-index: 2000"
-      src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
-      alt="Fork me on GitHub"
-      data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
-
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
           <a class="navbar-brand" href="#">Angular Bootstrap Calendar</a>
         </div>
         <ul class="nav navbar-nav hidden-xs">
+          <li class="active"><a href="/">Examples</a></li>
           <li><a href="https://github.com/mattlewis92/angular-bootstrap-calendar#installation">Installation</a></li>
           <li><a href="https://github.com/mattlewis92/angular-bootstrap-calendar#documentation">Documentation</a></li>
-          <li class="active"><a href="/">Examples</a></li>
+          <li><a href="https://github.com/mattlewis92/angular-bootstrap-calendar">Project on GitHub</a></li>
         </ul>
       </div>
     </nav>
@@ -60,6 +55,12 @@
         <div class="col-md-9">
           <h3>{{ vm.activeExample.label }}</h3>
           <div>
+            <button
+              class="btn btn-info pull-right"
+              style="position: relative; z-index: 3000"
+              ng-click="vm.editActiveExample()">
+              <i class="glyphicon glyphicon-edit"></i> Edit in Plunker
+            </button>
             <uib-tabset>
               <uib-tab heading="Demo" active="vm.showDemoTab">
                 <div id="demoContainer"></div>
@@ -71,7 +72,6 @@
                 <div hljs hljs-source="vm.activeExample.markup" hljs-language="html"></div>
               </uib-tab>
             </uib-tabset>
-
           </div>
         </div>
       </div>
@@ -149,5 +149,6 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
     <script src="//cdn.rawgit.com/pc035860/angular-highlightjs/master/build/angular-highlightjs.min.js"></script>
     <script src="docs/docs.js"></script>
+    <script src="docs/examples/helpers.js"></script>
   </body>
 </html>
