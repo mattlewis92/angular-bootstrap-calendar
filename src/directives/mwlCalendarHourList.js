@@ -51,7 +51,7 @@ angular
   .directive('mwlCalendarHourList', function(calendarConfig) {
 
     return {
-      restrict: 'EA',
+      restrict: 'E',
       templateUrl: calendarConfig.templates.calendarHourList,
       controller: 'MwlCalendarHourListCtrl as vm',
       scope: {

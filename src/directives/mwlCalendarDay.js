@@ -77,7 +77,7 @@ angular
 
     return {
       templateUrl: calendarConfig.templates.calendarDayView,
-      restrict: 'EA',
+      restrict: 'E',
       require: '^mwlCalendar',
       scope: {
         events: '=',

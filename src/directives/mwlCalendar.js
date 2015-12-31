@@ -112,7 +112,7 @@ angular
 
     return {
       templateUrl: calendarConfig.templates.calendar,
-      restrict: 'EA',
+      restrict: 'E',
       scope: {
         events: '=',
         view: '=',

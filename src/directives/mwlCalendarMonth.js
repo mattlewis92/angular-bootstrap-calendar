@@ -93,7 +93,7 @@ angular
 
     return {
       templateUrl: calendarConfig.templates.calendarMonthView,
-      restrict: 'EA',
+      restrict: 'E',
       require: '^mwlCalendar',
       scope: {
         events: '=',

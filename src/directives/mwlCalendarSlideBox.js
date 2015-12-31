@@ -22,7 +22,7 @@ angular
   .directive('mwlCalendarSlideBox', function(calendarConfig) {
 
     return {
-      restrict: 'EA',
+      restrict: 'E',
       templateUrl: calendarConfig.templates.calendarSlideBox,
       replace: true,
       controller: 'MwlCalendarSlideBoxCtrl as vm',
