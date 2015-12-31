@@ -62,10 +62,10 @@ angular
     };
 
   })
-  .directive('mwlCalendarYear', function(calendarUseTemplates) {
+  .directive('mwlCalendarYear', function(calendarConfig) {
 
     return {
-      template: calendarUseTemplates ? require('./../templates/calendarYearView.html') : '',
+      templateUrl: calendarConfig.templates.calendarYearView,
       restrict: 'EA',
       require: '^mwlCalendar',
       scope: {

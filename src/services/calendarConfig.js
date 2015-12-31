@@ -53,5 +53,6 @@ angular
       eventsLabel: 'Events',
       timeLabel: 'Time',
       weekNumber: 'Week {week}'
-    }
+    },
+    templates: {}
   });

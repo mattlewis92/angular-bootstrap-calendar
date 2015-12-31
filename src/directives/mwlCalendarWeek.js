@@ -75,10 +75,10 @@ angular
     };
 
   })
-  .directive('mwlCalendarWeek', function(calendarUseTemplates) {
+  .directive('mwlCalendarWeek', function(calendarConfig) {
 
     return {
-      template: calendarUseTemplates ? require('./../templates/calendarWeekView.html') : '',
+      templateUrl: calendarConfig.templates.calendarWeekView,
       restrict: 'EA',
       require: '^mwlCalendar',
       scope: {

@@ -108,10 +108,10 @@ angular
     });
 
   })
-  .directive('mwlCalendar', function(calendarUseTemplates) {
+  .directive('mwlCalendar', function(calendarConfig) {
 
     return {
-      template: calendarUseTemplates ? require('./../templates/calendar.html') : '',
+      templateUrl: calendarConfig.templates.calendar,
       restrict: 'EA',
       scope: {
         events: '=',
@@ -130,9 +130,7 @@ angular
         cellModifier: '&',
         dayViewStart: '@',
         dayViewEnd: '@',
-        dayViewSplit: '@',
-        monthCellTemplateUrl: '@',
-        monthCellEventsTemplateUrl: '@'
+        dayViewSplit: '@'
       },
       controller: 'MwlCalendarCtrl as vm',
       bindToController: true

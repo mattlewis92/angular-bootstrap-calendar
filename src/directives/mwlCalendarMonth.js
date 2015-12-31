@@ -89,10 +89,10 @@ angular
     };
 
   })
-  .directive('mwlCalendarMonth', function(calendarUseTemplates) {
+  .directive('mwlCalendarMonth', function(calendarConfig) {
 
     return {
-      template: calendarUseTemplates ? require('./../templates/calendarMonthView.html') : '',
+      templateUrl: calendarConfig.templates.calendarMonthView,
       restrict: 'EA',
       require: '^mwlCalendar',
       scope: {
@@ -106,9 +106,7 @@ angular
         deleteEventHtml: '=',
         cellIsOpen: '=',
         onTimespanClick: '=',
-        cellModifier: '=',
-        cellTemplateUrl: '@',
-        cellEventsTemplateUrl: '@'
+        cellModifier: '='
       },
       controller: 'MwlCalendarMonthCtrl as vm',
       link: function(scope, element, attrs, calendarCtrl) {

@@ -11,7 +11,6 @@ describe('mwlCalendarMonth directive', function() {
     directiveScope,
     showModal,
     calendarHelper,
-    $templateCache,
     template =
       '<mwl-calendar-month ' +
       'events="events" ' +
@@ -81,9 +80,8 @@ describe('mwlCalendarMonth directive', function() {
 
   beforeEach(angular.mock.module('mwl.calendar'));
 
-  beforeEach(angular.mock.inject(function($compile, _$rootScope_, _calendarHelper_, _$templateCache_) {
+  beforeEach(angular.mock.inject(function($compile, _$rootScope_, _calendarHelper_) {
     $rootScope = _$rootScope_;
-    $templateCache = _$templateCache_;
     calendarHelper = _calendarHelper_;
     scope = $rootScope.$new();
     prepareScope(scope);
@@ -174,26 +172,6 @@ describe('mwlCalendarMonth directive', function() {
       calendarNewEventStart: new Date(2015, 4, 1, 8, 0),
       calendarNewEventEnd: null
     });
-  });
-
-  it('should use a custom cell url', function() {
-    var templatePath = 'customMonthCell.html';
-    $templateCache.put(templatePath, '<my-custom-cell>Hello world!</my-custom-cell>');
-    scope.monthCellTemplateUrl = templatePath;
-    MwlCalendarCtrl.cellModifier = angular.noop;
-    scope.$broadcast('calendar.refreshView');
-    scope.$apply();
-    expect(element.find('my-custom-cell').length).to.be.at.least(1);
-  });
-
-  it('should use a custom cell events url', function() {
-    var templatePath = 'customMonthCellEvents.html';
-    $templateCache.put(templatePath, '<my-custom-events>Hello world!</my-custom-events>');
-    scope.monthCellEventsTemplateUrl = templatePath;
-    MwlCalendarCtrl.cellModifier = angular.noop;
-    scope.$broadcast('calendar.refreshView');
-    scope.$apply();
-    expect(element.find('my-custom-events').length).to.be.at.least(1);
   });
 
 });
