@@ -29,7 +29,7 @@ angular
     ];
 
     vm.calendarView = 'month';
-    vm.calendarDay = moment().startOf('month').toDate();
+    vm.viewDate = moment().startOf('month').toDate();
     vm.isCellOpen = true;
 
     vm.eventEdited = function(event) {

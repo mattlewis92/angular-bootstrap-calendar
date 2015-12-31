@@ -82,7 +82,7 @@ There is a single directive exposed to create the calendar, use it like so:
 ```javascript
 <mwl-calendar
     view="calendarView"
-    current-day="calendarDay"
+    view-date="calendarDate"
     events="events"
     view-title="calendarTitle"
     on-event-click="eventClicked(calendarEvent)"
@@ -106,9 +106,9 @@ For the calendar to display this variable needs to be set like so:
 $scope.calendarView = 'month';
 ```
 
-### current-day (required attribute)
+### view-date (required attribute)
 
-This variable holds the current day the calendar is centralised on. Each view will decide on its current year / month / week / day depending on the value of this variable.
+This variable holds the current date the calendar is centralised on. Each view will decide on its current year / month / week / day depending on the value of this variable.
 
 ### events (required attribute)
 
@@ -135,7 +135,7 @@ $scope.events = [
 
 ### view-title
 
-This variable will be assigned to the calendar title. If you want to change the formatting you can use the `calendarConfigProvider` or just override the appropriate method in the `calendarTitle` factory.
+This variable will be assigned to the calendar title. If you want to change the formatting you can use the `calendarConfig` or just override the appropriate method in the `calendarTitle` factory.
 
 ### on-event-click 
 
@@ -167,7 +167,7 @@ This expression is called when a month, day or hour on the calendar is clicked o
 
 ### cell-is-open
 
-A 2 way bound variable that when set to true will open the year or month view cell that corresponds to the date passed to the date object passed to `current-day`.
+A 2 way bound variable that when set to true will open the year or month view cell that corresponds to the date passed to the date object passed to `view-date`.
 
 ### day-view-start
 
@@ -181,38 +181,46 @@ An interpolated string in the form of hh:mm to end the day view at, e.g. setting
 
 The number of chunks to split the day view hours up into. Can be either 10, 15 or 30. Default: 30
 
-### on-drill-down-click
+### on-view-change-click
 
-An optional expression that is evaluated when the drilldown (clicking on a date to change the view) is triggered. Return false from the expression function to disable the drilldown. `calendarDate` can be used in the expression and contains the date that was selected. `calendarNextView` is the view that the calendar will be changed to.  
+An optional expression that is evaluated when the view is changed by clicking on a date. Return false from the expression function to disable the view change. `calendarDate` can be used in the expression and contains the date that was selected. `calendarNextView` is the view that the calendar will be changed to.  
 
 ### cell-modifier
 
 An optional expression that is evaluated on each cell generated for the year and month views. `calendarCell` can be used in the expression and is an object containing the current cell data which you can modify (see the `calendarHelper` service source code or just console.log it to see what data is available). If you add the `cssClass` property it will be applied to the cell.
 
-### month-cell-template-url
+## Configuring the calendar default config
 
-An interpolated string template url that can be used to override the default month cell template.
+You can easily customise the date formats and i18n strings used throughout the calendar by using the `calendarConfig` value. Please note that these example formats are those used by moment.js and these won't work if using angular as the date formatter. Example usage:
 
-### month-cell-events-template-url
+```javascript
+angular.module('myModule')
+  .config(function(calendarConfig) {
 
-An interpolated string template url that can be used to override the default month cell events.
+    console.log(calendarConfig); //view all available config
+
+    calendarConfig.templates.calendarMonthView = 'path/to/custom/template.html'; //change the month view template to a custom template
+
+    calendarConfig.dateFormatter = 'moment'; //use either moment or angular to format dates on the calendar. Default angular. Setting this will override any date formats you have already set.
+
+    calendarConfig.allDateFormats.moment.date.hour = 'HH:mm'; //this will configure times on the day view to display in 24 hour format rather than the default of 12 hour
+
+    calendarConfig.allDateFormats.moment.title = 'ddd D MMM'; //this will configure the day view title to be shorter
+
+    calendarConfig.i18nStrings.eventsLabel = 'Events'; //This will set the events label on the day view
+
+    calendarConfig.displayAllMonthEvents = true; //This will display all events on a month view even if they're not in the current month. Default false.
+
+    calendarConfig.displayEventEndTimes = true; //This will display event end times on the month and year views. Default false.
+
+    calendarConfig.showTimesOnWeekView = true; //Make the week view more like the day view, with the caveat that event end times are ignored.
+
+  });
+```
 
 ## Custom directive templates
 
-All templates apart from the month cell templates are linked to directives so you can change any template and use your own using a decorator like so:
-```
-//This will change the slide box directive template to one of your choosing
-app.config(['$provide', function($provide) {
-  $provide.decorator('mwlCalendarSlideBoxDirective', ['$delegate', function($delegate) {
-    var directive = $delegate[0];
-    delete directive.template; //the calendar uses template instead of template-url so you need to delete this
-    directive.templateUrl = 'path/to/my/slide/box/template.html';
-    return $delegate;
-  }]);
-}]);
-```
-
-For more info on using decorators see this [great guide](http://angular-tips.com/blog/2013/09/experiment-decorating-directives/).
+All calendar template urls can be changed using the `calendarConfig` as illustrated above. 
 
 ## The mwl-date-modifier directive
 
@@ -250,9 +258,9 @@ You can either use angular's date filter or moment.js to format dates. The defau
 
 ```javascript
 angular.module('myModule')
-  .config(function(calendarConfigProvider) {
+  .config(function(calendarConfig) {
   
-    calendarConfigProvider.setDateFormatter('moment'); // use moment to format dates
+    calendarConfig.dateFormatter = 'moment'; // use moment to format dates
  
   });
 ```   
@@ -270,36 +278,6 @@ moment.locale('en', {
     dow : 1 // Monday is the first day of the week
   }
 });
-```
-
-## Configuring date formats
-
-You can easily customise the date formats and i18n strings used throughout the calendar by using the `calendarConfigProvider`. Please note that these example formats are those used by moment.js and these won't work if using angular as the date formatter. Example usage:
-
-```javascript
-angular.module('myModule')
-  .config(function(calendarConfigProvider) {
-  
-    calendarConfigProvider.setDateFormatter('moment'); // use either moment or angular to format dates on the calendar. Default angular. Setting this will override any date formats you have already set.
-  
-    calendarConfigProvider.setDateFormats({
-      hour: 'HH:mm' // this will configure times on the day view to display in 24 hour format rather than the default of 12 hour
-    });
-    
-    calendarConfigProvider.setTitleFormats({
-      day: 'ddd D MMM' //this will configure the day view title to be shorter
-    });
-    
-    calendarConfigProvider.setI18nStrings({
-      eventsLabel: 'Events', //This will set the events label on the day view
-      timeLabel: 'Time' //This will set the time label on the time view
-    });
-    
-    calendarConfigProvider.setDisplayAllMonthEvents(true); //This will display all events on a month view even if they're not in the current month. Default false.
-
-    calendarConfigProvider.setDisplayEventEndTimes(true); //This will display event end times on the month and year views. Default false.
-
-  });
 ```
 
 For a full list of all available formats and their defaults see [calendarConfig.js](https://github.com/mattlewis92/angular-bootstrap-calendar/blob/master/src/services/calendarConfig.js)

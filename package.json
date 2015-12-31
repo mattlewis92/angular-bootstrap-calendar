@@ -36,6 +36,7 @@
     "moment": "^2.10.6",
     "ng-annotate-loader": "0.0.10",
     "node-libs-browser": "~0.5.2",
+    "null-loader": "~0.1.1",
     "phantomjs": "~1.9.17",
     "pre-git": "~3.1.1",
     "style-loader": "~0.13.0",

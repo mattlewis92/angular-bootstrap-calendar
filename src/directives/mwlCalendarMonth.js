@@ -14,7 +14,7 @@ angular
 
       vm.weekDays = calendarHelper.getWeekDayNames();
 
-      vm.view = calendarHelper.getMonthView(vm.events, vm.currentDay, vm.cellModifier);
+      vm.view = calendarHelper.getMonthView(vm.events, vm.viewDate, vm.cellModifier);
       var rows = Math.floor(vm.view.length / 7);
       vm.monthOffsets = [];
       for (var i = 0; i < rows; i++) {
@@ -25,7 +25,7 @@ angular
       if (vm.cellIsOpen && vm.openRowIndex === null) {
         vm.openDayIndex = null;
         vm.view.forEach(function(day) {
-          if (day.inMonth && moment(vm.currentDay).startOf('day').isSame(day.date)) {
+          if (day.inMonth && moment(vm.viewDate).startOf('day').isSame(day.date)) {
             vm.dayClicked(day, true);
           }
         });
@@ -89,15 +89,15 @@ angular
     };
 
   })
-  .directive('mwlCalendarMonth', function(calendarUseTemplates) {
+  .directive('mwlCalendarMonth', function(calendarConfig) {
 
     return {
-      template: calendarUseTemplates ? require('./../templates/calendarMonthView.html') : '',
-      restrict: 'EA',
+      templateUrl: calendarConfig.templates.calendarMonthView,
+      restrict: 'E',
       require: '^mwlCalendar',
       scope: {
         events: '=',
-        currentDay: '=',
+        viewDate: '=',
         onEventClick: '=',
         onEditEventClick: '=',
         onDeleteEventClick: '=',
@@ -106,9 +106,7 @@ angular
         deleteEventHtml: '=',
         cellIsOpen: '=',
         onTimespanClick: '=',
-        cellModifier: '=',
-        cellTemplateUrl: '@',
-        cellEventsTemplateUrl: '@'
+        cellModifier: '='
       },
       controller: 'MwlCalendarMonthCtrl as vm',
       link: function(scope, element, attrs, calendarCtrl) {

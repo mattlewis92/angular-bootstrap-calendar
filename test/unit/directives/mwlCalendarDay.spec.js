@@ -14,7 +14,7 @@ describe('mwlCalendarDay directive', function() {
     template =
     '<mwl-calendar-day ' +
       'events="events" ' +
-      'current-day="currentDay" ' +
+      'view-date="viewDate" ' +
       'on-event-click="onEventClick" ' +
       'on-event-times-changed="onEventTimesChanged" ' +
       'day-view-start="dayViewStart" ' +
@@ -25,7 +25,7 @@ describe('mwlCalendarDay directive', function() {
 
   function prepareScope(vm) {
     //These variables MUST be set as a minimum for the calendar to work
-    vm.currentDay = calendarDay;
+    vm.viewDate = calendarDay;
     vm.dayViewStart = '06:00';
     vm.dayViewEnd = '22:00';
     vm.dayViewsplit = 30;
@@ -86,7 +86,7 @@ describe('mwlCalendarDay directive', function() {
     scope.$broadcast('calendar.refreshView');
     expect(calendarHelper.getDayViewHeight).to.have.been.calledWith('06:00', '22:00', 30);
     expect(MwlCalendarCtrl.dayViewHeight).to.equal(1000);
-    expect(calendarHelper.getDayView).to.have.been.calledWith(scope.events, scope.currentDay, '06:00', '22:00', 30);
+    expect(calendarHelper.getDayView).to.have.been.calledWith(scope.events, scope.viewDate, '06:00', '22:00', 30);
     expect(MwlCalendarCtrl.view).to.eql({event: 'event1'});
   });
 

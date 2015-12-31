@@ -20,6 +20,10 @@ var webpackConfig = {
       test: /\.html$/,
       loader: 'html',
       exclude: /node_modules/
+    }, {
+      test: /\.less/,
+      loader: 'null',
+      exclude: /node_modules/
     }],
     postLoaders: [{
       test: /\.js$/,

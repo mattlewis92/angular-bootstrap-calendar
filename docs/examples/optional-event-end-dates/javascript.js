@@ -17,6 +17,6 @@ angular
     }];
 
     vm.calendarView = 'day';
-    vm.calendarDay = new Date();
+    vm.viewDate = new Date();
 
   });

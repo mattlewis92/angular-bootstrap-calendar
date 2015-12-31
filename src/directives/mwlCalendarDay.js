@@ -21,7 +21,7 @@ angular
 
       vm.view = calendarHelper.getDayView(
         vm.events,
-        vm.currentDay,
+        vm.viewDate,
         vm.dayViewStart,
         vm.dayViewEnd,
         vm.dayViewSplit
@@ -73,15 +73,15 @@ angular
     };
 
   })
-  .directive('mwlCalendarDay', function(calendarUseTemplates) {
+  .directive('mwlCalendarDay', function(calendarConfig) {
 
     return {
-      template: calendarUseTemplates ? require('./../templates/calendarDayView.html') : '',
-      restrict: 'EA',
+      templateUrl: calendarConfig.templates.calendarDayView,
+      restrict: 'E',
       require: '^mwlCalendar',
       scope: {
         events: '=',
-        currentDay: '=',
+        viewDate: '=',
         onEventClick: '=',
         onEventTimesChanged: '=',
         onTimespanClick: '=',
