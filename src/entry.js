@@ -8,24 +8,40 @@ function requireAll(r) {
   r.keys().forEach(r);
 }
 
+var templates = {};
+
+if (EXCLUDE_TEMPLATES === false) {
+
+  var templatesContext = require.context('./templates', false, /\.html/);
+
+  templatesContext.keys().forEach(function(templateName) {
+    var templateNameWithoutPrefix = templateName.replace('./', '');
+    var cacheTemplateName = 'mwl/' + templateNameWithoutPrefix;
+    var configTemplateName = templateNameWithoutPrefix.replace('.html', '');
+    templates[configTemplateName] = {
+      cacheTemplateName: cacheTemplateName,
+      template: templatesContext(templateName)
+    };
+  });
+
+}
+
 module.exports = angular
   .module('mwl.calendar', [])
-  .run(function($templateCache, calendarConfig) {
+  .config(function(calendarConfig) {
+    angular.forEach(templates, function(template, templateName) {
+      if (!calendarConfig.templates[templateName]) {
+        calendarConfig.templates[templateName] = template.cacheTemplateName;
+      }
+    });
+  })
+  .run(function($templateCache) {
 
-    if (EXCLUDE_TEMPLATES === false) {
-
-      var templatesContext = require.context('./templates', false, /\.html/);
-
-      templatesContext.keys().forEach(function(templateName) {
-        var templateNameWithoutPrefix = templateName.replace('./', '');
-        var cacheTemplateName = 'mwl/' + templateNameWithoutPrefix;
-        if (!$templateCache.get(cacheTemplateName)) {
-          $templateCache.put(cacheTemplateName, templatesContext(templateName));
-          calendarConfig.templates[templateNameWithoutPrefix.replace('.html', '')] = cacheTemplateName;
-        }
-      });
-
-    }
+    angular.forEach(templates, function(template) {
+      if (!$templateCache.get(template.cacheTemplateName)) {
+        $templateCache.put(template.cacheTemplateName, template.template);
+      }
+    });
 
   }).name;
 

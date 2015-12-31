@@ -4,7 +4,7 @@ var angular = require('angular');
 
 angular
   .module('mwl.calendar')
-  .value('calendarConfig', {
+  .constant('calendarConfig', {
     allDateFormats: {
       angular: {
         date: {
