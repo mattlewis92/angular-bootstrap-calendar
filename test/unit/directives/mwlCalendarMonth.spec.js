@@ -154,23 +154,27 @@ describe('mwlCalendarMonth directive', function() {
   });
 
   it('should call the callback function when you finish dropping an event', function() {
-    MwlCalendarCtrl.handleEventDrop(scope.events[0], calendarDay);
+    var draggedFromDate = new Date();
+    MwlCalendarCtrl.handleEventDrop(scope.events[0], calendarDay, draggedFromDate);
     expect(showModal).to.have.been.calledWith('Dropped or resized', {
       calendarEvent: scope.events[0],
       calendarDate: new Date(2015, 4, 1),
       calendarNewEventStart: new Date(2015, 4, 1, 8, 0),
-      calendarNewEventEnd: new Date(2015, 4, 10, 9, 0)
+      calendarNewEventEnd: new Date(2015, 4, 10, 9, 0),
+      calendarDraggedFromDate: draggedFromDate
     });
   });
 
   it('should call the callback function when you finish dropping an event with no end date', function() {
     delete scope.events[0].endsAt;
-    MwlCalendarCtrl.handleEventDrop(scope.events[0], calendarDay);
+    var draggedFromDate = new Date();
+    MwlCalendarCtrl.handleEventDrop(scope.events[0], calendarDay, draggedFromDate);
     expect(showModal).to.have.been.calledWith('Dropped or resized', {
       calendarEvent: scope.events[0],
       calendarDate: new Date(2015, 4, 1),
       calendarNewEventStart: new Date(2015, 4, 1, 8, 0),
-      calendarNewEventEnd: null
+      calendarNewEventEnd: null,
+      calendarDraggedFromDate: draggedFromDate
     });
   });
 
