@@ -72,7 +72,7 @@ angular
 
     };
 
-    vm.handleEventDrop = function(event, newDayDate) {
+    vm.handleEventDrop = function(event, newDayDate, draggedFromDate) {
 
       var newStart = moment(event.startsAt)
         .date(moment(newDayDate).date())
@@ -84,7 +84,8 @@ angular
         calendarEvent: event,
         calendarDate: newDayDate,
         calendarNewEventStart: newStart.toDate(),
-        calendarNewEventEnd: newEnd ? newEnd.toDate() : null
+        calendarNewEventEnd: newEnd ? newEnd.toDate() : null,
+        calendarDraggedFromDate: draggedFromDate
       });
     };
 

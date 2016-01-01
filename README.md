@@ -1,5 +1,7 @@
 # Angular Bootstrap Calendar
 
+## These docs are for the upcoming 0.18.0 release which has several breaking changes. Please instead use the [0.17.x docs here](https://github.com/mattlewis92/angular-bootstrap-calendar/tree/0.17.6)
+
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/mattlewis92/angular-bootstrap-calendar?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 [![Build Status](https://travis-ci.org/mattlewis92/angular-bootstrap-calendar.svg?branch=master)](https://travis-ci.org/mattlewis92/angular-bootstrap-calendar)
 [![Bower version](https://badge.fury.io/bo/angular-bootstrap-calendar.svg)](http://badge.fury.io/bo/angular-bootstrap-calendar)
@@ -143,7 +145,7 @@ This expression is called when an event is clicked on the calendar. `calendarEve
 
 ### on-event-times-changed
 
-This expression is called when an event is dragged and dropped or resized into a different date / time on the calendar. The available values that are passed to the expression are: `calendarEvent`, `calendarNewEventStart` and `calendarNewEventEnd`. The directive won't change the event object and leaves that up to you to implement. Please note drag and drop is only available by including the [interact.js](http://interactjs.io/) library.
+This expression is called when an event is dragged and dropped or resized into a different date / time on the calendar. The available values that are passed to the expression are: `calendarEvent`, `calendarNewEventStart`, `calendarNewEventEnd` and `calendarDraggedFromDate` (month view only). The directive won't change the event object and leaves that up to you to implement. Please note drag and drop is only available by including the [interact.js](http://interactjs.io/) library.
 
 ### edit-event-html 
 
