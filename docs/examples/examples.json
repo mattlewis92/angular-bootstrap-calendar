@@ -49,4 +49,7 @@
 }, {
   "key": "i18n",
   "label": "Internationalization"
+}, {
+  "key": "disabling-views",
+  "label": "Disabling views"
 }]
