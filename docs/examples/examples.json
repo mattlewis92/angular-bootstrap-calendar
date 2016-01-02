@@ -25,4 +25,7 @@
 }, {
   "key": "clickable-events",
   "label": "Clickable events"
+}, {
+  "key": "timespan-click",
+  "label": "Timespan click"
 }]
