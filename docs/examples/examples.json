@@ -10,4 +10,7 @@
 }, {
   "key": "draggable-events",
   "label": "Draggable events"
+}, {
+  "key": "resizable-events",
+  "label": "Resizable events"
 }]
