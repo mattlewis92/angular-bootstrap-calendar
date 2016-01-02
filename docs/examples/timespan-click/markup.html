@@ -1,0 +1,14 @@
+<div ng-controller="TimespanClickCtrl as vm">
+  <uib-alert type="info">
+    Click on a day on the view.
+    <strong ng-show="vm.lastDateClicked">You clicked on this day: {{ vm.lastDateClicked | date:'medium' }}</strong>
+  </uib-alert>
+  <ng-include src="'calendarControls.html'"></ng-include>
+  <mwl-calendar
+    events="vm.events"
+    view="vm.calendarView"
+    view-date="vm.viewDate"
+    cell-is-open="vm.isCellOpen"
+    on-timespan-click="vm.timespanClicked(calendarDate)">
+  </mwl-calendar>
+</div>

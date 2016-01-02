@@ -1,0 +1,15 @@
+<style type="text/css">
+  .odd-cell {
+    background-color: pink !important;
+  }
+</style>
+
+<div ng-controller="CellModifierCtrl as vm">
+  <ng-include src="'calendarControls.html'"></ng-include>
+  <mwl-calendar
+    events="vm.events"
+    view="vm.calendarView"
+    view-date="vm.viewDate"
+    cell-modifier="vm.cellModifier(calendarCell)">
+  </mwl-calendar>
+</div>

@@ -1,0 +1,31 @@
+<div ng-controller="DraggableExternalEventsCtrl as vm">
+
+  <div class="row">
+    <div class="col-md-3">
+      <div class="well">
+        <ul>
+          <li
+            ng-repeat="event in vm.externalEvents track by $index"
+            mwl-draggable="true"
+            drop-data="{event: event}">
+            <a
+              href="javascript:;"
+              ng-class="'text-' + event.type">
+              {{ event.title }}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <ng-include src="'calendarControls.html'"></ng-include>
+      <mwl-calendar
+        events="vm.events"
+        view="vm.calendarView"
+        view-date="vm.viewDate"
+        cell-is-open="vm.isCellOpen"
+        on-event-times-changed="vm.eventDropped(calendarEvent, calendarNewEventStart, calendarNewEventEnd)">
+      </mwl-calendar>
+    </div>
+  </div>
+</div>

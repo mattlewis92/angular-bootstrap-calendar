@@ -1,14 +1,12 @@
-'use strict';
-
 angular
-  .module('demo', ['mwl.calendar', 'ui.bootstrap', 'ngTouch', 'ngAnimate'])
-  .controller('MainCtrl', function ($uibModal, moment) {
+  .module('mwl.calendar.docs') //you will need to declare your module with the dependencies ['mwl.calendar', 'ui.bootstrap', 'ngAnimate']
+  .controller('KitchenSinkCtrl', function(moment, alert) {
 
     var vm = this;
 
     //These variables MUST be set as a minimum for the calendar to work
     vm.calendarView = 'month';
-    vm.calendarDay = new Date();
+    vm.viewDate = new Date();
     vm.events = [
       {
         title: 'An event',
@@ -37,50 +35,20 @@ angular
 
     vm.isCellOpen = true;
 
-    /*
-     var currentYear = moment().year();
-     var currentMonth = moment().month();
-
-    function random(min, max) {
-      return Math.floor((Math.random() * max) + min);
-    }
-
-    for (var i = 0; i < 1000; i++) {
-      var start = new Date(currentYear,random(0, 11),random(1, 28),random(0, 24),random(0, 59));
-     vm.events.push({
-        title: 'Event ' + i,
-        type: 'warning',
-        startsAt: start,
-        endsAt: moment(start).add(2, 'hours').toDate()
-      })
-    }*/
-
-    function showModal(action, event) {
-      $uibModal.open({
-        templateUrl: 'modalContent.html',
-        controller: function() {
-          var vm = this;
-          vm.action = action;
-          vm.event = event;
-        },
-        controllerAs: 'vm'
-      });
-    }
-
     vm.eventClicked = function(event) {
-      showModal('Clicked', event);
+      alert.show('Clicked', event);
     };
 
     vm.eventEdited = function(event) {
-      showModal('Edited', event);
+      alert.show('Edited', event);
     };
 
     vm.eventDeleted = function(event) {
-      showModal('Deleted', event);
+      alert.show('Deleted', event);
     };
 
     vm.eventTimesChanged = function(event) {
-      showModal('Dropped or resized', event);
+      alert.show('Dropped or resized', event);
     };
 
     vm.toggle = function($event, field, event) {

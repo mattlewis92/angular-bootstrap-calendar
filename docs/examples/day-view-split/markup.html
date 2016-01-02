@@ -1,0 +1,9 @@
+<div ng-controller="DayViewSplitCtrl as vm">
+  <ng-include src="'calendarControls.html'"></ng-include>
+  <mwl-calendar
+    events="vm.events"
+    view="vm.calendarView"
+    view-date="vm.viewDate"
+    day-view-split="10"> <!-- can be either 10, 15 or 30. Default 30 -->
+  </mwl-calendar>
+</div>

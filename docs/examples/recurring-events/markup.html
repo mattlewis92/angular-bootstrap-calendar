@@ -1,0 +1,11 @@
+<div ng-controller="RecurringEventsCtrl as vm">
+  <h1 class="text-center">{{ vm.calendarTitle }}</h1>
+  <ng-include src="'calendarControls.html'"></ng-include>
+  <mwl-calendar
+    events="vm.events"
+    view="vm.calendarView"
+    view-date="vm.viewDate"
+    cell-is-open="vm.isCellOpen"
+    view-title="vm.calendarTitle">
+  </mwl-calendar>
+</div>

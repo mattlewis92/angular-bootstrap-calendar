@@ -1,0 +1,8 @@
+<div ng-controller="i18nCtrl as vm">
+  <ng-include src="'calendarControls.html'"></ng-include>
+  <mwl-calendar
+    events="vm.events"
+    view="vm.calendarView"
+    view-date="vm.viewDate">
+  </mwl-calendar>
+</div>

@@ -1,0 +1,16 @@
+<div ng-controller="DisableViewsCtrl as vm">
+  <div class="text-center">
+    <div class="btn-group">
+      <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'year'">Year</label>
+      <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'week'">Week</label>
+      <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'day'">Day</label>
+    </div>
+  </div>
+  <br>
+  <mwl-calendar
+    events="vm.events"
+    view="vm.calendarView"
+    view-date="vm.viewDate"
+    on-view-change-click="vm.viewChangeClicked(calendarNextView)">
+  </mwl-calendar>
+</div>

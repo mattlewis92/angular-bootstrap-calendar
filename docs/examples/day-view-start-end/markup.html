@@ -1,0 +1,10 @@
+<div ng-controller="DayViewStartEndCtrl as vm">
+  <ng-include src="'calendarControls.html'"></ng-include>
+  <mwl-calendar
+    events="vm.events"
+    view="vm.calendarView"
+    view-date="vm.viewDate"
+    day-view-start="09:00"
+    day-view-end="17:00">
+  </mwl-calendar>
+</div>
