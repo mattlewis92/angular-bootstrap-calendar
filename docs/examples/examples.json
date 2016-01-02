@@ -19,4 +19,7 @@
 }, {
   "key": "recurring-events",
   "label": "Recurring events"
+}, {
+  "key": "custom-event-class",
+  "label": "Custom event class"
 }]
