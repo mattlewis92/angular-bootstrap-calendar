@@ -16,4 +16,7 @@
 }, {
   "key": "badge-total",
   "label": "Badge total"
+}, {
+  "key": "recurring-events",
+  "label": "Recurring events"
 }]
