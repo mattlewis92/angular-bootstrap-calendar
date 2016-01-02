@@ -34,4 +34,7 @@
 }, {
   "key": "day-view-start-end",
   "label": "Day view start / end time"
+}, {
+  "key": "day-view-split",
+  "label": "Day view minute split"
 }]
