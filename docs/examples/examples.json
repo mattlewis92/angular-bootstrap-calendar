@@ -46,4 +46,7 @@
 }, {
   "key": "custom-templates",
   "label": "Custom templates"
+}, {
+  "key": "i18n",
+  "label": "Internationalization"
 }]
