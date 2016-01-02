@@ -37,4 +37,7 @@
 }, {
   "key": "day-view-split",
   "label": "Day view minute split"
+}, {
+  "key": "view-change-click",
+  "label": "Navigating between views"
 }]

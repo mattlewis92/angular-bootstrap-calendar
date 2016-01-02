@@ -1,0 +1,22 @@
+<div ng-controller="ViewChangeClickCtrl as vm">
+  <h1 class="text-center">{{ vm.viewTitle }}</h1>
+  <ng-include src="'calendarControls.html'"></ng-include>
+  <uib-alert type="info">
+    <div ng-switch="vm.calendarView">
+      <span ng-switch-when="year">Click on a month label to change the view to that month.</span>
+      <span ng-switch-when="month">Click on a day label to change the view to that day.</span>
+      <span ng-switch-when="day">There is no other view to navigate to.</span>
+    </div>
+  </uib-alert>
+  <uib-alert type="warning">
+    Enable the view change <input type="checkbox" ng-model="vm.viewChangeEnabled">
+  </uib-alert>
+  <mwl-calendar
+    events="vm.events"
+    view="vm.calendarView"
+    view-title="vm.viewTitle"
+    view-date="vm.viewDate"
+    cell-is-open="vm.isCellOpen"
+    on-view-change-click="vm.viewChangeClicked(calendarDate, calendarNextView)">
+  </mwl-calendar>
+</div>
