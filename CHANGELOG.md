@@ -1,3 +1,57 @@
+<a name="0.18.0"></a>
+# [0.18.0](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.17.6...v0.18.0) (2016-01-02)
+
+
+### Features
+
+* **calendarConfig:** change the calendarConfig provider to a plain object. Part of #236 ([0eb50e0](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/0eb50e0))
+* **current-day:** rename current-day to view-date. Closes #244 ([c44a50e](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/c44a50e)), closes [#244](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/244)
+* **directives:** all element directives are now E instead of EA. Closes #247 ([b0887a1](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/b0887a1)), closes [#247](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/247)
+* **drag-and-drop:** expose the date the calendar event was dragged from on the month view ([5ca6920](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/5ca6920)), closes [#250](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/250)
+* **on-drill-down-click:** rename to on-view-change-click. Closes #245 ([2514975](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/2514975)), closes [#245](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/245)
+* **templates:** make all templates configurable from the calendarConfig ([8fc02fe](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/8fc02fe)), closes [#236](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/236)
+
+
+### BREAKING CHANGES
+
+* directives: The mwl-calendar directive is now element only instead of an attribute as well.
+
+To migrate:
+`<div mwl-calendar></div>` will no longer work. Instead you must use `<mwl-calendar></mwl-calendar>`
+
+* templates: `month-cell-template-url` and `month-cell-events-template-url` options have been removed in favour of the calendarConfig.
+
+To migrate:
+
+```
+angular.module('myModule')
+  .config(function(calendarConfig) {
+    calendarConfig.templates.calendarMonthCell = '/path/to/custom/template.html';
+    calendarConfig.templates.calendarMonthCellEvents = '/path/to/custom/template.html';
+  });
+```
+* calendarConfig: `calendarConfig` is now just a plain angular value. The helper methods were removed and now you directly set the properties on a plain object.
+
+Before:
+```
+.config(function(calendarConfigProvider) {
+  calendarConfigProvider.setDateFormatter('moment');
+});
+```
+
+After:
+```
+.config(function(calendarConfig) {
+  calendarConfig.dateFormatter = 'moment';
+});
+```
+
+* current-day: the `current-day` attribute has been renamed to `view-date`
+
+* on-drill-down-click: `on-drill-down-click` has been renamed to `on-view-change-click`
+
+
+
 <a name="0.17.6"></a>
 ## [0.17.6](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.17.5...v0.17.6) (2015-12-02)
 
