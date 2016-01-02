@@ -1,17 +1,10 @@
-<style type="text/css">
-
-  .my-custom-class a {
-    color: #FF3D7F !important;
-  }
-
-</style>
-
-<div ng-controller="CustomEventClassCtrl as vm">
+<div ng-controller="ClickableEventsCtrl as vm">
   <ng-include src="'calendarControls.html'"></ng-include>
   <mwl-calendar
     events="vm.events"
     view="vm.calendarView"
     view-date="vm.viewDate"
-    cell-is-open="vm.isCellOpen">
+    cell-is-open="vm.isCellOpen"
+    on-event-click="vm.eventClicked(calendarEvent);">
   </mwl-calendar>
 </div>

@@ -22,4 +22,7 @@
 }, {
   "key": "custom-event-class",
   "label": "Custom event class"
+}, {
+  "key": "clickable-events",
+  "label": "Clickable events"
 }]
