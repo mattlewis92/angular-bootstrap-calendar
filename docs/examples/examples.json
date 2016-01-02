@@ -43,4 +43,7 @@
 }, {
   "key": "cell-modifier",
   "label": "Cell modifier"
+}, {
+  "key": "custom-templates",
+  "label": "Custom templates"
 }]

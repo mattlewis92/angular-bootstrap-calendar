@@ -25,6 +25,8 @@ angular
       helpers.scripts = result.data;
     });
 
+    var previousScope;
+
     vm.loadExample = function(demo) {
       vm.activeExample = angular.copy(demo);
       vm.showDemoTab = true;
@@ -45,6 +47,10 @@ angular
         demoContainer.html(vm.activeExample.markup);
         var scope = $rootScope.$new();
         $compile(demoContainer)(scope);
+        if (previousScope) {
+          previousScope.$destroy();
+        }
+        previousScope = scope;
       });
 
     };
