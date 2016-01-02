@@ -13,4 +13,7 @@
 }, {
   "key": "resizable-events",
   "label": "Resizable events"
+}, {
+  "key": "badge-total",
+  "label": "Badge total"
 }]
