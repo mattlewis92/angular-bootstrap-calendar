@@ -1,6 +1,6 @@
 <div
   mwl-droppable
-  on-drop="vm.handleEventDrop(dropData.event, day.date)"
+  on-drop="vm.handleEventDrop(dropData.event, day.date, dropData.draggedFromDate)"
   class="cal-month-day {{ day.cssClass }}"
   ng-class="{
             'cal-day-outmonth': !day.inMonth,
@@ -20,7 +20,7 @@
   <span
     class="pull-right"
     data-cal-date
-    ng-click="vm.calendarCtrl.drillDown(day.date)"
+    ng-click="vm.calendarCtrl.dateClicked(day.date)"
     ng-bind="day.label">
   </span>
 
@@ -29,7 +29,7 @@
     <i class="fa fa-chevron-up"></i>
   </div>
 
-  <ng-include src="vm.cellEventsTemplateUrl || 'calendarMonthCellEvents.html'"></ng-include>
+  <ng-include src="vm.calendarConfig.templates.calendarMonthCellEvents"></ng-include>
 
   <div id="cal-week-box" ng-if="$first && rowHovered">
     {{ vm.calendarConfig.i18nStrings.weekNumber.replace('{week}', day.date.week()) }}

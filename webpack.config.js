@@ -1,24 +1,11 @@
 'use strict';
 
-const open = require('open');
-const karma = require('karma');
 const webpack = require('webpack');
 const WebpackNotifierPlugin = require('webpack-notifier');
-const PORT = 8000;
-
-open('http://localhost:' + PORT);
-
-const server = new karma.Server({
-  configFile: __dirname + '/karma.conf.js',
-  autoWatch: true,
-  singleRun: false
-});
-
-server.start();
 
 module.exports = {
   entry: __dirname + '/src/entry.js',
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'eval',
   output: {
     filename: 'angular-bootstrap-calendar.js'
   },
@@ -43,7 +30,7 @@ module.exports = {
     }]
   },
   devServer: {
-    port: PORT,
+    port: 8000,
     inline: true,
     hot: true
   },

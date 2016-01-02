@@ -19,11 +19,11 @@ angular
     });
 
   })
-  .directive('mwlCalendarSlideBox', function(calendarUseTemplates) {
+  .directive('mwlCalendarSlideBox', function(calendarConfig) {
 
     return {
-      restrict: 'EA',
-      template: calendarUseTemplates ? require('./../templates/calendarSlideBox.html') : '',
+      restrict: 'E',
+      templateUrl: calendarConfig.templates.calendarSlideBox,
       replace: true,
       controller: 'MwlCalendarSlideBoxCtrl as vm',
       require: ['^?mwlCalendarMonth', '^?mwlCalendarYear'],

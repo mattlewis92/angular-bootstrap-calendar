@@ -4,9 +4,8 @@ var angular = require('angular');
 
 angular
   .module('mwl.calendar')
-  .provider('calendarConfig', function() {
-
-    var defaultFormats = {
+  .constant('calendarConfig', {
+    allDateFormats: {
       angular: {
         date: {
           hour: 'ha',
@@ -39,73 +38,21 @@ angular
           year: 'YYYY'
         }
       }
-    };
-
-    var dateFormatter = 'angular';
-    var defaultDateFormats = angular.copy(defaultFormats[dateFormatter].date);
-    var defaultTitleFormats = angular.copy(defaultFormats[dateFormatter].title);
-    var displayEventEndTimes = false;
-    var showTimesOnWeekView = false;
-    var displayAllMonthEvents = false;
-
-    var i18nStrings = {
+    },
+    get dateFormats() {
+      return this.allDateFormats[this.dateFormatter].date;
+    },
+    get titleFormats() {
+      return this.allDateFormats[this.dateFormatter].title;
+    },
+    dateFormatter: 'angular',
+    displayEventEndTimes: false,
+    showTimesOnWeekView: false,
+    displayAllMonthEvents: false,
+    i18nStrings: {
       eventsLabel: 'Events',
       timeLabel: 'Time',
       weekNumber: 'Week {week}'
-    };
-
-    var configProvider = this;
-
-    configProvider.setDateFormats = function(formats) {
-      angular.extend(defaultDateFormats, formats);
-      return configProvider;
-    };
-
-    configProvider.setTitleFormats = function(formats) {
-      angular.extend(defaultTitleFormats, formats);
-      return configProvider;
-    };
-
-    configProvider.setI18nStrings = function(strings) {
-      angular.extend(i18nStrings, strings);
-      return configProvider;
-    };
-
-    configProvider.setDisplayAllMonthEvents = function(value) {
-      displayAllMonthEvents = value;
-      return configProvider;
-    };
-
-    configProvider.setDisplayEventEndTimes = function(value) {
-      displayEventEndTimes = value;
-      return configProvider;
-    };
-
-    configProvider.setDateFormatter = function(value) {
-      if (['angular', 'moment'].indexOf(value) === -1) {
-        throw new Error('Invalid date formatter. Allowed types are angular and moment.');
-      }
-      dateFormatter = value;
-      defaultDateFormats = angular.copy(defaultFormats[dateFormatter].date);
-      defaultTitleFormats = angular.copy(defaultFormats[dateFormatter].title);
-      return configProvider;
-    };
-
-    configProvider.showTimesOnWeekView = function(value) {
-      showTimesOnWeekView = value; //experimental, and ignores the event end date
-      return configProvider;
-    };
-
-    configProvider.$get = function() {
-      return {
-        dateFormats: defaultDateFormats,
-        titleFormats: defaultTitleFormats,
-        i18nStrings: i18nStrings,
-        displayAllMonthEvents: displayAllMonthEvents,
-        displayEventEndTimes: displayEventEndTimes,
-        dateFormatter: dateFormatter,
-        showTimesOnWeekView: showTimesOnWeekView
-      };
-    };
-
+    },
+    templates: {}
   });

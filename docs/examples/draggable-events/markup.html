@@ -1,0 +1,10 @@
+<div ng-controller="DraggableEventsCtrl as vm">
+  <ng-include src="'calendarControls.html'"></ng-include>
+  <mwl-calendar
+    events="vm.events"
+    view="vm.calendarView"
+    view-date="vm.viewDate"
+    cell-is-open="vm.isCellOpen"
+    on-event-times-changed="vm.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd">
+  </mwl-calendar>
+</div>

@@ -10,6 +10,6 @@
     tooltip-append-to-body="true"
     uib-tooltip-html="((event.startsAt | calendarDate:'time':true) + (vm.calendarConfig.displayEventEndTimes && event.endsAt ? ' - ' + (event.endsAt | calendarDate:'time':true) : '') + ' - ' + event.title) | calendarTrustAsHtml"
     mwl-draggable="event.draggable === true"
-    drop-data="{event: event}">
+    drop-data="{event: event, draggedFromDate: day.date.toDate()}">
   </a>
 </div>

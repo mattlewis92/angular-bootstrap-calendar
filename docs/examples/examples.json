@@ -1,0 +1,58 @@
+[{
+  "key": "kitchen-sink",
+  "label": "Kitchen sink"
+}, {
+  "key": "optional-event-end-dates",
+  "label": "Optional event end dates"
+}, {
+  "key": "editable-deletable-events",
+  "label": "Editable / deletable events"
+}, {
+  "key": "draggable-events",
+  "label": "Draggable events"
+}, {
+  "key": "resizable-events",
+  "label": "Resizable events"
+}, {
+  "key": "badge-total",
+  "label": "Badge total"
+}, {
+  "key": "recurring-events",
+  "label": "Recurring events"
+}, {
+  "key": "custom-event-class",
+  "label": "Custom event class"
+}, {
+  "key": "clickable-events",
+  "label": "Clickable events"
+}, {
+  "key": "timespan-click",
+  "label": "Timespan click"
+}, {
+  "key": "cell-is-open",
+  "label": "Slidebox is open"
+}, {
+  "key": "day-view-start-end",
+  "label": "Day view start / end time"
+}, {
+  "key": "day-view-split",
+  "label": "Day view minute split"
+}, {
+  "key": "view-change-click",
+  "label": "Navigating between views"
+}, {
+  "key": "cell-modifier",
+  "label": "Cell modifier"
+}, {
+  "key": "custom-templates",
+  "label": "Custom templates"
+}, {
+  "key": "i18n",
+  "label": "Internationalization"
+}, {
+  "key": "disabling-views",
+  "label": "Disabling views"
+}, {
+  "key": "draggable-external-events",
+  "label": "Draggable external events"
+}]

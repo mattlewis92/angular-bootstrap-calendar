@@ -88,11 +88,11 @@ angular
       return weekdays;
     }
 
-    function getYearView(events, currentDay, cellModifier) {
+    function getYearView(events, viewDate, cellModifier) {
 
       var view = [];
-      var eventsInPeriod = getEventsInPeriod(currentDay, 'year', events);
-      var month = moment(currentDay).startOf('year');
+      var eventsInPeriod = getEventsInPeriod(viewDate, 'year', events);
+      var month = moment(viewDate).startOf('year');
       var count = 0;
       while (count < 12) {
         var startPeriod = month.clone();
@@ -116,11 +116,11 @@ angular
 
     }
 
-    function getMonthView(events, currentDay, cellModifier) {
+    function getMonthView(events, viewDate, cellModifier) {
 
-      var startOfMonth = moment(currentDay).startOf('month');
+      var startOfMonth = moment(viewDate).startOf('month');
       var day = startOfMonth.clone().startOf('week');
-      var endOfMonthView = moment(currentDay).endOf('month').endOf('week');
+      var endOfMonthView = moment(viewDate).endOf('month').endOf('week');
       var eventsInPeriod;
       if (calendarConfig.displayAllMonthEvents) {
         eventsInPeriod = filterEventsInPeriod(events, day, endOfMonthView);
@@ -132,7 +132,7 @@ angular
 
       while (day.isBefore(endOfMonthView)) {
 
-        var inMonth = day.month() === moment(currentDay).month();
+        var inMonth = day.month() === moment(viewDate).month();
         var monthEvents = [];
         if (inMonth || calendarConfig.displayAllMonthEvents) {
           monthEvents = filterEventsInPeriod(eventsInPeriod, day, day.clone().endOf('day'));
@@ -161,10 +161,10 @@ angular
 
     }
 
-    function getWeekView(events, currentDay) {
+    function getWeekView(events, viewDate) {
 
-      var startOfWeek = moment(currentDay).startOf('week');
-      var endOfWeek = moment(currentDay).endOf('week');
+      var startOfWeek = moment(viewDate).startOf('week');
+      var endOfWeek = moment(viewDate).endOf('week');
       var dayCounter = startOfWeek.clone();
       var days = [];
       var today = moment().startOf('day');
@@ -215,20 +215,20 @@ angular
 
     }
 
-    function getDayView(events, currentDay, dayViewStart, dayViewEnd, dayViewSplit) {
+    function getDayView(events, viewDate, dayViewStart, dayViewEnd, dayViewSplit) {
 
       var dayStartHour = moment(dayViewStart || '00:00', 'HH:mm').hours();
       var dayEndHour = moment(dayViewEnd || '23:00', 'HH:mm').hours();
       var hourHeight = (60 / dayViewSplit) * 30;
-      var calendarStart = moment(currentDay).startOf('day').add(dayStartHour, 'hours');
-      var calendarEnd = moment(currentDay).startOf('day').add(dayEndHour, 'hours');
+      var calendarStart = moment(viewDate).startOf('day').add(dayStartHour, 'hours');
+      var calendarEnd = moment(viewDate).startOf('day').add(dayEndHour, 'hours');
       var calendarHeight = (dayEndHour - dayStartHour + 1) * hourHeight;
       var hourHeightMultiplier = hourHeight / 60;
       var buckets = [];
       var eventsInPeriod = filterEventsInPeriod(
         events,
-        moment(currentDay).startOf('day').toDate(),
-        moment(currentDay).endOf('day').toDate()
+        moment(viewDate).startOf('day').toDate(),
+        moment(viewDate).endOf('day').toDate()
       );
 
       return eventsInPeriod.map(function(event) {
@@ -293,8 +293,8 @@ angular
 
     }
 
-    function getWeekViewWithTimes(events, currentDay, dayViewStart, dayViewEnd, dayViewSplit) {
-      var weekView = getWeekView(events, currentDay);
+    function getWeekViewWithTimes(events, viewDate, dayViewStart, dayViewEnd, dayViewSplit) {
+      var weekView = getWeekView(events, viewDate);
       var newEvents = [];
       weekView.days.forEach(function(day) {
         var dayEvents = weekView.events.filter(function(event) {

@@ -1,0 +1,9 @@
+<div ng-controller="BadgeTotalCtrl as vm">
+  <ng-include src="'calendarControls.html'"></ng-include>
+  <mwl-calendar
+    events="vm.events"
+    view="vm.calendarView"
+    view-date="vm.viewDate"
+    cell-is-open="vm.isCellOpen">
+  </mwl-calendar>
+</div>

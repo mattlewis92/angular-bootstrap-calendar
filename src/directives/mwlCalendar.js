@@ -12,10 +12,10 @@ angular
 
     vm.changeView = function(view, newDay) {
       vm.view = view;
-      vm.currentDay = newDay;
+      vm.viewDate = newDay;
     };
 
-    vm.drillDown = function(date) {
+    vm.dateClicked = function(date) {
 
       var rawDate = moment(date).toDate();
 
@@ -25,13 +25,13 @@ angular
         week: 'day'
       };
 
-      if (vm.onDrillDownClick({calendarDate: rawDate, calendarNextView: nextView[vm.view]}) !== false) {
+      if (vm.onViewChangeClick({calendarDate: rawDate, calendarNextView: nextView[vm.view]}) !== false) {
         vm.changeView(nextView[vm.view], rawDate);
       }
 
     };
 
-    var previousDate = moment(vm.currentDay);
+    var previousDate = moment(vm.viewDate);
     var previousView = vm.view;
 
     function eventIsValid(event) {
@@ -58,7 +58,7 @@ angular
     function refreshCalendar() {
 
       if (calendarTitle[vm.view] && angular.isDefined($attrs.viewTitle)) {
-        vm.viewTitle = calendarTitle[vm.view](vm.currentDay);
+        vm.viewTitle = calendarTitle[vm.view](vm.viewDate);
       }
 
       vm.events = vm.events.filter(eventIsValid).map(function(event, index) {
@@ -67,7 +67,7 @@ angular
       });
 
       //if on-timespan-click="calendarDay = calendarDate" is set then don't update the view as nothing needs to change
-      var currentDate = moment(vm.currentDay);
+      var currentDate = moment(vm.viewDate);
       var shouldUpdate = true;
       if (
         previousDate.clone().startOf(vm.view).isSame(currentDate.clone().startOf(vm.view)) &&
@@ -91,7 +91,7 @@ angular
 
     //Refresh the calendar when any of these variables change.
     $scope.$watchGroup([
-      'vm.currentDay',
+      'vm.viewDate',
       'vm.view',
       'vm.cellIsOpen',
       function() {
@@ -108,16 +108,16 @@ angular
     });
 
   })
-  .directive('mwlCalendar', function(calendarUseTemplates) {
+  .directive('mwlCalendar', function(calendarConfig) {
 
     return {
-      template: calendarUseTemplates ? require('./../templates/calendar.html') : '',
-      restrict: 'EA',
+      templateUrl: calendarConfig.templates.calendar,
+      restrict: 'E',
       scope: {
         events: '=',
         view: '=',
         viewTitle: '=?',
-        currentDay: '=',
+        viewDate: '=',
         editEventHtml: '=',
         deleteEventHtml: '=',
         cellIsOpen: '=',
@@ -126,13 +126,11 @@ angular
         onEditEventClick: '&',
         onDeleteEventClick: '&',
         onTimespanClick: '&',
-        onDrillDownClick: '&',
+        onViewChangeClick: '&',
         cellModifier: '&',
         dayViewStart: '@',
         dayViewEnd: '@',
-        dayViewSplit: '@',
-        monthCellTemplateUrl: '@',
-        monthCellEventsTemplateUrl: '@'
+        dayViewSplit: '@'
       },
       controller: 'MwlCalendarCtrl as vm',
       bindToController: true

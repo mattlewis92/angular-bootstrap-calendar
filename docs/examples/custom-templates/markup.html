@@ -1,0 +1,25 @@
+<script id="customMonthCell.html" type="text/ng-template">
+  <div class="cal-month-day">
+
+    <span
+      class="pull-right"
+      data-cal-date
+      ng-click="vm.calendarCtrl.dateClicked(day.date)"
+      ng-bind="day.label">
+    </span>
+
+    <small style="position: absolute; bottom: 10px; left: 5px">
+      There are {{ day.events.length }} events on this day
+    </small>
+
+  </div>
+</script>
+
+<div ng-controller="CustomTemplatesCtrl as vm">
+  <ng-include src="'calendarControls.html'"></ng-include>
+  <mwl-calendar
+    events="vm.events"
+    view="vm.calendarView"
+    view-date="vm.viewDate">
+  </mwl-calendar>
+</div>
