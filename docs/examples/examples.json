@@ -31,4 +31,7 @@
 }, {
   "key": "cell-is-open",
   "label": "Slidebox is open"
+}, {
+  "key": "day-view-start-end",
+  "label": "Day view start / end time"
 }]
