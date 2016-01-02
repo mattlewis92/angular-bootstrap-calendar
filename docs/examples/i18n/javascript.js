@@ -23,4 +23,8 @@ angular
       moment.locale('fr'); // change the locale to french
     });
 
+    $scope.$on('$destroy', function() {
+      moment.locale('en');
+    });
+
   });
