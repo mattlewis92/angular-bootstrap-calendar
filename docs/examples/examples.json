@@ -28,4 +28,7 @@
 }, {
   "key": "timespan-click",
   "label": "Timespan click"
+}, {
+  "key": "cell-is-open",
+  "label": "Slidebox is open"
 }]
