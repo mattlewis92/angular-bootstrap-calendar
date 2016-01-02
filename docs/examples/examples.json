@@ -40,4 +40,7 @@
 }, {
   "key": "view-change-click",
   "label": "Navigating between views"
+}, {
+  "key": "cell-modifier",
+  "label": "Cell modifier"
 }]
