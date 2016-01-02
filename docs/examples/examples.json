@@ -52,4 +52,7 @@
 }, {
   "key": "disabling-views",
   "label": "Disabling views"
+}, {
+  "key": "draggable-external-events",
+  "label": "Draggable external events"
 }]
