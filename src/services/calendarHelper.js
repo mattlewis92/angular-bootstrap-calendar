@@ -22,16 +22,15 @@ angular
       return moment(oldEnd).add(diffInSeconds);
     }
 
-    function eventIsInPeriod(event, periodStart, periodEnd) {
+    function getRecurringEventPeriod(eventPeriod, recursOn, containerPeriodStart) {
 
-      var eventStart = moment(event.startsAt);
-      var eventEnd = moment(event.endsAt || event.startsAt);
-      periodStart = moment(periodStart);
-      periodEnd = moment(periodEnd);
+      var eventStart = moment(eventPeriod.start);
+      var eventEnd = moment(eventPeriod.end);
+      var periodStart = moment(containerPeriodStart);
 
-      if (angular.isDefined(event.recursOn)) {
+      if (angular.isDefined(recursOn)) {
 
-        switch (event.recursOn) {
+        switch (recursOn) {
           case 'year':
             eventStart.set({
               year: periodStart.year()
@@ -46,12 +45,25 @@ angular
             break;
 
           default:
-            throw new Error('Invalid value (' + event.recursOn + ') given for recurs on. Can only be year or month.');
+            throw new Error('Invalid value (' + recursOn + ') given for recurs on. Can only be year or month.');
         }
 
-        eventEnd = adjustEndDateFromStartDiff(event.startsAt, eventStart, eventEnd);
+        eventEnd = adjustEndDateFromStartDiff(eventPeriod.start, eventStart, eventEnd);
 
       }
+
+      return {start: eventStart, end: eventEnd};
+
+    }
+
+    function eventIsInPeriod(event, periodStart, periodEnd) {
+
+      periodStart = moment(periodStart);
+      periodEnd = moment(periodEnd);
+
+      var eventPeriod = getRecurringEventPeriod({start: event.startsAt, end: event.endsAt || event.startsAt}, event.recursOn, periodStart);
+      var eventStart = eventPeriod.start;
+      var eventEnd = eventPeriod.end;
 
       return (eventStart.isAfter(periodStart) && eventStart.isBefore(periodEnd)) ||
         (eventEnd.isAfter(periodStart) && eventEnd.isBefore(periodEnd)) ||
@@ -183,12 +195,18 @@ angular
 
       var eventsSorted = filterEventsInPeriod(events, startOfWeek, endOfWeek).map(function(event) {
 
-        var eventStart = moment(event.startsAt).startOf('day');
-        var eventEnd = moment(event.endsAt || event.startsAt).startOf('day');
         var weekViewStart = moment(startOfWeek).startOf('day');
         var weekViewEnd = moment(endOfWeek).startOf('day');
-        var offset, span;
 
+        var eventPeriod = getRecurringEventPeriod({
+          start: moment(event.startsAt).startOf('day'),
+          end: moment(event.endsAt || event.startsAt).startOf('day')
+        }, event.recursOn, weekViewStart);
+
+        var eventStart = eventPeriod.start;
+        var eventEnd = eventPeriod.end;
+
+        var offset, span;
         if (eventStart.isBefore(weekViewStart) || eventStart.isSame(weekViewStart)) {
           offset = 0;
         } else {

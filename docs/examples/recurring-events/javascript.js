@@ -8,13 +8,13 @@ angular
       {
         title: 'Recurs monthly',
         type: 'warning',
-        startsAt: moment().startOf('month').toDate(),
+        startsAt: moment().toDate(),
         recursOn: 'month'
       },
       {
         title: 'Recurs yearly',
         type: 'info',
-        startsAt: moment().startOf('month').toDate(),
+        startsAt: moment().toDate(),
         recursOn: 'year'
       }
     ];
@@ -23,7 +23,7 @@ angular
     // See here: https://github.com/mattlewis92/angular-bootstrap-calendar/issues/127#issuecomment-136022090
 
     vm.calendarView = 'month';
-    vm.viewDate = moment().startOf('month').toDate();
+    vm.viewDate = moment().toDate();
     vm.isCellOpen = true;
 
   });

@@ -478,6 +478,19 @@ describe('calendarHelper', function() {
 
     });
 
+    describe('recurring events', function() {
+
+      it('should display recuring events', function() {
+        weekView = calendarHelper.getWeekView([{
+          startsAt: new Date(2016, 0, 9, 1),
+          recursOn: 'month'
+        }], new Date(2016, 1, 9, 1));
+        expect(weekView.events[0].daySpan).to.equal(1);
+        expect(weekView.events[0].dayOffset).to.equal(2);
+      });
+
+    });
+
   });
 
   describe('getDayView', function() {
