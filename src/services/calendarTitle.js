@@ -12,7 +12,7 @@ angular
 
     function week(viewDate) {
       var weekTitleLabel = calendarConfig.titleFormats.week;
-      return weekTitleLabel.replace('{week}', moment(viewDate).week()).replace('{year}', moment(viewDate).format('YYYY'));
+      return weekTitleLabel.replace('{week}', moment(viewDate).isoWeek()).replace('{year}', moment(viewDate).format('YYYY'));
     }
 
     function month(viewDate) {
