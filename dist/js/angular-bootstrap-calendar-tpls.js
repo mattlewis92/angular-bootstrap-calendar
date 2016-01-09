@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-calendar - A pure AngularJS bootstrap themed responsive calendar that can display events and has views for year, month, week and day
- * @version v0.18.0
+ * @version v0.18.1
  * @link https://github.com/mattlewis92/angular-bootstrap-calendar
  * @license MIT
  */
@@ -1663,16 +1663,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return moment(oldEnd).add(diffInSeconds);
 	    }
 
-	    function eventIsInPeriod(event, periodStart, periodEnd) {
+	    function getRecurringEventPeriod(eventPeriod, recursOn, containerPeriodStart) {
 
-	      var eventStart = moment(event.startsAt);
-	      var eventEnd = moment(event.endsAt || event.startsAt);
-	      periodStart = moment(periodStart);
-	      periodEnd = moment(periodEnd);
+	      var eventStart = moment(eventPeriod.start);
+	      var eventEnd = moment(eventPeriod.end);
+	      var periodStart = moment(containerPeriodStart);
 
-	      if (angular.isDefined(event.recursOn)) {
+	      if (angular.isDefined(recursOn)) {
 
-	        switch (event.recursOn) {
+	        switch (recursOn) {
 	          case 'year':
 	            eventStart.set({
 	              year: periodStart.year()
@@ -1687,12 +1686,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	            break;
 
 	          default:
-	            throw new Error('Invalid value (' + event.recursOn + ') given for recurs on. Can only be year or month.');
+	            throw new Error('Invalid value (' + recursOn + ') given for recurs on. Can only be year or month.');
 	        }
 
-	        eventEnd = adjustEndDateFromStartDiff(event.startsAt, eventStart, eventEnd);
+	        eventEnd = adjustEndDateFromStartDiff(eventPeriod.start, eventStart, eventEnd);
 
 	      }
+
+	      return {start: eventStart, end: eventEnd};
+
+	    }
+
+	    function eventIsInPeriod(event, periodStart, periodEnd) {
+
+	      periodStart = moment(periodStart);
+	      periodEnd = moment(periodEnd);
+
+	      var eventPeriod = getRecurringEventPeriod({start: event.startsAt, end: event.endsAt || event.startsAt}, event.recursOn, periodStart);
+	      var eventStart = eventPeriod.start;
+	      var eventEnd = eventPeriod.end;
 
 	      return (eventStart.isAfter(periodStart) && eventStart.isBefore(periodEnd)) ||
 	        (eventEnd.isAfter(periodStart) && eventEnd.isBefore(periodEnd)) ||
@@ -1824,12 +1836,18 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var eventsSorted = filterEventsInPeriod(events, startOfWeek, endOfWeek).map(function(event) {
 
-	        var eventStart = moment(event.startsAt).startOf('day');
-	        var eventEnd = moment(event.endsAt || event.startsAt).startOf('day');
 	        var weekViewStart = moment(startOfWeek).startOf('day');
 	        var weekViewEnd = moment(endOfWeek).startOf('day');
-	        var offset, span;
 
+	        var eventPeriod = getRecurringEventPeriod({
+	          start: moment(event.startsAt).startOf('day'),
+	          end: moment(event.endsAt || event.startsAt).startOf('day')
+	        }, event.recursOn, weekViewStart);
+
+	        var eventStart = eventPeriod.start;
+	        var eventEnd = eventPeriod.end;
+
+	        var offset, span;
 	        if (eventStart.isBefore(weekViewStart) || eventStart.isSame(weekViewStart)) {
 	          offset = 0;
 	        } else {
@@ -1995,7 +2013,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function week(viewDate) {
 	      var weekTitleLabel = calendarConfig.titleFormats.week;
-	      return weekTitleLabel.replace('{week}', moment(viewDate).week()).replace('{year}', moment(viewDate).format('YYYY'));
+	      return weekTitleLabel.replace('{week}', moment(viewDate).isoWeek()).replace('{year}', moment(viewDate).format('YYYY'));
 	    }
 
 	    function month(viewDate) {
