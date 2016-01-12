@@ -1,3 +1,13 @@
+<a name="0.18.2"></a>
+## [0.18.2](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.18.1...v0.18.2) (2016-01-12)
+
+
+### Bug Fixes
+
+* mark all optional attributes as such for ng 1.3.x compatibility ([20ed32e](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/20ed32e)), closes [#259](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/259)
+
+
+
 <a name="0.18.1"></a>
 ## [0.18.1](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.18.0...v0.18.1) (2016-01-09)
 
