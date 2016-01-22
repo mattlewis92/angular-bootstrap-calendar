@@ -90,7 +90,7 @@ describe('mwlDraggable directive', function() {
 
     draggableOptions.onstart(event);
     draggableOptions.onmove(event);
-    expect(angular.element(event.target).css('z-index')).to.equal('1000');
+    expect(angular.element(event.target).css('z-index')).to.equal('50');
     expect(angular.element(event.target).attr('data-y')).to.equal('30');
     expect(angular.element(event.target).attr('data-x')).to.equal('0');
     expect(scope.onDrag).to.have.been.calledWith(0, 1);
