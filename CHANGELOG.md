@@ -1,3 +1,13 @@
+<a name="0.18.3"></a>
+## [0.18.3](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.18.2...v0.18.3) (2016-01-22)
+
+
+### Bug Fixes
+
+* **events:** use lower z-index to prevent conflict with mdDialog ([5ef9369](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/5ef9369)), closes [#264](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/264)
+
+
+
 <a name="0.18.2"></a>
 ## [0.18.2](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.18.1...v0.18.2) (2016-01-12)
 
