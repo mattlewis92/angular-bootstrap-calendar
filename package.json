@@ -38,7 +38,6 @@
     "mocha": "~2.3.0",
     "moment": "^2.10.6",
     "ng-annotate-loader": "~0.1.0",
-    "node-libs-browser": "~0.5.2",
     "null-loader": "~0.1.1",
     "phantomjs": "~1.9.17",
     "style-loader": "~0.13.0",
