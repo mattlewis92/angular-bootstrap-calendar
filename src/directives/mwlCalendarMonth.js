@@ -38,6 +38,7 @@ angular
       if (!dayClickedFirstRun) {
         vm.onTimespanClick({
           calendarDate: day.date.toDate(),
+          calendarCell: day,
           $event: $event
         });
         if ($event && $event.defaultPrevented) {

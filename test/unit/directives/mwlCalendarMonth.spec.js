@@ -115,7 +115,8 @@ describe('mwlCalendarMonth directive', function() {
     expect(MwlCalendarCtrl.openDayIndex).to.equal(0);
     expect(showModal).to.have.been.calledWith('Day clicked', {
       calendarDate: MwlCalendarCtrl.view[0].date.toDate(),
-      $event: undefined
+      $event: undefined,
+      calendarCell: MwlCalendarCtrl.view[0]
     });
 
     //Close event list
