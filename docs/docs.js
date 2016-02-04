@@ -92,11 +92,11 @@ angular
           '    <script src="//ajax.googleapis.com/ajax/libs/angularjs/'+ngVersion+'/angular.js"></script>\n' +
           '    <script src="//ajax.googleapis.com/ajax/libs/angularjs/'+ngVersion+'/angular-animate.js"></script>\n' +
           '    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/'+uibVersion+'/ui-bootstrap-tpls.min.js"></script>\n' +
-          '    <script src="//mattlewis.me/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.min.js"></script>\n' +
+          '    <script src="//mattlewis92.github.io/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.min.js"></script>\n' +
           '    <script src="example.js"></script>\n' +
           '    <script src="helpers.js"></script>\n' +
           '    <link href="//netdna.bootstrapcdn.com/bootstrap/'+bsVersion+'/css/bootstrap.min.css" rel="stylesheet">\n' +
-          '    <link href="//mattlewis.me/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.min.css" rel="stylesheet">\n' +
+          '    <link href="//mattlewis92.github.io/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.min.css" rel="stylesheet">\n' +
           '  </head>\n' +
           '  <body>\n\n' +
           content + '\n' +
