@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-calendar - A pure AngularJS bootstrap themed responsive calendar that can display events and has views for year, month, week and day
- * @version v0.18.4
+ * @version v0.18.5
  * @link https://github.com/mattlewis92/angular-bootstrap-calendar
  * @license MIT
  */
@@ -177,7 +177,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	angular
 	  .module('mwl.calendar')
-	  .controller('MwlCalendarCtrl', ["$scope", "$log", "$timeout", "$attrs", "$locale", "moment", "calendarTitle", function($scope, $log, $timeout, $attrs, $locale, moment, calendarTitle) {
+	  .controller('MwlCalendarCtrl', ["$scope", "$log", "$timeout", "$attrs", "$locale", "moment", "calendarTitle", "calendarHelper", function($scope, $log, $timeout, $attrs, $locale, moment, calendarTitle, calendarHelper) {
 
 	    var vm = this;
 
@@ -278,6 +278,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	      } else {
 	        refreshCalendar();
 	      }
+	    });
+
+	    calendarHelper.loadTemplates().then(function() {
+	      vm.templatesLoaded = true;
+	    }).catch(function(err) {
+	      $log.error('Could not load all calendar templates', err);
 	    });
 
 	  }])
@@ -1564,7 +1570,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	angular
 	  .module('mwl.calendar')
-	  .factory('calendarHelper', ["dateFilter", "moment", "calendarConfig", function(dateFilter, moment, calendarConfig) {
+	  .factory('calendarHelper', ["$q", "$templateRequest", "dateFilter", "moment", "calendarConfig", function($q, $templateRequest, dateFilter, moment, calendarConfig) {
 
 	    function formatDate(date, format) {
 	      if (calendarConfig.dateFormatter === 'angular') {
@@ -1898,6 +1904,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return ((dayViewEndM.diff(dayViewStartM, 'hours') + 1) * hourHeight) + 2;
 	    }
 
+	    function loadTemplates() {
+
+	      var templatePromises = Object.keys(calendarConfig.templates).map(function(key) {
+	        var templateUrl = calendarConfig.templates[key];
+	        return $templateRequest(templateUrl);
+	      });
+
+	      return $q.all(templatePromises);
+
+	    }
+
 	    return {
 	      getWeekDayNames: getWeekDayNames,
 	      getYearView: getYearView,
@@ -1908,6 +1925,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      getDayViewHeight: getDayViewHeight,
 	      adjustEndDateFromStartDiff: adjustEndDateFromStartDiff,
 	      formatDate: formatDate,
+	      loadTemplates: loadTemplates,
 	      eventIsInPeriod: eventIsInPeriod //expose for testing only
 	    };
 
