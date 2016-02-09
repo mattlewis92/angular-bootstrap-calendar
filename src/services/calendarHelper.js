@@ -4,7 +4,7 @@ var angular = require('angular');
 
 angular
   .module('mwl.calendar')
-  .factory('calendarHelper', function(dateFilter, moment, calendarConfig) {
+  .factory('calendarHelper', function($q, $templateRequest, dateFilter, moment, calendarConfig) {
 
     function formatDate(date, format) {
       if (calendarConfig.dateFormatter === 'angular') {
@@ -338,6 +338,17 @@ angular
       return ((dayViewEndM.diff(dayViewStartM, 'hours') + 1) * hourHeight) + 2;
     }
 
+    function loadTemplates() {
+
+      var templatePromises = Object.keys(calendarConfig.templates).map(function(key) {
+        var templateUrl = calendarConfig.templates[key];
+        return $templateRequest(templateUrl);
+      });
+
+      return $q.all(templatePromises);
+
+    }
+
     return {
       getWeekDayNames: getWeekDayNames,
       getYearView: getYearView,
@@ -348,6 +359,7 @@ angular
       getDayViewHeight: getDayViewHeight,
       adjustEndDateFromStartDiff: adjustEndDateFromStartDiff,
       formatDate: formatDate,
+      loadTemplates: loadTemplates,
       eventIsInPeriod: eventIsInPeriod //expose for testing only
     };
 

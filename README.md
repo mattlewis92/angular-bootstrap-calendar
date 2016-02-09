@@ -32,9 +32,9 @@ Pull requests are welcome.
 
 ## Installation
 
-The calendar has a few dependencies, these are as follows, and must be included BEFORE the plugin files:
+The calendar has a few dependencies, these are as follows, and must be included before this libraries files:
 
-* [AngularJS](https://angularjs.org/) 1.3.x or 1.4.x are supported
+* [AngularJS](https://angularjs.org/) 1.3.x, 1.4.x and 1.5.x are supported
 * [Bootstrap](http://getbootstrap.com/) 3+ (CSS only)
 * [Moment.js](http://momentjs.com/)
 * [ui-bootstrap](http://angular-ui.github.io/bootstrap/) (0.14.0+, optional, include for collapse animations and tooltips.

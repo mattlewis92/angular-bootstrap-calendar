@@ -6,11 +6,13 @@ beforeEach(angular.mock.module('mwl.calendar'));
 
 describe('calendarHelper', function() {
 
-  var calendarHelper, events, clock, calendarDay, calendarConfig;
+  var calendarHelper, events, clock, calendarDay, calendarConfig, $templateCache, $rootScope;
 
-  beforeEach(inject(function(_calendarHelper_, _calendarConfig_) {
+  beforeEach(inject(function(_calendarHelper_, _calendarConfig_, _$templateCache_, _$rootScope_) {
     calendarHelper = _calendarHelper_;
     calendarConfig = _calendarConfig_;
+    $templateCache = _$templateCache_;
+    $rootScope = _$rootScope_;
 
     events = [{
       title: 'Event 1',
@@ -647,6 +649,22 @@ describe('calendarHelper', function() {
       calendarConfig.dateFormatter = 'moment';
       var formattedDate = calendarHelper.formatDate(new Date(), 'YYYY-MM-DD');
       expect(formattedDate).to.equal('2015-10-20');
+    });
+
+  });
+
+  describe('loadTemplates', function() {
+
+    it('should return a promise with all loaded templates', function(done) {
+      calendarConfig.templates = {
+        template: 'test.html'
+      };
+      $templateCache.put('test.html', 'contents');
+      calendarHelper.loadTemplates().then(function(result) {
+        expect(result).to.deep.equal(['contents']);
+        done();
+      });
+      $rootScope.$apply();
     });
 
   });
