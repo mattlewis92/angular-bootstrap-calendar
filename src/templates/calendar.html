@@ -1,4 +1,7 @@
-<div class="cal-context" ng-switch="vm.view">
+<div
+  class="cal-context"
+  ng-switch="vm.view"
+  ng-if="vm.templatesLoaded">
 
   <div class="alert alert-danger" ng-switch-default>The value passed to the view attribute of the calendar is not set</div>
 
@@ -16,8 +19,8 @@
     delete-event-html="vm.deleteEventHtml"
     cell-is-open="vm.cellIsOpen"
     cell-modifier="vm.cellModifier"
-    ng-switch-when="year"
-  ></mwl-calendar-year>
+    ng-switch-when="year">
+  </mwl-calendar-year>
 
   <mwl-calendar-month
     events="vm.events"
@@ -31,8 +34,8 @@
     delete-event-html="vm.deleteEventHtml"
     cell-is-open="vm.cellIsOpen"
     cell-modifier="vm.cellModifier"
-    ng-switch-when="month"
-    ></mwl-calendar-month>
+    ng-switch-when="month">
+  </mwl-calendar-month>
 
   <mwl-calendar-week
     events="vm.events"
@@ -43,8 +46,8 @@
     day-view-end="vm.dayViewEnd"
     day-view-split="vm.dayViewSplit"
     on-timespan-click="vm.onTimespanClick"
-    ng-switch-when="week"
-    ></mwl-calendar-week>
+    ng-switch-when="week">
+  </mwl-calendar-week>
 
   <mwl-calendar-day
     events="vm.events"
@@ -55,6 +58,6 @@
     day-view-start="vm.dayViewStart"
     day-view-end="vm.dayViewEnd"
     day-view-split="vm.dayViewSplit"
-    ng-switch-when="day"
-    ></mwl-calendar-day>
+    ng-switch-when="day">
+  </mwl-calendar-day>
 </div>

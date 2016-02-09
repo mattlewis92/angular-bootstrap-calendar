@@ -8,7 +8,9 @@ describe('mwlCalendar directive', function() {
     element,
     scope,
     $rootScope,
+    $q,
     $timeout,
+    calendarHelper,
     directiveScope,
     MwlCalendarMonthCtrl,
     clock,
@@ -88,12 +90,15 @@ describe('mwlCalendar directive', function() {
 
   beforeEach(angular.mock.module('mwl.calendar'));
 
-  beforeEach(angular.mock.inject(function($compile, _$rootScope_, _$timeout_) {
+  beforeEach(angular.mock.inject(function($compile, _$rootScope_, _$timeout_, _$q_, _calendarHelper_) {
+    $q = _$q_;
     $rootScope = _$rootScope_;
     $timeout = _$timeout_;
+    calendarHelper = _calendarHelper_;
     scope = $rootScope.$new();
     scope.vm = {};
     clock = sinon.useFakeTimers(new Date(2015, 4, 1).getTime());
+    calendarHelper.loadTemplates = sinon.stub().returns($q.when());
     prepareScope(scope.vm);
 
     element = $compile(template)(scope);
@@ -135,6 +140,14 @@ describe('mwlCalendar directive', function() {
     MwlCalendarMonthCtrl.view.forEach(function(day) {
       expect(day.events).to.eql([]);
     });
+  });
+
+  it('should load all templates', function() {
+    expect(calendarHelper.loadTemplates).to.have.been.calledOnce;
+  });
+
+  it('should set templates loaded to true', function() {
+    expect(MwlCalendarCtrl.templatesLoaded).to.be.true;
   });
 
   afterEach(function() {
