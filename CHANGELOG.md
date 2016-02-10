@@ -1,3 +1,13 @@
+<a name="0.18.7"></a>
+## [0.18.7](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.18.6...v0.18.7) (2016-02-10)
+
+
+### Bug Fixes
+
+* start watchers after templates have been loaded ([b5621df](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/b5621df))
+
+
+
 <a name="0.18.6"></a>
 ## [0.18.6](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.18.5...v0.18.6) (2016-02-09)
 
