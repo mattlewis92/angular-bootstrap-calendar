@@ -51,6 +51,11 @@ angular
       });
     };
 
+    vm.eventDropped = function(event, date) {
+      var daysDiff = moment(date).diff(moment(event.startsAt), 'days');
+      vm.weekDragged(event, daysDiff);
+    };
+
     vm.weekResized = function(event, edge, daysDiff) {
 
       var start = moment(event.startsAt);

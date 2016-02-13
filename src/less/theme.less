@@ -15,7 +15,11 @@
 .cal-month-day {
   height: @rowHeightMonth;
 }
-[class*="cal-cell"]:hover, .cell-focus, [class*="cal-cell"] .drop-active, .cal-cell.drop-active {
+[class*="cal-cell"]:hover,
+.cell-focus,
+[class*="cal-cell"] .drop-active,
+.cal-cell.drop-active,
+.cal-week-box .cal-cell1.drop-active {
   background-color: @dayHover;
 }
 .cal-year-box [class*="span"],
