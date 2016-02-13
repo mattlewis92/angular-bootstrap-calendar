@@ -69,12 +69,11 @@ describe('mwlCalendarHourList directive', function() {
     var date = moment().add(2, 'days').toDate();
     MwlCalendarCtrl.onEventTimesChanged = sinon.spy();
     MwlCalendarCtrl.eventDropped(event, date);
-    expect(MwlCalendarCtrl.onEventTimesChanged.getCall(0).args[0]).to.deep.equal({
-      calendarEvent: event,
-      calendarDate: date,
-      calendarNewEventStart: date,
-      calendarNewEventEnd: moment().add(3, 'days').toDate()
-    });
+    var calledWith = MwlCalendarCtrl.onEventTimesChanged.getCall(0).args[0];
+    expect(calledWith.calendarEvent).to.equal(event);
+    expect(calledWith.calendarDate.getTime()).to.equal(date.getTime());
+    expect(calledWith.calendarNewEventStart.getTime()).to.equal(date.getTime());
+    expect(calledWith.calendarNewEventEnd.getTime()).to.equal(moment().add(3, 'days').toDate().getTime());
   });
 
 });
