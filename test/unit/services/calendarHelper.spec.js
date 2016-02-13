@@ -639,6 +639,12 @@ describe('calendarHelper', function() {
   });
 
   describe('formatDate', function() {
+
+    var defaultFormat;
+    beforeEach(function() {
+      defaultFormat = calendarConfig.dateFormatter;
+    });
+
     it('should format a date using angular dateFilter', function() {
       calendarConfig.dateFormatter = 'angular';
       var formattedDate = calendarHelper.formatDate(new Date(), 'yyyy-mm-dd');
@@ -649,6 +655,17 @@ describe('calendarHelper', function() {
       calendarConfig.dateFormatter = 'moment';
       var formattedDate = calendarHelper.formatDate(new Date(), 'YYYY-MM-DD');
       expect(formattedDate).to.equal('2015-10-20');
+    });
+
+    it('should throw an error when given an invalid date formatter', function() {
+      calendarConfig.dateFormatter = 'unknown';
+      expect(function() {
+        calendarHelper.formatDate(new Date(), 'YYYY-MM-DD');
+      }).to.throw();
+    });
+
+    afterEach(function() {
+      calendarConfig.dateFormatter = defaultFormat;
     });
 
   });

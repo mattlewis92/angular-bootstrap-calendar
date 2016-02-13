@@ -146,4 +146,11 @@ describe('mwlCalendarWeek directive', function() {
     });
   });
 
+  it('should allow events to be dropped on days', function() {
+    var event = {startsAt: moment().add(1, 'day').toDate()};
+    MwlCalendarCtrl.weekDragged = sinon.spy();
+    MwlCalendarCtrl.eventDropped(event, new Date());
+    expect(MwlCalendarCtrl.weekDragged).to.have.been.calledWith(event, -1);
+  });
+
 });

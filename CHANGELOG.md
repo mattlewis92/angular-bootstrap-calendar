@@ -1,3 +1,14 @@
+<a name="0.18.8"></a>
+## [0.18.8](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.18.7...v0.18.8) (2016-02-13)
+
+
+### Features
+
+* **dayView:** allow external events to be dropped on the day view ([9b937b1](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/9b937b1)), closes [#284](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/284)
+* **weekView:** allow external events to be dropped on week column headers ([1ea99a3](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/1ea99a3))
+
+
+
 <a name="0.18.7"></a>
 ## [0.18.7](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.18.6...v0.18.7) (2016-02-10)
 

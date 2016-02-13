@@ -4,47 +4,11 @@
 
     <div
       class="row-fluid cal-day-hour-part"
-      ng-click="vm.onTimespanClick({calendarDate: hour.date.toDate()})">
-      <div class="span1 col-xs-1"><strong ng-bind="hour.label"></strong></div>
-      <div class="span11 col-xs-11"></div>
-    </div>
-
-    <div
-      class="row-fluid cal-day-hour-part"
-      ng-click="vm.onTimespanClick({calendarDate: hour.date.clone().add(vm.dayViewSplit, 'minutes').toDate()})">
-      <div class="span1 col-xs-1"></div>
-      <div class="span11 col-xs-11"></div>
-    </div>
-
-    <div
-      class="row-fluid cal-day-hour-part"
-      ng-show="vm.dayViewSplit < 30"
-      ng-click="vm.onTimespanClick({calendarDate: hour.date.clone().add(vm.dayViewSplit * 2, 'minutes').toDate()})">
-      <div class="span1 col-xs-1"></div>
-      <div class="span11 col-xs-11"></div>
-    </div>
-
-    <div
-      class="row-fluid cal-day-hour-part"
-      ng-show="vm.dayViewSplit < 30"
-      ng-click="vm.onTimespanClick({calendarDate: hour.date.clone().add(vm.dayViewSplit * 3, 'minutes').toDate()})">
-      <div class="span1 col-xs-1"></div>
-      <div class="span11 col-xs-11"></div>
-    </div>
-
-    <div
-      class="row-fluid cal-day-hour-part"
-      ng-show="vm.dayViewSplit < 15"
-      ng-click="vm.onTimespanClick({calendarDate: hour.date.clone().add(vm.dayViewSplit * 4, 'minutes').toDate()})">
-      <div class="span1 col-xs-1"></div>
-      <div class="span11 col-xs-11"></div>
-    </div>
-
-    <div
-      class="row-fluid cal-day-hour-part"
-      ng-show="vm.dayViewSplit < 15"
-      ng-click="vm.onTimespanClick({calendarDate: hour.date.clone().add(vm.dayViewSplit * 5, 'minutes').toDate()})">
-      <div class="span1 col-xs-1"></div>
+      ng-repeat="chunk in vm.hourChunks track by chunk"
+      ng-click="vm.onTimespanClick({calendarDate: hour.date.clone().add(vm.dayViewSplit * $index, 'minutes').toDate()})"
+      mwl-droppable
+      on-drop="vm.eventDropped(dropData.event, hour.date.clone().add(vm.dayViewSplit * $index, 'minutes').toDate())">
+      <div class="span1 col-xs-1"><strong ng-bind="hour.label" ng-show="$first"></strong></div>
       <div class="span11 col-xs-11"></div>
     </div>
 
