@@ -25,6 +25,10 @@ angular
         });
         dayCounter.add(1, 'hour');
       }
+      vm.hourChunks = [];
+      for (var j = 0; j < (60 / vm.dayViewSplit); j++) {
+        vm.hourChunks.push(j);
+      }
     }
 
     var originalLocale = moment.locale();
