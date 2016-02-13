@@ -3,7 +3,7 @@
 var angular = require('angular'),
   moment = require('moment');
 
-describe('mwlCalendarDay directive', function() {
+describe('mwlCalendarHourList directive', function() {
   var MwlCalendarCtrl,
     element,
     scope,
@@ -69,7 +69,7 @@ describe('mwlCalendarDay directive', function() {
     var date = moment().add(2, 'days').toDate();
     MwlCalendarCtrl.onEventTimesChanged = sinon.spy();
     MwlCalendarCtrl.eventDropped(event, date);
-    expect(MwlCalendarCtrl.onEventTimesChanged).to.have.been.calledWith({
+    expect(MwlCalendarCtrl.onEventTimesChanged.getCall(0).args[0]).to.deep.equal({
       calendarEvent: event,
       calendarDate: date,
       calendarNewEventStart: date,
