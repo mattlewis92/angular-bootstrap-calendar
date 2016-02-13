@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-calendar - A pure AngularJS bootstrap themed responsive calendar that can display events and has views for year, month, week and day
- * @version v0.18.7
+ * @version v0.18.8
  * @link https://github.com/mattlewis92/angular-bootstrap-calendar
  * @license MIT
  */
@@ -452,6 +452,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        });
 	        dayCounter.add(1, 'hour');
 	      }
+	      vm.hourChunks = [];
+	      for (var j = 0; j < (60 / vm.dayViewSplit); j++) {
+	        vm.hourChunks.push(j);
+	      }
 	    }
 
 	    var originalLocale = moment.locale();
@@ -474,6 +478,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	      updateDays();
 	    });
 
+	    vm.eventDropped = function(event, date) {
+	      var newStart = moment(date);
+	      var newEnd = calendarHelper.adjustEndDateFromStartDiff(event.startsAt, newStart, event.endsAt);
+
+	      vm.onEventTimesChanged({
+	        calendarEvent: event,
+	        calendarDate: date,
+	        calendarNewEventStart: newStart.toDate(),
+	        calendarNewEventEnd: newEnd ? newEnd.toDate() : null
+	      });
+	    };
+
 	  }])
 	  .directive('mwlCalendarHourList', ["calendarConfig", function(calendarConfig) {
 
@@ -486,7 +502,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        dayViewStart: '=',
 	        dayViewEnd: '=',
 	        dayViewSplit: '=',
-	        onTimespanClick: '='
+	        onTimespanClick: '=',
+	        onEventTimesChanged: '='
 	      },
 	      bindToController: true
 	    };
@@ -727,6 +744,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        calendarNewEventStart: newStart.toDate(),
 	        calendarNewEventEnd: event.endsAt ? newEnd.toDate() : null
 	      });
+	    };
+
+	    vm.eventDropped = function(event, date) {
+	      var daysDiff = moment(date).diff(moment(event.startsAt), 'days');
+	      vm.weekDragged(event, daysDiff);
 	    };
 
 	    vm.weekResized = function(event, edge, daysDiff) {
@@ -1578,6 +1600,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return dateFilter(moment(date).toDate(), format);
 	      } else if (calendarConfig.dateFormatter === 'moment') {
 	        return moment(date).format(format);
+	      } else {
+	        throw new Error('Unknown date formatter: ' + calendarConfig.dateFormatter);
 	      }
 	    }
 
@@ -1773,7 +1797,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var eventStart = eventPeriod.start;
 	        var eventEnd = eventPeriod.end;
 
-	        var offset, span;
+	        var offset;
 	        if (eventStart.isBefore(weekViewStart) || eventStart.isSame(weekViewStart)) {
 	          offset = 0;
 	        } else {
@@ -1788,9 +1812,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          eventStart = weekViewStart;
 	        }
 
-	        span = moment(eventEnd).diff(eventStart, 'days') + 1;
-
-	        event.daySpan = span;
+	        event.daySpan = moment(eventEnd).diff(eventStart, 'days') + 1;
 	        event.dayOffset = offset;
 
 	        return event;
