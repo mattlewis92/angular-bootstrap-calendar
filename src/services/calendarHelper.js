@@ -11,6 +11,8 @@ angular
         return dateFilter(moment(date).toDate(), format);
       } else if (calendarConfig.dateFormatter === 'moment') {
         return moment(date).format(format);
+      } else {
+        throw new Error('Unknown date formatter: ' + calendarConfig.dateFormatter);
       }
     }
 
