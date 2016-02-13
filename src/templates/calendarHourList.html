@@ -5,7 +5,9 @@
     <div
       class="row-fluid cal-day-hour-part"
       ng-repeat="chunk in vm.hourChunks track by chunk"
-      ng-click="vm.onTimespanClick({calendarDate: hour.date.clone().add(vm.dayViewSplit * $index, 'minutes').toDate()})">
+      ng-click="vm.onTimespanClick({calendarDate: hour.date.clone().add(vm.dayViewSplit * $index, 'minutes').toDate()})"
+      mwl-droppable
+      on-drop="vm.eventDropped(dropData.event, hour.date.clone().add(vm.dayViewSplit * $index, 'minutes').toDate())">
       <div class="span1 col-xs-1"><strong ng-bind="hour.label" ng-show="$first"></strong></div>
       <div class="span11 col-xs-11"></div>
     </div>

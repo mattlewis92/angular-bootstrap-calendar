@@ -15,6 +15,7 @@ describe('mwlCalendarDay directive', function() {
         'day-view-start="dayViewStart" ' +
         'day-view-end="dayViewEnd" ' +
         'day-view-split="dayViewSplit || 30" ' +
+        'on-event-times-changed="eventDropped(calendarEvent, calendarDate, calendarNewEventStart, calendarNewEventEnd)" ' +
       '></mwl-calendar-hour-list>';
 
   function prepareScope(vm) {
@@ -58,6 +59,22 @@ describe('mwlCalendarDay directive', function() {
     scope.$broadcast('calendar.refreshView');
     expect(MwlCalendarCtrl.hours.length).to.equal(23);
     moment.locale.restore();
+  });
+
+  it('should call the event times changed callback when an event is dropped', function() {
+    var event = {
+      startsAt: moment().toDate(),
+      endsAt: moment().add(1, 'day').toDate()
+    };
+    var date = moment().add(2, 'days').toDate();
+    MwlCalendarCtrl.onEventTimesChanged = sinon.spy();
+    MwlCalendarCtrl.eventDropped(event, date);
+    expect(MwlCalendarCtrl.onEventTimesChanged).to.have.been.calledWith({
+      calendarEvent: event,
+      calendarDate: date,
+      calendarNewEventStart: date,
+      calendarNewEventEnd: moment().add(3, 'days').toDate()
+    });
   });
 
 });

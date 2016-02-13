@@ -51,6 +51,18 @@ angular
       updateDays();
     });
 
+    vm.eventDropped = function(event, date) {
+      var newStart = moment(date);
+      var newEnd = calendarHelper.adjustEndDateFromStartDiff(event.startsAt, newStart, event.endsAt);
+
+      vm.onEventTimesChanged({
+        calendarEvent: event,
+        calendarDate: date,
+        calendarNewEventStart: newStart.toDate(),
+        calendarNewEventEnd: newEnd ? newEnd.toDate() : null
+      });
+    };
+
   })
   .directive('mwlCalendarHourList', function(calendarConfig) {
 
@@ -63,7 +75,8 @@ angular
         dayViewStart: '=',
         dayViewEnd: '=',
         dayViewSplit: '=',
-        onTimespanClick: '='
+        onTimespanClick: '=',
+        onEventTimesChanged: '='
       },
       bindToController: true
     };
