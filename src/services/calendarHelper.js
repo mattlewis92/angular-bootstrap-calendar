@@ -208,7 +208,7 @@ angular
         var eventStart = eventPeriod.start;
         var eventEnd = eventPeriod.end;
 
-        var offset, span;
+        var offset;
         if (eventStart.isBefore(weekViewStart) || eventStart.isSame(weekViewStart)) {
           offset = 0;
         } else {
@@ -223,9 +223,7 @@ angular
           eventStart = weekViewStart;
         }
 
-        span = moment(eventEnd).diff(eventStart, 'days') + 1;
-
-        event.daySpan = span;
+        event.daySpan = moment(eventEnd).diff(eventStart, 'days') + 1;
         event.dayOffset = offset;
 
         return event;
