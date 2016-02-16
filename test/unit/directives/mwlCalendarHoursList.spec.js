@@ -10,6 +10,7 @@ describe('mwlCalendarHourList directive', function() {
     $rootScope,
     directiveScope,
     showModal,
+    clock,
     template =
       '<mwl-calendar-hour-list ' +
         'day-view-start="dayViewStart" ' +
@@ -38,6 +39,7 @@ describe('mwlCalendarHourList directive', function() {
   beforeEach(angular.mock.module('mwl.calendar'));
 
   beforeEach(angular.mock.inject(function($compile, _$rootScope_) {
+    clock = sinon.useFakeTimers(new Date('October 20, 2015 11:10:00').getTime());
     $rootScope = _$rootScope_;
     scope = $rootScope.$new();
     prepareScope(scope);
@@ -47,6 +49,10 @@ describe('mwlCalendarHourList directive', function() {
     directiveScope = element.isolateScope();
     MwlCalendarCtrl = directiveScope.vm;
   }));
+
+  afterEach(function() {
+    clock.restore();
+  });
 
   it('should define a list of hours', function() {
     expect(MwlCalendarCtrl.hours.length).to.equal(17);
