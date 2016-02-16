@@ -1,3 +1,13 @@
+<a name="0.18.9"></a>
+## [0.18.9](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.18.8...v0.18.9) (2016-02-16)
+
+
+### Bug Fixes
+
+* **resizeable:** dont allow events to be resized to 0 height or width ([df410ae](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/df410ae)), closes [#287](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/287)
+
+
+
 <a name="0.18.8"></a>
 ## [0.18.8](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.18.7...v0.18.8) (2016-02-13)
 

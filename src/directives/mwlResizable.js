@@ -64,7 +64,7 @@ angular
       },
       onmove: function(event) {
 
-        if (canResize()) {
+        if (canResize() && event.rect.width > 0 && event.rect.height > 0) {
           var elm = angular.element(event.target);
           var x = parseFloat(elm.data('x') || 0);
           var y = parseFloat(elm.data('y') || 0);
