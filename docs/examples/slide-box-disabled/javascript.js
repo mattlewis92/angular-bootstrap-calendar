@@ -6,16 +6,14 @@ angular
 
     vm.events = [
       {
-        title: 'Increments the badge total on the day cell',
+        title: 'Event 1',
         type: 'warning',
-        startsAt: moment().startOf('month').toDate(),
-        incrementsBadgeTotal: true
+        startsAt: moment().startOf('month').toDate()
       },
       {
-        title: 'Does not increment the badge total ',
+        title: 'Event 2',
         type: 'info',
-        startsAt: moment().startOf('month').toDate(),
-        incrementsBadgeTotal: false
+        startsAt: moment().startOf('month').toDate()
       }
     ];
 
