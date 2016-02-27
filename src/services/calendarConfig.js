@@ -50,8 +50,6 @@ angular
     showTimesOnWeekView: false,
     displayAllMonthEvents: false,
     i18nStrings: {
-      eventsLabel: 'Events',
-      timeLabel: 'Time',
       weekNumber: 'Week {week}'
     },
     templates: {}

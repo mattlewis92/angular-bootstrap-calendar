@@ -207,7 +207,7 @@ angular.module('myModule')
 
     calendarConfig.allDateFormats.moment.title.day = 'ddd D MMM'; //this will configure the day view title to be shorter
 
-    calendarConfig.i18nStrings.eventsLabel = 'Events'; //This will set the events label on the day view
+    calendarConfig.i18nStrings.weekNumber = 'Week {week}'; //This will set the week number hover label on the month view
 
     calendarConfig.displayAllMonthEvents = true; //This will display all events on a month view even if they're not in the current month. Default false.
 
