@@ -4,7 +4,7 @@ var angular = require('angular');
 
 angular
   .module('mwl.calendar')
-  .controller('MwlCalendarHourListCtrl', function($scope, moment, calendarConfig, calendarHelper) {
+  .controller('MwlCalendarHourListCtrl', function($scope, $attrs, moment, calendarConfig, calendarHelper) {
     var vm = this;
     var dayViewStart, dayViewEnd;
 
@@ -14,10 +14,17 @@ angular
       vm.dayViewSplit = parseInt(vm.dayViewSplit);
       vm.hours = [];
       var dayCounter = moment(vm.viewDate)
-        .clone()
+        .clone();
+
+      if ($attrs.dayWidth) {
+        dayCounter = dayCounter.startOf('week');
+      }
+
+      dayCounter
         .hours(dayViewStart.hours())
         .minutes(dayViewStart.minutes())
         .seconds(dayViewStart.seconds());
+
       for (var i = 0; i <= dayViewEnd.diff(dayViewStart, 'hours'); i++) {
         vm.hours.push({
           label: calendarHelper.formatDate(dayCounter, calendarConfig.dateFormats.hour),
@@ -63,6 +70,10 @@ angular
       });
     };
 
+    vm.getClickedDate = function(baseDate, minutes, days) {
+      return moment(baseDate).clone().add(minutes, 'minutes').add(days || 0, 'days').toDate();
+    };
+
   })
   .directive('mwlCalendarHourList', function(calendarConfig) {
 
@@ -75,6 +86,7 @@ angular
         dayViewStart: '=',
         dayViewEnd: '=',
         dayViewSplit: '=',
+        dayWidth: '=?',
         onTimespanClick: '=',
         onEventTimesChanged: '='
       },

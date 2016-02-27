@@ -128,6 +128,7 @@ angular
         editEventHtml: '=?',
         deleteEventHtml: '=?',
         cellIsOpen: '=?',
+        slideBoxDisabled: '=?',
         onEventClick: '&',
         onEventTimesChanged: '&',
         onEditEventClick: '&',

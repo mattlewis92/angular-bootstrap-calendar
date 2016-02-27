@@ -10,8 +10,6 @@ angular
 
     calendarConfig.dateFormatter = 'moment'; // use moment instead of angular for formatting dates
     var originali18n = angular.copy(calendarConfig.i18nStrings);
-    calendarConfig.i18nStrings.eventsLabel = 'Des événements';
-    calendarConfig.i18nStrings.timeLabel = 'Temps';
     calendarConfig.i18nStrings.weekNumber = 'Semaine {week}';
 
     $window.moment = $window.moment || moment;

@@ -34,6 +34,7 @@
       day-view-start="vm.dayViewStart"
       day-view-end="vm.dayViewEnd"
       day-view-split="vm.dayViewSplit"
+      day-width="vm.dayColumnDimensions.width"
       view-date="vm.viewDate"
       on-timespan-click="vm.onTimespanClick"
       ng-if="vm.showTimes">
@@ -42,7 +43,7 @@
     <div class="row">
       <div class="col-xs-12">
         <div
-          class="cal-row-fluid "
+          class="cal-row-fluid"
           ng-repeat="event in vm.view.events track by event.$id">
           <div
             ng-class="'cal-cell' + (vm.showTimes ? 1 : event.daySpan) + (vm.showTimes ? '' : ' cal-offset' + event.dayOffset) + ' day-highlight dh-event-' + event.type + ' ' + event.cssClass"

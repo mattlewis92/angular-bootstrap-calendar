@@ -4,11 +4,10 @@ var angular = require('angular');
 
 angular
   .module('mwl.calendar')
-  .controller('MwlCalendarDayCtrl', function($scope, $sce, moment, calendarHelper, calendarConfig) {
+  .controller('MwlCalendarDayCtrl', function($scope, $sce, moment, calendarHelper) {
 
     var vm = this;
 
-    vm.calendarConfig = calendarConfig;
     vm.$sce = $sce;
 
     $scope.$on('calendar.refreshView', function() {

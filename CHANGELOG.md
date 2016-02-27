@@ -1,3 +1,23 @@
+<a name="0.19.0"></a>
+# [0.19.0](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.18.9...v0.19.0) (2016-02-27)
+
+
+### Bug Fixes
+
+* **weekViewWithTimes:** ensure `on-timespan-click` is called with the correct date ([66277a1](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/66277a1)), closes [#291](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/291)
+
+### Features
+
+* **dayView:** remove the day view column header ([e624c68](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/e624c68)), closes [#293](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/293)
+* **slide-box-disabled:** add new option to disable the slidebox on the month and year views ([da92130](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/da92130)), closes [#292](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/292)
+
+
+### BREAKING CHANGES
+
+* dayView: the day view column header has been removed
+
+
+
 <a name="0.18.9"></a>
 ## [0.18.9](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.18.8...v0.18.9) (2016-02-16)
 

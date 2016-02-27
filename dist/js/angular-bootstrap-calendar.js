@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-calendar - A pure AngularJS bootstrap themed responsive calendar that can display events and has views for year, month, week and day
- * @version v0.18.9
+ * @version v0.19.0
  * @link https://github.com/mattlewis92/angular-bootstrap-calendar
  * @license MIT
  */
@@ -301,6 +301,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        editEventHtml: '=?',
 	        deleteEventHtml: '=?',
 	        cellIsOpen: '=?',
+	        slideBoxDisabled: '=?',
 	        onEventClick: '&',
 	        onEventTimesChanged: '&',
 	        onEditEventClick: '&',
@@ -329,11 +330,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	angular
 	  .module('mwl.calendar')
-	  .controller('MwlCalendarDayCtrl', ["$scope", "$sce", "moment", "calendarHelper", "calendarConfig", function($scope, $sce, moment, calendarHelper, calendarConfig) {
+	  .controller('MwlCalendarDayCtrl', ["$scope", "$sce", "moment", "calendarHelper", function($scope, $sce, moment, calendarHelper) {
 
 	    var vm = this;
 
-	    vm.calendarConfig = calendarConfig;
 	    vm.$sce = $sce;
 
 	    $scope.$on('calendar.refreshView', function() {
@@ -431,7 +431,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	angular
 	  .module('mwl.calendar')
-	  .controller('MwlCalendarHourListCtrl', ["$scope", "moment", "calendarConfig", "calendarHelper", function($scope, moment, calendarConfig, calendarHelper) {
+	  .controller('MwlCalendarHourListCtrl', ["$scope", "$attrs", "moment", "calendarConfig", "calendarHelper", function($scope, $attrs, moment, calendarConfig, calendarHelper) {
 	    var vm = this;
 	    var dayViewStart, dayViewEnd;
 
@@ -441,10 +441,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	      vm.dayViewSplit = parseInt(vm.dayViewSplit);
 	      vm.hours = [];
 	      var dayCounter = moment(vm.viewDate)
-	        .clone()
+	        .clone();
+
+	      if ($attrs.dayWidth) {
+	        dayCounter = dayCounter.startOf('week');
+	      }
+
+	      dayCounter
 	        .hours(dayViewStart.hours())
 	        .minutes(dayViewStart.minutes())
 	        .seconds(dayViewStart.seconds());
+
 	      for (var i = 0; i <= dayViewEnd.diff(dayViewStart, 'hours'); i++) {
 	        vm.hours.push({
 	          label: calendarHelper.formatDate(dayCounter, calendarConfig.dateFormats.hour),
@@ -490,6 +497,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      });
 	    };
 
+	    vm.getClickedDate = function(baseDate, minutes, days) {
+	      return moment(baseDate).clone().add(minutes, 'minutes').add(days || 0, 'days').toDate();
+	    };
+
 	  }])
 	  .directive('mwlCalendarHourList', ["calendarConfig", function(calendarConfig) {
 
@@ -502,6 +513,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        dayViewStart: '=',
 	        dayViewEnd: '=',
 	        dayViewSplit: '=',
+	        dayWidth: '=?',
 	        onTimespanClick: '=',
 	        onEventTimesChanged: '='
 	      },
@@ -625,7 +637,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        deleteEventHtml: '=',
 	        cellIsOpen: '=',
 	        onTimespanClick: '=',
-	        cellModifier: '='
+	        cellModifier: '=',
+	        slideBoxDisabled: '='
 	      },
 	      controller: 'MwlCalendarMonthCtrl as vm',
 	      link: function(scope, element, attrs, calendarCtrl) {
@@ -887,7 +900,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        deleteEventHtml: '=',
 	        cellIsOpen: '=',
 	        onTimespanClick: '=',
-	        cellModifier: '='
+	        cellModifier: '=',
+	        slideBoxDisabled: '='
 	      },
 	      controller: 'MwlCalendarYearCtrl as vm',
 	      link: function(scope, element, attrs, calendarCtrl) {
@@ -1575,8 +1589,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    showTimesOnWeekView: false,
 	    displayAllMonthEvents: false,
 	    i18nStrings: {
-	      eventsLabel: 'Events',
-	      timeLabel: 'Time',
 	      weekNumber: 'Week {week}'
 	    },
 	    templates: {}
