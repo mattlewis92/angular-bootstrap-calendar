@@ -1,0 +1,9 @@
+<div ng-controller="SlideBoxDisabledCtrl as vm">
+  <ng-include src="'calendarControls.html'"></ng-include>
+  <mwl-calendar
+    events="vm.events"
+    view="vm.calendarView"
+    view-date="vm.viewDate"
+    slide-box-disabled="true">
+  </mwl-calendar>
+</div>

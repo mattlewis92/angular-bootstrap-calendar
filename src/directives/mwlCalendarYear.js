@@ -80,7 +80,8 @@ angular
         deleteEventHtml: '=',
         cellIsOpen: '=',
         onTimespanClick: '=',
-        cellModifier: '='
+        cellModifier: '=',
+        slideBoxDisabled: '='
       },
       controller: 'MwlCalendarYearCtrl as vm',
       link: function(scope, element, attrs, calendarCtrl) {

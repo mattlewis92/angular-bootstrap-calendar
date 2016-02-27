@@ -189,6 +189,10 @@ An optional expression that is evaluated when the view is changed by clicking on
 
 An optional expression that is evaluated on each cell generated for the year and month views. `calendarCell` can be used in the expression and is an object containing the current cell data which you can modify (see the `calendarHelper` service source code or just console.log it to see what data is available). If you add the `cssClass` property it will be applied to the cell.
 
+### slide-box-disabled
+
+If set it true it will disable the slidebox on the month and year views
+
 ## Configuring the calendar default config
 
 You can easily customise the date formats and i18n strings used throughout the calendar by using the `calendarConfig` value. Please note that these example formats are those used by moment.js and these won't work if using angular as the date formatter. Example usage:
