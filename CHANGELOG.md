@@ -1,3 +1,13 @@
+<a name="0.19.1"></a>
+## [0.19.1](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.19.0...v0.19.1) (2016-02-29)
+
+
+### Bug Fixes
+
+* **monthView:** get the correct week number on hover of the month view week ([dac97e7](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/dac97e7)), closes [#298](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/298)
+
+
+
 <a name="0.19.0"></a>
 # [0.19.0](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.18.9...v0.19.0) (2016-02-27)
 
