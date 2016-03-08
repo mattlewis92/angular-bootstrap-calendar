@@ -1,3 +1,13 @@
+<a name="0.19.2"></a>
+## [0.19.2](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.19.1...v0.19.2) (2016-03-08)
+
+
+### Bug Fixes
+
+* **recursOn:** allow recursOn to be an empty string ([4bbde4e](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/4bbde4e)), closes [#300](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/300)
+
+
+
 <a name="0.19.1"></a>
 ## [0.19.1](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.19.0...v0.19.1) (2016-02-29)
 
