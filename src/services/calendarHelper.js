@@ -30,7 +30,7 @@ angular
       var eventEnd = moment(eventPeriod.end);
       var periodStart = moment(containerPeriodStart);
 
-      if (angular.isDefined(recursOn)) {
+      if (recursOn) {
 
         switch (recursOn) {
           case 'year':

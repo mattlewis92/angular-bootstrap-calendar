@@ -135,6 +135,18 @@ describe('calendarHelper', function() {
 
     });
 
+    it('should not throw an error when recursOn is an empty string', function() {
+
+      expect(function() {
+        calendarHelper.eventIsInPeriod({
+          startsAt: new Date(),
+          endsAt: new Date(),
+          recursOn: ''
+        }, periodStart, periodEnd);
+      }).not.to.throw();
+
+    });
+
     it('should use the event start time as the end time when no end time is passed', function() {
 
       var isInPeriod = calendarHelper.eventIsInPeriod({
