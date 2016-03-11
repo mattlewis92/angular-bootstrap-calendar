@@ -521,6 +521,9 @@ describe('calendarHelper', function() {
       }, {
         startsAt: new Date('October 20, 2015 11:00:00'),
         endsAt: new Date('October 20, 2015 12:00:00')
+      }, {
+        startsAt: new Date('October 20, 2015 22:00:00'),
+        endsAt: new Date('October 20, 2015 23:30:00')
       }];
 
       dayView = calendarHelper.getDayView(
@@ -550,6 +553,10 @@ describe('calendarHelper', function() {
 
     it('should set the height correctly if the event finishes before the end of the day', function() {
       expect(dayView[2].height).to.equal(60);
+    });
+
+    it('should set the height correctly of events that finish within an hour after the day view end', function() {
+      expect(dayView[3].height).to.equal(90);
     });
 
     it('should never exceed the maximum height of the calendar', function() {

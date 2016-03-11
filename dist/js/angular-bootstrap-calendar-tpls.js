@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-calendar - A pure AngularJS bootstrap themed responsive calendar that can display events and has views for year, month, week and day
- * @version v0.19.2
+ * @version v0.19.3
  * @link https://github.com/mattlewis92/angular-bootstrap-calendar
  * @license MIT
  */
@@ -1923,7 +1923,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var dayEndHour = moment(dayViewEnd || '23:00', 'HH:mm').hours();
 	      var hourHeight = (60 / dayViewSplit) * 30;
 	      var calendarStart = moment(viewDate).startOf('day').add(dayStartHour, 'hours');
-	      var calendarEnd = moment(viewDate).startOf('day').add(dayEndHour, 'hours');
+	      var calendarEnd = moment(viewDate).startOf('day').add(dayEndHour + 1, 'hours');
 	      var calendarHeight = (dayEndHour - dayStartHour + 1) * hourHeight;
 	      var hourHeightMultiplier = hourHeight / 60;
 	      var buckets = [];
@@ -1950,7 +1950,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          if (!event.endsAt) {
 	            event.height = 30;
 	          } else {
-	            event.height = moment(event.endsAt || event.startsAt).diff(diffStart, 'minutes') * hourHeightMultiplier;
+	            event.height = moment(event.endsAt).diff(moment(diffStart), 'minutes') * hourHeightMultiplier;
 	          }
 	        }
 

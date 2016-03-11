@@ -239,7 +239,7 @@ angular
       var dayEndHour = moment(dayViewEnd || '23:00', 'HH:mm').hours();
       var hourHeight = (60 / dayViewSplit) * 30;
       var calendarStart = moment(viewDate).startOf('day').add(dayStartHour, 'hours');
-      var calendarEnd = moment(viewDate).startOf('day').add(dayEndHour, 'hours');
+      var calendarEnd = moment(viewDate).startOf('day').add(dayEndHour + 1, 'hours');
       var calendarHeight = (dayEndHour - dayStartHour + 1) * hourHeight;
       var hourHeightMultiplier = hourHeight / 60;
       var buckets = [];
@@ -266,7 +266,7 @@ angular
           if (!event.endsAt) {
             event.height = 30;
           } else {
-            event.height = moment(event.endsAt || event.startsAt).diff(diffStart, 'minutes') * hourHeightMultiplier;
+            event.height = moment(event.endsAt).diff(moment(diffStart), 'minutes') * hourHeightMultiplier;
           }
         }
 
