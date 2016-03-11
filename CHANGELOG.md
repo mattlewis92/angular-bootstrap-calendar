@@ -1,3 +1,13 @@
+<a name="0.19.3"></a>
+## [0.19.3](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.19.2...v0.19.3) (2016-03-11)
+
+
+### Bug Fixes
+
+* **dayView:** correctly display events that finish within 1 hour after the day view end ([3fc4104](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/3fc4104)), closes [#302](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/302)
+
+
+
 <a name="0.19.2"></a>
 ## [0.19.2](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.19.1...v0.19.2) (2016-03-08)
 
