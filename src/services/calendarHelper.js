@@ -266,7 +266,7 @@ angular
           if (!event.endsAt) {
             event.height = 30;
           } else {
-            event.height = moment(event.endsAt || event.startsAt).diff(diffStart, 'minutes') * hourHeightMultiplier;
+            event.height = moment(event.endsAt).diff(moment(diffStart), 'minutes') * hourHeightMultiplier;
           }
         }
 
