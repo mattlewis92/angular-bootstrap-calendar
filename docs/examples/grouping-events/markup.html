@@ -1,0 +1,35 @@
+<script id="groupedMonthEvents.html" type="text/ng-template">
+  <div class="cal-month-day">
+
+    <span
+      class="pull-right"
+      data-cal-date
+      ng-click="vm.calendarCtrl.dateClicked(day.date)"
+      ng-bind="day.label">
+    </span>
+
+    <div style="position: relative; top: 35px; left: 5px">
+      <span ng-repeat="(type, events) in day.groups track by type">
+        <span class="label label-{{ type }}">
+          {{ events.length }}
+        </span>&nbsp;
+      </span>
+    </div>
+
+    <div class="cal-day-tick" ng-show="dayIndex === vm.openDayIndex && vm.view[vm.openDayIndex].events.length > 0 && !vm.slideBoxDisabled">
+      <i class="glyphicon glyphicon-chevron-up"></i>
+      <i class="fa fa-chevron-up"></i>
+    </div>
+
+  </div>
+</script>
+<div ng-controller="GroupingEventsCtrl as vm">
+  <ng-include src="'calendarControls.html'"></ng-include>
+  <mwl-calendar
+    events="vm.events"
+    view="vm.calendarView"
+    view-date="vm.viewDate"
+    cell-is-open="vm.isCellOpen"
+    cell-modifier="vm.groupEvents(calendarCell)">
+  </mwl-calendar>
+</div>
