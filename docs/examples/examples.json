@@ -58,4 +58,7 @@
 }, {
   "key": "slide-box-disabled",
   "label": "Disable the slidebox"
+}, {
+  "key": "grouping-events",
+  "label": "Group month view events"
 }]
