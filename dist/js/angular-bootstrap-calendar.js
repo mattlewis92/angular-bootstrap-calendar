@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-calendar - A pure AngularJS bootstrap themed responsive calendar that can display events and has views for year, month, week and day
- * @version v0.19.3
+ * @version v0.19.4
  * @link https://github.com/mattlewis92/angular-bootstrap-calendar
  * @license MIT
  */
@@ -1029,10 +1029,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        .css('transform', transformValue);
 	    }
 
-	    function canDrag() {
-	      return $parse($attrs.mwlDraggable)($scope);
-	    }
-
 	    function getUnitsMoved(x, y, gridDimensions) {
 
 	      var result = {x: x, y: y};
@@ -1052,74 +1048,74 @@ return /******/ (function(modules) { // webpackBootstrap
 	    interact($element[0]).draggable({
 	      snap: snap,
 	      onstart: function(event) {
-	        if (canDrag()) {
-	          angular.element(event.target).addClass('dragging-active');
-	          event.target.dropData = $parse($attrs.dropData)($scope);
-	          event.target.style.pointerEvents = 'none';
-	          if ($attrs.onDragStart) {
-	            $parse($attrs.onDragStart)($scope);
-	            $scope.$apply();
-	          }
+	        angular.element(event.target).addClass('dragging-active');
+	        event.target.dropData = $parse($attrs.dropData)($scope);
+	        event.target.style.pointerEvents = 'none';
+	        if ($attrs.onDragStart) {
+	          $parse($attrs.onDragStart)($scope);
+	          $scope.$apply();
 	        }
 	      },
 	      onmove: function(event) {
 
-	        if (canDrag()) {
-	          var elm = angular.element(event.target);
-	          var x = (parseFloat(elm.attr('data-x')) || 0) + (event.dx || 0);
-	          var y = (parseFloat(elm.attr('data-y')) || 0) + (event.dy || 0);
+	        var elm = angular.element(event.target);
+	        var x = (parseFloat(elm.attr('data-x')) || 0) + (event.dx || 0);
+	        var y = (parseFloat(elm.attr('data-y')) || 0) + (event.dy || 0);
 
-	          switch ($parse($attrs.axis)($scope)) {
-	            case 'x':
-	              y = 0;
-	              break;
+	        switch ($parse($attrs.axis)($scope)) {
+	          case 'x':
+	            y = 0;
+	            break;
 
-	            case 'y':
-	              x = 0;
-	              break;
+	          case 'y':
+	            x = 0;
+	            break;
 
-	            default:
-	          }
+	          default:
+	        }
 
-	          if ($window.getComputedStyle(elm[0]).position === 'static') {
-	            elm.css('position', 'relative');
-	          }
+	        if ($window.getComputedStyle(elm[0]).position === 'static') {
+	          elm.css('position', 'relative');
+	        }
 
-	          translateElement(elm, 'translate(' + x + 'px, ' + y + 'px)')
-	            .css('z-index', 50)
-	            .attr('data-x', x)
-	            .attr('data-y', y);
+	        translateElement(elm, 'translate(' + x + 'px, ' + y + 'px)')
+	          .css('z-index', 50)
+	          .attr('data-x', x)
+	          .attr('data-y', y);
 
-	          if ($attrs.onDrag) {
-	            $parse($attrs.onDrag)($scope, getUnitsMoved(x, y, snapGridDimensions));
-	            $scope.$apply();
-	          }
+	        if ($attrs.onDrag) {
+	          $parse($attrs.onDrag)($scope, getUnitsMoved(x, y, snapGridDimensions));
+	          $scope.$apply();
 	        }
 
 	      },
 	      onend: function(event) {
 
-	        if (canDrag()) {
-	          var elm = angular.element(event.target);
-	          var x = elm.attr('data-x');
-	          var y = elm.attr('data-y');
+	        var elm = angular.element(event.target);
+	        var x = elm.attr('data-x');
+	        var y = elm.attr('data-y');
 
-	          event.target.style.pointerEvents = 'auto';
-	          if ($attrs.onDragEnd) {
-	            $parse($attrs.onDragEnd)($scope, getUnitsMoved(x, y, snapGridDimensions));
-	            $scope.$apply();
-	          }
-
-	          $timeout(function() {
-	            translateElement(elm, '')
-	              .css('z-index', 'auto')
-	              .removeAttr('data-x')
-	              .removeAttr('data-y')
-	              .removeClass('dragging-active');
-	          });
+	        event.target.style.pointerEvents = 'auto';
+	        if ($attrs.onDragEnd) {
+	          $parse($attrs.onDragEnd)($scope, getUnitsMoved(x, y, snapGridDimensions));
+	          $scope.$apply();
 	        }
 
+	        $timeout(function() {
+	          translateElement(elm, '')
+	            .css('z-index', 'auto')
+	            .removeAttr('data-x')
+	            .removeAttr('data-y')
+	            .removeClass('dragging-active');
+	        });
+
 	      }
+	    });
+
+	    $scope.$watch($attrs.mwlDraggable, function(enabled) {
+	      interact($element[0]).draggable({
+	        enabled: enabled
+	      });
 	    });
 
 	    $scope.$on('$destroy', function() {
@@ -1153,15 +1149,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return;
 	    }
 
+	    var DROP_ACTIVE_CLASS = $attrs.dropActiveClass || 'drop-active';
+
 	    interact($element[0]).dropzone({
 	      ondragenter: function(event) {
-	        angular.element(event.target).addClass('drop-active');
+	        angular.element(event.target).addClass(DROP_ACTIVE_CLASS);
 	      },
 	      ondragleave: function(event) {
-	        angular.element(event.target).removeClass('drop-active');
+	        angular.element(event.target).removeClass(DROP_ACTIVE_CLASS);
 	      },
 	      ondropdeactivate: function(event) {
-	        angular.element(event.target).removeClass('drop-active');
+	        angular.element(event.target).removeClass(DROP_ACTIVE_CLASS);
 	      },
 	      ondrop: function(event) {
 	        if (event.relatedTarget.dropData) {
@@ -1244,10 +1242,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var originalDimensionsStyle = {};
 	    var resizeEdge;
 
-	    function canResize() {
-	      return $parse($attrs.mwlResizable)($scope);
-	    }
-
 	    function getUnitsResized(edge, elm, gridDimensions) {
 	      var unitsResized = {};
 	      unitsResized.edge = edge;
@@ -1272,19 +1266,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	      snap: snap,
 	      onstart: function(event) {
 
-	        if (canResize()) {
-	          resizeEdge = 'end';
-	          var elm = angular.element(event.target);
-	          originalDimensions.height = elm[0].offsetHeight;
-	          originalDimensions.width = elm[0].offsetWidth;
-	          originalDimensionsStyle.height = elm.css('height');
-	          originalDimensionsStyle.width = elm.css('width');
-	        }
+	        resizeEdge = 'end';
+	        var elm = angular.element(event.target);
+	        originalDimensions.height = elm[0].offsetHeight;
+	        originalDimensions.width = elm[0].offsetWidth;
+	        originalDimensionsStyle.height = elm.css('height');
+	        originalDimensionsStyle.width = elm.css('width');
 
 	      },
 	      onmove: function(event) {
 
-	        if (canResize() && event.rect.width > 0 && event.rect.height > 0) {
+	        if (event.rect.width > 0 && event.rect.height > 0) {
 	          var elm = angular.element(event.target);
 	          var x = parseFloat(elm.data('x') || 0);
 	          var y = parseFloat(elm.data('y') || 0);
@@ -1317,29 +1309,32 @@ return /******/ (function(modules) { // webpackBootstrap
 	      },
 	      onend: function(event) {
 
-	        if (canResize()) {
+	        var elm = angular.element(event.target);
+	        var unitsResized = getUnitsResized(resizeEdge, elm, snapGridDimensions);
 
-	          var elm = angular.element(event.target);
-	          var unitsResized = getUnitsResized(resizeEdge, elm, snapGridDimensions);
+	        $timeout(function() {
+	          elm
+	            .data('x', null)
+	            .data('y', null)
+	            .css({
+	              transform: '',
+	              width: originalDimensionsStyle.width,
+	              height: originalDimensionsStyle.height
+	            });
+	        });
 
-	          $timeout(function() {
-	            elm
-	              .data('x', null)
-	              .data('y', null)
-	              .css({
-	                transform: '',
-	                width: originalDimensionsStyle.width,
-	                height: originalDimensionsStyle.height
-	              });
-	          });
-
-	          if ($attrs.onResizeEnd) {
-	            $parse($attrs.onResizeEnd)($scope, unitsResized);
-	            $scope.$apply();
-	          }
+	        if ($attrs.onResizeEnd) {
+	          $parse($attrs.onResizeEnd)($scope, unitsResized);
+	          $scope.$apply();
 	        }
 
 	      }
+	    });
+
+	    $scope.$watch($attrs.mwlResizable, function(enabled) {
+	      interact($element[0]).resizable({
+	        enabled: enabled
+	      });
 	    });
 
 	    $scope.$on('$destroy', function() {

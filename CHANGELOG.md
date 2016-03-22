@@ -1,3 +1,16 @@
+<a name="0.19.4"></a>
+## [0.19.4](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.19.3...v0.19.4) (2016-03-22)
+
+
+### Bug Fixes
+
+* **bower.json:** looser dependency versions of moment and bootstrap ([7ee084b](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/7ee084b))
+* **draggable:** disable the cursor when dragging disabled events ([834e1ee](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/834e1ee)), closes [#307](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/307)
+* **droppable:** allow the drop active class to be customised ([fc85410](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/fc85410))
+* **resizeable:** disable the cursor when resizing disabled events ([ad9beb7](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/ad9beb7)), closes [#307](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/307)
+
+
+
 <a name="0.19.3"></a>
 ## [0.19.3](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.19.2...v0.19.3) (2016-03-11)
 
