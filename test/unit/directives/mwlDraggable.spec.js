@@ -121,4 +121,10 @@ describe('mwlDraggable directive', function() {
     expect(interactInstance.unset).to.have.been.called;
   });
 
+  it('should disable dragging on the event', function() {
+    scope.draggable = false;
+    scope.$apply();
+    expect(interactInstance.draggable).to.have.been.calledWith({enabled: false});
+  });
+
 });
