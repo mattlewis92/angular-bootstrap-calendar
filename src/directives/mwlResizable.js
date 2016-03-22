@@ -24,10 +24,6 @@ angular
     var originalDimensionsStyle = {};
     var resizeEdge;
 
-    function canResize() {
-      return $parse($attrs.mwlResizable)($scope);
-    }
-
     function getUnitsResized(edge, elm, gridDimensions) {
       var unitsResized = {};
       unitsResized.edge = edge;
@@ -52,19 +48,17 @@ angular
       snap: snap,
       onstart: function(event) {
 
-        if (canResize()) {
-          resizeEdge = 'end';
-          var elm = angular.element(event.target);
-          originalDimensions.height = elm[0].offsetHeight;
-          originalDimensions.width = elm[0].offsetWidth;
-          originalDimensionsStyle.height = elm.css('height');
-          originalDimensionsStyle.width = elm.css('width');
-        }
+        resizeEdge = 'end';
+        var elm = angular.element(event.target);
+        originalDimensions.height = elm[0].offsetHeight;
+        originalDimensions.width = elm[0].offsetWidth;
+        originalDimensionsStyle.height = elm.css('height');
+        originalDimensionsStyle.width = elm.css('width');
 
       },
       onmove: function(event) {
 
-        if (canResize() && event.rect.width > 0 && event.rect.height > 0) {
+        if (event.rect.width > 0 && event.rect.height > 0) {
           var elm = angular.element(event.target);
           var x = parseFloat(elm.data('x') || 0);
           var y = parseFloat(elm.data('y') || 0);
@@ -97,29 +91,32 @@ angular
       },
       onend: function(event) {
 
-        if (canResize()) {
+        var elm = angular.element(event.target);
+        var unitsResized = getUnitsResized(resizeEdge, elm, snapGridDimensions);
 
-          var elm = angular.element(event.target);
-          var unitsResized = getUnitsResized(resizeEdge, elm, snapGridDimensions);
+        $timeout(function() {
+          elm
+            .data('x', null)
+            .data('y', null)
+            .css({
+              transform: '',
+              width: originalDimensionsStyle.width,
+              height: originalDimensionsStyle.height
+            });
+        });
 
-          $timeout(function() {
-            elm
-              .data('x', null)
-              .data('y', null)
-              .css({
-                transform: '',
-                width: originalDimensionsStyle.width,
-                height: originalDimensionsStyle.height
-              });
-          });
-
-          if ($attrs.onResizeEnd) {
-            $parse($attrs.onResizeEnd)($scope, unitsResized);
-            $scope.$apply();
-          }
+        if ($attrs.onResizeEnd) {
+          $parse($attrs.onResizeEnd)($scope, unitsResized);
+          $scope.$apply();
         }
 
       }
+    });
+
+    $scope.$watch($attrs.mwlResizable, function(enabled) {
+      interact($element[0]).resizable({
+        enabled: enabled
+      });
     });
 
     $scope.$on('$destroy', function() {

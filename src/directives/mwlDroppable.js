@@ -10,15 +10,17 @@ angular
       return;
     }
 
+    var DROP_ACTIVE_CLASS = $attrs.dropActiveClass || 'drop-active';
+
     interact($element[0]).dropzone({
       ondragenter: function(event) {
-        angular.element(event.target).addClass('drop-active');
+        angular.element(event.target).addClass(DROP_ACTIVE_CLASS);
       },
       ondragleave: function(event) {
-        angular.element(event.target).removeClass('drop-active');
+        angular.element(event.target).removeClass(DROP_ACTIVE_CLASS);
       },
       ondropdeactivate: function(event) {
-        angular.element(event.target).removeClass('drop-active');
+        angular.element(event.target).removeClass(DROP_ACTIVE_CLASS);
       },
       ondrop: function(event) {
         if (event.relatedTarget.dropData) {
