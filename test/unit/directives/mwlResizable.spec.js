@@ -179,4 +179,10 @@ describe('mwlresizable directive', function() {
     expect(interactInstance.unset).to.have.been.called;
   });
 
+  it('should disable resizing on the event', function() {
+    scope.resizable = false;
+    scope.$apply();
+    expect(interactInstance.resizable).to.have.been.calledWith({enabled: false});
+  });
+
 });
