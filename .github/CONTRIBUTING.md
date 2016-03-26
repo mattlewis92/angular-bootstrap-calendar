@@ -5,7 +5,7 @@ Please read this guide before filing issues. Thanks!
 Please use the following sources for any questions on how to use the module:
 * The [examples list](http://mattlewis92.github.io/angular-bootstrap-calendar/) for demos of how to use all features of the directive. 
 * Search the [existing issues list](https://github.com/mattlewis92/angular-bootstrap-calendar/issues?q=is%3Aissue+is%3Aclosed), most of the time there has already been a similar issue filed.
-* For everything else please use [stackoverflow](http://stackoverflow.com/questions/ask/advice). The github issue tracker is primarily for bug reports + feature requests.
+* For everything else please use [stackoverflow](http://stackoverflow.com/questions/ask/advice) or [gitter](https://gitter.im/mattlewis92/angular-bootstrap-calendar). The github issue tracker is primarily for bug reports + feature requests.
 
 ### Bug reports
 Please include a plunker or something similar that clearly reproduces your problem or your issue may be closed. You can use this as a [starter template](http://plnkr.co/edit/tursHHxWA8SdALaj0Bx6?p=preview).

@@ -20,6 +20,10 @@ describe('calendarTitle', function() {
     expect(calendarTitle.week(calendarDay)).to.equal('Week 18 of 2015');
   });
 
+  it('should use the start of the week for the year number', function() {
+    expect(calendarTitle.week(new Date('2016-01-01'))).to.equal('Week 53 of 2015');
+  });
+
   it('should give the correct month title', function() {
     expect(calendarTitle.month(calendarDay)).to.equal('May 2015');
   });

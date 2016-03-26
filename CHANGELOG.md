@@ -1,3 +1,13 @@
+<a name="0.19.5"></a>
+## [0.19.5](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.19.4...v0.19.5) (2016-03-26)
+
+
+### Bug Fixes
+
+* **weekTitle:** use the correct year when the week spans 2 years ([638c741](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/638c741))
+
+
+
 <a name="0.19.4"></a>
 ## [0.19.4](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.19.3...v0.19.4) (2016-03-22)
 
