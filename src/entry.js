@@ -35,11 +35,14 @@ module.exports = angular
       }
     });
   })
-  .run(function($templateCache) {
+  .run(function($templateCache, $interpolate) {
 
     angular.forEach(templates, function(template) {
       if (!$templateCache.get(template.cacheTemplateName)) {
-        $templateCache.put(template.cacheTemplateName, template.template);
+        var templateContents = template.template
+          .replace('{{', $interpolate.startSymbol())
+          .replace('}}', $interpolate.endSymbol());
+        $templateCache.put(template.cacheTemplateName, templateContents);
       }
     });
 
