@@ -32,7 +32,7 @@
   <ng-include src="vm.calendarConfig.templates.calendarMonthCellEvents"></ng-include>
 
   <div id="cal-week-box" ng-if="$first && rowHovered">
-    {{ vm.calendarConfig.i18nStrings.weekNumber.replace('{week}', day.date.clone().add(1, 'day').isoWeek()) }}
+    <span ng-bind="vm.calendarConfig.i18nStrings.weekNumber.replace('{week}', day.date.clone().add(1, 'day').isoWeek())"></span>
   </div>
 
 </div>
