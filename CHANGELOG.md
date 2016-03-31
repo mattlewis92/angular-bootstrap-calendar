@@ -1,3 +1,13 @@
+<a name="0.19.6"></a>
+## [0.19.6](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.19.5...v0.19.6) (2016-03-31)
+
+
+### Bug Fixes
+
+* **templates:** replace the default interpolation symbol with the user configured one ([73a052e](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/73a052e)), closes [#309](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/309)
+
+
+
 <a name="0.19.5"></a>
 ## [0.19.5](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.19.4...v0.19.5) (2016-03-26)
 
