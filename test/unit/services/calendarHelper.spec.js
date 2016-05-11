@@ -167,7 +167,7 @@ describe('calendarHelper', function() {
     });
 
     it('should get the days of the week starting at monday', inject(function() {
-      moment.locale('en', {
+      moment.locale('en_gb', {
         week: {
           dow: 1 // Monday is the first day of the week
         }
@@ -176,11 +176,7 @@ describe('calendarHelper', function() {
       var weekdays = calendarHelper.getWeekDayNames();
       expect(weekdays).to.eql(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']);
 
-      moment.locale('en', {
-        week: {
-          dow: 0 // Sunday is the first day of the week
-        }
-      });
+      moment.locale('en');
     }));
 
   });
