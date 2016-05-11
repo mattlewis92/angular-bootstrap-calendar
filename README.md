@@ -276,7 +276,7 @@ Otherwise if using moment you can call `moment.locale('YOUR_LOCALE_STRING')` to 
 
 To set Monday as the first day of the week, configure it in moment like so (even if using angular for formatting dates):
 ```javascript
-moment.locale('en', {
+moment.locale('en_gb', {
   week : {
     dow : 1 // Monday is the first day of the week
   }
