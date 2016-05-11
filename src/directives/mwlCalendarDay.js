@@ -84,6 +84,7 @@ angular
         onEventClick: '=',
         onEventTimesChanged: '=',
         onTimespanClick: '=',
+        onSelectRange: '=',
         dayViewStart: '=',
         dayViewEnd: '=',
         dayViewSplit: '='

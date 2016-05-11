@@ -4,7 +4,7 @@ var angular = require('angular');
 
 angular
   .module('mwl.calendar')
-  .controller('MwlCalendarHourListCtrl', function($scope, $attrs, moment, calendarConfig, calendarHelper) {
+  .controller('MwlCalendarHourListCtrl', function($scope, $attrs, moment, calendarConfig, calendarHelper, $parse, interact) {
     var vm = this;
     var dayViewStart, dayViewEnd;
 
@@ -74,6 +74,43 @@ angular
       return moment(baseDate).clone().add(minutes, 'minutes').add(days || 0, 'days').toDate();
     };
 
+    if (interact && vm.onSelectRange) {
+      vm.select = {};
+      vm.select.active = false;
+      interact('.cal-day-hour-part').on('down', function(event) {
+        if (!vm.select.active) {
+          vm.select.active = true;
+          var date = $parse(event.target.attributes['current-value'].value)($scope);
+          vm.select.startDate = date;
+          vm.select.endDate = date;
+          $scope.$apply();
+        }
+        event.preventDefault();
+      });
+
+      interact('.cal-day-hour-part').on('up', function(event) {
+        if (vm.select.active) {
+          vm.select.active = false;
+          var date = $parse(event.target.attributes['current-value'].value)($scope);
+          vm.select.endDate = vm.getClickedDate(date, vm.dayViewSplit);
+          if (vm.select.endDate > vm.select.startDate) {
+            vm.onSelectRange({startDate: vm.select.startDate, endDate: vm.select.endDate});
+            //vm.onTimespanClick({calendarDate: vm.select.startDate});
+          }
+          $scope.$apply();
+        }
+        event.preventDefault();
+      });
+
+      interact('.cal-day-hour-part').on('move', function(event) {
+        if (vm.select.active) {
+          var date = $parse(event.target.attributes['current-value'].value)($scope);
+          vm.select.endDate = vm.getClickedDate(date, vm.dayViewSplit);
+          $scope.$apply();
+        }
+        event.preventDefault();
+      });
+    }
   })
   .directive('mwlCalendarHourList', function(calendarConfig) {
 
@@ -88,6 +125,7 @@ angular
         dayViewSplit: '=',
         dayWidth: '=?',
         onTimespanClick: '=',
+        onSelectRange: '=',
         onEventTimesChanged: '='
       },
       bindToController: true

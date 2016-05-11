@@ -29,6 +29,9 @@
   "key": "timespan-click",
   "label": "Timespan click"
 }, {
+  "key": "select-range",
+  "label": "Select range"
+}, {
   "key": "cell-is-open",
   "label": "Slidebox is open"
 }, {

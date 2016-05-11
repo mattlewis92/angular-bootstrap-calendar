@@ -4,10 +4,14 @@
 
     <div
       class="cal-day-hour-part"
+      ng-class="{ 'cal-day-hour-part-selected': vm.select.active &&
+                vm.select.startDate <= vm.getClickedDate(hour.date, vm.dayViewSplit * $index) &&
+                vm.getClickedDate(hour.date, vm.dayViewSplit * $index) < vm.select.endDate }"
       ng-repeat="chunk in vm.hourChunks track by chunk"
       ng-click="vm.onTimespanClick({calendarDate: vm.getClickedDate(hour.date, vm.dayViewSplit * $index)})"
       mwl-droppable
       on-drop="vm.eventDropped(dropData.event, vm.getClickedDate(hour.date, vm.dayViewSplit * $index))"
+      current-value="vm.getClickedDate({{hour.date}}, {{vm.dayViewSplit}} * {{$index}})"
       ng-if="!vm.dayWidth">
       <div class="cal-day-hour-part-time">
         <strong ng-bind="hour.label" ng-show="$first"></strong>
@@ -16,8 +20,13 @@
 
     <div
       class="cal-day-hour-part"
+      ng-class="{ 'cal-day-hour-part-selected': vm.select.active &&
+                vm.select.startDate <= vm.getClickedDate(hour.date, vm.dayViewSplit * $index) &&
+                vm.getClickedDate(hour.date, vm.dayViewSplit * $index) < vm.select.endDate }"
+      current-value="vm.getClickedDate({{hour.date}}, {{vm.dayViewSplit}} * {{$index}})"
       ng-repeat="chunk in vm.hourChunks track by chunk"
-      ng-if="vm.dayWidth">
+      ng-if="vm.dayWidth"
+      >
       <div class="cal-day-hour-part-time">
         <strong ng-bind="hour.label" ng-show="$first"></strong>
       </div>

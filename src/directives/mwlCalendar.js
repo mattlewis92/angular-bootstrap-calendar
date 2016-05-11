@@ -134,6 +134,7 @@ angular
         onEditEventClick: '&',
         onDeleteEventClick: '&',
         onTimespanClick: '&',
+        onSelectRange: '&?',
         onViewChangeClick: '&',
         cellModifier: '&',
         dayViewStart: '@',
