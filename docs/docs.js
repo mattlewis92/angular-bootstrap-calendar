@@ -120,4 +120,7 @@ angular
       form[0].submit();
       form.remove();
     };
+  })
+  .config(function($touchProvider) {
+    $touchProvider.ngClickOverrideEnabled(true);
   });

@@ -38,7 +38,7 @@ The calendar has a few dependencies, these are as follows, and must be included 
 * [Moment.js](http://momentjs.com/)
 * [ui-bootstrap](http://angular-ui.github.io/bootstrap/) (0.14.0+, optional, include for collapse animations and tooltips.
 * [interact.js](http://interactjs.io/) (optional, include to allow drag and drop on the calendar)
-* [ngTouch](https://docs.angularjs.org/api/ngTouch) (optional, include if using the calendar on mobile devices)
+* [ngTouch](https://docs.angularjs.org/api/ngTouch) (optional, include if using the calendar on mobile devices. You will also need to enable `$touchProvider.ngClickOverrideEnabled(true)` on angular 1.5.0+)
 
 You can install through bower:
 
