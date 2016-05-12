@@ -56,12 +56,12 @@
             data-event-class
             mwl-draggable="event.draggable === true"
             axis="vm.showTimes ? 'xy' : 'x'"
-            snap-grid="vm.showTimes ? {x: vm.dayColumnDimensions.width, y: 30} : {x: vm.dayColumnDimensions.width}"
-            on-drag="vm.tempTimeChanged(event, y)"
-            on-drag-end="vm.weekDragged(event, x, y)"
+            snap-grid="vm.showTimes ? {x: vm.dayColumnDimensions.width, y: vm.dayViewEventChunkSize || 30} : {x: vm.dayColumnDimensions.width}"
+            on-drag="vm.tempTimeChanged(event, y / 30)"
+            on-drag-end="vm.weekDragged(event, x / vm.dayColumnDimensions.width, y / 30)"
             mwl-resizable="event.resizable === true && event.endsAt && !vm.showTimes"
             resize-edges="{left: true, right: true}"
-            on-resize-end="vm.weekResized(event, edge, x)">
+            on-resize-end="vm.weekResized(event, edge, x / vm.dayColumnDimensions.width)">
             <strong ng-bind="(event.tempStartsAt || event.startsAt) | calendarDate:'time':true" ng-show="vm.showTimes"></strong>
             <a
               href="javascript:;"

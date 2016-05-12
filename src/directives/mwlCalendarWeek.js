@@ -94,6 +94,7 @@ angular
         dayViewStart: '=',
         dayViewEnd: '=',
         dayViewSplit: '=',
+        dayViewEventChunkSize: '=',
         onTimespanClick: '='
       },
       controller: 'MwlCalendarWeekCtrl as vm',

@@ -24,7 +24,7 @@ angular
     var originalDimensionsStyle = {};
     var resizeEdge;
 
-    function getUnitsResized(edge, elm, gridDimensions) {
+    function getUnitsResized(edge, elm) {
       var unitsResized = {};
       unitsResized.edge = edge;
       if (edge === 'start') {
@@ -33,12 +33,6 @@ angular
       } else if (edge === 'end') {
         unitsResized.x = parseFloat(elm.css('width').replace('px', '')) - originalDimensions.width;
         unitsResized.y = parseFloat(elm.css('height').replace('px', '')) - originalDimensions.height;
-      }
-      if (gridDimensions && gridDimensions.x) {
-        unitsResized.x = Math.round(unitsResized.x / gridDimensions.x);
-      }
-      if (gridDimensions && gridDimensions.y) {
-        unitsResized.y = Math.round(unitsResized.y / gridDimensions.y);
       }
       return unitsResized;
     }
@@ -82,7 +76,7 @@ angular
           }
 
           if ($attrs.onResize) {
-            $parse($attrs.onResize)($scope, getUnitsResized(resizeEdge, elm, snapGridDimensions));
+            $parse($attrs.onResize)($scope, getUnitsResized(resizeEdge, elm));
             $scope.$apply();
           }
 
@@ -92,7 +86,7 @@ angular
       onend: function(event) {
 
         var elm = angular.element(event.target);
-        var unitsResized = getUnitsResized(resizeEdge, elm, snapGridDimensions);
+        var unitsResized = getUnitsResized(resizeEdge, elm);
 
         $timeout(function() {
           elm
