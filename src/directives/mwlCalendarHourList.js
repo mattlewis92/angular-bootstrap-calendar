@@ -76,7 +76,6 @@ angular
 
     vm.onDragSelectStart = function(date) {
       vm.dateRangeSelect = {
-        active: true,
         startDate: date,
         endDate: date
       };

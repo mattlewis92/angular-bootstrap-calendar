@@ -82,4 +82,65 @@ describe('mwlCalendarHourList directive', function() {
     expect(calledWith.calendarNewEventEnd.getTime()).to.equal(moment().add(3, 'days').toDate().getTime());
   });
 
+  it('should initialise the date range select', function() {
+
+    var date = new Date();
+    MwlCalendarCtrl.onDragSelectStart(date);
+    expect(MwlCalendarCtrl.dateRangeSelect).to.deep.equal({
+      startDate: date,
+      endDate: date
+    });
+
+  });
+
+  it('should update the date ranges end date', function() {
+    var date = new Date();
+    MwlCalendarCtrl.dateRangeSelect = {
+      startDate: 'date1',
+      endDate: 'date2'
+    };
+    MwlCalendarCtrl.onDragSelectMove(date);
+    expect(MwlCalendarCtrl.dateRangeSelect).to.deep.equal({
+      startDate: 'date1',
+      endDate: date
+    });
+  });
+
+  it('should not throw if there is no date range being selected', function() {
+    var date = new Date();
+    MwlCalendarCtrl.dateRangeSelect = null;
+    expect(function() {
+      MwlCalendarCtrl.onDragSelectMove(date);
+    }).not.to.throw();
+  });
+
+  it('should call the onDateRangeSelect callback if there is a valid date range', function() {
+    MwlCalendarCtrl.onDateRangeSelect = sinon.spy();
+    var date1 = new Date();
+    var date2 = new Date(Date.now() + 100000);
+    MwlCalendarCtrl.dateRangeSelect = {
+      startDate: date1,
+      endDate: new Date(Date.now() + 10)
+    };
+    MwlCalendarCtrl.onDragSelectEnd(date2);
+    expect(MwlCalendarCtrl.onDateRangeSelect).to.have.been.calledWith({
+      calendarRangeStartDate: date1,
+      calendarRangeEndDate: date2
+    });
+    expect(MwlCalendarCtrl.dateRangeSelect).to.be.undefined;
+  });
+
+  it('should not call the onDateRangeSelect callback if there is an invalid date range', function() {
+    MwlCalendarCtrl.onDateRangeSelect = sinon.spy();
+    var date1 = new Date();
+    var date2 = new Date(Date.now() - 100000);
+    MwlCalendarCtrl.dateRangeSelect = {
+      startDate: date1,
+      endDate: new Date(Date.now() - 10)
+    };
+    MwlCalendarCtrl.onDragSelectEnd(date2);
+    expect(MwlCalendarCtrl.onDateRangeSelect).not.to.have.been.called;
+    expect(MwlCalendarCtrl.dateRangeSelect).to.be.undefined;
+  });
+
 });
