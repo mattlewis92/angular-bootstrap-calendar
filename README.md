@@ -164,7 +164,7 @@ This expression is called when an event delete link is clicked on the calendar. 
 
 This expression is called when a month, day or hour on the calendar is clicked on the year, month and day views respectively. `calendarDate` can be used in the expression and contains the start of the month, day or hour that was clicked on. If on the month or year view `calendarCell` will contain cell data for the clicked day or month which you can then modify.
 
-### on-select-range
+### on-date-range-select
 
 This expression is called when a range of hours selected on the day view respectively. `calendarRangeStartDate` can be used in the expression and contains the start of the range, `calendarRangeEndDate` can be used in the expression and contains the end of the range.
 

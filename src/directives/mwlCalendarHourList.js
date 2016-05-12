@@ -91,7 +91,7 @@ angular
     vm.onDragSelectEnd = function(date) {
       vm.dateRangeSelect.endDate = date;
       if (vm.dateRangeSelect.endDate > vm.dateRangeSelect.startDate) {
-        vm.onSelectRange({calendarRangeStartDate: vm.dateRangeSelect.startDate, calendarRangeEndDate: vm.dateRangeSelect.endDate});
+        vm.onDateRangeSelect({calendarRangeStartDate: vm.dateRangeSelect.startDate, calendarRangeEndDate: vm.dateRangeSelect.endDate});
       }
       delete vm.dateRangeSelect;
     };
@@ -110,7 +110,7 @@ angular
         dayViewSplit: '=',
         dayWidth: '=?',
         onTimespanClick: '=',
-        onSelectRange: '=',
+        onDateRangeSelect: '=',
         onEventTimesChanged: '='
       },
       bindToController: true
