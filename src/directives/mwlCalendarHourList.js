@@ -91,7 +91,7 @@ angular
     vm.onDragSelectEnd = function(date) {
       vm.dateRangeSelect.endDate = date;
       if (vm.dateRangeSelect.endDate > vm.dateRangeSelect.startDate) {
-        vm.onSelectRange({startDate: vm.dateRangeSelect.startDate, endDate: vm.dateRangeSelect.endDate});
+        vm.onSelectRange({calendarRangeStartDate: vm.dateRangeSelect.startDate, calendarRangeEndDate: vm.dateRangeSelect.endDate});
       }
       delete vm.dateRangeSelect;
     };

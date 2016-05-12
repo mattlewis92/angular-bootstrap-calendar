@@ -166,7 +166,7 @@ This expression is called when a month, day or hour on the calendar is clicked o
 
 ### on-select-range
 
-This expression is called when a range of hours selected on the day view respectively. `startDate` can be used in the expression and contains the start of the range, `endDate` can be used in the expression and contains the end of the range.
+This expression is called when a range of hours selected on the day view respectively. `calendarRangeStartDate` can be used in the expression and contains the start of the range, `calendarRangeEndDate` can be used in the expression and contains the end of the range.
 
 ### cell-is-open
 
