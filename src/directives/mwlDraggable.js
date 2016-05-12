@@ -27,22 +27,6 @@ angular
         .css('transform', transformValue);
     }
 
-    function getUnitsMoved(x, y, gridDimensions) {
-
-      var result = {x: x, y: y};
-
-      if (gridDimensions && gridDimensions.x) {
-        result.x /= gridDimensions.x;
-      }
-
-      if (gridDimensions && gridDimensions.y) {
-        result.y /= gridDimensions.y;
-      }
-
-      return result;
-
-    }
-
     interact($element[0]).draggable({
       snap: snap,
       onstart: function(event) {
@@ -82,7 +66,7 @@ angular
           .attr('data-y', y);
 
         if ($attrs.onDrag) {
-          $parse($attrs.onDrag)($scope, getUnitsMoved(x, y, snapGridDimensions));
+          $parse($attrs.onDrag)($scope, {x: x, y: y});
           $scope.$apply();
         }
 
@@ -95,7 +79,7 @@ angular
 
         event.target.style.pointerEvents = 'auto';
         if ($attrs.onDragEnd) {
-          $parse($attrs.onDragEnd)($scope, getUnitsMoved(x, y, snapGridDimensions));
+          $parse($attrs.onDragEnd)($scope, {x: x, y: y});
           $scope.$apply();
         }
 
