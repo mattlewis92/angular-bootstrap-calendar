@@ -74,15 +74,12 @@ angular
       return moment(baseDate).clone().add(minutes, 'minutes').add(days || 0, 'days').toDate();
     };
 
-    vm.onDragSelectStart = function(date, dayIndex) {
-      if (!vm.dateRangeSelect) {
-        vm.dateRangeSelect = {
-          active: true,
-          startDate: date,
-          endDate: date,
-          dayIndex: dayIndex
-        };
-      }
+    vm.onDragSelectStart = function(date) {
+      vm.dateRangeSelect = {
+        active: true,
+        startDate: date,
+        endDate: date
+      };
     };
 
     vm.onDragSelectMove = function(date) {
