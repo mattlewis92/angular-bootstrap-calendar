@@ -4,7 +4,7 @@ var angular = require('angular');
 
 angular
   .module('mwl.calendar')
-  .controller('MwlCalendarHourListCtrl', function($scope, $attrs, moment, calendarConfig, calendarHelper, $parse, interact) {
+  .controller('MwlCalendarHourListCtrl', function($scope, $attrs, moment, calendarConfig, calendarHelper) {
     var vm = this;
     var dayViewStart, dayViewEnd;
 
@@ -74,43 +74,31 @@ angular
       return moment(baseDate).clone().add(minutes, 'minutes').add(days || 0, 'days').toDate();
     };
 
-    if (interact && vm.onSelectRange) {
-      vm.select = {};
-      vm.select.active = false;
-      interact('.cal-day-hour-part').on('down', function(event) {
-        if (!vm.select.active) {
-          vm.select.active = true;
-          var date = $parse(event.target.attributes['current-value'].value)($scope);
-          vm.select.startDate = date;
-          vm.select.endDate = date;
-          $scope.$apply();
-        }
-        event.preventDefault();
-      });
+    vm.onDragSelectStart = function(date, dayIndex) {
+      if (!vm.dateRangeSelect) {
+        vm.dateRangeSelect = {
+          active: true,
+          startDate: date,
+          endDate: date,
+          dayIndex: dayIndex
+        };
+      }
+    };
 
-      interact('.cal-day-hour-part').on('up', function(event) {
-        if (vm.select.active) {
-          vm.select.active = false;
-          var date = $parse(event.target.attributes['current-value'].value)($scope);
-          vm.select.endDate = vm.getClickedDate(date, vm.dayViewSplit);
-          if (vm.select.endDate > vm.select.startDate) {
-            vm.onSelectRange({startDate: vm.select.startDate, endDate: vm.select.endDate});
-            //vm.onTimespanClick({calendarDate: vm.select.startDate});
-          }
-          $scope.$apply();
-        }
-        event.preventDefault();
-      });
+    vm.onDragSelectMove = function(date) {
+      if (vm.dateRangeSelect) {
+        vm.dateRangeSelect.endDate = date;
+      }
+    };
 
-      interact('.cal-day-hour-part').on('move', function(event) {
-        if (vm.select.active) {
-          var date = $parse(event.target.attributes['current-value'].value)($scope);
-          vm.select.endDate = vm.getClickedDate(date, vm.dayViewSplit);
-          $scope.$apply();
-        }
-        event.preventDefault();
-      });
-    }
+    vm.onDragSelectEnd = function(date) {
+      vm.dateRangeSelect.endDate = date;
+      if (vm.dateRangeSelect.endDate > vm.dateRangeSelect.startDate) {
+        vm.onSelectRange({startDate: vm.dateRangeSelect.startDate, endDate: vm.dateRangeSelect.endDate});
+      }
+      delete vm.dateRangeSelect;
+    };
+
   })
   .directive('mwlCalendarHourList', function(calendarConfig) {
 
