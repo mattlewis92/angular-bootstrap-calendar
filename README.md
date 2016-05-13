@@ -234,6 +234,8 @@ angular.module('myModule')
 
 All calendar template urls can be changed using the `calendarConfig` as illustrated above. 
 
+Please note that even patch releases may change templates which could break your app, so if using a custom template it is recommended that you pin the version of this module and review all changes when updating the version.
+
 ## The mwl-date-modifier directive
 
 There is also a helper directive that you can use for the next, today and previous buttons. Use it like so:
