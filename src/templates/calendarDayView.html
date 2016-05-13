@@ -1,3 +1,30 @@
+<div class="cal-week-box cal-all-day-events-box" ng-if="vm.allDayEvents.length > 0">
+  <div class="cal-day-panel clearfix">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="cal-row-fluid">
+          <div
+            class="cal-cell-6 day-highlight dh-event-{{ event.type }}"
+            data-event-class
+            ng-repeat="event in vm.allDayEvents track by event.$id">
+            <strong>
+              <span ng-bind="event.startsAt | calendarDate:'datetime':true"></span>
+              <span ng-if="event.endsAt">
+                - <span ng-bind="event.endsAt | calendarDate:'datetime':true"></span>
+              </span>
+            </strong>
+            <a
+              href="javascript:;"
+              class="event-item"
+              ng-bind-html="vm.$sce.trustAsHtml(event.title)">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="cal-day-box">
   <div class="cal-day-panel clearfix" ng-style="{height: vm.dayViewHeight + 'px'}">
 
@@ -13,7 +40,7 @@
 
     <div
       class="pull-left day-event day-highlight"
-      ng-repeat="event in vm.view track by event.$id"
+      ng-repeat="event in vm.nonAllDayEvents track by event.$id"
       ng-class="'dh-event-' + event.type + ' ' + event.cssClass"
       ng-style="{top: event.top + 'px', left: event.left + 60 + 'px', height: event.height + 'px'}"
       mwl-draggable="event.draggable === true"

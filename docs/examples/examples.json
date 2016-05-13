@@ -64,4 +64,7 @@
 }, {
   "key": "grouping-events",
   "label": "Group month view events"
+}, {
+  "key": "all-day-events",
+  "label": "All day events"
 }]
