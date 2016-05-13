@@ -87,8 +87,7 @@ angular
         onDateRangeSelect: '=',
         dayViewStart: '=',
         dayViewEnd: '=',
-        dayViewSplit: '=',
-        dayViewEventChunkSize: '='
+        dayViewSplit: '='
       },
       controller: 'MwlCalendarDayCtrl as vm',
       bindToController: true

@@ -139,8 +139,7 @@ angular
         cellModifier: '&',
         dayViewStart: '@',
         dayViewEnd: '@',
-        dayViewSplit: '@',
-        dayViewEventChunkSize: '@'
+        dayViewSplit: '@'
       },
       controller: 'MwlCalendarCtrl as vm',
       bindToController: true

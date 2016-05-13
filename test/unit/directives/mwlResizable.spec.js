@@ -17,8 +17,8 @@ describe('mwlresizable directive', function() {
       'snap-grid="{y: 30}" ' +
       'resize-edges="{top: true, bottom: true}" ' +
       'on-resize-start="onResizeStart()" ' +
-      'on-resize-end="onResizeEnd(x, y / 30)" ' +
-      'on-resize="onResize(x, y / 30)" ' +
+      'on-resize-end="onResizeEnd(x, y)" ' +
+      'on-resize="onResize(x, y)" ' +
       '></div>';
 
   function prepareScope(vm) {
