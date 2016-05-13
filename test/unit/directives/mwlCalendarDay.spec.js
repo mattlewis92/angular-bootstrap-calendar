@@ -82,12 +82,15 @@ describe('mwlCalendarDay directive', function() {
 
   it('should get the new day view when calendar refreshes', function() {
     sinon.stub(calendarHelper, 'getDayViewHeight').returns(1000);
-    sinon.stub(calendarHelper, 'getDayView').returns({event: 'event1'});
+    var event1 = {event: 'event1'};
+    var event2 = {event: 'event2', allDay: true};
+    sinon.stub(calendarHelper, 'getDayView').returns([event1, event2]);
     scope.$broadcast('calendar.refreshView');
     expect(calendarHelper.getDayViewHeight).to.have.been.calledWith('06:00', '22:00', 30);
     expect(MwlCalendarCtrl.dayViewHeight).to.equal(1000);
     expect(calendarHelper.getDayView).to.have.been.calledWith(scope.events, scope.viewDate, '06:00', '22:00', 30);
-    expect(MwlCalendarCtrl.view).to.eql({event: 'event1'});
+    expect(MwlCalendarCtrl.nonAllDayEvents).to.eql([event1]);
+    expect(MwlCalendarCtrl.allDayEvents).to.eql([event2]);
   });
 
   it('should call the callback function when you finish dragging and event', function() {

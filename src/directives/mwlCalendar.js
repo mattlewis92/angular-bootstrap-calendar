@@ -40,12 +40,12 @@ angular
       }
 
       if (!angular.isDate(event.startsAt)) {
-        $log.warn('Bootstrap calendar: ', 'Event startsAt should be a javascript date object', event);
+        $log.warn('Bootstrap calendar: ', 'Event startsAt should be a javascript date object. Do `new Date(event.startsAt)` to fix it.', event);
       }
 
       if (angular.isDefined(event.endsAt)) {
         if (!angular.isDate(event.endsAt)) {
-          $log.warn('Bootstrap calendar: ', 'Event endsAt should be a javascript date object', event);
+          $log.warn('Bootstrap calendar: ', 'Event endsAt should be a javascript date object. Do `new Date(event.endsAt)` to fix it.', event);
         }
         if (moment(event.startsAt).isAfter(moment(event.endsAt))) {
           $log.warn('Bootstrap calendar: ', 'Event cannot start after it finishes', event);
@@ -134,11 +134,13 @@ angular
         onEditEventClick: '&',
         onDeleteEventClick: '&',
         onTimespanClick: '&',
+        onDateRangeSelect: '&?',
         onViewChangeClick: '&',
         cellModifier: '&',
         dayViewStart: '@',
         dayViewEnd: '@',
-        dayViewSplit: '@'
+        dayViewSplit: '@',
+        dayViewEventChunkSize: '@'
       },
       controller: 'MwlCalendarCtrl as vm',
       bindToController: true

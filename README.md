@@ -38,7 +38,7 @@ The calendar has a few dependencies, these are as follows, and must be included 
 * [Moment.js](http://momentjs.com/)
 * [ui-bootstrap](http://angular-ui.github.io/bootstrap/) (0.14.0+, optional, include for collapse animations and tooltips.
 * [interact.js](http://interactjs.io/) (optional, include to allow drag and drop on the calendar)
-* [ngTouch](https://docs.angularjs.org/api/ngTouch) (optional, include if using the calendar on mobile devices)
+* [ngTouch](https://docs.angularjs.org/api/ngTouch) (optional, include if using the calendar on mobile devices. You will also need to enable `$touchProvider.ngClickOverrideEnabled(true)` on angular 1.5.0+)
 
 You can install through bower:
 
@@ -125,7 +125,8 @@ $scope.events = [
     resizable: true, //Allow an event to be resizable
     incrementsBadgeTotal: true, //If set to false then will not count towards the badge total amount on the month and year view
     recursOn: 'year', // If set the event will recur on the given period. Valid values are year or month
-    cssClass: 'a-css-class-name' //A CSS class (or more, just separate with spaces) that will be added to the event when it is displayed on each view. Useful for marking an event as selected / active etc
+    cssClass: 'a-css-class-name', //A CSS class (or more, just separate with spaces) that will be added to the event when it is displayed on each view. Useful for marking an event as selected / active etc
+    allDay: false // set to true to display the event as an all day event on the day view
   }
 ];
 ```
@@ -164,6 +165,10 @@ This expression is called when an event delete link is clicked on the calendar. 
 
 This expression is called when a month, day or hour on the calendar is clicked on the year, month and day views respectively. `calendarDate` can be used in the expression and contains the start of the month, day or hour that was clicked on. If on the month or year view `calendarCell` will contain cell data for the clicked day or month which you can then modify.
 
+### on-date-range-select
+
+This expression is called when a range of hours selected on the day view respectively. `calendarRangeStartDate` can be used in the expression and contains the start of the range, `calendarRangeEndDate` can be used in the expression and contains the end of the range.
+
 ### cell-is-open
 
 A 2 way bound variable that when set to true will open the year or month view cell that corresponds to the date passed to the date object passed to `view-date`.
@@ -179,6 +184,10 @@ An interpolated string in the form of hh:mm to end the day view at, e.g. setting
 ### day-view-split
 
 The number of chunks to split the day view hours up into. Can be either 10, 15 or 30. Default: 30
+
+### day-view-event-chunk-size
+
+The number of pixels to "snap" event drag and resizes to. Default: 30
 
 ### on-view-change-click
 
@@ -224,6 +233,8 @@ angular.module('myModule')
 ## Custom directive templates
 
 All calendar template urls can be changed using the `calendarConfig` as illustrated above. 
+
+Please note that even patch releases may change templates which could break your app, so if using a custom template it is recommended that you pin the version of this module and review all changes when updating the version.
 
 ## The mwl-date-modifier directive
 
@@ -276,7 +287,7 @@ Otherwise if using moment you can call `moment.locale('YOUR_LOCALE_STRING')` to 
 
 To set Monday as the first day of the week, configure it in moment like so (even if using angular for formatting dates):
 ```javascript
-moment.locale('en', {
+moment.locale('en_gb', {
   week : {
     dow : 1 // Monday is the first day of the week
   }

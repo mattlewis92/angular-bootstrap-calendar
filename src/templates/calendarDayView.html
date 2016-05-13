@@ -1,3 +1,30 @@
+<div class="cal-week-box cal-all-day-events-box" ng-if="vm.allDayEvents.length > 0">
+  <div class="cal-day-panel clearfix">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="cal-row-fluid">
+          <div
+            class="cal-cell-6 day-highlight dh-event-{{ event.type }}"
+            data-event-class
+            ng-repeat="event in vm.allDayEvents track by event.$id">
+            <strong>
+              <span ng-bind="event.startsAt | calendarDate:'datetime':true"></span>
+              <span ng-if="event.endsAt">
+                - <span ng-bind="event.endsAt | calendarDate:'datetime':true"></span>
+              </span>
+            </strong>
+            <a
+              href="javascript:;"
+              class="event-item"
+              ng-bind-html="vm.$sce.trustAsHtml(event.title)">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="cal-day-box">
   <div class="cal-day-panel clearfix" ng-style="{height: vm.dayViewHeight + 'px'}">
 
@@ -6,24 +33,25 @@
       day-view-end="vm.dayViewEnd"
       day-view-split="vm.dayViewSplit"
       on-timespan-click="vm.onTimespanClick"
+      on-date-range-select="vm.onDateRangeSelect"
       on-event-times-changed="vm.onEventTimesChanged"
       view-date="vm.viewDate">
     </mwl-calendar-hour-list>
 
     <div
       class="pull-left day-event day-highlight"
-      ng-repeat="event in vm.view track by event.$id"
+      ng-repeat="event in vm.nonAllDayEvents track by event.$id"
       ng-class="'dh-event-' + event.type + ' ' + event.cssClass"
       ng-style="{top: event.top + 'px', left: event.left + 60 + 'px', height: event.height + 'px'}"
       mwl-draggable="event.draggable === true"
       axis="'xy'"
-      snap-grid="{y: 30, x: 50}"
-      on-drag="vm.eventDragged(event, y)"
-      on-drag-end="vm.eventDragComplete(event, y)"
+      snap-grid="{y: vm.dayViewEventChunkSize || 30, x: 50}"
+      on-drag="vm.eventDragged(event, y / 30)"
+      on-drag-end="vm.eventDragComplete(event, y / 30)"
       mwl-resizable="event.resizable === true && event.endsAt"
       resize-edges="{top: true, bottom: true}"
-      on-resize="vm.eventResized(event, edge, y)"
-      on-resize-end="vm.eventResizeComplete(event, edge, y)">
+      on-resize="vm.eventResized(event, edge, y / 30)"
+      on-resize-end="vm.eventResizeComplete(event, edge, y / 30)">
 
       <span class="cal-hours">
         <span ng-show="event.top == 0"><span ng-bind="(event.tempStartsAt || event.startsAt) | calendarDate:'day':true"></span>, </span>

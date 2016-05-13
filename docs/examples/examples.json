@@ -29,6 +29,9 @@
   "key": "timespan-click",
   "label": "Timespan click"
 }, {
+  "key": "select-range",
+  "label": "Select range"
+}, {
   "key": "cell-is-open",
   "label": "Slidebox is open"
 }, {
@@ -61,4 +64,7 @@
 }, {
   "key": "grouping-events",
   "label": "Group month view events"
+}, {
+  "key": "all-day-events",
+  "label": "All day events"
 }]

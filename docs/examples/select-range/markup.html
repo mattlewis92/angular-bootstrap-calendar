@@ -1,0 +1,14 @@
+<div ng-controller="SelectRangeCtrl as vm">
+  <uib-alert type="info">
+    Select range on a day on the view.
+    <strong ng-show="vm.lastDateClicked">You selected on this day: from {{ vm.firstDateClicked | date:'medium' }} to {{ vm.lastDateClicked | date:'medium' }}</strong>
+  </uib-alert>
+  <ng-include src="'calendarControls.html'"></ng-include>
+  <mwl-calendar
+    events="vm.events"
+    view="vm.calendarView"
+    view-date="vm.viewDate"
+    cell-is-open="vm.isCellOpen"
+    on-date-range-select="vm.rangeSelected(calendarRangeStartDate, calendarRangeEndDate)">
+  </mwl-calendar>
+</div>

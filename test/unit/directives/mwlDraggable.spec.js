@@ -19,8 +19,8 @@ describe('mwlDraggable directive', function() {
       'axis="\'y\'" ' +
       'snap-grid="{x: 30, y: 30}" ' +
       'on-drag-start="onDragStart()" ' +
-      'on-drag-end="onDragEnd(x, y)" ' +
-      'on-drag="onDrag(x, y)" ' +
+      'on-drag-end="onDragEnd(x / 30, y / 30)" ' +
+      'on-drag="onDrag(x / 30, y / 30)" ' +
       'drop-data="dropData"' +
       '></div>';
 

@@ -18,13 +18,21 @@ angular
         vm.dayViewSplit
       );
 
-      vm.view = calendarHelper.getDayView(
+      var events = calendarHelper.getDayView(
         vm.events,
         vm.viewDate,
         vm.dayViewStart,
         vm.dayViewEnd,
         vm.dayViewSplit
       );
+
+      vm.allDayEvents = events.filter(function(event) {
+        return event.allDay;
+      });
+
+      vm.nonAllDayEvents = events.filter(function(event) {
+        return !event.allDay;
+      });
 
     });
 
@@ -84,9 +92,11 @@ angular
         onEventClick: '=',
         onEventTimesChanged: '=',
         onTimespanClick: '=',
+        onDateRangeSelect: '=',
         dayViewStart: '=',
         dayViewEnd: '=',
-        dayViewSplit: '='
+        dayViewSplit: '=',
+        dayViewEventChunkSize: '='
       },
       controller: 'MwlCalendarDayCtrl as vm',
       bindToController: true

@@ -74,6 +74,27 @@ angular
       return moment(baseDate).clone().add(minutes, 'minutes').add(days || 0, 'days').toDate();
     };
 
+    vm.onDragSelectStart = function(date) {
+      vm.dateRangeSelect = {
+        startDate: date,
+        endDate: date
+      };
+    };
+
+    vm.onDragSelectMove = function(date) {
+      if (vm.dateRangeSelect) {
+        vm.dateRangeSelect.endDate = date;
+      }
+    };
+
+    vm.onDragSelectEnd = function(date) {
+      vm.dateRangeSelect.endDate = date;
+      if (vm.dateRangeSelect.endDate > vm.dateRangeSelect.startDate) {
+        vm.onDateRangeSelect({calendarRangeStartDate: vm.dateRangeSelect.startDate, calendarRangeEndDate: vm.dateRangeSelect.endDate});
+      }
+      delete vm.dateRangeSelect;
+    };
+
   })
   .directive('mwlCalendarHourList', function(calendarConfig) {
 
@@ -88,6 +109,7 @@ angular
         dayViewSplit: '=',
         dayWidth: '=?',
         onTimespanClick: '=',
+        onDateRangeSelect: '=',
         onEventTimesChanged: '='
       },
       bindToController: true

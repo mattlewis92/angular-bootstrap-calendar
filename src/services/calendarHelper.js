@@ -285,7 +285,9 @@ angular
         buckets.forEach(function(bucket, bucketIndex) {
           var canFitInThisBucket = true;
 
-          bucket.forEach(function(bucketItem) {
+          bucket.filter(function(bucketItem) {
+            return !bucketItem.allDay;
+          }).forEach(function(bucketItem) {
             if (eventIsInPeriod(event, bucketItem.startsAt, bucketItem.endsAt || bucketItem.startsAt) ||
               eventIsInPeriod(bucketItem, event.startsAt, event.endsAt || event.startsAt)) {
               canFitInThisBucket = false;

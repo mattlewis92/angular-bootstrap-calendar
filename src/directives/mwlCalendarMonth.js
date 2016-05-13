@@ -77,7 +77,8 @@ angular
 
       var newStart = moment(event.startsAt)
         .date(moment(newDayDate).date())
-        .month(moment(newDayDate).month());
+        .month(moment(newDayDate).month())
+        .year(moment(newDayDate).year());
 
       var newEnd = calendarHelper.adjustEndDateFromStartDiff(event.startsAt, newStart, event.endsAt);
 

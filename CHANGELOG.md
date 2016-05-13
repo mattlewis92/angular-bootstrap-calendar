@@ -1,3 +1,21 @@
+<a name="0.20.0"></a>
+# [0.20.0](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.19.6...v0.20.0) (2016-05-13)
+
+
+### Bug Fixes
+
+* **draggableEvents:** copy the year when dropping an event on a month or year cell ([8467347](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/8467347)), closes [#326](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/326)
+* **warnings:** add example of how to fix date type warnings ([bf9d58f](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/bf9d58f))
+* **weekView:** update event sizes when the window is resized ([75c7a76](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/75c7a76)), closes [#328](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/328)
+
+### Features
+
+* **allDayEvents:** allow events to be displayed as all day on the day view ([9be6426](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/9be6426)), closes [#312](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/312)
+* **dayViewEventChunkSize:** add `day-view-event-chunk-size` option ([ef2f327](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/ef2f327)), closes [#320](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/320)
+* **onDateRangeSelect:** Add function for selecting range on day view. ([dd4a3d3](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/dd4a3d3))
+
+
+
 <a name="0.19.6"></a>
 ## [0.19.6](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.19.5...v0.19.6) (2016-03-31)
 
