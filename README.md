@@ -11,12 +11,16 @@
 
 ## Table of contents
 
+- [Demo](#demo)
 - [About](#about)
 - [Installation](#installation)
 - [Documentation](#documentation)
-- [Demo](#demo)
 - [Development](#development)
 - [License](#licence)
+
+## Demo
+
+https://mattlewis92.github.io/angular-bootstrap-calendar/
 
 ## About
 
@@ -295,10 +299,6 @@ moment.locale('en_gb', {
 ```
 
 For a full list of all available formats and their defaults see [calendarConfig.js](https://github.com/mattlewis92/angular-bootstrap-calendar/blob/master/src/services/calendarConfig.js)
-
-## Demo
-
-http://mattlewis92.github.io/angular-bootstrap-calendar/
 
 ## Development
 
