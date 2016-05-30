@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-calendar - A pure AngularJS bootstrap themed responsive calendar that can display events and has views for year, month, week and day
- * @version v0.20.0
+ * @version v0.20.1
  * @link https://github.com/mattlewis92/angular-bootstrap-calendar
  * @license MIT
  */
@@ -182,7 +182,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 16 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"cal-day-panel-hour\">\n\n  <div class=\"cal-day-hour\" ng-repeat=\"hour in vm.hours track by $index\">\n\n    <div\n      class=\"cal-day-hour-part\"\n      ng-class=\"{ 'cal-day-hour-part-selected': vm.dateRangeSelect &&\n                vm.dateRangeSelect.startDate <= vm.getClickedDate(hour.date, vm.dayViewSplit * $index) &&\n                vm.getClickedDate(hour.date, vm.dayViewSplit * $index) < vm.dateRangeSelect.endDate }\"\n      ng-repeat=\"chunk in vm.hourChunks track by chunk\"\n      ng-click=\"vm.onTimespanClick({calendarDate: vm.getClickedDate(hour.date, vm.dayViewSplit * $index)})\"\n      mwl-droppable\n      on-drop=\"vm.eventDropped(dropData.event, vm.getClickedDate(hour.date, vm.dayViewSplit * $index))\"\n      mwl-drag-select=\"!!vm.onDateRangeSelect\"\n      on-drag-select-start=\"vm.onDragSelectStart(vm.getClickedDate(hour.date, vm.dayViewSplit * $index))\"\n      on-drag-select-move=\"vm.onDragSelectMove(vm.getClickedDate(hour.date, vm.dayViewSplit * ($index + 1)))\"\n      on-drag-select-end=\"vm.onDragSelectEnd(vm.getClickedDate(hour.date, vm.dayViewSplit * ($index + 1)))\"\n      ng-if=\"!vm.dayWidth\">\n      <div class=\"cal-day-hour-part-time\">\n        <strong ng-bind=\"hour.label\" ng-show=\"$first\"></strong>\n      </div>\n    </div>\n\n    <div\n      class=\"cal-day-hour-part\"\n      ng-repeat=\"chunk in vm.hourChunks track by chunk\"\n      ng-if=\"vm.dayWidth\">\n      <div class=\"cal-day-hour-part-time\">\n        <strong ng-bind=\"hour.label\" ng-show=\"$first\"></strong>\n      </div>\n      <div\n        class=\"cal-day-hour-part-spacer\"\n        ng-repeat=\"dayIndex in [0, 1, 2, 3, 4, 5, 6]\"\n        ng-style=\"{width: vm.dayWidth + 'px'}\"\n        ng-click=\"vm.onTimespanClick({calendarDate: vm.getClickedDate(hour.date, vm.dayViewSplit * $parent.$index, dayIndex)})\"\n        mwl-droppable\n        on-drop=\"vm.eventDropped(dropData.event, vm.getClickedDate(hour.date, vm.dayViewSplit * $parent.$index, dayIndex))\">\n      </div>\n    </div>\n\n  </div>\n\n</div>\n";
+	module.exports = "<div class=\"cal-day-panel-hour\">\n\n  <div class=\"cal-day-hour\" ng-repeat=\"hour in vm.hours track by $index\">\n\n    <div\n      class=\"cal-day-hour-part\"\n      ng-class=\"{ 'cal-day-hour-part-selected': vm.dateRangeSelect &&\n                vm.dateRangeSelect.startDate <= vm.getClickedDate(hour.date, vm.dayViewSplit * $index) &&\n                vm.getClickedDate(hour.date, vm.dayViewSplit * $index) < vm.dateRangeSelect.endDate }\"\n      ng-repeat=\"chunk in vm.hourChunks track by chunk\"\n      ng-click=\"vm.onTimespanClick({calendarDate: vm.getClickedDate(hour.date, vm.dayViewSplit * $index)})\"\n      mwl-droppable\n      on-drop=\"vm.eventDropped(dropData.event, vm.getClickedDate(hour.date, vm.dayViewSplit * $index))\"\n      mwl-drag-select=\"!!vm.onDateRangeSelect\"\n      on-drag-select-start=\"vm.onDragSelectStart(vm.getClickedDate(hour.date, vm.dayViewSplit * $index))\"\n      on-drag-select-move=\"vm.onDragSelectMove(vm.getClickedDate(hour.date, vm.dayViewSplit * ($index + 1)))\"\n      on-drag-select-end=\"vm.onDragSelectEnd(vm.getClickedDate(hour.date, vm.dayViewSplit * ($index + 1)))\"\n      ng-if=\"!vm.dayWidth && $index >= hour.chunkIndexStart && $index <= hour.chunkIndexEnd\">\n      <div class=\"cal-day-hour-part-time\">\n        <strong ng-bind=\"hour.label\" ng-show=\"$first\"></strong>\n      </div>\n    </div>\n\n    <div\n      class=\"cal-day-hour-part\"\n      ng-repeat=\"chunk in vm.hourChunks track by chunk\"\n      ng-if=\"vm.dayWidth && $index >= hour.chunkIndexStart && $index <= hour.chunkIndexEnd\">\n      <div class=\"cal-day-hour-part-time\">\n        <strong ng-bind=\"hour.label\" ng-show=\"$first\"></strong>\n      </div>\n      <div\n        class=\"cal-day-hour-part-spacer\"\n        ng-repeat=\"dayIndex in [0, 1, 2, 3, 4, 5, 6]\"\n        ng-style=\"{width: vm.dayWidth + 'px'}\"\n        ng-click=\"vm.onTimespanClick({calendarDate: vm.getClickedDate(hour.date, vm.dayViewSplit * $parent.$index, dayIndex)})\"\n        mwl-droppable\n        on-drop=\"vm.eventDropped(dropData.event, vm.getClickedDate(hour.date, vm.dayViewSplit * $parent.$index, dayIndex))\">\n      </div>\n    </div>\n\n  </div>\n\n</div>\n";
 
 /***/ },
 /* 17 */
@@ -539,27 +539,34 @@ return /******/ (function(modules) { // webpackBootstrap
 	      dayViewEnd = moment(vm.dayViewEnd || '23:00', 'HH:mm');
 	      vm.dayViewSplit = parseInt(vm.dayViewSplit);
 	      vm.hours = [];
-	      var dayCounter = moment(vm.viewDate)
-	        .clone();
+	      var dayCounter = moment(vm.viewDate).clone();
 
 	      if ($attrs.dayWidth) {
 	        dayCounter = dayCounter.startOf('week');
 	      }
 
-	      dayCounter
-	        .hours(dayViewStart.hours())
-	        .minutes(dayViewStart.minutes())
-	        .seconds(dayViewStart.seconds());
+	      dayCounter = dayCounter.startOf('day').hours(dayViewStart.hours());
 
-	      for (var i = 0; i <= dayViewEnd.diff(dayViewStart, 'hours'); i++) {
-	        vm.hours.push({
+	      var hourLength = dayViewEnd.clone().startOf('hour').diff(dayViewStart.clone().startOf('hour'), 'hours');
+	      var hourChunkLength = (60 / vm.dayViewSplit);
+
+	      for (var i = 0; i <= hourLength; i++) {
+	        var hour = {
 	          label: calendarHelper.formatDate(dayCounter, calendarConfig.dateFormats.hour),
-	          date: dayCounter.clone()
-	        });
+	          date: dayCounter.clone(),
+	          chunkIndexStart: 0,
+	          chunkIndexEnd: hourChunkLength - 1
+	        };
+	        if (i === 0) {
+	          hour.chunkIndexStart += dayViewStart.diff(dayCounter, 'minutes') / vm.dayViewSplit;
+	        } else if (i === hourLength) {
+	          hour.chunkIndexEnd -= dayViewEnd.diff(dayCounter, 'minutes') / vm.dayViewSplit;
+	        }
+	        vm.hours.push(hour);
 	        dayCounter.add(1, 'hour');
 	      }
 	      vm.hourChunks = [];
-	      for (var j = 0; j < (60 / vm.dayViewSplit); j++) {
+	      for (var j = 0; j < hourChunkLength; j++) {
 	        vm.hourChunks.push(j);
 	      }
 	    }
@@ -2109,8 +2116,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function getDayViewHeight(dayViewStart, dayViewEnd, dayViewSplit) {
 	      var dayViewStartM = moment(dayViewStart || '00:00', 'HH:mm');
 	      var dayViewEndM = moment(dayViewEnd || '23:00', 'HH:mm');
-	      var hourHeight = (60 / dayViewSplit) * 30;
-	      return ((dayViewEndM.diff(dayViewStartM, 'hours') + 1) * hourHeight) + 2;
+	      var multiplier = 60 / dayViewSplit / 2;
+	      return dayViewEndM.diff(dayViewStartM, 'minutes') * multiplier;
 	    }
 
 	    function loadTemplates() {
