@@ -179,11 +179,11 @@ A 2 way bound variable that when set to true will open the year or month view ce
 
 ### day-view-start
 
-An interpolated string in the form of hh:mm to start the day view at, e.g. setting it to 06:00 will start the day view at 6am
+An interpolated string in the form of hh:mm to start the day view at, e.g. setting it to 06:00 will start the day view at 6am. Any minutes must be divisible by the `day-view-split` value.
 
 ### day-view-end
 
-An interpolated string in the form of hh:mm to end the day view at, e.g. setting it to 22:00 will end the day view at 10pm
+An interpolated string in the form of hh:mm to end the day view at, e.g. setting it to 22:00 will end the day view at 10pm. Any minutes must be divisible by the `day-view-split` value.
 
 ### day-view-split
 
