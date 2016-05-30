@@ -1,3 +1,13 @@
+<a name="0.20.1"></a>
+## [0.20.1](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.20.0...v0.20.1) (2016-05-30)
+
+
+### Bug Fixes
+
+* **dayView:** allow day view start and end to use minutes rather than just hours ([c98152c](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/c98152c)), closes [#340](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/340)
+
+
+
 <a name="0.20.0"></a>
 # [0.20.0](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.19.6...v0.20.0) (2016-05-13)
 
