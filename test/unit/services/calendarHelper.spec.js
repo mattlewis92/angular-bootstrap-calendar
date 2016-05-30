@@ -582,15 +582,15 @@ describe('calendarHelper', function() {
   });
 
   describe('getDayViewHeight', function() {
-    var dayViewHeight;
 
-    beforeEach(function() {
-      dayViewHeight = calendarHelper.getDayViewHeight('01:00', '22:00', 10);
+    it('should calculate the height of the day view with a 10 minute hour chunk', function() {
+      expect(calendarHelper.getDayViewHeight('01:00', '22:00', 10)).to.equal(3780);
     });
 
-    it('should calculate the height of the day view', function() {
-      expect(dayViewHeight).to.equal(3962);
+    it('should calculate the height of the day view with a 30 minute hour chunk', function() {
+      expect(calendarHelper.getDayViewHeight('01:00', '22:00', 30)).to.equal(1260);
     });
+
   });
 
   describe('getWeekViewWithTimes', function() {
