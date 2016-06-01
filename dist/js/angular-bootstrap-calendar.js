@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-calendar - A pure AngularJS bootstrap themed responsive calendar that can display events and has views for year, month, week and day
- * @version v0.20.1
+ * @version v0.20.2
  * @link https://github.com/mattlewis92/angular-bootstrap-calendar
  * @license MIT
  */
@@ -456,34 +456,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	      dayViewEnd = moment(vm.dayViewEnd || '23:00', 'HH:mm');
 	      vm.dayViewSplit = parseInt(vm.dayViewSplit);
 	      vm.hours = [];
-	      var dayCounter = moment(vm.viewDate).clone();
+	      var dayCounter = moment(vm.viewDate)
+	        .clone();
 
 	      if ($attrs.dayWidth) {
 	        dayCounter = dayCounter.startOf('week');
 	      }
 
-	      dayCounter = dayCounter.startOf('day').hours(dayViewStart.hours());
+	      dayCounter
+	        .hours(dayViewStart.hours())
+	        .minutes(dayViewStart.minutes())
+	        .seconds(dayViewStart.seconds());
 
-	      var hourLength = dayViewEnd.clone().startOf('hour').diff(dayViewStart.clone().startOf('hour'), 'hours');
-	      var hourChunkLength = (60 / vm.dayViewSplit);
-
-	      for (var i = 0; i <= hourLength; i++) {
-	        var hour = {
+	      for (var i = 0; i <= dayViewEnd.diff(dayViewStart, 'hours'); i++) {
+	        vm.hours.push({
 	          label: calendarHelper.formatDate(dayCounter, calendarConfig.dateFormats.hour),
-	          date: dayCounter.clone(),
-	          chunkIndexStart: 0,
-	          chunkIndexEnd: hourChunkLength - 1
-	        };
-	        if (i === 0) {
-	          hour.chunkIndexStart += dayViewStart.diff(dayCounter, 'minutes') / vm.dayViewSplit;
-	        } else if (i === hourLength) {
-	          hour.chunkIndexEnd -= dayViewEnd.diff(dayCounter, 'minutes') / vm.dayViewSplit;
-	        }
-	        vm.hours.push(hour);
+	          date: dayCounter.clone()
+	        });
 	        dayCounter.add(1, 'hour');
 	      }
 	      vm.hourChunks = [];
-	      for (var j = 0; j < hourChunkLength; j++) {
+	      for (var j = 0; j < (60 / vm.dayViewSplit); j++) {
 	        vm.hourChunks.push(j);
 	      }
 	    }
@@ -2033,8 +2026,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function getDayViewHeight(dayViewStart, dayViewEnd, dayViewSplit) {
 	      var dayViewStartM = moment(dayViewStart || '00:00', 'HH:mm');
 	      var dayViewEndM = moment(dayViewEnd || '23:00', 'HH:mm');
-	      var multiplier = 60 / dayViewSplit / 2;
-	      return dayViewEndM.diff(dayViewStartM, 'minutes') * multiplier;
+	      var hourHeight = (60 / dayViewSplit) * 30;
+	      return ((dayViewEndM.diff(dayViewStartM, 'hours') + 1) * hourHeight) + 2;
 	    }
 
 	    function loadTemplates() {
