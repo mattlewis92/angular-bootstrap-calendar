@@ -1,3 +1,14 @@
+<a name="0.20.2"></a>
+## [0.20.2](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.20.1...v0.20.2) (2016-06-01)
+
+
+### Bug Fixes
+
+* **monthView:** dont call on-timespan-click when clicking on an event on the month cell ([a194fb0](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/a194fb0)), closes [#345](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/345)
+
+The previous fix for the day view starting on minutes has also been reverted as it caused several bugs.
+
+
 <a name="0.20.1"></a>
 ## [0.20.1](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.20.0...v0.20.1) (2016-05-30)
 

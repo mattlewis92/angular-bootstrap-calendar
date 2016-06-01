@@ -15,7 +15,7 @@
       on-drag-select-start="vm.onDragSelectStart(vm.getClickedDate(hour.date, vm.dayViewSplit * $index))"
       on-drag-select-move="vm.onDragSelectMove(vm.getClickedDate(hour.date, vm.dayViewSplit * ($index + 1)))"
       on-drag-select-end="vm.onDragSelectEnd(vm.getClickedDate(hour.date, vm.dayViewSplit * ($index + 1)))"
-      ng-if="!vm.dayWidth && $index >= hour.chunkIndexStart && $index <= hour.chunkIndexEnd">
+      ng-if="!vm.dayWidth">
       <div class="cal-day-hour-part-time">
         <strong ng-bind="hour.label" ng-show="$first"></strong>
       </div>
@@ -24,7 +24,7 @@
     <div
       class="cal-day-hour-part"
       ng-repeat="chunk in vm.hourChunks track by chunk"
-      ng-if="vm.dayWidth && $index >= hour.chunkIndexStart && $index <= hour.chunkIndexEnd">
+      ng-if="vm.dayWidth">
       <div class="cal-day-hour-part-time">
         <strong ng-bind="hour.label" ng-show="$first"></strong>
       </div>
