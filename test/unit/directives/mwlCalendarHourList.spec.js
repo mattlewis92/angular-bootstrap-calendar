@@ -143,18 +143,4 @@ describe('mwlCalendarHourList directive', function() {
     expect(MwlCalendarCtrl.dateRangeSelect).to.be.undefined;
   });
 
-  it('should hide any chunks that occur before day view start', function() {
-    expect(MwlCalendarCtrl.hours[0].chunkIndexStart).to.equal(0);
-    scope.dayViewStart = '06:30';
-    scope.$apply();
-    expect(MwlCalendarCtrl.hours[0].chunkIndexStart).to.equal(1);
-  });
-
-  it('should hide any chunks that occur after day view start', function() {
-    expect(MwlCalendarCtrl.hours[MwlCalendarCtrl.hours.length - 1].chunkIndexEnd).to.equal(1);
-    scope.dayViewEnd = '09:30';
-    scope.$apply();
-    expect(MwlCalendarCtrl.hours[MwlCalendarCtrl.hours.length - 1].chunkIndexEnd).to.equal(0);
-  });
-
 });
