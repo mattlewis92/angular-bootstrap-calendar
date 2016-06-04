@@ -37,13 +37,11 @@ angular
     function eventIsValid(event) {
       if (!event.startsAt) {
         $log.warn('Bootstrap calendar: ', 'Event is missing the startsAt field', event);
-      }
-
-      if (!angular.isDate(event.startsAt)) {
+      } else if (!angular.isDate(event.startsAt)) {
         $log.warn('Bootstrap calendar: ', 'Event startsAt should be a javascript date object. Do `new Date(event.startsAt)` to fix it.', event);
       }
 
-      if (angular.isDefined(event.endsAt)) {
+      if (event.endsAt) {
         if (!angular.isDate(event.endsAt)) {
           $log.warn('Bootstrap calendar: ', 'Event endsAt should be a javascript date object. Do `new Date(event.endsAt)` to fix it.', event);
         }
