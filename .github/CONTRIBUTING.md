@@ -8,7 +8,7 @@ Please use the following sources for any questions on how to use the module:
 * For everything else please use [stackoverflow](http://stackoverflow.com/questions/ask/advice) or [gitter](https://gitter.im/mattlewis92/angular-bootstrap-calendar). The github issue tracker is primarily for bug reports + feature requests.
 
 ### Bug reports
-Please include a plunker or something similar that clearly reproduces your problem or your issue may be closed. You can use this as a [starter template](http://plnkr.co/edit/tursHHxWA8SdALaj0Bx6?p=preview).
+Please include a plunker or something similar that clearly reproduces your problem or your issue may be closed. You can use this as a [starter template](http://plnkr.co/edit/LE4F4U7AnnD3tjM9ZH4G?p=preview).
 
 ### Feature requests
 Please clearly describe what you require and your use case. A lot of the time you can use the existing API hooks + custom templates to add your own features. Please check the [examples list](http://mattlewis92.github.io/angular-bootstrap-calendar/) first to see if the feature you've requested has already been implemented. Features that can easily be implemented in userland are unlikely to be accepted.
