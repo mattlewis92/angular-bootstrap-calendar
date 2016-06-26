@@ -38,7 +38,8 @@ angular
         editEventHtml: '=',
         onEditEventClick: '=',
         deleteEventHtml: '=',
-        onDeleteEventClick: '='
+        onDeleteEventClick: '=',
+        cell: '='
       },
       bindToController: true
     };
