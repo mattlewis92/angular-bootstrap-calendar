@@ -61,6 +61,22 @@
         <span ng-bind-html="vm.$sce.trustAsHtml(event.title) | calendarTruncateEventTitle:20:event.height"></span>
       </a>
 
+      <a
+        href="javascript:;"
+        class="event-item-edit"
+        ng-if="vm.editEventHtml && event.editable !== false"
+        ng-bind-html="vm.$sce.trustAsHtml(vm.editEventHtml)"
+        ng-click="vm.onEditEventClick({calendarEvent: event})">
+      </a>
+
+      <a
+        href="javascript:;"
+        class="event-item-delete"
+        ng-if="vm.deleteEventHtml && event.deletable !== false"
+        ng-bind-html="vm.$sce.trustAsHtml(vm.deleteEventHtml)"
+        ng-click="vm.onDeleteEventClick({calendarEvent: event})">
+      </a>
+
     </div>
 
   </div>
