@@ -85,10 +85,12 @@ describe('mwlCalendarHourList directive', function() {
   it('should initialise the date range select', function() {
 
     var date = new Date();
-    MwlCalendarCtrl.onDragSelectStart(date);
+    MwlCalendarCtrl.onDragSelectStart(date, 1);
     expect(MwlCalendarCtrl.dateRangeSelect).to.deep.equal({
+      active: true,
       startDate: date,
-      endDate: date
+      endDate: date,
+      dayIndex: 1
     });
 
   });
