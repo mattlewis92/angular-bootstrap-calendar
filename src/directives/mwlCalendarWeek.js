@@ -4,12 +4,12 @@ var angular = require('angular');
 
 angular
   .module('mwl.calendar')
-  .controller('MwlCalendarWeekCtrl', function($scope, $sce, moment, calendarHelper, calendarConfig) {
+  .controller('MwlCalendarWeekCtrl', function($scope, moment, calendarHelper, calendarConfig, calendarEventTitle) {
 
     var vm = this;
 
     vm.showTimes = calendarConfig.showTimesOnWeekView;
-    vm.$sce = $sce;
+    vm.calendarEventTitle = calendarEventTitle;
 
     $scope.$on('calendar.refreshView', function() {
       vm.dayViewSplit = vm.dayViewSplit || 30;

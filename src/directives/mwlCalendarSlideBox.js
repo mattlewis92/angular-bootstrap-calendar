@@ -4,11 +4,11 @@ var angular = require('angular');
 
 angular
   .module('mwl.calendar')
-  .controller('MwlCalendarSlideBoxCtrl', function($sce, $scope, $timeout, calendarConfig) {
+  .controller('MwlCalendarSlideBoxCtrl', function($scope, $timeout, calendarConfig, calendarEventTitle) {
 
     var vm = this;
-    vm.$sce = $sce;
     vm.calendarConfig = calendarConfig;
+    vm.calendarEventTitle = calendarEventTitle;
 
     vm.isCollapsed = true;
     $scope.$watch('vm.isOpen', function(isOpen) {

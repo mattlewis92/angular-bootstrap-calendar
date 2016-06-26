@@ -227,8 +227,6 @@ angular.module('myModule')
 
     calendarConfig.displayAllMonthEvents = true; //This will display all events on a month view even if they're not in the current month. Default false.
 
-    calendarConfig.displayEventEndTimes = true; //This will display event end times on the month and year views. Default false.
-
     calendarConfig.showTimesOnWeekView = true; //Make the week view more like the day view, with the caveat that event end times are ignored.
 
   });
