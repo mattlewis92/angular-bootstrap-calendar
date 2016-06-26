@@ -10,7 +10,7 @@ angular
 
     vm.$sce = $sce;
 
-    $scope.$on('calendar.refreshView', function() {
+    function refreshView() {
       vm.dayViewSplit = vm.dayViewSplit || 30;
       vm.dayViewHeight = calendarHelper.getDayViewHeight(
         vm.dayViewStart,
@@ -34,7 +34,15 @@ angular
         return !event.allDay;
       });
 
-    });
+    }
+
+    $scope.$on('calendar.refreshView', refreshView);
+
+    $scope.$watchGroup([
+      'vm.dayViewStart',
+      'vm.dayViewEnd',
+      'vm.dayViewSplit'
+    ], refreshView);
 
     vm.eventDragComplete = function(event, minuteChunksMoved) {
       var minutesDiff = minuteChunksMoved * vm.dayViewSplit;
