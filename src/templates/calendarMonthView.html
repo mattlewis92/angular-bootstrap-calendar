@@ -16,7 +16,7 @@
         class="cal-cell1 cal-cell {{ day.highlightClass }}"
         ng-click="vm.dayClicked(day, false, $event)"
         ng-class="{pointer: day.events.length > 0}">
-        <div mwl-dynamic-directive-template name="calendarMonthCell" overrides="vm.customTemplateUrls"></div>
+        <ng-include src="vm.customTemplateUrls.calendarMonthCell || vm.calendarConfig.templates.calendarMonthCell"></ng-include>
       </div>
     </div>
 
