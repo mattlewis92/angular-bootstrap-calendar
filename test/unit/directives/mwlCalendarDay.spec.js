@@ -31,6 +31,7 @@ describe('mwlCalendarDay directive', function() {
     vm.dayViewsplit = 30;
     vm.events = [
       {
+        $id: 0,
         title: 'An event',
         type: 'warning',
         startsAt: moment(calendarDay).startOf('week').subtract(2, 'days').add(8, 'hours').toDate(),
@@ -38,6 +39,7 @@ describe('mwlCalendarDay directive', function() {
         draggable: true,
         resizable: true
       }, {
+        $id: 1,
         title: '<i class="glyphicon glyphicon-asterisk"></i> <span class="text-primary">Another event</span>, with a <i>html</i> title',
         type: 'info',
         startsAt: moment(calendarDay).subtract(1, 'day').toDate(),
@@ -45,6 +47,7 @@ describe('mwlCalendarDay directive', function() {
         draggable: true,
         resizable: true
       }, {
+        $id: 2,
         title: 'This is a really long event title that occurs on every year',
         type: 'important',
         startsAt: moment(calendarDay).startOf('day').add(7, 'hours').toDate(),
@@ -136,6 +139,15 @@ describe('mwlCalendarDay directive', function() {
   it('should update the temporary start position while resizing', function() {
     MwlCalendarCtrl.eventResized(scope.events[0], 'start', 1);
     expect(scope.events[0].tempStartsAt).to.eql(new Date(2015, 3, 24, 8, 30));
+  });
+
+  it('should update the events when the day view split changes', function() {
+    scope.viewDate = moment(calendarDay).startOf('day').add(1, 'hour').toDate();
+    scope.$apply();
+    scope.$broadcast('calendar.refreshView');
+    scope.dayViewSplit = 15;
+    scope.$apply();
+    expect(MwlCalendarCtrl.nonAllDayEvents[0].height).to.equal(2040);
   });
 
 });

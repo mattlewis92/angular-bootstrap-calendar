@@ -4,13 +4,13 @@ var angular = require('angular');
 
 angular
   .module('mwl.calendar')
-  .controller('MwlCalendarDayCtrl', function($scope, $sce, moment, calendarHelper) {
+  .controller('MwlCalendarDayCtrl', function($scope, moment, calendarHelper, calendarEventTitle) {
 
     var vm = this;
 
-    vm.$sce = $sce;
+    vm.calendarEventTitle = calendarEventTitle;
 
-    $scope.$on('calendar.refreshView', function() {
+    function refreshView() {
       vm.dayViewSplit = vm.dayViewSplit || 30;
       vm.dayViewHeight = calendarHelper.getDayViewHeight(
         vm.dayViewStart,
@@ -34,7 +34,15 @@ angular
         return !event.allDay;
       });
 
-    });
+    }
+
+    $scope.$on('calendar.refreshView', refreshView);
+
+    $scope.$watchGroup([
+      'vm.dayViewStart',
+      'vm.dayViewEnd',
+      'vm.dayViewSplit'
+    ], refreshView);
 
     vm.eventDragComplete = function(event, minuteChunksMoved) {
       var minutesDiff = minuteChunksMoved * vm.dayViewSplit;
@@ -80,10 +88,10 @@ angular
     };
 
   })
-  .directive('mwlCalendarDay', function(calendarConfig) {
+  .directive('mwlCalendarDay', function() {
 
     return {
-      templateUrl: calendarConfig.templates.calendarDayView,
+      template: '<div mwl-dynamic-directive-template name="calendarDayView" overrides="vm.customTemplateUrls"></div>',
       restrict: 'E',
       require: '^mwlCalendar',
       scope: {
@@ -96,7 +104,12 @@ angular
         dayViewStart: '=',
         dayViewEnd: '=',
         dayViewSplit: '=',
-        dayViewEventChunkSize: '='
+        dayViewEventChunkSize: '=',
+        onEditEventClick: '=',
+        onDeleteEventClick: '=',
+        editEventHtml: '=',
+        deleteEventHtml: '=',
+        customTemplateUrls: '=?'
       },
       controller: 'MwlCalendarDayCtrl as vm',
       bindToController: true

@@ -16,7 +16,7 @@
         class="cal-cell1 cal-cell {{ day.highlightClass }}"
         ng-click="vm.dayClicked(day, false, $event)"
         ng-class="{pointer: day.events.length > 0}">
-        <ng-include src="vm.calendarConfig.templates.calendarMonthCell"></ng-include>
+        <div mwl-dynamic-directive-template name="calendarMonthCell" overrides="vm.customTemplateUrls"></div>
       </div>
     </div>
 
@@ -27,7 +27,9 @@
       edit-event-html="vm.editEventHtml"
       on-edit-event-click="vm.onEditEventClick"
       delete-event-html="vm.deleteEventHtml"
-      on-delete-event-click="vm.onDeleteEventClick">
+      on-delete-event-click="vm.onDeleteEventClick"
+      cell="vm.view[vm.openDayIndex]"
+      custom-template-urls="vm.customTemplateUrls">
     </mwl-calendar-slide-box>
 
   </div>

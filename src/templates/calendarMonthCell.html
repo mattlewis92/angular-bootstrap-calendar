@@ -29,7 +29,7 @@
     <i class="fa fa-chevron-up"></i>
   </div>
 
-  <ng-include src="vm.calendarConfig.templates.calendarMonthCellEvents"></ng-include>
+  <div mwl-dynamic-directive-template name="calendarMonthCellEvents" overrides="vm.customTemplateUrls"></div>
 
   <div id="cal-week-box" ng-if="$first && rowHovered">
     <span ng-bind="vm.calendarConfig.i18nStrings.weekNumber.replace('{week}', day.date.clone().add(1, 'day').isoWeek())"></span>

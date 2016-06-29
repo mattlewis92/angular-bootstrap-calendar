@@ -74,11 +74,15 @@ angular
       return moment(baseDate).clone().add(minutes, 'minutes').add(days || 0, 'days').toDate();
     };
 
-    vm.onDragSelectStart = function(date) {
-      vm.dateRangeSelect = {
-        startDate: date,
-        endDate: date
-      };
+    vm.onDragSelectStart = function(date, dayIndex) {
+      if (!vm.dateRangeSelect) {
+        vm.dateRangeSelect = {
+          active: true,
+          startDate: date,
+          endDate: date,
+          dayIndex: dayIndex
+        };
+      }
     };
 
     vm.onDragSelectMove = function(date) {
@@ -96,11 +100,11 @@ angular
     };
 
   })
-  .directive('mwlCalendarHourList', function(calendarConfig) {
+  .directive('mwlCalendarHourList', function() {
 
     return {
       restrict: 'E',
-      templateUrl: calendarConfig.templates.calendarHourList,
+      template: '<div mwl-dynamic-directive-template name="calendarHourList" overrides="vm.customTemplateUrls"></div>',
       controller: 'MwlCalendarHourListCtrl as vm',
       scope: {
         viewDate: '=',
@@ -110,7 +114,8 @@ angular
         dayWidth: '=?',
         onTimespanClick: '=',
         onDateRangeSelect: '=',
-        onEventTimesChanged: '='
+        onEventTimesChanged: '=',
+        customTemplateUrls: '=?'
       },
       bindToController: true
     };

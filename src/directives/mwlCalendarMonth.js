@@ -4,10 +4,11 @@ var angular = require('angular');
 
 angular
   .module('mwl.calendar')
-  .controller('MwlCalendarMonthCtrl', function($scope, moment, calendarHelper, calendarConfig) {
+  .controller('MwlCalendarMonthCtrl', function($scope, moment, calendarHelper, calendarConfig, calendarEventTitle) {
 
     var vm = this;
     vm.calendarConfig = calendarConfig;
+    vm.calendarEventTitle = calendarEventTitle;
     vm.openRowIndex = null;
 
     $scope.$on('calendar.refreshView', function() {
@@ -92,10 +93,10 @@ angular
     };
 
   })
-  .directive('mwlCalendarMonth', function(calendarConfig) {
+  .directive('mwlCalendarMonth', function() {
 
     return {
-      templateUrl: calendarConfig.templates.calendarMonthView,
+      template: '<div mwl-dynamic-directive-template name="calendarMonthView" overrides="vm.customTemplateUrls"></div>',
       restrict: 'E',
       require: '^mwlCalendar',
       scope: {
@@ -110,7 +111,8 @@ angular
         cellIsOpen: '=',
         onTimespanClick: '=',
         cellModifier: '=',
-        slideBoxDisabled: '='
+        slideBoxDisabled: '=',
+        customTemplateUrls: '=?'
       },
       controller: 'MwlCalendarMonthCtrl as vm',
       link: function(scope, element, attrs, calendarCtrl) {

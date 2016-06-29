@@ -11,6 +11,7 @@ describe('mwlCalendarWeek directive', function() {
     directiveScope,
     showModal,
     calendarHelper,
+    clock,
     template =
       '<mwl-calendar-week ' +
       'events="events" ' +
@@ -69,6 +70,7 @@ describe('mwlCalendarWeek directive', function() {
   beforeEach(angular.mock.module('mwl.calendar'));
 
   beforeEach(angular.mock.inject(function($compile, _$rootScope_, _calendarHelper_) {
+    clock = sinon.useFakeTimers(new Date('October 20, 2015 11:10:00').getTime());
     $rootScope = _$rootScope_;
     calendarHelper = _calendarHelper_;
     scope = $rootScope.$new();
@@ -80,6 +82,10 @@ describe('mwlCalendarWeek directive', function() {
     directiveScope = element.isolateScope();
     MwlCalendarCtrl = directiveScope.vm;
   }));
+
+  afterEach(function() {
+    clock.restore();
+  });
 
   it('should get the new week view when calendar refreshes', function() {
     sinon.stub(calendarHelper, 'getDayViewHeight').returns(1000);

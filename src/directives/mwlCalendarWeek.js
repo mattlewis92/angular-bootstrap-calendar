@@ -4,12 +4,12 @@ var angular = require('angular');
 
 angular
   .module('mwl.calendar')
-  .controller('MwlCalendarWeekCtrl', function($scope, $sce, moment, calendarHelper, calendarConfig) {
+  .controller('MwlCalendarWeekCtrl', function($scope, moment, calendarHelper, calendarConfig, calendarEventTitle) {
 
     var vm = this;
 
     vm.showTimes = calendarConfig.showTimesOnWeekView;
-    vm.$sce = $sce;
+    vm.calendarEventTitle = calendarEventTitle;
 
     $scope.$on('calendar.refreshView', function() {
       vm.dayViewSplit = vm.dayViewSplit || 30;
@@ -80,10 +80,10 @@ angular
     };
 
   })
-  .directive('mwlCalendarWeek', function(calendarConfig) {
+  .directive('mwlCalendarWeek', function() {
 
     return {
-      templateUrl: calendarConfig.templates.calendarWeekView,
+      template: '<div mwl-dynamic-directive-template name="calendarWeekView" overrides="vm.customTemplateUrls"></div>',
       restrict: 'E',
       require: '^mwlCalendar',
       scope: {
@@ -95,7 +95,9 @@ angular
         dayViewEnd: '=',
         dayViewSplit: '=',
         dayViewEventChunkSize: '=',
-        onTimespanClick: '='
+        onTimespanClick: '=',
+        onDateRangeSelect: '=',
+        customTemplateUrls: '=?'
       },
       controller: 'MwlCalendarWeekCtrl as vm',
       link: function(scope, element, attrs, calendarCtrl) {

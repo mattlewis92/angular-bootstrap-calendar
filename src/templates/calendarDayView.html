@@ -16,7 +16,7 @@
             <a
               href="javascript:;"
               class="event-item"
-              ng-bind-html="vm.$sce.trustAsHtml(event.title)">
+              ng-bind-html="vm.calendarEventTitle.dayView(event) | calendarTrustAsHtml">
             </a>
           </div>
         </div>
@@ -35,7 +35,8 @@
       on-timespan-click="vm.onTimespanClick"
       on-date-range-select="vm.onDateRangeSelect"
       on-event-times-changed="vm.onEventTimesChanged"
-      view-date="vm.viewDate">
+      view-date="vm.viewDate"
+      custom-template-urls="vm.customTemplateUrls">
     </mwl-calendar-hour-list>
 
     <div
@@ -58,7 +59,23 @@
         <span ng-bind="(event.tempStartsAt || event.startsAt) | calendarDate:'time':true"></span>
       </span>
       <a href="javascript:;" class="event-item" ng-click="vm.onEventClick({calendarEvent: event})">
-        <span ng-bind-html="vm.$sce.trustAsHtml(event.title) | calendarTruncateEventTitle:20:event.height"></span>
+        <span ng-bind-html="vm.calendarEventTitle.dayView(event) | calendarTrustAsHtml"></span>
+      </a>
+
+      <a
+        href="javascript:;"
+        class="event-item-edit"
+        ng-if="vm.editEventHtml && event.editable !== false"
+        ng-bind-html="vm.editEventHtml | calendarTrustAsHtml"
+        ng-click="vm.onEditEventClick({calendarEvent: event})">
+      </a>
+
+      <a
+        href="javascript:;"
+        class="event-item-delete"
+        ng-if="vm.deleteEventHtml && event.deletable !== false"
+        ng-bind-html="vm.deleteEventHtml | calendarTrustAsHtml"
+        ng-click="vm.onDeleteEventClick({calendarEvent: event})">
       </a>
 
     </div>

@@ -1,5 +1,6 @@
 .cal-week-box {
   position: relative;
+
   [data-event-class] {
     white-space: nowrap;
     height: 30px;
@@ -15,6 +16,35 @@
   .cal-day-panel {
     border: 0px !important;
   }
+
+}
+
+.cal-week-box:not(.cal-day-box) {
+
+  .cal-row-fluid {
+    margin-bottom: 2px;
+  }
+
+  .cal-row-fluid:hover,
+  [class*="cal-cell"]:hover {
+    background-color: inherit !important;
+  }
+
+  [data-event-class] {
+    margin-left: 2px;
+    margin-right: 2px;
+  }
+
+  .border-left-rounded {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
+
+  .border-right-rounded {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+
 }
 
 .cal-week-box.cal-day-box {

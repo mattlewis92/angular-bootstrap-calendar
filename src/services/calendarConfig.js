@@ -46,7 +46,6 @@ angular
       return this.allDateFormats[this.dateFormatter].title;
     },
     dateFormatter: 'angular',
-    displayEventEndTimes: false,
     showTimesOnWeekView: false,
     displayAllMonthEvents: false,
     i18nStrings: {

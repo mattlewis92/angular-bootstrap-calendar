@@ -37,41 +37,46 @@
       day-width="vm.dayColumnDimensions.width"
       view-date="vm.viewDate"
       on-timespan-click="vm.onTimespanClick"
+      on-date-range-select="vm.onDateRangeSelect"
+      custom-template-urls="vm.customTemplateUrls"
       ng-if="vm.showTimes">
     </mwl-calendar-hour-list>
 
-    <div class="row">
+    <div class="row" ng-repeat="row in vm.view.eventRows track by $index">
       <div class="col-xs-12">
-        <div
-          class="cal-row-fluid"
-          ng-repeat="event in vm.view.events track by event.$id">
+        <div class="cal-row-fluid">
           <div
-            ng-class="'cal-cell' + (vm.showTimes ? 1 : event.daySpan) + (vm.showTimes ? '' : ' cal-offset' + event.dayOffset) + ' day-highlight dh-event-' + event.type + ' ' + event.cssClass"
+            ng-repeat="eventRow in row.row track by eventRow.event.$id"
+            ng-class="'cal-cell' + (vm.showTimes ? 1 : eventRow.span) + (vm.showTimes ? '' : ' cal-offset' + eventRow.offset)"
             ng-style="{
-              top: vm.showTimes ? ((event.top + 2) + 'px') : 'auto',
+              top: vm.showTimes ? ((eventRow.event.top + 2) + 'px') : 'auto',
               position: vm.showTimes ? 'absolute' : 'inherit',
               width: vm.showTimes ? (vm.dayColumnDimensions.width + 'px') : '',
-              left: vm.showTimes ? (vm.dayColumnDimensions.width * event.dayOffset) + 15 + 'px' : ''
-            }"
-            data-event-class
-            mwl-draggable="event.draggable === true"
-            axis="vm.showTimes ? 'xy' : 'x'"
-            snap-grid="vm.showTimes ? {x: vm.dayColumnDimensions.width, y: vm.dayViewEventChunkSize || 30} : {x: vm.dayColumnDimensions.width}"
-            on-drag="vm.tempTimeChanged(event, y / 30)"
-            on-drag-end="vm.weekDragged(event, x / vm.dayColumnDimensions.width, y / 30)"
-            mwl-resizable="event.resizable === true && event.endsAt && !vm.showTimes"
-            resize-edges="{left: true, right: true}"
-            on-resize-end="vm.weekResized(event, edge, x / vm.dayColumnDimensions.width)">
-            <strong ng-bind="(event.tempStartsAt || event.startsAt) | calendarDate:'time':true" ng-show="vm.showTimes"></strong>
-            <a
-              href="javascript:;"
-              ng-click="vm.onEventClick({calendarEvent: event})"
-              class="event-item"
-              ng-bind-html="vm.$sce.trustAsHtml(event.title)"
-              uib-tooltip-html="event.title | calendarTrustAsHtml"
-              tooltip-placement="left"
-              tooltip-append-to-body="true">
-            </a>
+              left: vm.showTimes ? (vm.dayColumnDimensions.width * eventRow.offset) + 15 + 'px' : ''
+            }">
+            <div
+              class="day-highlight"
+              ng-class="['dh-event-' + eventRow.event.type, eventRow.event.cssClass, eventRow.extendsLeft ? '' : 'border-left-rounded', eventRow.extendsRight ? '' : 'border-right-rounded']"
+              data-event-class
+              mwl-draggable="eventRow.event.draggable === true"
+              axis="vm.showTimes ? 'xy' : 'x'"
+              snap-grid="vm.showTimes ? {x: vm.dayColumnDimensions.width, y: vm.dayViewEventChunkSize || 30} : {x: vm.dayColumnDimensions.width}"
+              on-drag="vm.tempTimeChanged(eventRow.event, y / 30)"
+              on-drag-end="vm.weekDragged(eventRow.event, x / vm.dayColumnDimensions.width, y / 30)"
+              mwl-resizable="eventRow.event.resizable === true && eventRow.event.endsAt && !vm.showTimes"
+              resize-edges="{left: true, right: true}"
+              on-resize-end="vm.weekResized(eventRow.event, edge, x / vm.dayColumnDimensions.width)">
+              <strong ng-bind="(eventRow.event.tempStartsAt || eventRow.event.startsAt) | calendarDate:'time':true" ng-show="vm.showTimes"></strong>
+              <a
+                href="javascript:;"
+                ng-click="vm.onEventClick({calendarEvent: eventRow.event})"
+                class="event-item"
+                ng-bind-html="vm.calendarEventTitle.weekView(eventRow.event) | calendarTrustAsHtml"
+                uib-tooltip-html="vm.calendarEventTitle.weekViewTooltip(eventRow.event) | calendarTrustAsHtml"
+                tooltip-placement="left"
+                tooltip-append-to-body="true">
+              </a>
+            </div>
           </div>
         </div>
       </div>
