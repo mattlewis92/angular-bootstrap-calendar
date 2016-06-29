@@ -313,7 +313,6 @@ angular
       var flattenedEvents = [];
       weekView.eventRows.forEach(function(row) {
         row.row.forEach(function(eventRow) {
-          eventRow.event.dayOffset = eventRow.offset;
           flattenedEvents.push(eventRow.event);
         });
       });
@@ -332,9 +331,13 @@ angular
       });
       weekView.eventRows = [{
         row: newEvents.map(function(event) {
-          var offset = event.dayOffset;
-          delete event.dayOffset;
-          return {event: event, offset: offset};
+          return {
+            event: event,
+            offset: calendarUtils.getDayOffset(
+              {start: event.startsAt, end: event.endsAt},
+              moment(viewDate).startOf('week')
+            )
+          };
         })
       }];
       return weekView;
