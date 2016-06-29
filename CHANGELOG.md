@@ -1,3 +1,13 @@
+<a name="0.21.2"></a>
+## [0.21.2](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.21.1...v0.21.2) (2016-06-29)
+
+
+### Bug Fixes
+
+* **weekViewWithTimes:** put events in the correct columns ([06b0181](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/06b0181))
+
+
+
 <a name="0.21.1"></a>
 ## [0.21.1](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.21.0...v0.21.1) (2016-06-29)
 
