@@ -85,7 +85,6 @@
     }
   },
   "dependencies": {
-    "calendar-utils": "0.0.1",
-    "es6-set": "~0.1.4"
+    "calendar-utils": "0.0.2"
   }
 }

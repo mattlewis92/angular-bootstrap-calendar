@@ -1,7 +1,6 @@
 'use strict';
 
 var angular = require('angular');
-require('es6-set/implement');
 var calendarUtils = require('calendar-utils');
 
 angular
