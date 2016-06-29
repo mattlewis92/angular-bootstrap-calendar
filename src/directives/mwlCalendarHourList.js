@@ -100,11 +100,11 @@ angular
     };
 
   })
-  .directive('mwlCalendarHourList', function(calendarConfig) {
+  .directive('mwlCalendarHourList', function() {
 
     return {
       restrict: 'E',
-      templateUrl: calendarConfig.templates.calendarHourList,
+      template: '<div mwl-dynamic-directive-template name="calendarHourList" overrides="vm.customTemplateUrls"></div>',
       controller: 'MwlCalendarHourListCtrl as vm',
       scope: {
         viewDate: '=',
@@ -114,7 +114,8 @@ angular
         dayWidth: '=?',
         onTimespanClick: '=',
         onDateRangeSelect: '=',
-        onEventTimesChanged: '='
+        onEventTimesChanged: '=',
+        customTemplateUrls: '=?'
       },
       bindToController: true
     };

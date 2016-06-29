@@ -205,6 +205,19 @@ An optional expression that is evaluated on each cell generated for the year and
 
 If set it true it will disable the slidebox on the month and year views
 
+### custom-template-urls
+
+An object where the key is the template name to override and the value is a path to a custom template for that calendar instance. If not set it will fallback to the value of `calendarConfig.templates`.
+
+For example, to change the month view template on just one instance of the month view:
+```
+// in your controller
+$templateCache.put('my-custom-template.html', 'Custom month view template here');
+
+// in your template
+<mwl-calendar custom-template-urls="{calendarMonthView: 'my-custom-template.html'}"></mwl-calendar>
+```
+
 ## Configuring the calendar default config
 
 You can easily customise the date formats and i18n strings used throughout the calendar by using the `calendarConfig` value. Please note that these example formats are those used by moment.js and these won't work if using angular as the date formatter. Example usage:
@@ -215,7 +228,7 @@ angular.module('myModule')
 
     console.log(calendarConfig); //view all available config
 
-    calendarConfig.templates.calendarMonthView = 'path/to/custom/template.html'; //change the month view template to a custom template
+    calendarConfig.templates.calendarMonthView = 'path/to/custom/template.html'; //change the month view template globally to a custom template
 
     calendarConfig.dateFormatter = 'moment'; //use either moment or angular to format dates on the calendar. Default angular. Setting this will override any date formats you have already set.
 

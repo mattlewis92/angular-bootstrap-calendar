@@ -19,11 +19,11 @@ angular
     });
 
   })
-  .directive('mwlCalendarSlideBox', function(calendarConfig) {
+  .directive('mwlCalendarSlideBox', function() {
 
     return {
       restrict: 'E',
-      templateUrl: calendarConfig.templates.calendarSlideBox,
+      template: '<div mwl-dynamic-directive-template name="calendarSlideBox" overrides="vm.customTemplateUrls"></div>',
       replace: true,
       controller: 'MwlCalendarSlideBoxCtrl as vm',
       require: ['^?mwlCalendarMonth', '^?mwlCalendarYear'],
@@ -39,7 +39,8 @@ angular
         onEditEventClick: '=',
         deleteEventHtml: '=',
         onDeleteEventClick: '=',
-        cell: '='
+        cell: '=',
+        customTemplateUrls: '=?'
       },
       bindToController: true
     };

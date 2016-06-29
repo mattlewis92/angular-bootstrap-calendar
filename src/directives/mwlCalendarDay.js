@@ -88,10 +88,10 @@ angular
     };
 
   })
-  .directive('mwlCalendarDay', function(calendarConfig) {
+  .directive('mwlCalendarDay', function() {
 
     return {
-      templateUrl: calendarConfig.templates.calendarDayView,
+      template: '<div mwl-dynamic-directive-template name="calendarDayView" overrides="vm.customTemplateUrls"></div>',
       restrict: 'E',
       require: '^mwlCalendar',
       scope: {
@@ -108,7 +108,8 @@ angular
         onEditEventClick: '=',
         onDeleteEventClick: '=',
         editEventHtml: '=',
-        deleteEventHtml: '='
+        deleteEventHtml: '=',
+        customTemplateUrls: '=?'
       },
       controller: 'MwlCalendarDayCtrl as vm',
       bindToController: true

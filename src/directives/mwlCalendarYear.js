@@ -65,10 +65,10 @@ angular
     };
 
   })
-  .directive('mwlCalendarYear', function(calendarConfig) {
+  .directive('mwlCalendarYear', function() {
 
     return {
-      templateUrl: calendarConfig.templates.calendarYearView,
+      template: '<div mwl-dynamic-directive-template name="calendarYearView" overrides="vm.customTemplateUrls"></div>',
       restrict: 'E',
       require: '^mwlCalendar',
       scope: {
@@ -83,7 +83,8 @@ angular
         cellIsOpen: '=',
         onTimespanClick: '=',
         cellModifier: '=',
-        slideBoxDisabled: '='
+        slideBoxDisabled: '=',
+        customTemplateUrls: '=?'
       },
       controller: 'MwlCalendarYearCtrl as vm',
       link: function(scope, element, attrs, calendarCtrl) {

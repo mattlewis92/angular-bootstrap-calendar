@@ -80,10 +80,10 @@ angular
     };
 
   })
-  .directive('mwlCalendarWeek', function(calendarConfig) {
+  .directive('mwlCalendarWeek', function() {
 
     return {
-      templateUrl: calendarConfig.templates.calendarWeekView,
+      template: '<div mwl-dynamic-directive-template name="calendarWeekView" overrides="vm.customTemplateUrls"></div>',
       restrict: 'E',
       require: '^mwlCalendar',
       scope: {
@@ -96,7 +96,8 @@ angular
         dayViewSplit: '=',
         dayViewEventChunkSize: '=',
         onTimespanClick: '=',
-        onDateRangeSelect: '='
+        onDateRangeSelect: '=',
+        customTemplateUrls: '=?'
       },
       controller: 'MwlCalendarWeekCtrl as vm',
       link: function(scope, element, attrs, calendarCtrl) {

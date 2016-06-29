@@ -113,10 +113,10 @@ angular
     });
 
   })
-  .directive('mwlCalendar', function(calendarConfig) {
+  .directive('mwlCalendar', function() {
 
     return {
-      templateUrl: calendarConfig.templates.calendar,
+      template: '<div mwl-dynamic-directive-template name="calendar" overrides="vm.customTemplateUrls"></div>',
       restrict: 'E',
       scope: {
         events: '=',
@@ -127,6 +127,7 @@ angular
         deleteEventHtml: '=?',
         cellIsOpen: '=?',
         slideBoxDisabled: '=?',
+        customTemplateUrls: '=?',
         onEventClick: '&',
         onEventTimesChanged: '&',
         onEditEventClick: '&',
