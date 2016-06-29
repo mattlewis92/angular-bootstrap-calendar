@@ -445,7 +445,8 @@ describe('calendarHelper', function() {
     });
 
     it('should only contain events for that week', function() {
-      expect(weekView.events).to.eql([events[0], events[1]]);
+      expect(weekView.eventRows[0].row[0].event).to.eql(events[0]);
+      expect(weekView.eventRows[1].row[0].event).to.eql(events[1]);
     });
 
     describe('setting the correct span and offset', function() {
@@ -455,8 +456,8 @@ describe('calendarHelper', function() {
           startsAt: new Date(2015, 9, 20, 1),
           endsAt: new Date(2015, 9, 21, 15)
         }], calendarDay);
-        expect(weekView.events[0].daySpan).to.equal(2);
-        expect(weekView.events[0].dayOffset).to.equal(2);
+        expect(weekView.eventRows[0].row[0].span).to.equal(2);
+        expect(weekView.eventRows[0].row[0].offset).to.equal(2);
       });
 
       it('should pass when the event starts before the current week view and ends within it', function() {
@@ -464,8 +465,8 @@ describe('calendarHelper', function() {
           startsAt: new Date(2015, 8, 20, 1),
           endsAt: new Date(2015, 9, 21, 15)
         }], calendarDay);
-        expect(weekView.events[0].daySpan).to.equal(4);
-        expect(weekView.events[0].dayOffset).to.equal(0);
+        expect(weekView.eventRows[0].row[0].span).to.equal(4);
+        expect(weekView.eventRows[0].row[0].offset).to.equal(0);
       });
 
       it('should pass when the event starts before the current week view and ends after the end of the week', function() {
@@ -473,8 +474,8 @@ describe('calendarHelper', function() {
           startsAt: new Date(2015, 8, 20, 1),
           endsAt: new Date(2015, 10, 21, 15)
         }], calendarDay);
-        expect(weekView.events[0].daySpan).to.equal(7);
-        expect(weekView.events[0].dayOffset).to.equal(0);
+        expect(weekView.eventRows[0].row[0].span).to.equal(7);
+        expect(weekView.eventRows[0].row[0].offset).to.equal(0);
       });
 
       it('should pass when the event starts within the current week but ends after it', function() {
@@ -482,8 +483,8 @@ describe('calendarHelper', function() {
           startsAt: new Date(2015, 9, 20, 1),
           endsAt: new Date(2015, 10, 21, 15)
         }], calendarDay);
-        expect(weekView.events[0].daySpan).to.equal(5);
-        expect(weekView.events[0].dayOffset).to.equal(2);
+        expect(weekView.eventRows[0].row[0].span).to.equal(5);
+        expect(weekView.eventRows[0].row[0].offset).to.equal(2);
       });
 
     });
@@ -495,8 +496,8 @@ describe('calendarHelper', function() {
           startsAt: new Date(2016, 0, 9, 1),
           recursOn: 'month'
         }], new Date(2016, 1, 9, 1));
-        expect(weekView.events[0].daySpan).to.equal(1);
-        expect(weekView.events[0].dayOffset).to.equal(2);
+        expect(weekView.eventRows[0].row[0].span).to.equal(1);
+        expect(weekView.eventRows[0].row[0].offset).to.equal(2);
       });
 
     });
@@ -620,36 +621,36 @@ describe('calendarHelper', function() {
     it('should calculate the week view with times', function() {
       var expectedEventsWeekView = [
         {
-          startsAt: new Date('October 19, 2015 11:00:00'),
-          endsAt: new Date('October 21, 2015 11:00:00'),
-          daySpan: 3,
-          dayOffset: 1,
-          top: 658,
-          height: 782,
-          left: 0
+          event: {
+            top: 658,
+            height: 782,
+            left: 0,
+            startsAt: new Date('October 19, 2015 11:00:00'),
+            endsAt: new Date('October 21, 2015 11:00:00')
+          }
         },
         {
-          startsAt: new Date('October 20, 2015 11:00:00'),
-          endsAt: new Date('October 21, 2015 11:00:00'),
-          daySpan: 2,
-          dayOffset: 2,
-          top: 658,
-          height: 782,
-          left: 0
+          event: {
+            top: 658,
+            height: 782,
+            left: 0,
+            startsAt: new Date('October 20, 2015 11:00:00'),
+            endsAt: new Date('October 21, 2015 11:00:00')
+          }
         },
         {
-          startsAt: new Date('October 20, 2015 11:00:00'),
-          endsAt: new Date('October 20, 2015 12:00:00'),
-          daySpan: 1,
-          dayOffset: 2,
-          top: 658,
-          height: 60,
-          left: 150
+          event: {
+            startsAt: new Date('October 20, 2015 11:00:00'),
+            endsAt: new Date('October 20, 2015 12:00:00'),
+            top: 658,
+            height: 60,
+            left: 150
+          }
         }
       ];
 
       expect(weekViewWithTimes.days.length).to.equal(7);
-      expect(weekViewWithTimes.events).to.eql(expectedEventsWeekView);
+      expect(weekViewWithTimes.eventRows[0].row).to.eql(expectedEventsWeekView);
     });
   });
 

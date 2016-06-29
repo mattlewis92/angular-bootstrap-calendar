@@ -32,7 +32,7 @@
     "html-loader": "~0.4.0",
     "htmlhint-loader": "~0.1.0",
     "istanbul-instrumenter-loader": "~0.2.0",
-    "karma": "~1.1.0",
+    "karma": "~0.13.22",
     "karma-chai-plugins": "~0.7.0",
     "karma-coverage": "~1.0.0",
     "karma-mocha": "~1.1.1",
@@ -82,5 +82,9 @@
     "commitizen": {
       "path": "node_modules/cz-conventional-changelog"
     }
+  },
+  "dependencies": {
+    "calendar-utils": "0.0.1",
+    "es6-set": "~0.1.4"
   }
 }
