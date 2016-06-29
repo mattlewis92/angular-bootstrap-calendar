@@ -1,3 +1,36 @@
+<a name="0.21.0"></a>
+# [0.21.0](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.20.2...v0.21.0) (2016-06-29)
+
+
+### Bug Fixes
+
+* **bower:** ignore non source files ([a78b3fd](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/a78b3fd)), closes [#374](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/374)
+* **dayView:** support updating the day view chunk and split options on the fly ([12d99a2](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/12d99a2)), closes [#358](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/358)
+* **dependencies:** remove bootstrap as a peer dependency so other bootstrap CSS libs can be used ([7e74ddd](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/7e74ddd)), closes [#375](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/375)
+* **monthView:** bind once to the ng-include template value so it doesn't change after render ([48f3869](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/48f3869)), closes [#346](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/346)
+* **npm:** change browser to main for compatibility with more module bundlers ([88c1e9a](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/88c1e9a)), closes [#371](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/371)
+* **npm:** only publish dist folder to npm ([3c4913d](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/3c4913d)), closes [#374](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/374)
+* **warnings:** dont log a warning that the event ends at is missing if it is a falsey value ([da101ab](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/da101ab)), closes [#348](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/348)
+
+### Features
+
+* **calendarEventTitle:** abstract all event title logic into a service that can easily be overridde ([a8ad01a](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/a8ad01a)), closes [#349](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/349) [#361](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/361)
+* **calendarSlideBox:** expose the current month or year cell to the slide box controller for use in ([a6d2bdb](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/a6d2bdb)), closes [#369](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/369)
+* **custom-template-urls:** allow setting of custom template on a per calendar instance basis ([0ae7661](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/0ae7661)), closes [#355](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/355)
+* **dayView:** add edit and delete actions to day view events ([08c4292](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/08c4292)), closes [#351](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/351)
+* **onDateRangeSelect:** support dragd and selecting a range on the week view with times ([1efeee0](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/1efeee0)), closes [#366](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/366)
+* **weekView:** bucket sort events into columns rather than having each event sit on its own lin ([fdaea2d](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/fdaea2d)), closes [#381](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/381)
+
+
+### BREAKING CHANGES
+
+* weekView: the UX of the week view has now changed. The template has also changed heavily if
+you were using a custom template.
+* calendarEventTitle: The `calendarConfig.displayEventTimes` option has been removed. Just override the
+`calendarEventTitle.yearView` and `calendarEventTitle.monthView` functions instead
+
+
+
 <a name="0.20.2"></a>
 ## [0.20.2](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.20.1...v0.20.2) (2016-06-01)
 
