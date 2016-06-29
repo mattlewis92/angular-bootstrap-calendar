@@ -1,3 +1,13 @@
+<a name="0.21.1"></a>
+## [0.21.1](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.21.0...v0.21.1) (2016-06-29)
+
+
+### Bug Fixes
+
+* **monthView:** fix CSS classes not being added to month cells ([3757ecf](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/3757ecf))
+
+
+
 <a name="0.21.0"></a>
 # [0.21.0](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.20.2...v0.21.0) (2016-06-29)
 
