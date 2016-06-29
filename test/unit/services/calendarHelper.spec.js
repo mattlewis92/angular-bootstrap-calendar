@@ -627,7 +627,8 @@ describe('calendarHelper', function() {
             left: 0,
             startsAt: new Date('October 19, 2015 11:00:00'),
             endsAt: new Date('October 21, 2015 11:00:00')
-          }
+          },
+          offset: 1
         },
         {
           event: {
@@ -636,7 +637,8 @@ describe('calendarHelper', function() {
             left: 0,
             startsAt: new Date('October 20, 2015 11:00:00'),
             endsAt: new Date('October 21, 2015 11:00:00')
-          }
+          },
+          offset: 2
         },
         {
           event: {
@@ -645,7 +647,8 @@ describe('calendarHelper', function() {
             top: 658,
             height: 60,
             left: 150
-          }
+          },
+          offset: 2
         }
       ];
 
