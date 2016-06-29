@@ -22,7 +22,7 @@
     "**/.*",
     "node_modules",
     "test",
-    "src",
+    "src/**/*.js",
     ".github",
     "docs",
     "index.html",
