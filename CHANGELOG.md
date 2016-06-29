@@ -1,3 +1,13 @@
+<a name="0.21.3"></a>
+## [0.21.3](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.21.2...v0.21.3) (2016-06-29)
+
+
+### Bug Fixes
+
+* **weekViewWithTimes:** more robust fix for event offsets ([721b3fc](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/721b3fc))
+
+
+
 <a name="0.21.2"></a>
 ## [0.21.2](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.21.1...v0.21.2) (2016-06-29)
 

@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-calendar - A pure AngularJS bootstrap themed responsive calendar that can display events and has views for year, month, week and day
- * @version v0.21.2
+ * @version v0.21.3
  * @link https://github.com/mattlewis92/angular-bootstrap-calendar
  * @license MIT
  */
@@ -2116,7 +2116,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var flattenedEvents = [];
 	      weekView.eventRows.forEach(function(row) {
 	        row.row.forEach(function(eventRow) {
-	          eventRow.event.dayOffset = eventRow.offset;
 	          flattenedEvents.push(eventRow.event);
 	        });
 	      });
@@ -2135,9 +2134,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	      });
 	      weekView.eventRows = [{
 	        row: newEvents.map(function(event) {
-	          var offset = event.dayOffset;
-	          delete event.dayOffset;
-	          return {event: event, offset: offset};
+	          return {
+	            event: event,
+	            offset: calendarUtils.getDayOffset(
+	              {start: event.startsAt, end: event.endsAt},
+	              moment(viewDate).startOf('week')
+	            )
+	          };
 	        })
 	      }];
 	      return weekView;
@@ -2203,7 +2206,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    return span;
 	};
-	var getDayOffset = function (event, startOfWeek) {
+	exports.getDayOffset = function (event, startOfWeek) {
 	    var offset = 0;
 	    if (moment(event.start).startOf('day').isAfter(moment(startOfWeek))) {
 	        offset = moment(event.start).startOf('day').diff(startOfWeek, 'days');
@@ -2226,7 +2229,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var startOfWeek = moment(viewDate).startOf('week');
 	    var endOfWeek = moment(startOfWeek).clone().add(DAYS_IN_WEEK, 'days');
 	    var eventsMapped = events.map(function (event) {
-	        var offset = getDayOffset(event, startOfWeek);
+	        var offset = exports.getDayOffset(event, startOfWeek);
 	        var span = getDaySpan(event, offset, startOfWeek);
 	        return {
 	            event: event,
