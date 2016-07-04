@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-calendar - A pure AngularJS bootstrap themed responsive calendar that can display events and has views for year, month, week and day
- * @version v0.21.3
+ * @version v0.21.4
  * @link https://github.com/mattlewis92/angular-bootstrap-calendar
  * @license MIT
  */
@@ -2188,6 +2188,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	"use strict";
 	var moment = __webpack_require__(39);
 	var DAYS_IN_WEEK = 7;
+	var WEEKEND_DAY_NUMBERS = [0, 6];
 	var getDaySpan = function (event, offset, startOfWeek) {
 	    var span = 1;
 	    if (event.end) {
@@ -2213,22 +2214,57 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    return offset;
 	};
+	var isEventIsPeriod = function (_a) {
+	    var event = _a.event, periodStart = _a.periodStart, periodEnd = _a.periodEnd;
+	    var eventStart = moment(event.start);
+	    var eventEnd = moment(event.end || event.start);
+	    if (eventStart.isAfter(periodStart) && eventStart.isBefore(periodEnd)) {
+	        return true;
+	    }
+	    if (eventEnd.isAfter(periodStart) && eventEnd.isBefore(periodEnd)) {
+	        return true;
+	    }
+	    if (eventStart.isBefore(periodStart) && eventEnd.isAfter(periodEnd)) {
+	        return true;
+	    }
+	    if (eventStart.isSame(periodStart) || eventStart.isSame(periodEnd)) {
+	        return true;
+	    }
+	    if (eventEnd.isSame(periodStart) || eventEnd.isSame(periodEnd)) {
+	        return true;
+	    }
+	    return false;
+	};
+	var getEventsInPeriod = function (_a) {
+	    var events = _a.events, periodStart = _a.periodStart, periodEnd = _a.periodEnd;
+	    return events.filter(function (event) { return isEventIsPeriod({ event: event, periodStart: periodStart, periodEnd: periodEnd }); });
+	};
+	var getWeekDay = function (_a) {
+	    var date = _a.date;
+	    var today = moment().startOf('day');
+	    return {
+	        date: date,
+	        isPast: date.isBefore(today),
+	        isToday: date.isSame(today),
+	        isFuture: date.isAfter(today),
+	        isWeekend: WEEKEND_DAY_NUMBERS.indexOf(date.day()) > -1
+	    };
+	};
 	exports.getWeekViewHeader = function (_a) {
 	    var viewDate = _a.viewDate;
 	    var start = moment(viewDate).startOf('week');
 	    var days = [];
 	    for (var i = 0; i < DAYS_IN_WEEK; i++) {
-	        days.push({
-	            date: start.clone().add(i, 'days')
-	        });
+	        var date = start.clone().add(i, 'days');
+	        days.push(getWeekDay({ date: date }));
 	    }
 	    return days;
 	};
 	exports.getWeekView = function (_a) {
 	    var events = _a.events, viewDate = _a.viewDate;
 	    var startOfWeek = moment(viewDate).startOf('week');
-	    var endOfWeek = moment(startOfWeek).clone().add(DAYS_IN_WEEK, 'days');
-	    var eventsMapped = events.map(function (event) {
+	    var endOfWeek = moment(viewDate).endOf('week');
+	    var eventsMapped = getEventsInPeriod({ events: events, periodStart: startOfWeek, periodEnd: endOfWeek }).map(function (event) {
 	        var offset = exports.getDayOffset(event, startOfWeek);
 	        var span = getDaySpan(event, offset, startOfWeek);
 	        return {
@@ -2271,6 +2307,42 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    });
 	    return eventRows;
+	};
+	exports.getMonthView = function (_a) {
+	    var events = _a.events, viewDate = _a.viewDate;
+	    var start = moment(viewDate).startOf('month').startOf('week');
+	    var end = moment(viewDate).endOf('month').endOf('week');
+	    var eventsInMonth = getEventsInPeriod({
+	        events: events,
+	        periodStart: moment(viewDate).startOf('month'),
+	        periodEnd: moment(viewDate).endOf('month')
+	    });
+	    var days = [];
+	    for (var i = 0; i < end.diff(start, 'days') + 1; i++) {
+	        var date = start.clone().add(i, 'days');
+	        var day = getWeekDay({ date: date });
+	        day.inMonth = date.clone().startOf('month').isSame(moment(viewDate).startOf('month'));
+	        if (day.inMonth) {
+	            day.events = getEventsInPeriod({
+	                events: eventsInMonth,
+	                periodStart: moment(date).startOf('day'),
+	                periodEnd: moment(date).endOf('day')
+	            });
+	        }
+	        else {
+	            day.events = [];
+	        }
+	        days.push(day);
+	    }
+	    var rows = Math.floor(days.length / 7);
+	    var rowOffsets = [];
+	    for (var i = 0; i < rows; i++) {
+	        rowOffsets.push(i * 7);
+	    }
+	    return {
+	        rowOffsets: rowOffsets,
+	        days: days
+	    };
 	};
 	//# sourceMappingURL=calendarUtils.js.map
 

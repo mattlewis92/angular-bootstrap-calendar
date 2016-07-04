@@ -1,3 +1,13 @@
+<a name="0.21.4"></a>
+## [0.21.4](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.21.3...v0.21.4) (2016-07-04)
+
+
+### Bug Fixes
+
+* fix moment peer dependency warning on install if using latest moment ([30073d9](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/30073d9))
+
+
+
 <a name="0.21.3"></a>
 ## [0.21.3](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.21.2...v0.21.3) (2016-06-29)
 
