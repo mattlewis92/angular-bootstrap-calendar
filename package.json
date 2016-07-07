@@ -19,7 +19,7 @@
     "angular-mocks": ">=1.3.0",
     "bootstrap": "^3.3.6",
     "commitizen": "~2.8.1",
-    "concurrently": "~2.1.0",
+    "concurrently": "~2.2.0",
     "conventional-changelog": "~1.1.0",
     "conventional-changelog-cli": "~1.2.0",
     "css-loader": "~0.23.0",
