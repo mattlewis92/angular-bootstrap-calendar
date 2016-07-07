@@ -1,3 +1,9 @@
+<a name="0.21.5"></a>
+## [0.21.5](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.21.4...v0.21.5) (2016-07-07)
+
+* Fix the NPM package description
+
+
 <a name="0.21.4"></a>
 ## [0.21.4](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.21.3...v0.21.4) (2016-07-04)
 
