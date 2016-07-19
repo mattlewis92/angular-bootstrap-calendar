@@ -1,6 +1,10 @@
 <div
   mwl-droppable
   on-drop="vm.handleEventDrop(dropData.event, day.date, dropData.draggedFromDate)"
+  mwl-drag-select="!!vm.onDateRangeSelect"
+  on-drag-select-start="vm.onDragSelectStart(day)"
+  on-drag-select-move="vm.onDragSelectMove(day)"
+  on-drag-select-end="vm.onDragSelectEnd(day)"
   class="cal-month-day {{ day.cssClass }}"
   ng-class="{
     'cal-day-outmonth': !day.inMonth,
@@ -8,7 +12,8 @@
     'cal-day-weekend': day.isWeekend,
     'cal-day-past': day.isPast,
     'cal-day-today': day.isToday,
-    'cal-day-future': day.isFuture
+    'cal-day-future': day.isFuture,
+    'cal-day-selected': vm.dateRangeSelect && vm.dateRangeSelect.startDate <= day.date && day.date <= vm.dateRangeSelect.endDate
   }">
 
   <small

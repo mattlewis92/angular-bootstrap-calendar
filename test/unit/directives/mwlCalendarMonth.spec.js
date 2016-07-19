@@ -192,4 +192,65 @@ describe('mwlCalendarMonth directive', function() {
     expect(MwlCalendarCtrl.getWeekNumberLabel({date: moment().startOf('year').endOf('week').add(1, 'day')})).to.equal('My custom function 1');
   });
 
+  it('should initialise the date range select', function() {
+
+    var date = moment();
+    MwlCalendarCtrl.onDragSelectStart({date: date});
+    expect(MwlCalendarCtrl.dateRangeSelect).to.deep.equal({
+      startDate: date,
+      endDate: date
+    });
+
+  });
+
+  it('should update the date ranges end date', function() {
+    var date = moment();
+    MwlCalendarCtrl.dateRangeSelect = {
+      startDate: 'date1',
+      endDate: 'date2'
+    };
+    MwlCalendarCtrl.onDragSelectMove({date: date});
+    expect(MwlCalendarCtrl.dateRangeSelect).to.deep.equal({
+      startDate: 'date1',
+      endDate: date
+    });
+  });
+
+  it('should not throw if there is no date range being selected', function() {
+    var date = moment();
+    MwlCalendarCtrl.dateRangeSelect = null;
+    expect(function() {
+      MwlCalendarCtrl.onDragSelectMove({date: date});
+    }).not.to.throw();
+  });
+
+  it('should call the onDateRangeSelect callback if there is a valid date range', function() {
+    MwlCalendarCtrl.onDateRangeSelect = sinon.spy();
+    var date1 = moment();
+    var date2 = moment().add(1, 'day');
+    MwlCalendarCtrl.dateRangeSelect = {
+      startDate: date1,
+      endDate: moment().add(1, 'second')
+    };
+    MwlCalendarCtrl.onDragSelectEnd({date: date2});
+    expect(MwlCalendarCtrl.onDateRangeSelect).to.have.been.calledWith({
+      calendarRangeStartDate: date1.startOf('day').toDate(),
+      calendarRangeEndDate: date2.endOf('day').toDate()
+    });
+    expect(MwlCalendarCtrl.dateRangeSelect).to.be.undefined;
+  });
+
+  it('should not call the onDateRangeSelect callback if there is an invalid date range', function() {
+    MwlCalendarCtrl.onDateRangeSelect = sinon.spy();
+    var date1 = moment();
+    var date2 = moment().subtract(1, 'day');
+    MwlCalendarCtrl.dateRangeSelect = {
+      startDate: date1,
+      endDate: moment().subtract(1, 'second')
+    };
+    MwlCalendarCtrl.onDragSelectEnd({date: date2});
+    expect(MwlCalendarCtrl.onDateRangeSelect).not.to.have.been.called;
+    expect(MwlCalendarCtrl.dateRangeSelect).to.be.undefined;
+  });
+
 });

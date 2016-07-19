@@ -101,6 +101,32 @@ angular
       }
     };
 
+    vm.onDragSelectStart = function(day) {
+      if (!vm.dateRangeSelect) {
+        vm.dateRangeSelect = {
+          startDate: day.date,
+          endDate: day.date
+        };
+      }
+    };
+
+    vm.onDragSelectMove = function(day) {
+      if (vm.dateRangeSelect) {
+        vm.dateRangeSelect.endDate = day.date;
+      }
+    };
+
+    vm.onDragSelectEnd = function(day) {
+      vm.dateRangeSelect.endDate = day.date;
+      if (vm.dateRangeSelect.endDate > vm.dateRangeSelect.startDate) {
+        vm.onDateRangeSelect({
+          calendarRangeStartDate: vm.dateRangeSelect.startDate.clone().startOf('day').toDate(),
+          calendarRangeEndDate: vm.dateRangeSelect.endDate.clone().endOf('day').toDate()
+        });
+      }
+      delete vm.dateRangeSelect;
+    };
+
   })
   .directive('mwlCalendarMonth', function() {
 
@@ -115,6 +141,7 @@ angular
         onEditEventClick: '=',
         onDeleteEventClick: '=',
         onEventTimesChanged: '=',
+        onDateRangeSelect: '=',
         editEventHtml: '=',
         deleteEventHtml: '=',
         cellIsOpen: '=',
