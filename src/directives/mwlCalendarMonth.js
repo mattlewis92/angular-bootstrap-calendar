@@ -92,6 +92,15 @@ angular
       });
     };
 
+    vm.getWeekNumberLabel = function(day) {
+      var weekNumber = day.date.clone().add(1, 'day').isoWeek();
+      if (typeof calendarConfig.i18nStrings.weekNumber === 'function') {
+        return calendarConfig.i18nStrings.weekNumber({weekNumber: weekNumber});
+      } else {
+        return calendarConfig.i18nStrings.weekNumber.replace('{week}', weekNumber);
+      }
+    };
+
   })
   .directive('mwlCalendarMonth', function() {
 

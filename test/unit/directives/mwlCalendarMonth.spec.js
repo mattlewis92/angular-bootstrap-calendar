@@ -11,6 +11,7 @@ describe('mwlCalendarMonth directive', function() {
     directiveScope,
     showModal,
     calendarHelper,
+    calendarConfig,
     template =
       '<mwl-calendar-month ' +
       'events="events" ' +
@@ -80,9 +81,10 @@ describe('mwlCalendarMonth directive', function() {
 
   beforeEach(angular.mock.module('mwl.calendar'));
 
-  beforeEach(angular.mock.inject(function($compile, _$rootScope_, _calendarHelper_) {
+  beforeEach(angular.mock.inject(function($compile, _$rootScope_, _calendarHelper_, _calendarConfig_) {
     $rootScope = _$rootScope_;
     calendarHelper = _calendarHelper_;
+    calendarConfig = _calendarConfig_;
     scope = $rootScope.$new();
     prepareScope(scope);
     element = angular.element(template);
@@ -177,6 +179,17 @@ describe('mwlCalendarMonth directive', function() {
       calendarNewEventEnd: null,
       calendarDraggedFromDate: draggedFromDate
     });
+  });
+
+  it('should get the week label', function() {
+    expect(MwlCalendarCtrl.getWeekNumberLabel({date: moment().startOf('year').endOf('week').add(1, 'day')})).to.equal('Week 1');
+  });
+
+  it('should allow the week label option to be a function', function() {
+    calendarConfig.i18nStrings.weekNumber = function(params) {
+      return 'My custom function ' + params.weekNumber;
+    };
+    expect(MwlCalendarCtrl.getWeekNumberLabel({date: moment().startOf('year').endOf('week').add(1, 'day')})).to.equal('My custom function 1');
   });
 
 });
