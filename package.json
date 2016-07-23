@@ -71,8 +71,8 @@
     "build:min": "webpack -p --config webpack.config.build.js",
     "build:unmin:exclude-templates": "webpack --config webpack.config.build.js --exclude-templates",
     "build:min:exclude-templates": "webpack -p --config webpack.config.build.js --exclude-templates",
-    "build": "concurrently \"npm run build:unmin\" \"npm run build:min\" \"npm run build:unmin:exclude-templates\" \"npm run build:min:exclude-templates\"",
-    "start": "concurrently \"webpack-dev-server\" \"npm run test:watch\" \"open http://localhost:8000\"",
+    "build": "concurrently --raw \"npm run build:unmin\" \"npm run build:min\" \"npm run build:unmin:exclude-templates\" \"npm run build:min:exclude-templates\"",
+    "start": "concurrently --raw \"webpack-dev-server\" \"npm run test:watch\" \"open http://localhost:8000\"",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "commit": "git-cz",
     "release": "npm run build && npm run changelog"
