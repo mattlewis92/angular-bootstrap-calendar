@@ -33,7 +33,7 @@ describe('mwlCalendarMonth directive', function() {
     vm.viewDate = calendarDay;
     vm.cellIsOpen = true;
     vm.dayViewStart = '06:00';
-    vm.dayViewEnd = '22:00';
+    vm.dayViewEnd = '22:59';
     vm.dayViewsplit = 30;
     vm.events = [
       {

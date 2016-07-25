@@ -41,41 +41,41 @@
 
     <div
       class="pull-left day-event day-highlight"
-      ng-repeat="event in vm.nonAllDayEvents track by event.$id"
-      ng-class="'dh-event-' + event.type + ' ' + event.cssClass"
-      ng-style="{top: event.top + 'px', left: event.left + 60 + 'px', height: event.height + 'px'}"
-      mwl-draggable="event.draggable === true"
+      ng-repeat="event in vm.nonAllDayEvents track by event.event.$id"
+      ng-class="'dh-event-' + event.event.type + ' ' + event.event.cssClass"
+      ng-style="{top: event.top - 1 + 'px', left: event.left + 60 + 'px', height: event.height + 'px'}"
+      mwl-draggable="event.event.draggable === true"
       axis="'xy'"
       snap-grid="{y: vm.dayViewEventChunkSize || 30, x: 50}"
-      on-drag="vm.eventDragged(event, y / 30)"
-      on-drag-end="vm.eventDragComplete(event, y / 30)"
-      mwl-resizable="event.resizable === true && event.endsAt"
+      on-drag="vm.eventDragged(event.event, y / 30)"
+      on-drag-end="vm.eventDragComplete(event.event, y / 30)"
+      mwl-resizable="event.event.resizable === true && event.event.endsAt"
       resize-edges="{top: true, bottom: true}"
-      on-resize="vm.eventResized(event, edge, y / 30)"
-      on-resize-end="vm.eventResizeComplete(event, edge, y / 30)">
+      on-resize="vm.eventResized(event.event, edge, y / 30)"
+      on-resize-end="vm.eventResizeComplete(event.event, edge, y / 30)">
 
       <span class="cal-hours">
-        <span ng-show="event.top == 0"><span ng-bind="(event.tempStartsAt || event.startsAt) | calendarDate:'day':true"></span>, </span>
-        <span ng-bind="(event.tempStartsAt || event.startsAt) | calendarDate:'time':true"></span>
+        <span ng-show="event.top == 0"><span ng-bind="(event.event.tempStartsAt || event.event.startsAt) | calendarDate:'day':true"></span>, </span>
+        <span ng-bind="(event.event.tempStartsAt || event.event.startsAt) | calendarDate:'time':true"></span>
       </span>
-      <a href="javascript:;" class="event-item" ng-click="vm.onEventClick({calendarEvent: event})">
-        <span ng-bind-html="vm.calendarEventTitle.dayView(event) | calendarTrustAsHtml"></span>
+      <a href="javascript:;" class="event-item" ng-click="vm.onEventClick({calendarEvent: event.event})">
+        <span ng-bind-html="vm.calendarEventTitle.dayView(event.event) | calendarTrustAsHtml"></span>
       </a>
 
       <a
         href="javascript:;"
         class="event-item-edit"
-        ng-if="vm.editEventHtml && event.editable !== false"
+        ng-if="vm.editEventHtml && event.event.editable !== false"
         ng-bind-html="vm.editEventHtml | calendarTrustAsHtml"
-        ng-click="vm.onEditEventClick({calendarEvent: event})">
+        ng-click="vm.onEditEventClick({calendarEvent: event.event})">
       </a>
 
       <a
         href="javascript:;"
         class="event-item-delete"
-        ng-if="vm.deleteEventHtml && event.deletable !== false"
+        ng-if="vm.deleteEventHtml && event.event.deletable !== false"
         ng-bind-html="vm.deleteEventHtml | calendarTrustAsHtml"
-        ng-click="vm.onDeleteEventClick({calendarEvent: event})">
+        ng-click="vm.onDeleteEventClick({calendarEvent: event.event})">
       </a>
 
     </div>

@@ -27,7 +27,7 @@ describe('mwlCalendarDay directive', function() {
     //These variables MUST be set as a minimum for the calendar to work
     vm.viewDate = calendarDay;
     vm.dayViewStart = '06:00';
-    vm.dayViewEnd = '22:00';
+    vm.dayViewEnd = '22:59';
     vm.dayViewsplit = 30;
     vm.events = [
       {
@@ -87,12 +87,12 @@ describe('mwlCalendarDay directive', function() {
     sinon.stub(calendarHelper, 'getDayViewHeight').returns(1000);
     var event1 = {event: 'event1'};
     var event2 = {event: 'event2', allDay: true};
-    sinon.stub(calendarHelper, 'getDayView').returns([event1, event2]);
+    sinon.stub(calendarHelper, 'getDayView').returns({events: [{event: event1}], allDayEvents: [event2]});
     scope.$broadcast('calendar.refreshView');
-    expect(calendarHelper.getDayViewHeight).to.have.been.calledWith('06:00', '22:00', 30);
+    expect(calendarHelper.getDayViewHeight).to.have.been.calledWith('06:00', '22:59', 30);
     expect(MwlCalendarCtrl.dayViewHeight).to.equal(1000);
-    expect(calendarHelper.getDayView).to.have.been.calledWith(scope.events, scope.viewDate, '06:00', '22:00', 30);
-    expect(MwlCalendarCtrl.nonAllDayEvents).to.eql([event1]);
+    expect(calendarHelper.getDayView).to.have.been.calledWith(scope.events, scope.viewDate, '06:00', '22:59', 30);
+    expect(MwlCalendarCtrl.nonAllDayEvents).to.eql([{event: event1}]);
     expect(MwlCalendarCtrl.allDayEvents).to.eql([event2]);
   });
 
@@ -147,7 +147,7 @@ describe('mwlCalendarDay directive', function() {
     scope.$broadcast('calendar.refreshView');
     scope.dayViewSplit = 15;
     scope.$apply();
-    expect(MwlCalendarCtrl.nonAllDayEvents[0].height).to.equal(2040);
+    expect(MwlCalendarCtrl.nonAllDayEvents[0].height).to.equal(2038);
   });
 
 });

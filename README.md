@@ -27,7 +27,7 @@ https://mattlewis92.github.io/angular-bootstrap-calendar/
 This plugin is an AngularJS port of the original jQuery bootstrap calendar that can be found here:
 http://bootstrap-calendar.azurewebsites.net/
 
-The layout and functionality is intended to be exactly the same, but without the overhead of including jQuery just for a calendar. 
+The layout and functionality is intended to be exactly the same, but without the overhead of including jQuery just for a calendar.
 
 All credits for the UI/UX and the less files of the calendar go to the original author.
 
@@ -141,7 +141,7 @@ $scope.events = [
 
 This variable will be assigned to the calendar title. If you want to change the formatting you can use the `calendarConfig` or just override the appropriate method in the `calendarTitle` factory.
 
-### on-event-click 
+### on-event-click
 
 This expression is called when an event is clicked on the calendar. `calendarEvent` can be used in the expression and contains the calendar event that was clicked on.
 
@@ -149,19 +149,19 @@ This expression is called when an event is clicked on the calendar. `calendarEve
 
 This expression is called when an event is dragged and dropped or resized into a different date / time on the calendar. The available values that are passed to the expression are: `calendarEvent`, `calendarNewEventStart`, `calendarNewEventEnd` and `calendarDraggedFromDate` (month view only). The directive won't change the event object and leaves that up to you to implement. Please note drag and drop is only available by including the [interact.js](http://interactjs.io/) library.
 
-### edit-event-html 
+### edit-event-html
 
 If provided this piece of html will be displayed next to an event on the year and month view and will fire the function passed to edit-event-click.
 
-### delete-event-html 
+### delete-event-html
 
 If provided this piece of html will be displayed next to an event on the year and month view and will fire the function passed to delete-event-click.
 
-### on-edit-event-click 
+### on-edit-event-click
 
 This expression is called when an event edit link is clicked on the calendar. `calendarEvent` can be used in the expression and contains the calendar event that was clicked on.
 
-### on-delete-event-click 
+### on-delete-event-click
 
 This expression is called when an event delete link is clicked on the calendar. `calendarEvent` can be used in the expression and contains the calendar event that was clicked on.
 
@@ -183,7 +183,7 @@ An interpolated string in the form of hh:mm to start the day view at, e.g. setti
 
 ### day-view-end
 
-An interpolated string in the form of hh:mm to end the day view at, e.g. setting it to 22:00 will end the day view at 10pm. Any minutes must be divisible by the `day-view-split` value.
+An interpolated string in the form of hh:mm to end the day view at, e.g. setting it to 22:59 will end the day view at 11pm.
 
 ### day-view-split
 
@@ -195,7 +195,7 @@ The number of pixels to "snap" event drag and resizes to. Default: 30
 
 ### on-view-change-click
 
-An optional expression that is evaluated when the view is changed by clicking on a date. Return false from the expression function to disable the view change. `calendarDate` can be used in the expression and contains the date that was selected. `calendarNextView` is the view that the calendar will be changed to.  
+An optional expression that is evaluated when the view is changed by clicking on a date. Return false from the expression function to disable the view change. `calendarDate` can be used in the expression and contains the date that was selected. `calendarNextView` is the view that the calendar will be changed to.
 
 ### cell-modifier
 
@@ -247,7 +247,7 @@ angular.module('myModule')
 
 ## Custom directive templates
 
-All calendar template urls can be changed using the `calendarConfig` as illustrated above. 
+All calendar template urls can be changed using the `calendarConfig` as illustrated above.
 
 Please note that even patch releases may change templates which could break your app, so if using a custom template it is recommended that you pin the version of this module and review all changes when updating the version.
 
@@ -288,13 +288,13 @@ You can either use angular's date filter or moment.js to format dates. The defau
 ```javascript
 angular.module('myModule')
   .config(function(calendarConfig) {
-  
-    calendarConfig.dateFormatter = 'moment'; // use moment to format dates
- 
-  });
-```   
 
-Then you just need to include the appropriate locale files for your app. 
+    calendarConfig.dateFormatter = 'moment'; // use moment to format dates
+
+  });
+```
+
+Then you just need to include the appropriate locale files for your app.
 
 If you want to dynamically change the locale for angular and not include all of the available angular locale files [try this library](https://github.com/lgalfaso/angular-dynamic-locale).
 
@@ -318,10 +318,10 @@ For a full list of all available formats and their defaults see [calendarConfig.
 * Install local dev dependencies: `npm install` while current directory is this repo
 
 ### Development server
-Run `npm start` to start a development server on port 8000 with auto reload + run tests. 
+Run `npm start` to start a development server on port 8000 with auto reload + run tests.
 
 ### Testing
-Run `npm test` to run tests once or `npm run test:watch` to continually run tests (this is automatic when you run `npm start`). 
+Run `npm test` to run tests once or `npm run test:watch` to continually run tests (this is automatic when you run `npm start`).
 
 ### Build
 Run `npm run build` to build the project files in the dist folder

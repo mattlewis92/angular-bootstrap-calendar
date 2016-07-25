@@ -229,81 +229,46 @@ angular
 
     function getDayView(events, viewDate, dayViewStart, dayViewEnd, dayViewSplit) {
 
-      var dayStartHour = moment(dayViewStart || '00:00', 'HH:mm').hours();
-      var dayEndHour = moment(dayViewEnd || '23:00', 'HH:mm').hours();
-      var hourHeight = (60 / dayViewSplit) * 30;
-      var calendarStart = moment(viewDate).startOf('day').add(dayStartHour, 'hours');
-      var calendarEnd = moment(viewDate).startOf('day').add(dayEndHour + 1, 'hours');
-      var calendarHeight = (dayEndHour - dayStartHour + 1) * hourHeight;
-      var hourHeightMultiplier = hourHeight / 60;
-      var buckets = [];
-      var eventsInPeriod = filterEventsInPeriod(
-        events,
-        moment(viewDate).startOf('day').toDate(),
-        moment(viewDate).endOf('day').toDate()
-      );
+      var dayStart = (dayViewStart || '00:00').split(':');
+      var dayEnd = (dayViewEnd || '23:59').split(':');
 
-      return eventsInPeriod.map(function(event) {
-        if (moment(event.startsAt).isBefore(calendarStart)) {
-          event.top = 0;
-        } else {
-          event.top = (moment(event.startsAt).startOf('minute').diff(calendarStart.startOf('minute'), 'minutes') * hourHeightMultiplier) - 2;
-        }
-
-        if (moment(event.endsAt || event.startsAt).isAfter(calendarEnd)) {
-          event.height = calendarHeight - event.top;
-        } else {
-          var diffStart = event.startsAt;
-          if (moment(event.startsAt).isBefore(calendarStart)) {
-            diffStart = calendarStart.toDate();
-          }
-          if (!event.endsAt) {
-            event.height = 30;
-          } else {
-            event.height = moment(event.endsAt).diff(moment(diffStart), 'minutes') * hourHeightMultiplier;
-          }
-        }
-
-        if (event.top - event.height > calendarHeight) {
-          event.height = 0;
-        }
-
-        event.left = 0;
-
-        return event;
-      }).filter(function(event) {
-        return event.height > 0;
-      }).map(function(event) {
-
-        var cannotFitInABucket = true;
-        buckets.forEach(function(bucket, bucketIndex) {
-          var canFitInThisBucket = true;
-
-          bucket.filter(function(bucketItem) {
-            return !bucketItem.allDay;
-          }).forEach(function(bucketItem) {
-            if (eventIsInPeriod(event, bucketItem.startsAt, bucketItem.endsAt || bucketItem.startsAt) ||
-              eventIsInPeriod(bucketItem, event.startsAt, event.endsAt || event.startsAt)) {
-              canFitInThisBucket = false;
-            }
-          });
-
-          if (canFitInThisBucket && cannotFitInABucket) {
-            cannotFitInABucket = false;
-            event.left = bucketIndex * 150;
-            buckets[bucketIndex].push(event);
-          }
-
-        });
-
-        if (cannotFitInABucket) {
-          event.left = buckets.length * 150;
-          buckets.push([event]);
-        }
-
-        return event;
-
+      var allDayEvents = events.filter(function(event) {
+        return event.allDay;
       });
+
+      var nonAllDayEvents = events.filter(function(event) {
+        return !event.allDay;
+      });
+
+      var view = calendarUtils.getDayView({
+        events: nonAllDayEvents.map(function(event) { // hack required to work with event API
+          event.start = event.startsAt;
+          event.end = event.endsAt;
+          return event;
+        }),
+        viewDate: viewDate,
+        hourSegments: 60 / dayViewSplit,
+        dayStart: {
+          hour: dayStart[0],
+          minute: dayStart[1]
+        },
+        dayEnd: {
+          hour: dayEnd[0],
+          minute: dayEnd[1]
+        },
+        eventWidth: 150,
+        segmentHeight: 30
+      });
+
+      // remove hack to work with new event API
+      nonAllDayEvents.forEach(function(event) {
+        delete event.start;
+        delete event.end;
+      });
+
+      view.allDayEvents = allDayEvents;
+
+      return view;
 
     }
 
@@ -326,13 +291,15 @@ angular
           dayViewStart,
           dayViewEnd,
           dayViewSplit
-        );
+        ).events;
         newEvents = newEvents.concat(newDayEvents);
       });
       weekView.eventRows = [{
-        row: newEvents.map(function(event) {
+        row: newEvents.map(function(dayEvent) {
+          var event = dayEvent.event;
           return {
             event: event,
+            top: dayEvent.top,
             offset: calendarUtils.getDayOffset(
               {start: event.startsAt, end: event.endsAt},
               moment(viewDate).startOf('week')
@@ -345,7 +312,7 @@ angular
 
     function getDayViewHeight(dayViewStart, dayViewEnd, dayViewSplit) {
       var dayViewStartM = moment(dayViewStart || '00:00', 'HH:mm');
-      var dayViewEndM = moment(dayViewEnd || '23:00', 'HH:mm');
+      var dayViewEndM = moment(dayViewEnd || '23:59', 'HH:mm');
       var hourHeight = (60 / dayViewSplit) * 30;
       return ((dayViewEndM.diff(dayViewStartM, 'hours') + 1) * hourHeight) + 2;
     }
