@@ -31,6 +31,16 @@
           ng-bind-html="vm.deleteEventHtml | calendarTrustAsHtml"
           ng-click="vm.onDeleteEventClick({calendarEvent: event})">
         </a>
+
+        <a
+          href="javascript:;"
+          class="event-item-action"
+          ng-class="action.cssClass"
+          ng-repeat="action in event.actions track by $index"
+          ng-bind-html="action.label | calendarTrustAsHtml"
+          ng-click="action.onClick({calendarEvent: event})">
+        </a>
+
       </li>
 
     </ul>

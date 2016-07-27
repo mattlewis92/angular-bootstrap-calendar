@@ -126,8 +126,13 @@ $scope.events = [
       primary: '#e3bc08', // the primary event color (should be darker than secondary)
       secondary: '#fdf1ba' // the secondary event color (should be lighter than primary)
     },
-    editable: false, // If edit-event-html is set and this field is explicitly set to false then dont make it editable.
-    deletable: false, // If delete-event-html is set and this field is explicitly set to false then dont make it deleteable
+    actions: [{ // an array of actions that will be displayed next to the event title
+      label: '<i class=\'glyphicon glyphicon-pencil\'></i>', // the label of the action
+      cssClass: 'edit-action', // a CSS class that will be added to the action element so you can implement custom styling
+      onClick: function(args) { // the action that occurs when it is clicked. The first argument will be an object containing the parent event
+        console.log('Edit event', args.calendarEvent);
+      }
+    }],
     draggable: true, //Allow an event to be dragged and dropped
     resizable: true, //Allow an event to be resizable
     incrementsBadgeTotal: true, //If set to false then will not count towards the badge total amount on the month and year view
@@ -151,22 +156,6 @@ This expression is called when an event is clicked on the calendar. `calendarEve
 ### on-event-times-changed
 
 This expression is called when an event is dragged and dropped or resized into a different date / time on the calendar. The available values that are passed to the expression are: `calendarEvent`, `calendarNewEventStart`, `calendarNewEventEnd` and `calendarDraggedFromDate` (month view only). The directive won't change the event object and leaves that up to you to implement. Please note drag and drop is only available by including the [interact.js](http://interactjs.io/) library.
-
-### edit-event-html
-
-If provided this piece of html will be displayed next to an event on the year and month view and will fire the function passed to edit-event-click.
-
-### delete-event-html
-
-If provided this piece of html will be displayed next to an event on the year and month view and will fire the function passed to delete-event-click.
-
-### on-edit-event-click
-
-This expression is called when an event edit link is clicked on the calendar. `calendarEvent` can be used in the expression and contains the calendar event that was clicked on.
-
-### on-delete-event-click
-
-This expression is called when an event delete link is clicked on the calendar. `calendarEvent` can be used in the expression and contains the calendar event that was clicked on.
 
 ### on-timespan-click
 

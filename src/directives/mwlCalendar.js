@@ -1,6 +1,8 @@
 'use strict';
 
 var angular = require('angular');
+var LOG_PREFIX = 'Bootstrap calendar:';
+var CHANGELOG_LINK = 'https://github.com/mattlewis92/angular-bootstrap-calendar/blob/master/CHANGELOG.md';
 
 angular
   .module('mwl.calendar')
@@ -31,11 +33,15 @@ angular
 
     };
 
+    if ($attrs.onEditEventClick || $attrs.onDeleteEventClick || $attrs.editEventHtml || $attrs.deleteEventHtml) {
+      $log.warn(LOG_PREFIX, '`on-edit-event-click`, `on-delete-event-click`, `edit-event-html`, `delete-event-html` options ' +
+        'are deprecated, please see the changelog on how to upgrade: ' + CHANGELOG_LINK);
+    }
+
     var previousDate = moment(vm.viewDate);
     var previousView = vm.view;
 
     function eventIsValid(event) {
-      var LOG_PREFIX = 'Bootstrap calendar:';
       if (!event.startsAt) {
         $log.warn(LOG_PREFIX, 'Event is missing the startsAt field', event);
       } else if (!angular.isDate(event.startsAt)) {
@@ -52,8 +58,7 @@ angular
       }
 
       if (event.type && !event.color) {
-        $log.warn(LOG_PREFIX, 'Event type is deprecated, please see the changelog on how to upgrade: ' +
-          'https://github.com/mattlewis92/angular-bootstrap-calendar/blob/master/CHANGELOG.md', event);
+        $log.warn(LOG_PREFIX, 'Event type is deprecated, please see the changelog on how to upgrade: ' + CHANGELOG_LINK, event);
       }
 
       return true;
