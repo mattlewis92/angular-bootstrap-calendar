@@ -18,7 +18,7 @@ angular
         vm.dayViewSplit
       );
 
-      var events = calendarHelper.getDayView(
+      var view = calendarHelper.getDayView(
         vm.events,
         vm.viewDate,
         vm.dayViewStart,
@@ -26,13 +26,9 @@ angular
         vm.dayViewSplit
       );
 
-      vm.allDayEvents = events.filter(function(event) {
-        return event.allDay;
-      });
-
-      vm.nonAllDayEvents = events.filter(function(event) {
-        return !event.allDay;
-      });
+      vm.allDayEvents = view.allDayEvents;
+      vm.nonAllDayEvents = view.events;
+      vm.viewWidth = view.width + 62;
 
     }
 

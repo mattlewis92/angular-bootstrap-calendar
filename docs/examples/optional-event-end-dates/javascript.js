@@ -1,17 +1,17 @@
 angular
   .module('mwl.calendar.docs')
-  .controller('OptionalEventEndDatesCtrl', function(moment) {
+  .controller('OptionalEventEndDatesCtrl', function(moment, calendarConfig) {
 
     var vm = this;
 
     vm.events = [{
       title: 'No event end date',
       startsAt: moment().hours(3).minutes(0).toDate(),
-      type: 'info'
+      color: calendarConfig.colorTypes.info
     }, {
       title: 'No event end date',
       startsAt: moment().hours(5).minutes(0).toDate(),
-      type: 'warning'
+      color: calendarConfig.colorTypes.warning
     }];
 
     vm.calendarView = 'day';

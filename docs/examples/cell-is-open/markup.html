@@ -1,7 +1,7 @@
 <div ng-controller="CellIsOpenCtrl as vm">
-  <uib-alert type="info">
+  <div class="alert alert-info">
     The slidebox is <span ng-show="vm.isCellOpen">open</span><span ng-hide="vm.isCellOpen">closed</span>.
-  </uib-alert>
+  </div>
   <ng-include src="'calendarControls.html'"></ng-include>
   <mwl-calendar
     events="vm.events"

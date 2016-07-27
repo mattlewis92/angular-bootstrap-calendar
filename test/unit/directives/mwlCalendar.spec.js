@@ -28,7 +28,7 @@ describe('mwlCalendar directive', function() {
       'on-delete-event-click="vm.eventDeleted(calendarEvent)" ' +
       'cell-is-open="true" ' +
       'day-view-start="06:00" ' +
-      'day-view-end="22:00" ' +
+      'day-view-end="22:59" ' +
       'day-view-split="30" ' +
       'cell-modifier="vm.modifyCell(calendarCell)"> ' +
     '</mwl-calendar>';
@@ -185,6 +185,20 @@ describe('mwlCalendar directive', function() {
     scope.vm.events = [{title: 'title', startsAt: new Date(), endsAt: new Date(Date.now() - 1)}];
     scope.$apply();
     expect($log.warn).to.have.been.calledOnce;
+  });
+
+  it('should log a warning if the deprecated event type is used', function() {
+    $log.warn = sinon.spy();
+    scope.vm.events = [{title: 'title', startsAt: new Date(), type: 'success'}];
+    scope.$apply();
+    expect($log.warn).to.have.been.calledOnce;
+  });
+
+  it('should not log a warning if the deprecated event type is not used', function() {
+    $log.warn = sinon.spy();
+    scope.vm.events = [{title: 'title', startsAt: new Date(), color: {primary: 'blue', secondary: 'lightblue'}}];
+    scope.$apply();
+    expect($log.warn).not.to.have.been.called;
   });
 
   afterEach(function() {

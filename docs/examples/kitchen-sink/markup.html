@@ -52,13 +52,9 @@
     view-date="vm.viewDate"
     on-event-click="vm.eventClicked(calendarEvent)"
     on-event-times-changed="vm.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
-    edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
-    delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
-    on-edit-event-click="vm.eventEdited(calendarEvent)"
-    on-delete-event-click="vm.eventDeleted(calendarEvent)"
     cell-is-open="vm.isCellOpen"
     day-view-start="06:00"
-    day-view-end="22:00"
+    day-view-end="22:59"
     day-view-split="30"
     cell-modifier="vm.modifyCell(calendarCell)">
   </mwl-calendar>
@@ -69,7 +65,7 @@
     Edit events
     <button
       class="btn btn-primary pull-right"
-      ng-click="vm.events.push({title: 'New event', type: 'important', draggable: true, resizable: true})">
+      ng-click="vm.addEvent()">
       Add new
     </button>
     <div class="clearfix"></div>
@@ -80,7 +76,8 @@
     <thead>
       <tr>
         <th>Title</th>
-        <th>Type</th>
+        <th>Primary color</th>
+        <th>Secondary color</th>
         <th>Starts at</th>
         <th>Ends at</th>
         <th>Remove</th>
@@ -96,14 +93,10 @@
             ng-model="event.title">
         </td>
         <td>
-          <select ng-model="event.type" class="form-control">
-            <option value="important">Important</option>
-            <option value="warning">Warning</option>
-            <option value="info">Info</option>
-            <option value="inverse">Inverse</option>
-            <option value="success">Success</option>
-            <option value="special">Special</option>
-          </select>
+          <input class="form-control" colorpicker type="text" ng-model="event.color.primary">
+        </td>
+        <td>
+          <input class="form-control" colorpicker type="text" ng-model="event.color.secondary">
         </td>
         <td>
           <p class="input-group" style="max-width: 250px">
@@ -124,12 +117,13 @@
               </button>
             </span>
           </p>
-          <uib-timepicker
+          <div
+            uib-timepicker
             ng-model="event.startsAt"
             hour-step="1"
             minute-step="15"
             show-meridian="true">
-          </uib-timepicker>
+          </div>
         </td>
         <td>
           <p class="input-group" style="max-width: 250px">
@@ -150,12 +144,13 @@
               </button>
             </span>
           </p>
-          <uib-timepicker
+          <div
+            uib-timepicker
             ng-model="event.endsAt"
             hour-step="1"
             minute-step="15"
             show-meridian="true">
-          </uib-timepicker>
+          </div>
         </td>
         <td>
           <button

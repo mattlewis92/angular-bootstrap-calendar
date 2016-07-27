@@ -22,7 +22,7 @@ describe('mwlCalendarHourList directive', function() {
   function prepareScope(vm) {
     //These variables MUST be set as a minimum for the calendar to work
     vm.dayViewStart = '06:00';
-    vm.dayViewEnd = '22:00';
+    vm.dayViewEnd = '22:59';
     vm.dayViewsplit = 30;
 
     showModal = sinon.spy();
@@ -55,7 +55,7 @@ describe('mwlCalendarHourList directive', function() {
   });
 
   it('should define a list of hours', function() {
-    expect(MwlCalendarCtrl.hours.length).to.equal(17);
+    expect(MwlCalendarCtrl.hourGrid.length).to.equal(17);
   });
 
   it('should update the list of hours when the calendar refreshes if the locale changes', function() {
@@ -63,7 +63,7 @@ describe('mwlCalendarHourList directive', function() {
     scope.dayViewStart = '00:00';
     scope.$apply();
     scope.$broadcast('calendar.refreshView');
-    expect(MwlCalendarCtrl.hours.length).to.equal(23);
+    expect(MwlCalendarCtrl.hourGrid.length).to.equal(23);
     moment.locale.restore();
   });
 

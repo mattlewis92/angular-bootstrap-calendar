@@ -1,41 +1,39 @@
 angular
   .module('mwl.calendar.docs')
-  .controller('EditableDeletableEventsCtrl', function(moment, alert) {
+  .controller('EditableDeletableEventsCtrl', function(moment, alert, calendarConfig) {
 
     var vm = this;
 
     vm.events = [
       {
         title: 'Editable event',
-        type: 'warning',
+        color: calendarConfig.colorTypes.warning,
         startsAt: moment().startOf('month').toDate(),
-        editable: true,
-        deletable: false
+        actions: [{
+          label: '<i class=\'glyphicon glyphicon-pencil\'></i>',
+          onClick: function(args) {
+            alert.show('Edited', args.calendarEvent);
+          }
+        }]
       }, {
         title: 'Deletable event',
-        type: 'info',
+        color: calendarConfig.colorTypes.info,
         startsAt: moment().startOf('month').toDate(),
-        deletable: true,
-        editable: false
+        actions: [{
+          label: '<i class=\'glyphicon glyphicon-remove\'></i>',
+          onClick: function(args) {
+            alert.show('Deleted', args.calendarEvent);
+          }
+        }]
       }, {
         title: 'Non editable and deletable event',
-        type: 'important',
-        startsAt: moment().startOf('month').toDate(),
-        editable: false,
-        deletable: false
+        color: calendarConfig.colorTypes.important,
+        startsAt: moment().startOf('month').toDate()
       }
     ];
 
     vm.calendarView = 'month';
     vm.viewDate = moment().startOf('month').toDate();
     vm.isCellOpen = true;
-
-    vm.eventEdited = function(event) {
-      alert.show('Edited', event);
-    };
-
-    vm.eventDeleted = function(event) {
-      alert.show('Deleted', event);
-    };
 
   });

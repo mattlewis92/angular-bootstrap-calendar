@@ -64,10 +64,12 @@ angular
 
       vm.view.forEach(function(day) {
         delete day.highlightClass;
+        delete day.backgroundColor;
         if (shouldAddClass) {
           var dayContainsEvent = day.events.indexOf(event) > -1;
           if (dayContainsEvent) {
             day.highlightClass = 'day-highlight dh-event-' + event.type;
+            day.backgroundColor = event.color ? event.color.secondary : '';
           }
         }
       });
@@ -92,6 +94,41 @@ angular
       });
     };
 
+    vm.getWeekNumberLabel = function(day) {
+      var weekNumber = day.date.clone().add(1, 'day').isoWeek();
+      if (typeof calendarConfig.i18nStrings.weekNumber === 'function') {
+        return calendarConfig.i18nStrings.weekNumber({weekNumber: weekNumber});
+      } else {
+        return calendarConfig.i18nStrings.weekNumber.replace('{week}', weekNumber);
+      }
+    };
+
+    vm.onDragSelectStart = function(day) {
+      if (!vm.dateRangeSelect) {
+        vm.dateRangeSelect = {
+          startDate: day.date,
+          endDate: day.date
+        };
+      }
+    };
+
+    vm.onDragSelectMove = function(day) {
+      if (vm.dateRangeSelect) {
+        vm.dateRangeSelect.endDate = day.date;
+      }
+    };
+
+    vm.onDragSelectEnd = function(day) {
+      vm.dateRangeSelect.endDate = day.date;
+      if (vm.dateRangeSelect.endDate > vm.dateRangeSelect.startDate) {
+        vm.onDateRangeSelect({
+          calendarRangeStartDate: vm.dateRangeSelect.startDate.clone().startOf('day').toDate(),
+          calendarRangeEndDate: vm.dateRangeSelect.endDate.clone().endOf('day').toDate()
+        });
+      }
+      delete vm.dateRangeSelect;
+    };
+
   })
   .directive('mwlCalendarMonth', function() {
 
@@ -106,6 +143,7 @@ angular
         onEditEventClick: '=',
         onDeleteEventClick: '=',
         onEventTimesChanged: '=',
+        onDateRangeSelect: '=',
         editEventHtml: '=',
         deleteEventHtml: '=',
         cellIsOpen: '=',

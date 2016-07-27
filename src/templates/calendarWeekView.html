@@ -49,14 +49,15 @@
             ng-repeat="eventRow in row.row track by eventRow.event.$id"
             ng-class="'cal-cell' + (vm.showTimes ? 1 : eventRow.span) + (vm.showTimes ? '' : ' cal-offset' + eventRow.offset)"
             ng-style="{
-              top: vm.showTimes ? ((eventRow.event.top + 2) + 'px') : 'auto',
+              top: vm.showTimes ? ((eventRow.top) + 'px') : 'auto',
               position: vm.showTimes ? 'absolute' : 'inherit',
               width: vm.showTimes ? (vm.dayColumnDimensions.width + 'px') : '',
               left: vm.showTimes ? (vm.dayColumnDimensions.width * eventRow.offset) + 15 + 'px' : ''
             }">
             <div
               class="day-highlight"
-              ng-class="['dh-event-' + eventRow.event.type, eventRow.event.cssClass, !vm.showTimes && eventRow.extendsLeft ? '' : 'border-left-rounded', !vm.showTimes && eventRow.extendsRight ? '' : 'border-right-rounded']"
+              ng-class="['dh-event-' + eventRow.event.type, eventRow.event.cssClass, !vm.showTimes && eventRow.startsBeforeWeek ? '' : 'border-left-rounded', !vm.showTimes && eventRow.endsAfterWeek ? '' : 'border-right-rounded']"
+              ng-style="{backgroundColor: eventRow.event.color.secondary}"
               data-event-class
               mwl-draggable="eventRow.event.draggable === true"
               axis="vm.showTimes ? 'xy' : 'x'"

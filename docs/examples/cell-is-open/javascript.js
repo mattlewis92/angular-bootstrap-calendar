@@ -1,18 +1,18 @@
 angular
   .module('mwl.calendar.docs')
-  .controller('CellIsOpenCtrl', function(moment) {
+  .controller('CellIsOpenCtrl', function(moment, calendarConfig) {
 
     var vm = this;
 
     vm.events = [
       {
         title: 'Draggable event',
-        type: 'warning',
+        color: calendarConfig.colorTypes.warning,
         startsAt: moment().startOf('month').toDate()
       },
       {
         title: 'Non-draggable event',
-        type: 'info',
+        color: calendarConfig.colorTypes.info,
         startsAt: moment().startOf('month').add(1, 'day').toDate()
       }
     ];

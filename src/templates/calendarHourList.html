@@ -1,32 +1,32 @@
 <div class="cal-day-panel-hour">
 
-  <div class="cal-day-hour" ng-repeat="hour in vm.hours track by $index">
+  <div class="cal-day-hour" ng-repeat="hour in vm.hourGrid track by $index">
 
     <div
       class="cal-day-hour-part"
+      ng-repeat="segment in hour.segments track by $index"
       ng-class="{ 'cal-day-hour-part-selected': vm.dateRangeSelect &&
-                vm.dateRangeSelect.startDate <= vm.getClickedDate(hour.date, vm.dayViewSplit * $index) &&
-                vm.getClickedDate(hour.date, vm.dayViewSplit * $index) < vm.dateRangeSelect.endDate }"
-      ng-repeat="chunk in vm.hourChunks track by chunk"
-      ng-click="vm.onTimespanClick({calendarDate: vm.getClickedDate(hour.date, vm.dayViewSplit * $index)})"
+                vm.dateRangeSelect.startDate <= vm.getClickedDate(segment.date, vm.dayViewSplit * $index) &&
+                vm.getClickedDate(segment.date, vm.dayViewSplit * $index) < vm.dateRangeSelect.endDate }"
+      ng-click="vm.onTimespanClick({calendarDate: vm.getClickedDate(segment.date, vm.dayViewSplit * $index)})"
       mwl-droppable
-      on-drop="vm.eventDropped(dropData.event, vm.getClickedDate(hour.date, vm.dayViewSplit * $index))"
+      on-drop="vm.eventDropped(dropData.event, vm.getClickedDate(segment.date, vm.dayViewSplit * $index))"
       mwl-drag-select="!!vm.onDateRangeSelect"
-      on-drag-select-start="vm.onDragSelectStart(vm.getClickedDate(hour.date, vm.dayViewSplit * $index))"
-      on-drag-select-move="vm.onDragSelectMove(vm.getClickedDate(hour.date, vm.dayViewSplit * ($index + 1)))"
-      on-drag-select-end="vm.onDragSelectEnd(vm.getClickedDate(hour.date, vm.dayViewSplit * ($index + 1)))"
+      on-drag-select-start="vm.onDragSelectStart(vm.getClickedDate(segment.date, vm.dayViewSplit * $index))"
+      on-drag-select-move="vm.onDragSelectMove(vm.getClickedDate(segment.date, vm.dayViewSplit * ($index + 1)))"
+      on-drag-select-end="vm.onDragSelectEnd(vm.getClickedDate(segment.date, vm.dayViewSplit * ($index + 1)))"
       ng-if="!vm.dayWidth">
       <div class="cal-day-hour-part-time">
-        <strong ng-bind="hour.label" ng-show="$first"></strong>
+        <strong ng-bind="segment.date | calendarDate:'hour':true" ng-if="segment.isStart"></strong>
       </div>
     </div>
 
     <div
       class="cal-day-hour-part"
-      ng-repeat="chunk in vm.hourChunks track by chunk"
+      ng-repeat="segment in hour.segments track by $index"
       ng-if="vm.dayWidth">
       <div class="cal-day-hour-part-time">
-        <strong ng-bind="hour.label" ng-show="$first"></strong>
+        <strong ng-bind="segment.date | calendarDate:'hour':true" ng-if="segment.isStart"></strong>
         &nbsp;
       </div>
       <div
@@ -34,15 +34,15 @@
         ng-repeat="dayIndex in [0, 1, 2, 3, 4, 5, 6]"
         ng-style="{width: vm.dayWidth + 'px'}"
         ng-class="{ 'cal-day-hour-part-selected': vm.dateRangeSelect &&
-                vm.dateRangeSelect.startDate <= vm.getClickedDate(hour.date, vm.dayViewSplit * $parent.$index, dayIndex) &&
-                vm.getClickedDate(hour.date, vm.dayViewSplit * $parent.$index, dayIndex) < vm.dateRangeSelect.endDate }"
-        ng-click="vm.onTimespanClick({calendarDate: vm.getClickedDate(hour.date, vm.dayViewSplit * $parent.$index, dayIndex)})"
+                vm.dateRangeSelect.startDate <= vm.getClickedDate(segment.date, vm.dayViewSplit * $parent.$index, dayIndex) &&
+                vm.getClickedDate(segment.date, vm.dayViewSplit * $parent.$index, dayIndex) < vm.dateRangeSelect.endDate }"
+        ng-click="vm.onTimespanClick({calendarDate: vm.getClickedDate(segment.date, vm.dayViewSplit * $parent.$index, dayIndex)})"
         mwl-droppable
-        on-drop="vm.eventDropped(dropData.event, vm.getClickedDate(hour.date, vm.dayViewSplit * $parent.$index, dayIndex))"
+        on-drop="vm.eventDropped(dropData.event, vm.getClickedDate(segment.date, vm.dayViewSplit * $parent.$index, dayIndex))"
         mwl-drag-select="!!vm.onDateRangeSelect"
-        on-drag-select-start="vm.onDragSelectStart(vm.getClickedDate(hour.date, vm.dayViewSplit * $parent.$index, dayIndex), dayIndex)"
-        on-drag-select-move="vm.onDragSelectMove(vm.getClickedDate(hour.date, vm.dayViewSplit * ($parent.$index + 1), vm.dateRangeSelect.dayIndex))"
-        on-drag-select-end="vm.onDragSelectEnd(vm.getClickedDate(hour.date, vm.dayViewSplit * ($parent.$index + 1), vm.dateRangeSelect.dayIndex))">
+        on-drag-select-start="vm.onDragSelectStart(vm.getClickedDate(segment.date, vm.dayViewSplit * $parent.$index, dayIndex), dayIndex)"
+        on-drag-select-move="vm.onDragSelectMove(vm.getClickedDate(segment.date, vm.dayViewSplit * ($parent.$index + 1), vm.dateRangeSelect.dayIndex))"
+        on-drag-select-end="vm.onDragSelectEnd(vm.getClickedDate(segment.date, vm.dayViewSplit * ($parent.$index + 1), vm.dateRangeSelect.dayIndex))">
       </div>
     </div>
 

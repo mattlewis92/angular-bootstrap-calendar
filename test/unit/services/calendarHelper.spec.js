@@ -527,37 +527,40 @@ describe('calendarHelper', function() {
         dayEvents,
         calendarDay,
         '00:00',
-        '23:00',
+        '23:59',
         30
       );
     });
 
     it('should only contain events for that day', function() {
-      expect(dayView).to.eql(dayEvents);
+      expect(dayView.events[0].event).to.eql(dayEvents[0]);
+      expect(dayView.events[1].event).to.eql(dayEvents[1]);
+      expect(dayView.events[2].event).to.eql(dayEvents[2]);
+      expect(dayView.events[3].event).to.eql(dayEvents[3]);
     });
 
     it('should set the top to 0 if the event starts before the start of the day', function() {
-      expect(dayView[0].top).to.equal(0);
+      expect(dayView.events[0].top).to.equal(0);
     });
 
     it('should set the top correctly if the event starts after the start of the day', function() {
-      expect(dayView[1].top).to.equal(658);
+      expect(dayView.events[1].top).to.equal(660);
     });
 
     it('should set the height correctly if the event finishes after the end of the day', function() {
-      expect(dayView[1].height).to.equal(782);
+      expect(dayView.events[1].height).to.equal(779);
     });
 
     it('should set the height correctly if the event finishes before the end of the day', function() {
-      expect(dayView[2].height).to.equal(60);
+      expect(dayView.events[2].height).to.equal(60);
     });
 
     it('should set the height correctly of events that finish within an hour after the day view end', function() {
-      expect(dayView[3].height).to.equal(90);
+      expect(dayView.events[3].height).to.equal(90);
     });
 
     it('should never exceed the maximum height of the calendar', function() {
-      expect(dayView[0].height).to.equal(1440);
+      expect(dayView.events[0].height).to.equal(1439);
     });
 
     it('should remove events that start and end at the same time', function() {
@@ -568,30 +571,32 @@ describe('calendarHelper', function() {
         }],
         calendarDay,
         '00:00',
-        '23:00',
+        '23:59',
         30
       );
-      expect(dayView).to.eql([]);
+      expect(dayView.events).to.eql([]);
     });
 
     it('should move events across if there are multiple ones on the same line', function() {
-      expect(dayView[0].left).to.equal(0);
-      expect(dayView[1].left).to.equal(150);
-      expect(dayView[2].left).to.equal(300);
+      expect(dayView.events[0].left).to.equal(0);
+      expect(dayView.events[1].left).to.equal(150);
+      expect(dayView.events[2].left).to.equal(300);
     });
 
   });
 
   describe('getDayViewHeight', function() {
-    var dayViewHeight;
-
-    beforeEach(function() {
-      dayViewHeight = calendarHelper.getDayViewHeight('01:00', '22:00', 10);
-    });
 
     it('should calculate the height of the day view', function() {
-      expect(dayViewHeight).to.equal(3962);
+      var dayViewHeight = calendarHelper.getDayViewHeight('01:00', '22:59', 10);
+      expect(dayViewHeight).to.equal(3960);
     });
+
+    it('should support partial hours', function() {
+      var dayViewHeight = calendarHelper.getDayViewHeight('01:00', '22:29', 10);
+      expect(dayViewHeight).to.equal(3870);
+    });
+
   });
 
   describe('getWeekViewWithTimes', function() {
@@ -613,7 +618,7 @@ describe('calendarHelper', function() {
         dayEvents,
         calendarDay,
         '00:00',
-        '23:00',
+        '23:59',
         30
       );
     });
@@ -622,36 +627,29 @@ describe('calendarHelper', function() {
       var expectedEventsWeekView = [
         {
           event: {
-            top: 658,
-            height: 782,
-            left: 0,
             startsAt: new Date('October 19, 2015 11:00:00'),
             endsAt: new Date('October 21, 2015 11:00:00')
           },
-          offset: 1
+          offset: 1,
+          top: 660
         },
         {
           event: {
-            top: 658,
-            height: 782,
-            left: 0,
             startsAt: new Date('October 20, 2015 11:00:00'),
             endsAt: new Date('October 21, 2015 11:00:00')
           },
-          offset: 2
+          offset: 2,
+          top: 660,
         },
         {
           event: {
             startsAt: new Date('October 20, 2015 11:00:00'),
-            endsAt: new Date('October 20, 2015 12:00:00'),
-            top: 658,
-            height: 60,
-            left: 150
+            endsAt: new Date('October 20, 2015 12:00:00')
           },
-          offset: 2
+          offset: 2,
+          top: 660,
         }
       ];
-
       expect(weekViewWithTimes.days.length).to.equal(7);
       expect(weekViewWithTimes.eventRows[0].row).to.eql(expectedEventsWeekView);
     });

@@ -1,41 +1,31 @@
 'use strict';
 
 var angular = require('angular');
+var calendarUtils = require('calendar-utils');
 
 angular
   .module('mwl.calendar')
-  .controller('MwlCalendarHourListCtrl', function($scope, $attrs, moment, calendarConfig, calendarHelper) {
+  .controller('MwlCalendarHourListCtrl', function($scope, $attrs, moment, calendarHelper) {
     var vm = this;
-    var dayViewStart, dayViewEnd;
 
     function updateDays() {
-      dayViewStart = moment(vm.dayViewStart || '00:00', 'HH:mm');
-      dayViewEnd = moment(vm.dayViewEnd || '23:00', 'HH:mm');
+
       vm.dayViewSplit = parseInt(vm.dayViewSplit);
-      vm.hours = [];
-      var dayCounter = moment(vm.viewDate)
-        .clone();
+      var dayStart = (vm.dayViewStart || '00:00').split(':');
+      var dayEnd = (vm.dayViewEnd || '23:59').split(':');
+      vm.hourGrid = calendarUtils.getDayViewHourGrid({
+        viewDate: $attrs.dayWidth ? moment(vm.viewDate).startOf('week').toDate() : moment(vm.viewDate).toDate(),
+        hourSegments: 60 / vm.dayViewSplit,
+        dayStart: {
+          hour: dayStart[0],
+          minute: dayStart[1]
+        },
+        dayEnd: {
+          hour: dayEnd[0],
+          minute: dayEnd[1]
+        }
+      });
 
-      if ($attrs.dayWidth) {
-        dayCounter = dayCounter.startOf('week');
-      }
-
-      dayCounter
-        .hours(dayViewStart.hours())
-        .minutes(dayViewStart.minutes())
-        .seconds(dayViewStart.seconds());
-
-      for (var i = 0; i <= dayViewEnd.diff(dayViewStart, 'hours'); i++) {
-        vm.hours.push({
-          label: calendarHelper.formatDate(dayCounter, calendarConfig.dateFormats.hour),
-          date: dayCounter.clone()
-        });
-        dayCounter.add(1, 'hour');
-      }
-      vm.hourChunks = [];
-      for (var j = 0; j < (60 / vm.dayViewSplit); j++) {
-        vm.hourChunks.push(j);
-      }
     }
 
     var originalLocale = moment.locale();
@@ -71,7 +61,7 @@ angular
     };
 
     vm.getClickedDate = function(baseDate, minutes, days) {
-      return moment(baseDate).clone().add(minutes, 'minutes').add(days || 0, 'days').toDate();
+      return moment(baseDate).clone().startOf('hour').add(minutes, 'minutes').add(days || 0, 'days').toDate();
     };
 
     vm.onDragSelectStart = function(date, dayIndex) {

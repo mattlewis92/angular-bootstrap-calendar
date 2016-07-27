@@ -1,20 +1,20 @@
 angular
   .module('mwl.calendar.docs')
-  .controller('ResizableEventsCtrl', function(moment, alert) {
+  .controller('ResizableEventsCtrl', function(moment, alert, calendarConfig) {
 
     var vm = this;
 
     vm.events = [
       {
         title: 'Resizable event',
-        type: 'warning',
+        color: calendarConfig.colorTypes.warning,
         startsAt: moment().startOf('month').toDate(),
         endsAt: moment().startOf('month').add(1, 'hour').toDate(), //ends at is required
         resizable: true
       },
       {
         title: 'Non-resizeable event',
-        type: 'info',
+        color: calendarConfig.colorTypes.info,
         startsAt: moment().startOf('month').toDate(),
         endsAt: moment().startOf('month').add(1, 'hour').toDate(), //ends at is required
         resizable: false

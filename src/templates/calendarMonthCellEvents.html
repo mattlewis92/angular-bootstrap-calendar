@@ -5,6 +5,7 @@
     ng-click="$event.stopPropagation(); vm.onEventClick({calendarEvent: event})"
     class="pull-left event"
     ng-class="'event-' + event.type + ' ' + event.cssClass"
+    ng-style="{backgroundColor: event.color.primary}"
     ng-mouseenter="vm.highlightEvent(event, true)"
     ng-mouseleave="vm.highlightEvent(event, false)"
     tooltip-append-to-body="true"

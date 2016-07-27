@@ -1,6 +1,6 @@
 angular
   .module('mwl.calendar.docs')
-  .controller('DraggableExternalEventsCtrl', function(moment) {
+  .controller('DraggableExternalEventsCtrl', function(moment, calendarConfig) {
 
     var vm = this;
 
@@ -10,12 +10,14 @@ angular
       {
         title: 'Event 1',
         type: 'warning',
+        color: calendarConfig.colorTypes.warning,
         startsAt: moment().startOf('month').toDate(),
         draggable: true
       },
       {
         title: 'Event 2',
         type: 'danger',
+        color: calendarConfig.colorTypes.important,
         startsAt: moment().startOf('month').toDate(),
         draggable: true
       }
