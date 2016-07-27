@@ -1,3 +1,94 @@
+<a name="0.22.0"></a>
+# [0.22.0](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.21.5...v0.22.0) (2016-07-27)
+
+
+### Bug Fixes
+
+* **dayView:** fix event border colors ([93d1a35](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/93d1a35))
+* **dayView:** have day view start and end respect minutes ([80bdc39](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/80bdc39)), closes [#344](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/344)
+* **dayView:** make hour list take up full width of overflow content ([22737dd](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/22737dd)), closes [#389](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/389)
+* **dayView:** use correct height when the end is part of the way through an hour ([beb2d31](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/beb2d31))
+* **onDateRangeSelect:** fix behaviour after bug was introduced in previous commit ([e0c260c](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/e0c260c))
+
+### Features
+
+* show deprecation warning when event type is set ([08bbf74](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/08bbf74))
+* **eventActions:** allow custom event actions to be set ([5744685](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/5744685)), closes [#386](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/386)
+* **events:** allow the event colors to be customised ([f06eb1d](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/f06eb1d)), closes [#402](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/402)
+* **i18n:** allow the i18nStrings.weekNumber option to be a function ([247f2c1](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/247f2c1)), closes [#393](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/393)
+* **monthView:** support on-date-range-select callback on the month view ([fa3b02e](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/fa3b02e)), closes [#391](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/391)
+
+
+### BREAKING CHANGES
+
+* eventActions: `on-edit-event-click`, `on-delete-event-click`, `edit-event-html`, `delete-event-html` are now deprecated and will be removed in a future release. Instead use the new event actions.
+
+Before:
+```
+// in your template
+events="events"
+edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
+on-edit-event-click="vm.eventEdited(calendarEvent)"
+```
+
+After:
+```
+// in your controller
+$scope.events = [{
+  actions: [{
+    label: '<i class=\'glyphicon glyphicon-pencil\'></i>',
+    onClick: function(args) {
+      vm.eventEdited(args.calendarEvent);
+    }
+  }]
+}];
+```
+* events: The `type` field on event objects is now deprecated, you must now explicitly state
+the events color on each event. The old functionality will continue to work but will be removed in a future release.
+
+Before:
+```
+var events = [{
+  title: 'foo',
+  type: 'info',
+  ... other properties
+}];
+```
+
+After:
+```
+var events = [{
+  title: 'foo',
+  color: {
+    primary: '#1e90ff',
+    secondary: '#d1e8ff'
+  },
+  ... other properties
+}];
+```
+
+To ease migration the old events colors are available on the calendarConfig.colorTypes object so you can also do:
+```
+var events = [{
+  title: 'foo',
+  color: calendarConfig.colorTypes.info,
+  ... other properties
+}];
+```
+* dayView: The `day-view-start` and `day-view-end` now respect the minutes values. This means the `day-view-start` value must now be the end of the hour instead of the beginning of the next hour
+
+Before:
+```
+day-view-end="22:00"
+```
+
+After:
+```
+day-view-end="22:59"
+```
+
+
+
 <a name="0.21.5"></a>
 ## [0.21.5](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.21.4...v0.21.5) (2016-07-07)
 
