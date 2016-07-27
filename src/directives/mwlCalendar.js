@@ -35,19 +35,25 @@ angular
     var previousView = vm.view;
 
     function eventIsValid(event) {
+      var LOG_PREFIX = 'Bootstrap calendar:';
       if (!event.startsAt) {
-        $log.warn('Bootstrap calendar: ', 'Event is missing the startsAt field', event);
+        $log.warn(LOG_PREFIX, 'Event is missing the startsAt field', event);
       } else if (!angular.isDate(event.startsAt)) {
-        $log.warn('Bootstrap calendar: ', 'Event startsAt should be a javascript date object. Do `new Date(event.startsAt)` to fix it.', event);
+        $log.warn(LOG_PREFIX, 'Event startsAt should be a javascript date object. Do `new Date(event.startsAt)` to fix it.', event);
       }
 
       if (event.endsAt) {
         if (!angular.isDate(event.endsAt)) {
-          $log.warn('Bootstrap calendar: ', 'Event endsAt should be a javascript date object. Do `new Date(event.endsAt)` to fix it.', event);
+          $log.warn(LOG_PREFIX, 'Event endsAt should be a javascript date object. Do `new Date(event.endsAt)` to fix it.', event);
         }
         if (moment(event.startsAt).isAfter(moment(event.endsAt))) {
-          $log.warn('Bootstrap calendar: ', 'Event cannot start after it finishes', event);
+          $log.warn(LOG_PREFIX, 'Event cannot start after it finishes', event);
         }
+      }
+
+      if (event.type && !event.color) {
+        $log.warn(LOG_PREFIX, 'Event type is deprecated, please see the changelog on how to upgrade: ' +
+          'https://github.com/mattlewis92/angular-bootstrap-calendar/blob/master/CHANGELOG.md', event);
       }
 
       return true;
