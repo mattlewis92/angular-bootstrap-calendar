@@ -61,7 +61,7 @@ angular
     };
 
     vm.getClickedDate = function(baseDate, minutes, days) {
-      return moment(baseDate).clone().add(minutes, 'minutes').add(days || 0, 'days').toDate();
+      return moment(baseDate).clone().startOf('hour').add(minutes, 'minutes').add(days || 0, 'days').toDate();
     };
 
     vm.onDragSelectStart = function(date, dayIndex) {
