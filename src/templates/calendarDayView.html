@@ -44,7 +44,13 @@
       class="pull-left day-event day-highlight"
       ng-repeat="dayEvent in vm.nonAllDayEvents track by dayEvent.event.$id"
       ng-class="'dh-event-' + dayEvent.event.type + ' ' + dayEvent.event.cssClass"
-      ng-style="{top: dayEvent.top - 1 + 'px', left: dayEvent.left + 60 + 'px', height: dayEvent.height + 'px', backgroundColor: dayEvent.event.color.secondary}"
+      ng-style="{
+        top: dayEvent.top - 1 + 'px',
+        left: dayEvent.left + 60 + 'px',
+        height: dayEvent.height + 'px',
+        backgroundColor: dayEvent.event.color.secondary,
+        borderColor: dayEvent.event.color.primary
+      }"
       mwl-draggable="dayEvent.event.draggable === true"
       axis="'xy'"
       snap-grid="{y: vm.dayViewEventChunkSize || 30, x: 50}"
