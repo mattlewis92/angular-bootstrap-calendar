@@ -1,19 +1,19 @@
 angular
   .module('mwl.calendar.docs')
-  .controller('BadgeTotalCtrl', function(moment) {
+  .controller('BadgeTotalCtrl', function(moment, calendarConfig) {
 
     var vm = this;
 
     vm.events = [
       {
         title: 'Increments the badge total on the day cell',
-        type: 'warning',
+        color: calendarConfig.colorTypes.warning,
         startsAt: moment().startOf('month').toDate(),
         incrementsBadgeTotal: true
       },
       {
         title: 'Does not increment the badge total ',
-        type: 'info',
+        color: calendarConfig.colorTypes.info,
         startsAt: moment().startOf('month').toDate(),
         incrementsBadgeTotal: false
       }

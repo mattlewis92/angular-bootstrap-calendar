@@ -120,9 +120,12 @@ An array of events to display on the calendar. For example:
 $scope.events = [
   {
     title: 'My event title', // The title of the event
-    type: 'info', // The type of the event (determines its color). Can be important, warning, info, inverse, success or special
     startsAt: new Date(2013,5,1,1), // A javascript date object for when the event starts
     endsAt: new Date(2014,8,26,15), // Optional - a javascript date object for when the event ends
+    color: { // can also be calendarConfig.colorTypes.warning for shortcuts to the deprecated event types
+      primary: '#e3bc08', // the primary event color (should be darker than secondary)
+      secondary: '#fdf1ba' // the secondary event color (should be lighter than primary)
+    },
     editable: false, // If edit-event-html is set and this field is explicitly set to false then dont make it editable.
     deletable: false, // If delete-event-html is set and this field is explicitly set to false then dont make it deleteable
     draggable: true, //Allow an event to be dragged and dropped
@@ -135,7 +138,7 @@ $scope.events = [
 ];
 ```
 
-`title`, `type` and `startsAt` are required for all events.
+`title`, `color` and `startsAt` are required for all events.
 
 ### view-title
 

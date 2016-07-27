@@ -1,25 +1,25 @@
 angular
   .module('mwl.calendar.docs')
-  .controller('EditableDeletableEventsCtrl', function(moment, alert) {
+  .controller('EditableDeletableEventsCtrl', function(moment, alert, calendarConfig) {
 
     var vm = this;
 
     vm.events = [
       {
         title: 'Editable event',
-        type: 'warning',
+        color: calendarConfig.colorTypes.warning,
         startsAt: moment().startOf('month').toDate(),
         editable: true,
         deletable: false
       }, {
         title: 'Deletable event',
-        type: 'info',
+        color: calendarConfig.colorTypes.info,
         startsAt: moment().startOf('month').toDate(),
         deletable: true,
         editable: false
       }, {
         title: 'Non editable and deletable event',
-        type: 'important',
+        color: calendarConfig.colorTypes.important,
         startsAt: moment().startOf('month').toDate(),
         editable: false,
         deletable: false

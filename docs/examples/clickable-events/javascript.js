@@ -1,18 +1,18 @@
 angular
   .module('mwl.calendar.docs')
-  .controller('ClickableEventsCtrl', function(moment, alert) {
+  .controller('ClickableEventsCtrl', function(moment, alert, calendarConfig) {
 
     var vm = this;
 
     vm.events = [
       {
         title: 'Click me',
-        type: 'warning',
+        color: calendarConfig.colorTypes.warning,
         startsAt: moment().startOf('month').toDate()
       },
       {
         title: 'Or click me',
-        type: 'info',
+        color: calendarConfig.colorTypes.info,
         startsAt: moment().startOf('month').toDate()
       }
     ];

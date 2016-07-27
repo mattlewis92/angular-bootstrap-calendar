@@ -1,6 +1,6 @@
 angular
   .module('mwl.calendar.docs')
-  .controller('RecurringEventsCtrl', function($scope, moment) {
+  .controller('RecurringEventsCtrl', function($scope, moment, calendarConfig) {
 
     var vm = this;
 
@@ -25,12 +25,12 @@ angular
 
       vm.events = [{
         title: 'Recurs monthly',
-        type: 'warning',
+        color: calendarConfig.colorTypes.warning,
         startsAt: moment().toDate(),
         recursOn: 'month'
       }, {
         title: 'Recurs yearly',
-        type: 'info',
+        tcolor: calendarConfig.colorTypes.info,
         startsAt: moment().toDate(),
         recursOn: 'year'
       }];
@@ -38,7 +38,7 @@ angular
       rule.all().forEach(function(date) {
         vm.events.push({
           title: 'Recurs weekly on mondays',
-          type: 'success',
+          color: calendarConfig.colorTypes.success,
           startsAt: new Date(date)
         });
       });

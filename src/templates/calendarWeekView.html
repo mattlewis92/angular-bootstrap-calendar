@@ -57,6 +57,7 @@
             <div
               class="day-highlight"
               ng-class="['dh-event-' + eventRow.event.type, eventRow.event.cssClass, !vm.showTimes && eventRow.startsBeforeWeek ? '' : 'border-left-rounded', !vm.showTimes && eventRow.endsAfterWeek ? '' : 'border-right-rounded']"
+              ng-style="{backgroundColor: eventRow.event.color.secondary}"
               data-event-class
               mwl-draggable="eventRow.event.draggable === true"
               axis="vm.showTimes ? 'xy' : 'x'"

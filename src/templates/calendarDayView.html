@@ -5,6 +5,7 @@
         <div class="cal-row-fluid">
           <div
             class="cal-cell-6 day-highlight dh-event-{{ event.type }}"
+            ng-style="{backgroundColor: event.color.secondary}"
             data-event-class
             ng-repeat="event in vm.allDayEvents track by event.$id">
             <strong>
@@ -43,7 +44,7 @@
       class="pull-left day-event day-highlight"
       ng-repeat="event in vm.nonAllDayEvents track by event.event.$id"
       ng-class="'dh-event-' + event.event.type + ' ' + event.event.cssClass"
-      ng-style="{top: event.top - 1 + 'px', left: event.left + 60 + 'px', height: event.height + 'px'}"
+      ng-style="{top: event.top - 1 + 'px', left: event.left + 60 + 'px', height: event.height + 'px', backgroundColor: event.event.color.secondary}"
       mwl-draggable="event.event.draggable === true"
       axis="'xy'"
       snap-grid="{y: vm.dayViewEventChunkSize || 30, x: 50}"

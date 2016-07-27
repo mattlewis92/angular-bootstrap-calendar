@@ -51,5 +51,31 @@ angular
     i18nStrings: {
       weekNumber: 'Week {week}'
     },
-    templates: {}
+    templates: {},
+    colorTypes: {
+      info: {
+        primary: '#1e90ff',
+        secondary: '#d1e8ff'
+      },
+      important: {
+        primary: '#ad2121',
+        secondary: '#fae3e3'
+      },
+      warning: {
+        primary: '#e3bc08',
+        secondary: '#fdf1ba'
+      },
+      inverse: {
+        primary: '#1b1b1b',
+        secondary: '#c1c1c1'
+      },
+      special: {
+        primary: '#800080',
+        secondary: '#ffe6ff'
+      },
+      success: {
+        primary: '#006400',
+        secondary: '#caffca'
+      }
+    }
   });

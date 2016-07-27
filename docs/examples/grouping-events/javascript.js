@@ -14,22 +14,27 @@ angular
       {
         title: 'Event 1',
         type: 'warning',
+        color: calendarConfig.colorTypes.warning,
         startsAt: moment().startOf('month').toDate()
       }, {
         title: 'Event 2',
         type: 'info',
+        color: calendarConfig.colorTypes.info,
         startsAt: moment().startOf('month').toDate()
       }, {
         title: 'Event 3',
         type: 'info',
+        color: calendarConfig.colorTypes.info,
         startsAt: moment().startOf('month').toDate()
       }, {
         title: 'Event 4',
         type: 'danger',
+        color: calendarConfig.colorTypes.important,
         startsAt: moment().startOf('month').toDate()
       }, {
         title: 'Event 5',
-        type: 'primary',
+        type: 'success',
+        color: calendarConfig.colorTypes.success,
         startsAt: moment().startOf('month').toDate()
       }
     ];
