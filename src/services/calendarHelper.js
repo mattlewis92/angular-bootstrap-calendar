@@ -314,7 +314,7 @@ angular
       var dayViewStartM = moment(dayViewStart || '00:00', 'HH:mm');
       var dayViewEndM = moment(dayViewEnd || '23:59', 'HH:mm');
       var hourHeight = (60 / dayViewSplit) * 30;
-      return ((dayViewEndM.diff(dayViewStartM, 'hours') + 1) * hourHeight) + 2;
+      return ((dayViewEndM.diff(dayViewStartM, 'minutes') / 60) * hourHeight) + 3;
     }
 
     function loadTemplates() {

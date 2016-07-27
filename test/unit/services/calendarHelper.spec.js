@@ -586,15 +586,17 @@ describe('calendarHelper', function() {
   });
 
   describe('getDayViewHeight', function() {
-    var dayViewHeight;
-
-    beforeEach(function() {
-      dayViewHeight = calendarHelper.getDayViewHeight('01:00', '22:59', 10);
-    });
 
     it('should calculate the height of the day view', function() {
-      expect(dayViewHeight).to.equal(3962);
+      var dayViewHeight = calendarHelper.getDayViewHeight('01:00', '22:59', 10);
+      expect(dayViewHeight).to.equal(3960);
     });
+
+    it('should support partial hours', function() {
+      var dayViewHeight = calendarHelper.getDayViewHeight('01:00', '22:29', 10);
+      expect(dayViewHeight).to.equal(3870);
+    });
+
   });
 
   describe('getWeekViewWithTimes', function() {
