@@ -2,7 +2,7 @@
 
 angular
   .module('mwl.calendar.docs', ['mwl.calendar', 'ui.bootstrap', 'ngTouch', 'ngAnimate', 'oc.lazyLoad', 'hljs', 'colorpicker.module'])
-  .controller('ExamplesCtrl', function($http, $rootScope, $compile, $q, $location, $ocLazyLoad, plunkGenerator) {
+  .controller('ExamplesCtrl', function($http, $rootScope, $compile, $q, $location, $ocLazyLoad, plunkGenerator, moment) {
 
     var vm = this;
 
@@ -56,7 +56,7 @@ angular
     };
 
     vm.editActiveExample = function() {
-      plunkGenerator(angular.version.full, '3.3.6', '0.14.3', helpers, vm.activeExample);
+      plunkGenerator(angular.version.full, '3.3.7', '2.0.0', moment.version, helpers, vm.activeExample);
     };
 
     $http.get('docs/examples/examples.json').then(function(result) {
@@ -74,7 +74,7 @@ angular
   })
   .factory('plunkGenerator', function ($document, $templateCache) {
 
-    return function (ngVersion, bsVersion, uibVersion, helpers, content) {
+    return function (ngVersion, bsVersion, uibVersion, momentVersion, helpers, content) {
 
       var form = angular.element('<form style="display: none;" method="post" action="http://plnkr.co/edit/?p=preview" target="_blank"></form>');
       var addField = function (name, value) {
@@ -87,15 +87,18 @@ angular
         return '<!doctype html>\n' +
           '<html ng-app="mwl.calendar.docs">\n' +
           '  <head>\n' +
-          '    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>\n' +
+          '    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/'+momentVersion+'/moment.min.js"></script>\n' +
           '    <script src="//cdnjs.cloudflare.com/ajax/libs/interact.js/1.2.4/interact.min.js"></script>\n' +
           '    <script src="//ajax.googleapis.com/ajax/libs/angularjs/'+ngVersion+'/angular.js"></script>\n' +
           '    <script src="//ajax.googleapis.com/ajax/libs/angularjs/'+ngVersion+'/angular-animate.js"></script>\n' +
           '    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/'+uibVersion+'/ui-bootstrap-tpls.min.js"></script>\n' +
+          '    <script src="//cdn.rawgit.com/jkbrzt/rrule/v2.1.0/lib/rrule.js"></script>\n' +
+          '    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-bootstrap-colorpicker/3.0.25/js/bootstrap-colorpicker-module.min.js"></script>\n' +
           '    <script src="//mattlewis92.github.io/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.min.js"></script>\n' +
           '    <script src="example.js"></script>\n' +
           '    <script src="helpers.js"></script>\n' +
           '    <link href="//netdna.bootstrapcdn.com/bootstrap/'+bsVersion+'/css/bootstrap.min.css" rel="stylesheet">\n' +
+          '    <link href="//cdnjs.cloudflare.com/ajax/libs/angular-bootstrap-colorpicker/3.0.25/css/colorpicker.min.css" rel="stylesheet">\n' +
           '    <link href="//mattlewis92.github.io/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.min.css" rel="stylesheet">\n' +
           '  </head>\n' +
           '  <body>\n\n' +
@@ -105,7 +108,7 @@ angular
       };
 
       var scriptContent = function(content) {
-        return "angular.module('mwl.calendar.docs', ['mwl.calendar', 'ngAnimate', 'ui.bootstrap']);" + "\n" + content;
+        return "angular.module('mwl.calendar.docs', ['mwl.calendar', 'ngAnimate', 'ui.bootstrap', 'colorpicker.module']);" + "\n" + content;
       };
 
       addField('description', 'http://mattlewis92.github.io/angular-bootstrap-calendar/');
