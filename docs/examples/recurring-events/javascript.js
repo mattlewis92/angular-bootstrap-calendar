@@ -30,7 +30,7 @@ angular
         recursOn: 'month'
       }, {
         title: 'Recurs yearly',
-        tcolor: calendarConfig.colorTypes.info,
+        color: calendarConfig.colorTypes.info,
         startsAt: moment().toDate(),
         recursOn: 'year'
       }];
