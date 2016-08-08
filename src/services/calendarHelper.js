@@ -133,44 +133,32 @@ angular
 
     function getMonthView(events, viewDate, cellModifier) {
 
-      var startOfMonth = moment(viewDate).startOf('month');
-      var day = startOfMonth.clone().startOf('week');
-      var endOfMonthView = moment(viewDate).endOf('month').endOf('week');
-      var eventsInPeriod;
-      if (calendarConfig.displayAllMonthEvents) {
-        eventsInPeriod = filterEventsInPeriod(events, day, endOfMonthView);
-      } else {
-        eventsInPeriod = filterEventsInPeriod(events, startOfMonth, startOfMonth.clone().endOf('month'));
-      }
-      var view = [];
-      var today = moment().startOf('day');
+      // hack required to work with the calendar-utils api
+      events.forEach(function(event) {
+        event.start = event.startsAt;
+        event.end = event.endsAt;
+      });
 
-      while (day.isBefore(endOfMonthView)) {
+      var view = calendarUtils.getMonthView({
+        events: events,
+        viewDate: viewDate
+      });
 
-        var inMonth = day.month() === moment(viewDate).month();
-        var monthEvents = [];
-        if (inMonth || calendarConfig.displayAllMonthEvents) {
-          monthEvents = filterEventsInPeriod(eventsInPeriod, day, day.clone().endOf('day'));
+      view.days = view.days.map(function(day) {
+        day.label = day.date.date();
+        day.badgeTotal = getBadgeTotal(day.events);
+        if (!calendarConfig.displayAllMonthEvents && !day.inMonth) {
+          day.events = [];
         }
+        cellModifier({calendarCell: day});
+        return day;
+      });
 
-        var cell = {
-          label: day.date(),
-          date: day.clone(),
-          inMonth: inMonth,
-          isPast: today.isAfter(day),
-          isToday: today.isSame(day),
-          isFuture: today.isBefore(day),
-          isWeekend: [0, 6].indexOf(day.day()) > -1,
-          events: monthEvents,
-          badgeTotal: getBadgeTotal(monthEvents)
-        };
-
-        cellModifier({calendarCell: cell});
-
-        view.push(cell);
-
-        day.add(1, 'day');
-      }
+      // remove hack
+      events.forEach(function(event) {
+        delete event.start;
+        delete event.end;
+      });
 
       return view;
 

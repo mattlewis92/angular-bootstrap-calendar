@@ -96,7 +96,7 @@ describe('mwlCalendarMonth directive', function() {
   }));
 
   it('should get the new month view when calendar refreshes and show the list of events for the current day if required', function() {
-    var monthView = [{date: moment(calendarDay), inMonth: true}];
+    var monthView = {days: [{date: moment(calendarDay), inMonth: true}], rowOffsets: []};
     sinon.stub(calendarHelper, 'getWeekDayNames').returns(['Mon', 'Tu']);
     sinon.stub(calendarHelper, 'getMonthView').returns(monthView);
     sinon.stub(calendarHelper, 'getWeekViewWithTimes').returns({event: 'event2'});
@@ -104,7 +104,8 @@ describe('mwlCalendarMonth directive', function() {
     expect(calendarHelper.getWeekDayNames).to.have.been.called;
     expect(calendarHelper.getMonthView).to.have.been.calledWith(scope.events, scope.viewDate);
     expect(MwlCalendarCtrl.weekDays).to.eql(['Mon', 'Tu']);
-    expect(MwlCalendarCtrl.view).to.equal(monthView);
+    expect(MwlCalendarCtrl.view).to.equal(monthView.days);
+    expect(MwlCalendarCtrl.monthOffsets).to.equal(monthView.rowOffsets);
     expect(MwlCalendarCtrl.openRowIndex).to.equal(0);
     expect(MwlCalendarCtrl.openDayIndex).to.equal(0);
   });
