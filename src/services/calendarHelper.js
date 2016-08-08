@@ -178,23 +178,16 @@ angular
 
     function getWeekView(events, viewDate) {
 
+      var days = calendarUtils.getWeekViewHeader({
+        viewDate: viewDate
+      }).map(function(day) {
+        day.weekDayLabel = formatDate(day.date, calendarConfig.dateFormats.weekDay);
+        day.dayLabel = formatDate(day.date, calendarConfig.dateFormats.day);
+        return day;
+      });
+
       var startOfWeek = moment(viewDate).startOf('week');
       var endOfWeek = moment(viewDate).endOf('week');
-      var dayCounter = startOfWeek.clone();
-      var days = [];
-      var today = moment().startOf('day');
-      while (days.length < 7) {
-        days.push({
-          weekDayLabel: formatDate(dayCounter, calendarConfig.dateFormats.weekDay),
-          date: dayCounter.clone(),
-          dayLabel: formatDate(dayCounter, calendarConfig.dateFormats.day),
-          isPast: dayCounter.isBefore(today),
-          isToday: dayCounter.isSame(today),
-          isFuture: dayCounter.isAfter(today),
-          isWeekend: [0, 6].indexOf(dayCounter.day()) > -1
-        });
-        dayCounter.add(1, 'day');
-      }
 
       var eventRows = calendarUtils.getWeekView({
         viewDate: viewDate,
