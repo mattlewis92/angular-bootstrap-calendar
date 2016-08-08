@@ -232,16 +232,8 @@ angular
       var dayStart = (dayViewStart || '00:00').split(':');
       var dayEnd = (dayViewEnd || '23:59').split(':');
 
-      var allDayEvents = events.filter(function(event) {
-        return event.allDay;
-      });
-
-      var nonAllDayEvents = events.filter(function(event) {
-        return !event.allDay;
-      });
-
       var view = calendarUtils.getDayView({
-        events: nonAllDayEvents.map(function(event) { // hack required to work with event API
+        events: events.map(function(event) { // hack required to work with event API
           event.start = event.startsAt;
           event.end = event.endsAt;
           return event;
@@ -261,12 +253,10 @@ angular
       });
 
       // remove hack to work with new event API
-      nonAllDayEvents.forEach(function(event) {
+      events.forEach(function(event) {
         delete event.start;
         delete event.end;
       });
-
-      view.allDayEvents = allDayEvents;
 
       return view;
 
