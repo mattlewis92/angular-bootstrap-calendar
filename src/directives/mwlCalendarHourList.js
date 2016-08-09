@@ -26,6 +26,12 @@ angular
         }
       });
 
+      vm.hourGrid.forEach(function(hour) {
+        hour.segments.forEach(function(segment) {
+          vm.cellModifier({calendarCell: segment});
+        });
+      });
+
     }
 
     var originalLocale = moment.locale();
@@ -105,7 +111,8 @@ angular
         onTimespanClick: '=',
         onDateRangeSelect: '=',
         onEventTimesChanged: '=',
-        customTemplateUrls: '=?'
+        customTemplateUrls: '=?',
+        cellModifier: '='
       },
       bindToController: true
     };

@@ -5,9 +5,9 @@
     <div
       class="cal-day-hour-part"
       ng-repeat="segment in hour.segments track by $index"
-      ng-class="{ 'cal-day-hour-part-selected': vm.dateRangeSelect &&
+      ng-class="[{ 'cal-day-hour-part-selected': vm.dateRangeSelect &&
                 vm.dateRangeSelect.startDate <= vm.getClickedDate(segment.date, vm.dayViewSplit * $index) &&
-                vm.getClickedDate(segment.date, vm.dayViewSplit * $index) < vm.dateRangeSelect.endDate }"
+                vm.getClickedDate(segment.date, vm.dayViewSplit * $index) < vm.dateRangeSelect.endDate }, segment.cssClass]"
       ng-click="vm.onTimespanClick({calendarDate: vm.getClickedDate(segment.date, vm.dayViewSplit * $index)})"
       mwl-droppable
       on-drop="vm.eventDropped(dropData.event, vm.getClickedDate(segment.date, vm.dayViewSplit * $index))"
@@ -33,9 +33,9 @@
         class="cal-day-hour-part-spacer"
         ng-repeat="dayIndex in [0, 1, 2, 3, 4, 5, 6]"
         ng-style="{width: vm.dayWidth + 'px'}"
-        ng-class="{ 'cal-day-hour-part-selected': vm.dateRangeSelect &&
+        ng-class="[{ 'cal-day-hour-part-selected': vm.dateRangeSelect &&
                 vm.dateRangeSelect.startDate <= vm.getClickedDate(segment.date, vm.dayViewSplit * $parent.$index, dayIndex) &&
-                vm.getClickedDate(segment.date, vm.dayViewSplit * $parent.$index, dayIndex) < vm.dateRangeSelect.endDate }"
+                vm.getClickedDate(segment.date, vm.dayViewSplit * $parent.$index, dayIndex) < vm.dateRangeSelect.endDate }, segment.cssClass]"
         ng-click="vm.onTimespanClick({calendarDate: vm.getClickedDate(segment.date, vm.dayViewSplit * $parent.$index, dayIndex)})"
         mwl-droppable
         on-drop="vm.eventDropped(dropData.event, vm.getClickedDate(segment.date, vm.dayViewSplit * $parent.$index, dayIndex))"

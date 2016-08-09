@@ -20,6 +20,7 @@ describe('mwlCalendarDay directive', function() {
       'day-view-start="dayViewStart" ' +
       'day-view-end="dayViewEnd" ' +
       'day-view-split="dayViewSplit || 30" ' +
+      'cell-modifier="cellModifier"' +
     '></mwl-calendar-day>';
   var calendarDay = new Date(2015, 4, 1);
 
@@ -29,6 +30,7 @@ describe('mwlCalendarDay directive', function() {
     vm.dayViewStart = '06:00';
     vm.dayViewEnd = '22:59';
     vm.dayViewsplit = 30;
+    vm.cellModifier = sinon.spy();
     vm.events = [
       {
         $id: 0,

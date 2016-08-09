@@ -17,6 +17,7 @@ describe('mwlCalendarHourList directive', function() {
         'day-view-end="dayViewEnd" ' +
         'day-view-split="dayViewSplit || 30" ' +
         'on-event-times-changed="eventDropped(calendarEvent, calendarDate, calendarNewEventStart, calendarNewEventEnd)" ' +
+        'cell-modifier="cellModifier"' +
       '></mwl-calendar-hour-list>';
 
   function prepareScope(vm) {
@@ -24,6 +25,7 @@ describe('mwlCalendarHourList directive', function() {
     vm.dayViewStart = '06:00';
     vm.dayViewEnd = '22:59';
     vm.dayViewsplit = 30;
+    vm.cellModifier = sinon.stub();
 
     showModal = sinon.spy();
 
@@ -143,6 +145,18 @@ describe('mwlCalendarHourList directive', function() {
     MwlCalendarCtrl.onDragSelectEnd(date2);
     expect(MwlCalendarCtrl.onDateRangeSelect).not.to.have.been.called;
     expect(MwlCalendarCtrl.dateRangeSelect).to.be.undefined;
+  });
+
+  it('should allow the hour segments to have their CSS class overridden', function() {
+    sinon.stub(moment, 'locale').returns('another locale');
+    scope.cellModifier = function(args) {
+      args.calendarCell.cssClass = 'foo';
+    };
+    scope.$apply();
+    scope.$broadcast('calendar.refreshView');
+    scope.$apply();
+    expect(element[0].querySelector('.cal-day-hour-part.foo')).to.be.ok;
+    moment.locale.restore();
   });
 
 });

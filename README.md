@@ -191,7 +191,7 @@ An optional expression that is evaluated when the view is changed by clicking on
 
 ### cell-modifier
 
-An optional expression that is evaluated on each cell generated for the year and month views. `calendarCell` can be used in the expression and is an object containing the current cell data which you can modify (see the `calendarHelper` service source code or just console.log it to see what data is available). If you add the `cssClass` property it will be applied to the cell.
+An optional expression that is evaluated on each cell generated for the year, month and day views. `calendarCell` can be used in the expression and is an object containing the current cell data which you can modify (see the `calendarHelper` service source code or just console.log it to see what data is available). If you add the `cssClass` property it will be applied to the cell.
 
 ### slide-box-disabled
 
