@@ -106,7 +106,8 @@ angular
         editEventHtml: '=',
         deleteEventHtml: '=',
         customTemplateUrls: '=?',
-        cellModifier: '='
+        cellModifier: '=',
+        templateScope: '='
       },
       controller: 'MwlCalendarDayCtrl as vm',
       bindToController: true

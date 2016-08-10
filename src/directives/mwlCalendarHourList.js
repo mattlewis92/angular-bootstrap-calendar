@@ -112,7 +112,8 @@ angular
         onDateRangeSelect: '=',
         onEventTimesChanged: '=',
         customTemplateUrls: '=?',
-        cellModifier: '='
+        cellModifier: '=',
+        templateScope: '='
       },
       bindToController: true
     };

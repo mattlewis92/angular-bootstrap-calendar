@@ -84,7 +84,8 @@ angular
         onTimespanClick: '=',
         cellModifier: '=',
         slideBoxDisabled: '=',
-        customTemplateUrls: '=?'
+        customTemplateUrls: '=?',
+        templateScope: '='
       },
       controller: 'MwlCalendarYearCtrl as vm',
       link: function(scope, element, attrs, calendarCtrl) {

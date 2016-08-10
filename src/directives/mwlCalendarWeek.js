@@ -98,7 +98,8 @@ angular
         onTimespanClick: '=',
         onDateRangeSelect: '=',
         customTemplateUrls: '=?',
-        cellModifier: '='
+        cellModifier: '=',
+        templateScope: '='
       },
       controller: 'MwlCalendarWeekCtrl as vm',
       link: function(scope, element, attrs, calendarCtrl) {

@@ -40,7 +40,8 @@ angular
         deleteEventHtml: '=',
         onDeleteEventClick: '=',
         cell: '=',
-        customTemplateUrls: '=?'
+        customTemplateUrls: '=?',
+        templateScope: '='
       },
       bindToController: true
     };

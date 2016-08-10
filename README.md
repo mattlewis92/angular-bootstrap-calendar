@@ -210,6 +210,9 @@ $templateCache.put('my-custom-template.html', 'Custom month view template here')
 <mwl-calendar custom-template-urls="{calendarMonthView: 'my-custom-template.html'}"></mwl-calendar>
 ```
 
+### template-scope
+An object containing a set of variables that will be available in a custom template as `vm.templateScope`
+
 ## Configuring the calendar default config
 
 You can easily customise the date formats and i18n strings used throughout the calendar by using the `calendarConfig` value. Please note that these example formats are those used by moment.js and these won't work if using angular as the date formatter. Example usage:
