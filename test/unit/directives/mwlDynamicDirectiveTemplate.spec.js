@@ -6,10 +6,11 @@ describe('dynamicDirectiveTemplate directive', function() {
 
   beforeEach(angular.mock.module('mwl.calendar'));
 
-  var scope, elm, calendarConfig, $templateCache;
-  beforeEach(inject(function($rootScope, $compile, _$templateCache_, _calendarConfig_) {
+  var scope, elm, calendarConfig, $templateCache, $log;
+  beforeEach(inject(function($rootScope, $compile, _$templateCache_, _calendarConfig_, _$log_) {
     $templateCache = _$templateCache_;
     calendarConfig = _calendarConfig_;
+    $log = _$log_;
     scope = $rootScope.$new();
     calendarConfig.templates = {
       foo: 'foo.html'
@@ -44,6 +45,15 @@ describe('dynamicDirectiveTemplate directive', function() {
     };
     scope.$apply();
     expect(elm.text()).to.equal('bar baz');
+  });
+
+  it('should log a warning when the template is not in the cache', function() {
+    $log.warn = sinon.spy();
+    scope.overrides = {
+      foo: 'bam.html'
+    };
+    scope.$apply();
+    expect($log.warn).to.have.been.calledOnce;
   });
 
 });
