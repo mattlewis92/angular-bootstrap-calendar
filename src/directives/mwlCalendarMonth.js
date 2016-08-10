@@ -65,7 +65,6 @@ angular
         if (shouldAddClass) {
           var dayContainsEvent = day.events.indexOf(event) > -1;
           if (dayContainsEvent) {
-            day.highlightClass = 'day-highlight dh-event-' + event.type;
             day.backgroundColor = event.color ? event.color.secondary : '';
           }
         }

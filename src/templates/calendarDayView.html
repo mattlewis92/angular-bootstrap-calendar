@@ -4,7 +4,7 @@
       <div class="col-xs-12">
         <div class="cal-row-fluid">
           <div
-            class="cal-cell-6 day-highlight dh-event-{{ event.type }}"
+            class="cal-cell-6 day-highlight"
             ng-style="{backgroundColor: event.color.secondary}"
             data-event-class
             ng-repeat="event in vm.allDayEvents track by event.$id">
@@ -45,7 +45,7 @@
     <div
       class="pull-left day-event day-highlight"
       ng-repeat="dayEvent in vm.nonAllDayEvents track by dayEvent.event.$id"
-      ng-class="'dh-event-' + dayEvent.event.type + ' ' + dayEvent.event.cssClass"
+      ng-class="dayEvent.event.cssClass"
       ng-style="{
         top: dayEvent.top - 1 + 'px',
         left: dayEvent.left + 60 + 'px',

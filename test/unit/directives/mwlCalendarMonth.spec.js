@@ -141,27 +141,6 @@ describe('mwlCalendarMonth directive', function() {
     expect(MwlCalendarCtrl.openDayIndex).to.be.undefined;
   });
 
-  it('should highlight an event across multiple days', function() {
-    var monthView = [{
-      date: moment(calendarDay),
-      inMonth: true,
-      events: [scope.events[0]]
-    }, {
-      date: moment(calendarDay),
-      inMonth: true,
-      events: [scope.events[0]]
-    }, {
-      date: moment(calendarDay),
-      inMonth: true,
-      events: [scope.events[1]]
-    }];
-
-    MwlCalendarCtrl.view = monthView;
-    MwlCalendarCtrl.highlightEvent(scope.events[0], true);
-    expect(monthView[0].highlightClass).to.equal('day-highlight dh-event-warning');
-    expect(monthView[1].highlightClass).to.equal('day-highlight dh-event-warning');
-  });
-
   it('should highlight the month with the events color', function() {
 
     scope.events[0].color = {

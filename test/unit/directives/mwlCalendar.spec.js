@@ -187,20 +187,6 @@ describe('mwlCalendar directive', function() {
     expect($log.warn).to.have.been.calledOnce;
   });
 
-  it('should log a warning if the deprecated event type is used', function() {
-    $log.warn = sinon.spy();
-    scope.vm.events = [{title: 'title', startsAt: new Date(), type: 'success'}];
-    scope.$apply();
-    expect($log.warn).to.have.been.calledOnce;
-  });
-
-  it('should not log a warning if the deprecated event type is not used', function() {
-    $log.warn = sinon.spy();
-    scope.vm.events = [{title: 'title', startsAt: new Date(), color: {primary: 'blue', secondary: 'lightblue'}}];
-    scope.$apply();
-    expect($log.warn).not.to.have.been.called;
-  });
-
   afterEach(function() {
     clock.restore();
   });

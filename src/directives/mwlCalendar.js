@@ -57,10 +57,6 @@ angular
         }
       }
 
-      if (event.type && !event.color) {
-        $log.warn(LOG_PREFIX, 'Event type is deprecated, please see the changelog on how to upgrade: ' + CHANGELOG_LINK, event);
-      }
-
       return true;
     }
 
