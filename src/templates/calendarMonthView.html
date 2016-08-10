@@ -25,10 +25,6 @@
       is-open="vm.openRowIndex === $index && vm.view[vm.openDayIndex].events.length > 0 && !vm.slideBoxDisabled"
       events="vm.view[vm.openDayIndex].events"
       on-event-click="vm.onEventClick"
-      edit-event-html="vm.editEventHtml"
-      on-edit-event-click="vm.onEditEventClick"
-      delete-event-html="vm.deleteEventHtml"
-      on-delete-event-click="vm.onDeleteEventClick"
       cell="vm.view[vm.openDayIndex]"
       custom-template-urls="vm.customTemplateUrls"
       template-scope="vm.templateScope">

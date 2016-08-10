@@ -24,8 +24,6 @@ describe('mwlCalendar directive', function() {
       'on-event-click="vm.eventClicked(calendarEvent)" ' +
       'on-event-times-changed="vm.eventTimesChanged(calendarEvent); ' +
       'calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd" ' +
-      'on-edit-event-click="vm.eventEdited(calendarEvent)" ' +
-      'on-delete-event-click="vm.eventDeleted(calendarEvent)" ' +
       'cell-is-open="true" ' +
       'day-view-start="06:00" ' +
       'day-view-end="22:59" ' +

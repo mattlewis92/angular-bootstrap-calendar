@@ -101,10 +101,6 @@ angular
         dayViewEnd: '=',
         dayViewSplit: '=',
         dayViewEventChunkSize: '=',
-        onEditEventClick: '=',
-        onDeleteEventClick: '=',
-        editEventHtml: '=',
-        deleteEventHtml: '=',
         customTemplateUrls: '=?',
         cellModifier: '=',
         templateScope: '='

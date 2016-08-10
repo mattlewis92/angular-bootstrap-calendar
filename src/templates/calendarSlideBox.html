@@ -18,22 +18,6 @@
 
         <a
           href="javascript:;"
-          class="event-item-edit"
-          ng-if="vm.editEventHtml && event.editable !== false"
-          ng-bind-html="vm.editEventHtml | calendarTrustAsHtml"
-          ng-click="vm.onEditEventClick({calendarEvent: event})">
-        </a>
-
-        <a
-          href="javascript:;"
-          class="event-item-delete"
-          ng-if="vm.deleteEventHtml && event.deletable !== false"
-          ng-bind-html="vm.deleteEventHtml | calendarTrustAsHtml"
-          ng-click="vm.onDeleteEventClick({calendarEvent: event})">
-        </a>
-
-        <a
-          href="javascript:;"
           class="event-item-action"
           ng-class="action.cssClass"
           ng-repeat="action in event.actions track by $index"

@@ -90,10 +90,6 @@ There is a single directive exposed to create the calendar, use it like so:
     view-title="calendarTitle"
     on-event-click="eventClicked(calendarEvent)"
     on-event-times-changed="calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
-    edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
-    delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
-    on-edit-event-click="eventEdited(calendarEvent)"
-    on-delete-event-click="eventDeleted(calendarEvent)"
     cell-is-open="true">
 </mwl-calendar>
 ```
