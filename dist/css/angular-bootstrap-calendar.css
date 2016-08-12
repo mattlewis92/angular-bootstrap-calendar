@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-calendar - A pure AngularJS bootstrap themed responsive calendar that can display events and has views for year, month, week and day
- * @version v0.22.0
+ * @version v0.23.0
  * @link https://github.com/mattlewis92/angular-bootstrap-calendar
  * @license MIT
  */
@@ -331,25 +331,6 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.cal-day-box .day-highlight.dh-event-important {
-  border: 1px solid #ad2121;
-}
-.cal-day-box .day-highlight.dh-event-warning {
-  border: 1px solid #e3bc08;
-}
-.cal-day-box .day-highlight.dh-event-info {
-  border: 1px solid dodgerblue;
-}
-.cal-day-box .day-highlight.dh-event-inverse {
-  border: 1px solid #1b1b1b;
-}
-.cal-day-box .day-highlight.dh-event-success {
-  border: 1px solid darkgreen;
-}
-.cal-day-box .day-highlight.dh-event-special {
-  background-color: #ffe6ff;
-  border: 1px solid #800080;
-}
 .event {
   display: block;
   background-color: #c3c3c3;
@@ -371,51 +352,9 @@
 .cal-event-list .event.pull-left {
   margin-top: 3px;
 }
-.event-important {
-  background-color: #ad2121;
-}
-.event-info {
-  background-color: dodgerblue;
-}
-.event-warning {
-  background-color: #e3bc08;
-}
-.event-inverse {
-  background-color: #1b1b1b;
-}
-.event-success {
-  background-color: darkgreen;
-}
-.event-special {
-  background-color: #800080;
-}
 .day-highlight:hover,
 .day-highlight {
   background-color: #dddddd;
-}
-.day-highlight.dh-event-important:hover,
-.day-highlight.dh-event-important {
-  background-color: #fae3e3;
-}
-.day-highlight.dh-event-warning:hover,
-.day-highlight.dh-event-warning {
-  background-color: #fdf1ba;
-}
-.day-highlight.dh-event-info:hover,
-.day-highlight.dh-event-info {
-  background-color: #d1e8ff;
-}
-.day-highlight.dh-event-inverse:hover,
-.day-highlight.dh-event-inverse {
-  background-color: #c1c1c1;
-}
-.day-highlight.dh-event-success:hover,
-.day-highlight.dh-event-success {
-  background-color: #caffca;
-}
-.day-highlight.dh-event-special:hover,
-.day-highlight.dh-event-special {
-  background-color: #ffe6ff;
 }
 .cal-row-head [class*="cal-cell"]:first-child,
 .cal-row-head [class*="cal-cell"] {

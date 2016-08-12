@@ -101,11 +101,9 @@ angular
         dayViewEnd: '=',
         dayViewSplit: '=',
         dayViewEventChunkSize: '=',
-        onEditEventClick: '=',
-        onDeleteEventClick: '=',
-        editEventHtml: '=',
-        deleteEventHtml: '=',
-        customTemplateUrls: '=?'
+        customTemplateUrls: '=?',
+        cellModifier: '=',
+        templateScope: '='
       },
       controller: 'MwlCalendarDayCtrl as vm',
       bindToController: true

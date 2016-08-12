@@ -133,44 +133,32 @@ angular
 
     function getMonthView(events, viewDate, cellModifier) {
 
-      var startOfMonth = moment(viewDate).startOf('month');
-      var day = startOfMonth.clone().startOf('week');
-      var endOfMonthView = moment(viewDate).endOf('month').endOf('week');
-      var eventsInPeriod;
-      if (calendarConfig.displayAllMonthEvents) {
-        eventsInPeriod = filterEventsInPeriod(events, day, endOfMonthView);
-      } else {
-        eventsInPeriod = filterEventsInPeriod(events, startOfMonth, startOfMonth.clone().endOf('month'));
-      }
-      var view = [];
-      var today = moment().startOf('day');
+      // hack required to work with the calendar-utils api
+      events.forEach(function(event) {
+        event.start = event.startsAt;
+        event.end = event.endsAt;
+      });
 
-      while (day.isBefore(endOfMonthView)) {
+      var view = calendarUtils.getMonthView({
+        events: events,
+        viewDate: viewDate
+      });
 
-        var inMonth = day.month() === moment(viewDate).month();
-        var monthEvents = [];
-        if (inMonth || calendarConfig.displayAllMonthEvents) {
-          monthEvents = filterEventsInPeriod(eventsInPeriod, day, day.clone().endOf('day'));
+      view.days = view.days.map(function(day) {
+        day.label = day.date.date();
+        day.badgeTotal = getBadgeTotal(day.events);
+        if (!calendarConfig.displayAllMonthEvents && !day.inMonth) {
+          day.events = [];
         }
+        cellModifier({calendarCell: day});
+        return day;
+      });
 
-        var cell = {
-          label: day.date(),
-          date: day.clone(),
-          inMonth: inMonth,
-          isPast: today.isAfter(day),
-          isToday: today.isSame(day),
-          isFuture: today.isBefore(day),
-          isWeekend: [0, 6].indexOf(day.day()) > -1,
-          events: monthEvents,
-          badgeTotal: getBadgeTotal(monthEvents)
-        };
-
-        cellModifier({calendarCell: cell});
-
-        view.push(cell);
-
-        day.add(1, 'day');
-      }
+      // remove hack
+      events.forEach(function(event) {
+        delete event.start;
+        delete event.end;
+      });
 
       return view;
 
@@ -178,23 +166,16 @@ angular
 
     function getWeekView(events, viewDate) {
 
+      var days = calendarUtils.getWeekViewHeader({
+        viewDate: viewDate
+      }).map(function(day) {
+        day.weekDayLabel = formatDate(day.date, calendarConfig.dateFormats.weekDay);
+        day.dayLabel = formatDate(day.date, calendarConfig.dateFormats.day);
+        return day;
+      });
+
       var startOfWeek = moment(viewDate).startOf('week');
       var endOfWeek = moment(viewDate).endOf('week');
-      var dayCounter = startOfWeek.clone();
-      var days = [];
-      var today = moment().startOf('day');
-      while (days.length < 7) {
-        days.push({
-          weekDayLabel: formatDate(dayCounter, calendarConfig.dateFormats.weekDay),
-          date: dayCounter.clone(),
-          dayLabel: formatDate(dayCounter, calendarConfig.dateFormats.day),
-          isPast: dayCounter.isBefore(today),
-          isToday: dayCounter.isSame(today),
-          isFuture: dayCounter.isAfter(today),
-          isWeekend: [0, 6].indexOf(dayCounter.day()) > -1
-        });
-        dayCounter.add(1, 'day');
-      }
 
       var eventRows = calendarUtils.getWeekView({
         viewDate: viewDate,
@@ -232,16 +213,8 @@ angular
       var dayStart = (dayViewStart || '00:00').split(':');
       var dayEnd = (dayViewEnd || '23:59').split(':');
 
-      var allDayEvents = events.filter(function(event) {
-        return event.allDay;
-      });
-
-      var nonAllDayEvents = events.filter(function(event) {
-        return !event.allDay;
-      });
-
       var view = calendarUtils.getDayView({
-        events: nonAllDayEvents.map(function(event) { // hack required to work with event API
+        events: events.map(function(event) { // hack required to work with event API
           event.start = event.startsAt;
           event.end = event.endsAt;
           return event;
@@ -261,12 +234,10 @@ angular
       });
 
       // remove hack to work with new event API
-      nonAllDayEvents.forEach(function(event) {
+      events.forEach(function(event) {
         delete event.start;
         delete event.end;
       });
-
-      view.allDayEvents = allDayEvents;
 
       return view;
 

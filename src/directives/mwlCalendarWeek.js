@@ -97,7 +97,9 @@ angular
         dayViewEventChunkSize: '=',
         onTimespanClick: '=',
         onDateRangeSelect: '=',
-        customTemplateUrls: '=?'
+        customTemplateUrls: '=?',
+        cellModifier: '=',
+        templateScope: '='
       },
       controller: 'MwlCalendarWeekCtrl as vm',
       link: function(scope, element, attrs, calendarCtrl) {

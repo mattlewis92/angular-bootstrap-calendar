@@ -232,7 +232,7 @@ describe('calendarHelper', function() {
     var monthView;
 
     beforeEach(function() {
-      monthView = calendarHelper.getMonthView(events, calendarDay, angular.noop);
+      monthView = calendarHelper.getMonthView(events, calendarDay, angular.noop).days;
     });
 
     it('should give back the correct amount of days for the calendar', function() {
@@ -345,9 +345,9 @@ describe('calendarHelper', function() {
       calendarConfig.displayAllMonthEvents = true;
       var eventsOffCalendar = [{
         startsAt: new Date('September 29, 2015 02:00:00'),
-        endsAt: new Date('September 29, 2015 02:00:00')
+        endsAt: new Date('September 29, 2015 03:00:00')
       }];
-      monthView = calendarHelper.getMonthView(eventsOffCalendar, calendarDay, angular.noop);
+      monthView = calendarHelper.getMonthView(eventsOffCalendar, calendarDay, angular.noop).days;
       expect(monthView[2].events).to.eql(eventsOffCalendar);
       calendarConfig.displayAllMonthEvents = false;
     });

@@ -1,3 +1,36 @@
+<a name="0.23.0"></a>
+# [0.23.0](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.22.0...v0.23.0) (2016-08-12)
+
+
+### Bug Fixes
+
+* **dayView:** hide all day events that dont occur on the given day ([28354e6](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/28354e6)), closes [#414](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/414)
+* remove deprecated `event.type` ([c53d4c8](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/c53d4c8))
+* remove deprecated edit and delete actions ([fadbf75](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/fadbf75)), closes [#417](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/417)
+
+### Features
+
+* **customTemplates:** allow a parent scope to be accessed in custom templates ([c84e9ab](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/c84e9ab)), closes [#415](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/415)
+* **customTemplates:** show a warning when a template doesnt exist in the template cache ([a7eee2a](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/a7eee2a)), closes [#422](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/422)
+* **dayView:** call the cell modifier for day view hour segments ([835f17b](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/835f17b)), closes [#418](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/418)
+
+
+### BREAKING CHANGES
+
+* `on-edit-event-click`, `on-delete-event-click`, `edit-event-html`, `delete-event-html` options have been removed in favour of generic event actions.
+
+See the 0.22.0 changelog for migration details
+
+* The deprecated `event.type` property has been removed.
+
+See 0.22.0 release notes for migration instructions
+
+* dayView: the `cell-modifier` callback is now called for the day view.
+
+To migrate add a guard on the callback to check what the current view is and act accordingly
+
+
+
 <a name="0.22.0"></a>
 # [0.22.0](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.21.5...v0.22.0) (2016-07-27)
 

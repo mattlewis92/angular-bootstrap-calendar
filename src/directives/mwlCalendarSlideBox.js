@@ -35,12 +35,9 @@ angular
         isOpen: '=',
         events: '=',
         onEventClick: '=',
-        editEventHtml: '=',
-        onEditEventClick: '=',
-        deleteEventHtml: '=',
-        onDeleteEventClick: '=',
         cell: '=',
-        customTemplateUrls: '=?'
+        customTemplateUrls: '=?',
+        templateScope: '='
       },
       bindToController: true
     };

@@ -76,15 +76,12 @@ angular
         viewDate: '=',
         onEventClick: '=',
         onEventTimesChanged: '=',
-        onEditEventClick: '=',
-        onDeleteEventClick: '=',
-        editEventHtml: '=',
-        deleteEventHtml: '=',
         cellIsOpen: '=',
         onTimespanClick: '=',
         cellModifier: '=',
         slideBoxDisabled: '=',
-        customTemplateUrls: '=?'
+        customTemplateUrls: '=?',
+        templateScope: '='
       },
       controller: 'MwlCalendarYearCtrl as vm',
       link: function(scope, element, attrs, calendarCtrl) {

@@ -12,6 +12,7 @@ describe('mwlCalendarMonth directive', function() {
     showModal,
     calendarHelper,
     calendarConfig,
+    $templateCache,
     template =
       '<mwl-calendar-month ' +
       'events="events" ' +
@@ -25,6 +26,8 @@ describe('mwlCalendarMonth directive', function() {
       'day-view-split="dayViewSplit || 30" ' +
       'cell-template-url="{{ monthCellTemplateUrl }}" ' +
       'cell-events-template-url="{{ monthCellEventsTemplateUrl }}" ' +
+      'template-scope="templateScope"' +
+      'custom-template-urls="customTemplateUrls"' +
       '></mwl-calendar-month>';
   var calendarDay = new Date(2015, 4, 1);
 
@@ -81,10 +84,11 @@ describe('mwlCalendarMonth directive', function() {
 
   beforeEach(angular.mock.module('mwl.calendar'));
 
-  beforeEach(angular.mock.inject(function($compile, _$rootScope_, _calendarHelper_, _calendarConfig_) {
+  beforeEach(angular.mock.inject(function($compile, _$rootScope_, _calendarHelper_, _calendarConfig_, _$templateCache_) {
     $rootScope = _$rootScope_;
     calendarHelper = _calendarHelper_;
     calendarConfig = _calendarConfig_;
+    $templateCache = _$templateCache_;
     scope = $rootScope.$new();
     prepareScope(scope);
     element = angular.element(template);
@@ -96,7 +100,7 @@ describe('mwlCalendarMonth directive', function() {
   }));
 
   it('should get the new month view when calendar refreshes and show the list of events for the current day if required', function() {
-    var monthView = [{date: moment(calendarDay), inMonth: true}];
+    var monthView = {days: [{date: moment(calendarDay), inMonth: true}], rowOffsets: []};
     sinon.stub(calendarHelper, 'getWeekDayNames').returns(['Mon', 'Tu']);
     sinon.stub(calendarHelper, 'getMonthView').returns(monthView);
     sinon.stub(calendarHelper, 'getWeekViewWithTimes').returns({event: 'event2'});
@@ -104,7 +108,8 @@ describe('mwlCalendarMonth directive', function() {
     expect(calendarHelper.getWeekDayNames).to.have.been.called;
     expect(calendarHelper.getMonthView).to.have.been.calledWith(scope.events, scope.viewDate);
     expect(MwlCalendarCtrl.weekDays).to.eql(['Mon', 'Tu']);
-    expect(MwlCalendarCtrl.view).to.equal(monthView);
+    expect(MwlCalendarCtrl.view).to.equal(monthView.days);
+    expect(MwlCalendarCtrl.monthOffsets).to.equal(monthView.rowOffsets);
     expect(MwlCalendarCtrl.openRowIndex).to.equal(0);
     expect(MwlCalendarCtrl.openDayIndex).to.equal(0);
   });
@@ -134,27 +139,6 @@ describe('mwlCalendarMonth directive', function() {
     MwlCalendarCtrl.dayClicked(MwlCalendarCtrl.view[0], false, {defaultPrevented: true});
     expect(MwlCalendarCtrl.openRowIndex).to.be.null;
     expect(MwlCalendarCtrl.openDayIndex).to.be.undefined;
-  });
-
-  it('should highlight an event across multiple days', function() {
-    var monthView = [{
-      date: moment(calendarDay),
-      inMonth: true,
-      events: [scope.events[0]]
-    }, {
-      date: moment(calendarDay),
-      inMonth: true,
-      events: [scope.events[0]]
-    }, {
-      date: moment(calendarDay),
-      inMonth: true,
-      events: [scope.events[1]]
-    }];
-
-    MwlCalendarCtrl.view = monthView;
-    MwlCalendarCtrl.highlightEvent(scope.events[0], true);
-    expect(monthView[0].highlightClass).to.equal('day-highlight dh-event-warning');
-    expect(monthView[1].highlightClass).to.equal('day-highlight dh-event-warning');
   });
 
   it('should highlight the month with the events color', function() {
@@ -279,6 +263,16 @@ describe('mwlCalendarMonth directive', function() {
     MwlCalendarCtrl.onDragSelectEnd({date: date2});
     expect(MwlCalendarCtrl.onDateRangeSelect).not.to.have.been.called;
     expect(MwlCalendarCtrl.dateRangeSelect).to.be.undefined;
+  });
+
+  it('should pass in a scope object that is accessible from the custom template', function() {
+    scope.templateScope = {
+      foo: 'world'
+    };
+    $templateCache.put('customMonth.html', 'Hello {{ vm.templateScope.foo }}');
+    scope.customTemplateUrls = {calendarMonthView: 'customMonth.html'};
+    scope.$apply();
+    expect(element.text()).to.deep.equal('Hello world');
   });
 
 });

@@ -33,6 +33,8 @@ All credits for the UI/UX and the less files of the calendar go to the original 
 
 Pull requests are welcome.
 
+Looking for an angular2 version of this module? Development is underway here: https://github.com/mattlewis92/angular2-calendar
+
 ## Installation
 
 The calendar has a few dependencies, these are as follows, and must be included before this libraries files:
@@ -90,10 +92,6 @@ There is a single directive exposed to create the calendar, use it like so:
     view-title="calendarTitle"
     on-event-click="eventClicked(calendarEvent)"
     on-event-times-changed="calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
-    edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
-    delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
-    on-edit-event-click="eventEdited(calendarEvent)"
-    on-delete-event-click="eventDeleted(calendarEvent)"
     cell-is-open="true">
 </mwl-calendar>
 ```
@@ -191,7 +189,7 @@ An optional expression that is evaluated when the view is changed by clicking on
 
 ### cell-modifier
 
-An optional expression that is evaluated on each cell generated for the year and month views. `calendarCell` can be used in the expression and is an object containing the current cell data which you can modify (see the `calendarHelper` service source code or just console.log it to see what data is available). If you add the `cssClass` property it will be applied to the cell.
+An optional expression that is evaluated on each cell generated for the year, month and day views. `calendarCell` can be used in the expression and is an object containing the current cell data which you can modify (see the `calendarHelper` service source code or just console.log it to see what data is available). If you add the `cssClass` property it will be applied to the cell.
 
 ### slide-box-disabled
 
@@ -209,6 +207,9 @@ $templateCache.put('my-custom-template.html', 'Custom month view template here')
 // in your template
 <mwl-calendar custom-template-urls="{calendarMonthView: 'my-custom-template.html'}"></mwl-calendar>
 ```
+
+### template-scope
+An object containing a set of variables that will be available in a custom template as `vm.templateScope`
 
 ## Configuring the calendar default config
 

@@ -15,12 +15,9 @@ angular
 
       vm.weekDays = calendarHelper.getWeekDayNames();
 
-      vm.view = calendarHelper.getMonthView(vm.events, vm.viewDate, vm.cellModifier);
-      var rows = Math.floor(vm.view.length / 7);
-      vm.monthOffsets = [];
-      for (var i = 0; i < rows; i++) {
-        vm.monthOffsets.push(i * 7);
-      }
+      var monthView = calendarHelper.getMonthView(vm.events, vm.viewDate, vm.cellModifier);
+      vm.view = monthView.days;
+      vm.monthOffsets = monthView.rowOffsets;
 
       //Auto open the calendar to the current day if set
       if (vm.cellIsOpen && vm.openRowIndex === null) {
@@ -68,7 +65,6 @@ angular
         if (shouldAddClass) {
           var dayContainsEvent = day.events.indexOf(event) > -1;
           if (dayContainsEvent) {
-            day.highlightClass = 'day-highlight dh-event-' + event.type;
             day.backgroundColor = event.color ? event.color.secondary : '';
           }
         }
@@ -140,17 +136,14 @@ angular
         events: '=',
         viewDate: '=',
         onEventClick: '=',
-        onEditEventClick: '=',
-        onDeleteEventClick: '=',
         onEventTimesChanged: '=',
         onDateRangeSelect: '=',
-        editEventHtml: '=',
-        deleteEventHtml: '=',
         cellIsOpen: '=',
         onTimespanClick: '=',
         cellModifier: '=',
         slideBoxDisabled: '=',
-        customTemplateUrls: '=?'
+        customTemplateUrls: '=?',
+        templateScope: '='
       },
       controller: 'MwlCalendarMonthCtrl as vm',
       link: function(scope, element, attrs, calendarCtrl) {

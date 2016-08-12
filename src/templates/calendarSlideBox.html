@@ -7,29 +7,13 @@
         ng-class="event.cssClass"
         mwl-draggable="event.draggable === true"
         drop-data="{event: event}">
-        <span class="pull-left event" ng-class="'event-' + event.type" ng-style="{backgroundColor: event.color.primary}"></span>
+        <span class="pull-left event" ng-style="{backgroundColor: event.color.primary}"></span>
         &nbsp;
         <a
           href="javascript:;"
           class="event-item"
           ng-click="vm.onEventClick({calendarEvent: event})">
           <span ng-bind-html="isMonthView ? vm.calendarEventTitle.monthView(event) : vm.calendarEventTitle.yearView(event) | calendarTrustAsHtml"></span>
-        </a>
-
-        <a
-          href="javascript:;"
-          class="event-item-edit"
-          ng-if="vm.editEventHtml && event.editable !== false"
-          ng-bind-html="vm.editEventHtml | calendarTrustAsHtml"
-          ng-click="vm.onEditEventClick({calendarEvent: event})">
-        </a>
-
-        <a
-          href="javascript:;"
-          class="event-item-delete"
-          ng-if="vm.deleteEventHtml && event.deletable !== false"
-          ng-bind-html="vm.deleteEventHtml | calendarTrustAsHtml"
-          ng-click="vm.onDeleteEventClick({calendarEvent: event})">
         </a>
 
         <a
