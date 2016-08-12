@@ -33,6 +33,8 @@ All credits for the UI/UX and the less files of the calendar go to the original 
 
 Pull requests are welcome.
 
+Looking for an angular2 version of this module? Development is underway here: https://github.com/mattlewis92/angular2-calendar
+
 ## Installation
 
 The calendar has a few dependencies, these are as follows, and must be included before this libraries files:
