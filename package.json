@@ -34,7 +34,7 @@
     "html-loader": "~0.4.0",
     "htmlhint-loader": "~0.1.0",
     "istanbul-instrumenter-loader": "~0.2.0",
-    "karma": "~1.1.1",
+    "karma": "~1.2.0",
     "karma-chai-plugins": "~0.7.0",
     "karma-coverage": "~1.1.0",
     "karma-mocha": "~1.1.1",
