@@ -25,7 +25,7 @@ angular
 
     vm.calendarView = 'month';
     vm.viewDate = moment().startOf('month').toDate();
-    vm.isCellOpen = true;
+    vm.cellIsOpen = false;
 
     vm.eventDropped = function(event, start, end) {
       var externalIndex = vm.externalEvents.indexOf(event);
@@ -37,6 +37,8 @@ angular
       if (end) {
         event.endsAt = end;
       }
+      vm.viewDate = start;
+      vm.cellIsOpen = true;
     };
 
   });

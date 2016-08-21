@@ -7,7 +7,6 @@ angular
     vm.events = [];
     vm.calendarView = 'year';
     vm.viewDate = moment().startOf('month').toDate();
-    vm.isCellOpen = true;
     vm.viewChangeEnabled = true;
 
     vm.viewChangeClicked = function(date, nextView) {

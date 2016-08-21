@@ -22,7 +22,7 @@
     </div>
 
     <mwl-calendar-slide-box
-      is-open="vm.openRowIndex === $index && vm.view[vm.openDayIndex].events.length > 0 && !vm.slideBoxDisabled"
+      is-open="vm.openRowIndex === $index && (vm.cellAutoOpenDisabled || vm.view[vm.openDayIndex].events.length > 0) && !vm.slideBoxDisabled"
       events="vm.view[vm.openDayIndex].events"
       on-event-click="vm.onEventClick"
       cell="vm.view[vm.openDayIndex]"
