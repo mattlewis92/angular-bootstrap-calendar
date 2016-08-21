@@ -10,8 +10,8 @@ angular
     var vm = this;
 
     if (vm.slideBoxDisabled) {
-      $log.warn(LOG_PREFIX, 'The `slide-box-disabled` is deprecated and will be removed in the next release. ' +
-        'Instead set `cell-auto-open-disabled` to false');
+      $log.warn(LOG_PREFIX, 'The `slide-box-disabled` option is deprecated and will be removed in the next release. ' +
+        'Instead set `cell-auto-open-disabled` to true');
     }
 
     vm.events = vm.events || [];
