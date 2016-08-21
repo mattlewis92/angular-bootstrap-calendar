@@ -9,6 +9,7 @@ describe('mwlCalendarHourList directive', function() {
     scope,
     $rootScope,
     directiveScope,
+    calendarConfig,
     showModal,
     clock,
     template =
@@ -18,6 +19,7 @@ describe('mwlCalendarHourList directive', function() {
         'day-view-split="dayViewSplit || 30" ' +
         'on-event-times-changed="eventDropped(calendarEvent, calendarDate, calendarNewEventStart, calendarNewEventEnd)" ' +
         'cell-modifier="cellModifier"' +
+        'day-width="dayWidth"' +
       '></mwl-calendar-hour-list>';
 
   function prepareScope(vm) {
@@ -40,7 +42,8 @@ describe('mwlCalendarHourList directive', function() {
 
   beforeEach(angular.mock.module('mwl.calendar'));
 
-  beforeEach(angular.mock.inject(function($compile, _$rootScope_) {
+  beforeEach(angular.mock.inject(function($compile, _$rootScope_, _calendarConfig_) {
+    calendarConfig = _calendarConfig_;
     clock = sinon.useFakeTimers(new Date('October 20, 2015 11:10:00').getTime());
     $rootScope = _$rootScope_;
     scope = $rootScope.$new();
@@ -155,8 +158,23 @@ describe('mwlCalendarHourList directive', function() {
     scope.$apply();
     scope.$broadcast('calendar.refreshView');
     scope.$apply();
-    expect(element[0].querySelector('.cal-day-hour-part.foo')).to.be.ok;
     moment.locale.restore();
+    expect(element[0].querySelector('.cal-day-hour-part.foo')).to.be.ok;
+  });
+
+  it('should allow the week view with times day segments CSS classes to be customised', function() {
+    calendarConfig.showTimesOnWeekView = true;
+    scope.dayWidth = 50;
+    sinon.stub(moment, 'locale').returns('another locale');
+    scope.cellModifier = function(args) {
+      args.calendarCell.cssClass = 'foo';
+    };
+    scope.$apply();
+    scope.$broadcast('calendar.refreshView');
+    scope.$apply();
+    calendarConfig.showTimesOnWeekView = false;
+    moment.locale.restore();
+    expect(element[0].querySelector('.cal-day-hour-part-spacer.foo')).to.be.ok;
   });
 
 });
