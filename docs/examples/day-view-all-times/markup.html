@@ -1,0 +1,12 @@
+<div ng-controller="DayViewAllTimesCtrl as vm">
+  <style type="text/css">
+    .cal-day-hour-part-time strong.ng-hide {
+      display: block !important;
+    }
+  </style>
+  <mwl-calendar
+    events="vm.events"
+    view="vm.calendarView"
+    view-date="vm.viewDate">
+  </mwl-calendar>
+</div>
