@@ -42,6 +42,8 @@ The calendar has a few dependencies, these are as follows, and must be included 
 * [AngularJS](https://angularjs.org/) 1.3.x, 1.4.x and 1.5.x are supported
 * [Bootstrap](http://getbootstrap.com/) 3+ (CSS only)
 * [Moment.js](http://momentjs.com/)
+
+**Optional dependencies:**
 * [ui-bootstrap](http://angular-ui.github.io/bootstrap/) (0.14.0+, optional, include for collapse animations and tooltips.
 * [interact.js](http://interactjs.io/) (optional, include to allow drag and drop on the calendar)
 * [ngTouch](https://docs.angularjs.org/api/ngTouch) (optional, include if using the calendar on mobile devices. You will also need to enable `$touchProvider.ngClickOverrideEnabled(true)` on angular 1.5.0+)
