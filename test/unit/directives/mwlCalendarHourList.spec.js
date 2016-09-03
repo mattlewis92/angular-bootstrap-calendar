@@ -177,4 +177,10 @@ describe('mwlCalendarHourList directive', function() {
     expect(element[0].querySelector('.cal-day-hour-part-spacer.foo')).to.be.ok;
   });
 
+  it('should not throw if there is no current range being selected', function() {
+    expect(function() {
+      MwlCalendarCtrl.onDragSelectEnd(new Date());
+    }).not.to.throw();
+  });
+
 });

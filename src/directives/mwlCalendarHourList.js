@@ -103,11 +103,13 @@ angular
     };
 
     vm.onDragSelectEnd = function(date) {
-      vm.dateRangeSelect.endDate = date;
-      if (vm.dateRangeSelect.endDate > vm.dateRangeSelect.startDate) {
-        vm.onDateRangeSelect({calendarRangeStartDate: vm.dateRangeSelect.startDate, calendarRangeEndDate: vm.dateRangeSelect.endDate});
+      if (vm.dateRangeSelect) {
+        vm.dateRangeSelect.endDate = date;
+        if (vm.dateRangeSelect.endDate > vm.dateRangeSelect.startDate) {
+          vm.onDateRangeSelect({calendarRangeStartDate: vm.dateRangeSelect.startDate, calendarRangeEndDate: vm.dateRangeSelect.endDate});
+        }
+        delete vm.dateRangeSelect;
       }
-      delete vm.dateRangeSelect;
     };
 
   })
