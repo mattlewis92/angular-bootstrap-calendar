@@ -445,8 +445,8 @@ describe('calendarHelper', function() {
     });
 
     it('should only contain events for that week', function() {
-      expect(weekView.eventRows[0].row[0].event).to.eql(events[0]);
-      expect(weekView.eventRows[1].row[0].event).to.eql(events[1]);
+      expect(weekView.eventRows[0].row[0].event).to.eql(events[1]);
+      expect(weekView.eventRows[1].row[0].event).to.eql(events[0]);
     });
 
     describe('setting the correct span and offset', function() {
