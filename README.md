@@ -89,7 +89,7 @@ There is a single directive exposed to create the calendar, use it like so:
 ```javascript
 <mwl-calendar
     view="calendarView"
-    view-date="calendarDate"
+    view-date="viewDate"
     events="events"
     view-title="calendarTitle"
     on-event-click="eventClicked(calendarEvent)"
@@ -254,7 +254,7 @@ There is also a helper directive that you can use for the next, today and previo
 <button
   class="btn btn-primary"
   mwl-date-modifier
-  date="calendarDay"
+  date="viewDate"
   decrement="calendarView">
   Previous
 </button>
@@ -262,7 +262,7 @@ There is also a helper directive that you can use for the next, today and previo
 <button
   class="btn btn-default"
   mwl-date-modifier
-  date="calendarDay"
+  date="viewDate"
   set-to-today>
   Today
 </button>
@@ -270,7 +270,7 @@ There is also a helper directive that you can use for the next, today and previo
 <button
   class="btn btn-primary"
   mwl-date-modifier
-  date="calendarDay"
+  date="viewDate"
   increment="calendarView">
   Next
 </button>
