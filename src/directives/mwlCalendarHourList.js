@@ -29,6 +29,8 @@ angular
       vm.hourGrid.forEach(function(hour) {
         hour.segments.forEach(function(segment) {
 
+          segment.date = moment(segment.date);
+
           if (calendarConfig.showTimesOnWeekView) {
 
             segment.days = [];
