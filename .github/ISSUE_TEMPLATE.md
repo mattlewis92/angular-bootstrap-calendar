@@ -5,12 +5,14 @@ Issues that ignore this template will be closed without notice!
 -->
 ### Bug description / Feature request:
 
+
 ### Link to minimally-working plunker that reproduces the issue (starter template: http://plnkr.co/edit/LE4F4U7AnnD3tjM9ZH4G?p=preview)
+
 
 ### Versions
 
-Angular:
+Angular: 
 
-Calendar directive:
+Calendar library: 
 
-Browser name and version:
+Browser name and version: 
