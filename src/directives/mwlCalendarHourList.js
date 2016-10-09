@@ -30,6 +30,7 @@ angular
         hour.segments.forEach(function(segment) {
 
           segment.date = moment(segment.date);
+          segment.nextSegmentDate = segment.date.clone().add(vm.dayViewSplit, 'minutes');
 
           if (calendarConfig.showTimesOnWeekView) {
 
@@ -39,6 +40,7 @@ angular
               var day = {
                 date: moment(segment.date).add(i, 'days')
               };
+              day.nextSegmentDate = day.date.clone().add(vm.dayViewSplit, 'minutes');
               vm.cellModifier({calendarCell: day});
               segment.days.push(day);
             }
@@ -46,6 +48,7 @@ angular
           } else {
             vm.cellModifier({calendarCell: segment});
           }
+
         });
       });
 
@@ -81,10 +84,6 @@ angular
         calendarNewEventStart: newStart.toDate(),
         calendarNewEventEnd: newEnd ? newEnd.toDate() : null
       });
-    };
-
-    vm.getClickedDate = function(baseDate, minutes, days) {
-      return moment(baseDate).clone().startOf('hour').add(minutes, 'minutes').add(days || 0, 'days').toDate();
     };
 
     vm.onDragSelectStart = function(date, dayIndex) {
