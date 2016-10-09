@@ -7,7 +7,7 @@
             class="cal-cell-6 day-highlight"
             ng-style="{backgroundColor: event.color.secondary}"
             data-event-class
-            ng-repeat="event in vm.allDayEvents track by event.$id">
+            ng-repeat="event in vm.allDayEvents track by event.calendarEventId">
             <strong>
               <span ng-bind="event.startsAt | calendarDate:'datetime':true"></span>
               <span ng-if="event.endsAt">
@@ -44,7 +44,7 @@
 
     <div
       class="pull-left day-event day-highlight"
-      ng-repeat="dayEvent in vm.nonAllDayEvents track by dayEvent.event.$id"
+      ng-repeat="dayEvent in vm.nonAllDayEvents track by dayEvent.event.calendarEventId"
       ng-class="dayEvent.event.cssClass"
       ng-style="{
         top: dayEvent.top - 1 + 'px',

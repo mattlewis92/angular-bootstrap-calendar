@@ -33,7 +33,7 @@ describe('mwlCalendarDay directive', function() {
     vm.cellModifier = sinon.spy();
     vm.events = [
       {
-        $id: 0,
+        calendarEventId: 0,
         title: 'An event',
         type: 'warning',
         startsAt: moment(calendarDay).startOf('week').subtract(2, 'days').add(8, 'hours').toDate(),
@@ -41,7 +41,7 @@ describe('mwlCalendarDay directive', function() {
         draggable: true,
         resizable: true
       }, {
-        $id: 1,
+        calendarEventId: 1,
         title: '<i class="glyphicon glyphicon-asterisk"></i> <span class="text-primary">Another event</span>, with a <i>html</i> title',
         type: 'info',
         startsAt: moment(calendarDay).subtract(1, 'day').toDate(),
@@ -49,7 +49,7 @@ describe('mwlCalendarDay directive', function() {
         draggable: true,
         resizable: true
       }, {
-        $id: 2,
+        calendarEventId: 2,
         title: 'This is a really long event title that occurs on every year',
         type: 'important',
         startsAt: moment(calendarDay).startOf('day').add(7, 'hours').toDate(),

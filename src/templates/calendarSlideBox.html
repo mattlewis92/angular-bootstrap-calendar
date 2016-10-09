@@ -3,7 +3,7 @@
     <ul class="unstyled list-unstyled">
 
       <li
-        ng-repeat="event in vm.events | orderBy:'startsAt' track by event.$id"
+        ng-repeat="event in vm.events | orderBy:'startsAt' track by event.calendarEventId"
         ng-class="event.cssClass"
         mwl-draggable="event.draggable === true"
         drop-data="{event: event}">

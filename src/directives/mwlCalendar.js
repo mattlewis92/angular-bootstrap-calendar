@@ -66,7 +66,7 @@ angular
       }
 
       vm.events = vm.events.filter(eventIsValid).map(function(event, index) {
-        Object.defineProperty(event, '$id', {enumerable: false, configurable: true, value: index});
+        event.calendarEventId = index;
         return event;
       });
 

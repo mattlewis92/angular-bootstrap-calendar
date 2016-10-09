@@ -154,21 +154,21 @@ describe('mwlCalendar directive', function() {
     $log.warn = sinon.spy();
     scope.vm.events = [{title: 'title'}];
     scope.$apply();
-    expect($log.warn).to.have.been.calledOnce;
+    expect($log.warn).to.have.been.called;
   });
 
   it('should log a warning if the event starts at is not a valid date object', function() {
     $log.warn = sinon.spy();
     scope.vm.events = [{title: 'title', startsAt: '2016-06-01'}];
     scope.$apply();
-    expect($log.warn).to.have.been.calledOnce;
+    expect($log.warn).to.have.been.called;
   });
 
   it('should log a warning if the event ends at is not a valid date object', function() {
     $log.warn = sinon.spy();
     scope.vm.events = [{title: 'title', startsAt: new Date(), endsAt: '2016-01-01'}];
     scope.$apply();
-    expect($log.warn).to.have.been.calledOnce;
+    expect($log.warn).to.have.been.called;
   });
 
   it('should not log a warning if the event ends at is set to a falsey value', function() {
@@ -182,7 +182,7 @@ describe('mwlCalendar directive', function() {
     $log.warn = sinon.spy();
     scope.vm.events = [{title: 'title', startsAt: new Date(), endsAt: new Date(Date.now() - 1)}];
     scope.$apply();
-    expect($log.warn).to.have.been.calledOnce;
+    expect($log.warn).to.have.been.called;
   });
 
   afterEach(function() {
