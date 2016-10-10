@@ -487,6 +487,15 @@ describe('calendarHelper', function() {
         expect(weekView.eventRows[0].row[0].offset).to.equal(2);
       });
 
+      it('should pass when the event spans exactly one day', function() {
+        weekView = calendarHelper.getWeekView([{
+          startsAt: moment(new Date(2015, 9, 20)).startOf('day').toDate(),
+          endsAt: moment(new Date(2015, 9, 20)).endOf('day').toDate()
+        }], calendarDay);
+        expect(weekView.eventRows[0].row[0].span).to.equal(1);
+        expect(weekView.eventRows[0].row[0].offset).to.equal(2);
+      });
+
     });
 
     describe('recurring events', function() {
