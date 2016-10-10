@@ -13,7 +13,8 @@
     'cal-day-past': day.isPast,
     'cal-day-today': day.isToday,
     'cal-day-future': day.isFuture,
-    'cal-day-selected': vm.dateRangeSelect && vm.dateRangeSelect.startDate <= day.date && day.date <= vm.dateRangeSelect.endDate
+    'cal-day-selected': vm.dateRangeSelect && vm.dateRangeSelect.startDate <= day.date && day.date <= vm.dateRangeSelect.endDate,
+    'cal-day-open': dayIndex === vm.openDayIndex
   }">
 
   <small
