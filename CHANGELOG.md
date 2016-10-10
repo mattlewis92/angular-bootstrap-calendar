@@ -1,3 +1,46 @@
+<a name="0.24.0"></a>
+# [0.24.0](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.23.0...v0.24.0) (2016-10-10)
+
+
+### Bug Fixes
+
+* **dayView:** dont throw when dragging an event and the date range select is enabled ([1e3efdd](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/1e3efdd)), closes [#439](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/439)
+* **weekView:** ensure events are always ordered by start date ([419626e](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/419626e)), closes [#443](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/443)
+* update event track by ids when the original calendar events are reset ([580a967](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/580a967)), closes [#457](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/457)
+* **weekView:** fix event span for end of day events ([5e038c5](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/5e038c5))
+* **weekView:** use correct date for onTimespanClick callback ([e05882e](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/e05882e)), closes [#454](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/454)
+* **weekViewWithTimes:** call the cell-modifier for each days hour segment ([29725a8](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/29725a8)), closes [#424](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/424)
+
+### Features
+
+* **cellAutoOpenDisabled:** allow disabling the auto opening and closing of the slidebox ([682b522](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/682b522)), closes [#426](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/426)
+* **dayView:** allow all hour segment times to be shown ([06bc836](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/06bc836)), closes [#429](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/429)
+* **monthView:** add cal-day-open class to the open day ([75d84c6](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/75d84c6)), closes [#463](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/463)
+
+
+### BREAKING CHANGES
+
+* weekView: if using a custom week view template, the getClickedDate function has been removed
+* If using a custom template the event track by field has changed from `$id` to `calendarEventId`. It is also now enumerable.
+* weekViewWithTimes: The `cell-modifier` will now be called for every days hour segment instead of just the first day in the week.
+
+The cssClass added will now be added on the segments day column instead of on the entire row.
+
+The structure of the week view with times template has also changed slightly if using a custom template
+* cellAutoOpenDisabled: The `slide-box-disabled` option is deprecated and will be removed in the next release. Use the new `cell-auto-open-disabled` option instead.
+
+Before:
+```
+slide-box-disabled="true"
+```
+
+After:
+```
+cell-auto-open-disabled="true"
+```
+
+
+
 <a name="0.23.0"></a>
 # [0.23.0](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.22.0...v0.23.0) (2016-08-12)
 
