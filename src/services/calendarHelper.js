@@ -190,7 +190,7 @@ angular
 
           var eventPeriod = getRecurringEventPeriod({
             start: moment(event.startsAt),
-            end: moment(event.endsAt || event.startsAt).add(1, 'second')
+            end: moment(event.endsAt || event.startsAt)
           }, event.recursOn, weekViewStart);
 
           eventPeriod.originalEvent = event;
