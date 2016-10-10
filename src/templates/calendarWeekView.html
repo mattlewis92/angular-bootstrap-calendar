@@ -48,7 +48,7 @@
       <div class="col-xs-12">
         <div class="cal-row-fluid">
           <div
-            ng-repeat="eventRow in row.row track by eventRow.event.$id"
+            ng-repeat="eventRow in row.row track by eventRow.event.calendarEventId"
             ng-class="'cal-cell' + (vm.showTimes ? 1 : eventRow.span) + (vm.showTimes ? '' : ' cal-offset' + eventRow.offset)"
             ng-style="{
               top: vm.showTimes ? ((eventRow.top) + 'px') : 'auto',

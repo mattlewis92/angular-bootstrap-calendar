@@ -10,21 +10,24 @@
           class="btn btn-primary"
           mwl-date-modifier
           date="vm.viewDate"
-          decrement="vm.calendarView">
+          decrement="vm.calendarView"
+          ng-click="vm.cellIsOpen = false">
           Previous
         </button>
         <button
           class="btn btn-default"
           mwl-date-modifier
           date="vm.viewDate"
-          set-to-today>
+          set-to-today
+          ng-click="vm.cellIsOpen = false">
           Today
         </button>
         <button
           class="btn btn-primary"
           mwl-date-modifier
           date="vm.viewDate"
-          increment="vm.calendarView">
+          increment="vm.calendarView"
+          ng-click="vm.cellIsOpen = false">
           Next
         </button>
       </div>
@@ -34,10 +37,10 @@
 
     <div class="col-md-6 text-center">
       <div class="btn-group">
-        <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'year'">Year</label>
-        <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'month'">Month</label>
-        <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'week'">Week</label>
-        <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'day'">Day</label>
+        <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'year'" ng-click="vm.cellIsOpen = false">Year</label>
+        <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'month'" ng-click="vm.cellIsOpen = false">Month</label>
+        <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'week'" ng-click="vm.cellIsOpen = false">Week</label>
+        <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'day'" ng-click="vm.cellIsOpen = false">Day</label>
       </div>
     </div>
 
@@ -52,11 +55,13 @@
     view-date="vm.viewDate"
     on-event-click="vm.eventClicked(calendarEvent)"
     on-event-times-changed="vm.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
-    cell-is-open="vm.isCellOpen"
+    cell-is-open="vm.cellIsOpen"
     day-view-start="06:00"
     day-view-end="22:59"
     day-view-split="30"
-    cell-modifier="vm.modifyCell(calendarCell)">
+    cell-modifier="vm.modifyCell(calendarCell)"
+    cell-auto-open-disabled="true"
+    on-timespan-click="vm.timespanClicked(calendarDate, calendarCell)">
   </mwl-calendar>
 
   <br><br><br>

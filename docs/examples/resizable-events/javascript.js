@@ -23,7 +23,6 @@ angular
 
     vm.calendarView = 'week';
     vm.viewDate = moment().startOf('month').toDate();
-    vm.isCellOpen = true;
 
     vm.eventTimesChanged = function(event) {
       alert.show('Resized', event);

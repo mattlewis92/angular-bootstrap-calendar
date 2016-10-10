@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/mattlewis92/angular-bootstrap-calendar.svg?branch=master)](https://travis-ci.org/mattlewis92/angular-bootstrap-calendar)
 [![Bower version](https://badge.fury.io/bo/angular-bootstrap-calendar.svg)](http://badge.fury.io/bo/angular-bootstrap-calendar)
 [![npm version](https://badge.fury.io/js/angular-bootstrap-calendar.svg)](http://badge.fury.io/js/angular-bootstrap-calendar)
-[![devDependency Status](https://david-dm.org/mattlewis92/angular-bootstrap-calendar/dev-status.svg)](https://david-dm.org/mattlewis92/angular-bootstrap-calendar#info=devDependencies)
+[![devDependency Status](https://david-dm.org/mattlewis92/angular-bootstrap-calendar/dev-status.svg)](https://david-dm.org/mattlewis92/angular-bootstrap-calendar?type=dev)
 [![GitHub issues](https://img.shields.io/github/issues/mattlewis92/angular-bootstrap-calendar.svg)](https://github.com/mattlewis92/angular-bootstrap-calendar/issues)
 [![GitHub stars](https://img.shields.io/github/stars/mattlewis92/angular-bootstrap-calendar.svg)](https://github.com/mattlewis92/angular-bootstrap-calendar/stargazers)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/mattlewis92/angular-bootstrap-calendar/master/LICENSE)
@@ -42,6 +42,8 @@ The calendar has a few dependencies, these are as follows, and must be included 
 * [AngularJS](https://angularjs.org/) 1.3.x, 1.4.x and 1.5.x are supported
 * [Bootstrap](http://getbootstrap.com/) 3+ (CSS only)
 * [Moment.js](http://momentjs.com/)
+
+**Optional dependencies:**
 * [ui-bootstrap](http://angular-ui.github.io/bootstrap/) (0.14.0+, optional, include for collapse animations and tooltips.
 * [interact.js](http://interactjs.io/) (optional, include to allow drag and drop on the calendar)
 * [ngTouch](https://docs.angularjs.org/api/ngTouch) (optional, include if using the calendar on mobile devices. You will also need to enable `$touchProvider.ngClickOverrideEnabled(true)` on angular 1.5.0+)
@@ -87,7 +89,7 @@ There is a single directive exposed to create the calendar, use it like so:
 ```javascript
 <mwl-calendar
     view="calendarView"
-    view-date="calendarDate"
+    view-date="viewDate"
     events="events"
     view-title="calendarTitle"
     on-event-click="eventClicked(calendarEvent)"
@@ -252,7 +254,7 @@ There is also a helper directive that you can use for the next, today and previo
 <button
   class="btn btn-primary"
   mwl-date-modifier
-  date="calendarDay"
+  date="viewDate"
   decrement="calendarView">
   Previous
 </button>
@@ -260,7 +262,7 @@ There is also a helper directive that you can use for the next, today and previo
 <button
   class="btn btn-default"
   mwl-date-modifier
-  date="calendarDay"
+  date="viewDate"
   set-to-today>
   Today
 </button>
@@ -268,7 +270,7 @@ There is also a helper directive that you can use for the next, today and previo
 <button
   class="btn btn-primary"
   mwl-date-modifier
-  date="calendarDay"
+  date="viewDate"
   increment="calendarView">
   Next
 </button>

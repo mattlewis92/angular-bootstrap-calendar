@@ -5,7 +5,9 @@
     events="vm.events"
     view="vm.calendarView"
     view-date="vm.viewDate"
-    cell-is-open="vm.isCellOpen"
-    view-title="vm.calendarTitle">
+    cell-is-open="vm.cellIsOpen"
+    cell-auto-open-disabled="true"
+    view-title="vm.calendarTitle"
+    on-timespan-click="vm.timespanClicked(calendarDate, calendarCell)">
   </mwl-calendar>
 </div>

@@ -34,6 +34,6 @@ angular
 
     vm.calendarView = 'month';
     vm.viewDate = moment().startOf('month').toDate();
-    vm.isCellOpen = true;
+    vm.cellIsOpen = true;
 
   });

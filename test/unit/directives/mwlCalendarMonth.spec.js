@@ -22,6 +22,7 @@ describe('mwlCalendarMonth directive', function() {
       'day-view-start="dayViewStart" ' +
       'day-view-end="dayViewEnd" ' +
       'cell-is-open="cellIsOpen"' +
+      'cell-auto-open-disabled="true"' +
       'on-timespan-click="onTimeSpanClick"' +
       'day-view-split="dayViewSplit || 30" ' +
       'cell-template-url="{{ monthCellTemplateUrl }}" ' +
@@ -34,13 +35,13 @@ describe('mwlCalendarMonth directive', function() {
   function prepareScope(vm) {
     //These variables MUST be set as a minimum for the calendar to work
     vm.viewDate = calendarDay;
-    vm.cellIsOpen = true;
+    vm.cellIsOpen = false;
     vm.dayViewStart = '06:00';
     vm.dayViewEnd = '22:59';
     vm.dayViewsplit = 30;
     vm.events = [
       {
-        $id: 0,
+        calendarEventId: 0,
         title: 'An event',
         type: 'warning',
         startsAt: moment(calendarDay).startOf('week').subtract(2, 'days').add(8, 'hours').toDate(),
@@ -48,7 +49,7 @@ describe('mwlCalendarMonth directive', function() {
         draggable: true,
         resizable: true
       }, {
-        $id: 1,
+        calendarEventId: 1,
         title: '<i class="glyphicon glyphicon-asterisk"></i> <span class="text-primary">Another event</span>, with a <i>html</i> title',
         type: 'info',
         startsAt: moment(calendarDay).subtract(1, 'day').toDate(),
@@ -56,7 +57,7 @@ describe('mwlCalendarMonth directive', function() {
         draggable: true,
         resizable: true
       }, {
-        $id: 2,
+        calendarEventId: 2,
         title: 'This is a really long event title that occurs on every year',
         type: 'important',
         startsAt: moment(calendarDay).startOf('day').add(7, 'hours').toDate(),
@@ -110,35 +111,32 @@ describe('mwlCalendarMonth directive', function() {
     expect(MwlCalendarCtrl.weekDays).to.eql(['Mon', 'Tu']);
     expect(MwlCalendarCtrl.view).to.equal(monthView.days);
     expect(MwlCalendarCtrl.monthOffsets).to.equal(monthView.rowOffsets);
-    expect(MwlCalendarCtrl.openRowIndex).to.equal(0);
-    expect(MwlCalendarCtrl.openDayIndex).to.equal(0);
   });
 
-  it('should toggle the event list for the selected day ', function() {
+  it('should call the on timespan clicked callback ', function() {
     MwlCalendarCtrl.view = [{date: moment(calendarDay), inMonth: true}];
     MwlCalendarCtrl.dayClicked(MwlCalendarCtrl.view[0]);
-    //Open event list
-    expect(MwlCalendarCtrl.openRowIndex).to.equal(0);
-    expect(MwlCalendarCtrl.openDayIndex).to.equal(0);
     expect(showModal).to.have.been.calledWith('Day clicked', {
       calendarDate: MwlCalendarCtrl.view[0].date.toDate(),
       $event: undefined,
       calendarCell: MwlCalendarCtrl.view[0]
     });
-
-    //Close event list
-    MwlCalendarCtrl.dayClicked(MwlCalendarCtrl.view[0]);
-    expect(MwlCalendarCtrl.openRowIndex).to.equal(null);
-    expect(MwlCalendarCtrl.openDayIndex).to.equal(null);
   });
 
-  it('should disable the slidebox if the click event is prevented', function() {
-    expect(MwlCalendarCtrl.openRowIndex).to.be.null;
-    expect(MwlCalendarCtrl.openDayIndex).to.be.undefined;
+  it('should toggle the event list for the selected day ', function() {
+
     MwlCalendarCtrl.view = [{date: moment(calendarDay), inMonth: true}];
-    MwlCalendarCtrl.dayClicked(MwlCalendarCtrl.view[0], false, {defaultPrevented: true});
-    expect(MwlCalendarCtrl.openRowIndex).to.be.null;
-    expect(MwlCalendarCtrl.openDayIndex).to.be.undefined;
+    //Open event list
+    MwlCalendarCtrl.cellIsOpen = true;
+    scope.$apply();
+    expect(MwlCalendarCtrl.openRowIndex).to.equal(0);
+    expect(MwlCalendarCtrl.openDayIndex).to.equal(0);
+
+    //Close event list
+    MwlCalendarCtrl.cellIsOpen = false;
+    scope.$apply();
+    expect(MwlCalendarCtrl.openRowIndex).to.equal(null);
+    expect(MwlCalendarCtrl.openDayIndex).to.equal(null);
   });
 
   it('should highlight the month with the events color', function() {

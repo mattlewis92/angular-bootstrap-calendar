@@ -5,7 +5,7 @@ var calendarUtils = require('calendar-utils');
 
 angular
   .module('mwl.calendar')
-  .controller('MwlCalendarHourListCtrl', function($scope, $attrs, moment, calendarHelper) {
+  .controller('MwlCalendarHourListCtrl', function($scope, moment, calendarHelper, calendarConfig) {
     var vm = this;
 
     function updateDays() {
@@ -14,7 +14,7 @@ angular
       var dayStart = (vm.dayViewStart || '00:00').split(':');
       var dayEnd = (vm.dayViewEnd || '23:59').split(':');
       vm.hourGrid = calendarUtils.getDayViewHourGrid({
-        viewDate: $attrs.dayWidth ? moment(vm.viewDate).startOf('week').toDate() : moment(vm.viewDate).toDate(),
+        viewDate: calendarConfig.showTimesOnWeekView ? moment(vm.viewDate).startOf('week').toDate() : moment(vm.viewDate).toDate(),
         hourSegments: 60 / vm.dayViewSplit,
         dayStart: {
           hour: dayStart[0],
@@ -28,7 +28,27 @@ angular
 
       vm.hourGrid.forEach(function(hour) {
         hour.segments.forEach(function(segment) {
-          vm.cellModifier({calendarCell: segment});
+
+          segment.date = moment(segment.date);
+          segment.nextSegmentDate = segment.date.clone().add(vm.dayViewSplit, 'minutes');
+
+          if (calendarConfig.showTimesOnWeekView) {
+
+            segment.days = [];
+
+            for (var i = 0; i < 7; i++) {
+              var day = {
+                date: moment(segment.date).add(i, 'days')
+              };
+              day.nextSegmentDate = day.date.clone().add(vm.dayViewSplit, 'minutes');
+              vm.cellModifier({calendarCell: day});
+              segment.days.push(day);
+            }
+
+          } else {
+            vm.cellModifier({calendarCell: segment});
+          }
+
         });
       });
 
@@ -66,10 +86,6 @@ angular
       });
     };
 
-    vm.getClickedDate = function(baseDate, minutes, days) {
-      return moment(baseDate).clone().startOf('hour').add(minutes, 'minutes').add(days || 0, 'days').toDate();
-    };
-
     vm.onDragSelectStart = function(date, dayIndex) {
       if (!vm.dateRangeSelect) {
         vm.dateRangeSelect = {
@@ -88,11 +104,13 @@ angular
     };
 
     vm.onDragSelectEnd = function(date) {
-      vm.dateRangeSelect.endDate = date;
-      if (vm.dateRangeSelect.endDate > vm.dateRangeSelect.startDate) {
-        vm.onDateRangeSelect({calendarRangeStartDate: vm.dateRangeSelect.startDate, calendarRangeEndDate: vm.dateRangeSelect.endDate});
+      if (vm.dateRangeSelect) {
+        vm.dateRangeSelect.endDate = date;
+        if (vm.dateRangeSelect.endDate > vm.dateRangeSelect.startDate) {
+          vm.onDateRangeSelect({calendarRangeStartDate: vm.dateRangeSelect.startDate, calendarRangeEndDate: vm.dateRangeSelect.endDate});
+        }
+        delete vm.dateRangeSelect;
       }
-      delete vm.dateRangeSelect;
     };
 
   })

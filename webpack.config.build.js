@@ -18,7 +18,7 @@ jsFilename += '.js';
 cssFilename += '.css';
 
 function getBanner() {
-  const pkg = require('./bower.json');
+  const pkg = require('./package.json');
   return `
 /**
  * ${pkg.name} - ${pkg.description}

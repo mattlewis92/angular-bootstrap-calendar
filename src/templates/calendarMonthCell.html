@@ -13,7 +13,8 @@
     'cal-day-past': day.isPast,
     'cal-day-today': day.isToday,
     'cal-day-future': day.isFuture,
-    'cal-day-selected': vm.dateRangeSelect && vm.dateRangeSelect.startDate <= day.date && day.date <= vm.dateRangeSelect.endDate
+    'cal-day-selected': vm.dateRangeSelect && vm.dateRangeSelect.startDate <= day.date && day.date <= vm.dateRangeSelect.endDate,
+    'cal-day-open': dayIndex === vm.openDayIndex
   }">
 
   <small
@@ -29,7 +30,7 @@
     ng-bind="day.label">
   </span>
 
-  <div class="cal-day-tick" ng-show="dayIndex === vm.openDayIndex && vm.view[vm.openDayIndex].events.length > 0 && !vm.slideBoxDisabled">
+  <div class="cal-day-tick" ng-show="dayIndex === vm.openDayIndex && (vm.cellAutoOpenDisabled || vm.view[vm.openDayIndex].events.length > 0) && !vm.slideBoxDisabled">
     <i class="glyphicon glyphicon-chevron-up"></i>
     <i class="fa fa-chevron-up"></i>
   </div>

@@ -9,6 +9,11 @@ angular
 
     var vm = this;
 
+    if (vm.slideBoxDisabled) {
+      $log.warn(LOG_PREFIX, 'The `slide-box-disabled` option is deprecated and will be removed in the next release. ' +
+        'Instead set `cell-auto-open-disabled` to true');
+    }
+
     vm.events = vm.events || [];
 
     vm.changeView = function(view, newDay) {
@@ -61,7 +66,7 @@ angular
       }
 
       vm.events = vm.events.filter(eventIsValid).map(function(event, index) {
-        Object.defineProperty(event, '$id', {enumerable: false, configurable: true, value: index});
+        event.calendarEventId = index;
         return event;
       });
 
@@ -125,6 +130,7 @@ angular
         viewTitle: '=?',
         viewDate: '=',
         cellIsOpen: '=?',
+        cellAutoOpenDisabled: '=?',
         slideBoxDisabled: '=?',
         customTemplateUrls: '=?',
         onEventClick: '&',

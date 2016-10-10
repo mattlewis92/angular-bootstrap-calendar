@@ -1,12 +1,14 @@
 <div ng-controller="CellIsOpenCtrl as vm">
   <div class="alert alert-info">
-    The slidebox is <span ng-show="vm.isCellOpen">open</span><span ng-hide="vm.isCellOpen">closed</span>.
+    The slidebox is <span ng-show="vm.cellIsOpen">open</span><span ng-hide="vm.cellIsOpen">closed</span>.
   </div>
   <ng-include src="'calendarControls.html'"></ng-include>
   <mwl-calendar
     events="vm.events"
     view="vm.calendarView"
     view-date="vm.viewDate"
-    cell-is-open="vm.isCellOpen">
+    cell-is-open="vm.cellIsOpen"
+    cell-auto-open-disabled="true"
+    on-timespan-click="vm.timespanClicked(calendarDate, calendarCell)">
   </mwl-calendar>
 </div>

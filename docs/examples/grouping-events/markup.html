@@ -1,4 +1,5 @@
 <script id="groupedMonthEvents.html" type="text/ng-template">
+
   <div class="cal-month-day">
 
     <span
@@ -7,6 +8,16 @@
       ng-click="vm.calendarCtrl.dateClicked(day.date)"
       ng-bind="day.label">
     </span>
+
+    <!--
+      *** Please note ***
+
+      The contents of the template have been stripped down for brevity.
+      You will need to adapt the original template from here for all functionality to work:
+      https://github.com/mattlewis92/angular-bootstrap-calendar/blob/master/src/templates/calendarMonthCell.html
+
+      Insert the div below into the full month view template
+    -->
 
     <div style="position: relative; top: 35px; left: 5px">
       <span ng-repeat="(type, events) in day.groups track by type">
@@ -29,7 +40,8 @@
     events="vm.events"
     view="vm.calendarView"
     view-date="vm.viewDate"
-    cell-is-open="vm.isCellOpen"
-    cell-modifier="vm.groupEvents(calendarCell)">
+    cell-is-open="vm.cellIsOpen"
+    cell-modifier="vm.groupEvents(calendarCell)"
+    cell-auto-open-disabled="true">
   </mwl-calendar>
 </div>

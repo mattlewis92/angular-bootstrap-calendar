@@ -23,6 +23,5 @@ angular
 
     vm.calendarView = 'day';
     vm.viewDate = moment().toDate();
-    vm.isCellOpen = true;
 
   });

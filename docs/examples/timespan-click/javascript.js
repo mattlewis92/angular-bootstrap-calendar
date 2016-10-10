@@ -7,7 +7,6 @@ angular
     vm.events = [];
     vm.calendarView = 'month';
     vm.viewDate = moment().startOf('month').toDate();
-    vm.isCellOpen = true;
 
     vm.timespanClicked = function(date) {
       vm.lastDateClicked = date;

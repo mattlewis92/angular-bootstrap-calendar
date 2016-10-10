@@ -141,10 +141,12 @@ angular
 
       var view = calendarUtils.getMonthView({
         events: events,
-        viewDate: viewDate
+        viewDate: viewDate,
+        weekStartsOn: moment().startOf('week').day()
       });
 
       view.days = view.days.map(function(day) {
+        day.date = moment(day.date);
         day.label = day.date.date();
         day.badgeTotal = getBadgeTotal(day.events);
         if (!calendarConfig.displayAllMonthEvents && !day.inMonth) {
@@ -167,8 +169,10 @@ angular
     function getWeekView(events, viewDate) {
 
       var days = calendarUtils.getWeekViewHeader({
-        viewDate: viewDate
+        viewDate: viewDate,
+        weekStartsOn: moment().startOf('week').day()
       }).map(function(day) {
+        day.date = moment(day.date);
         day.weekDayLabel = formatDate(day.date, calendarConfig.dateFormats.weekDay);
         day.dayLabel = formatDate(day.date, calendarConfig.dateFormats.day);
         return day;
@@ -179,13 +183,14 @@ angular
 
       var eventRows = calendarUtils.getWeekView({
         viewDate: viewDate,
+        weekStartsOn: moment().startOf('week').day(),
         events: filterEventsInPeriod(events, startOfWeek, endOfWeek).map(function(event) {
 
           var weekViewStart = moment(startOfWeek).startOf('day');
 
           var eventPeriod = getRecurringEventPeriod({
-            start: moment(event.startsAt).startOf('day'),
-            end: moment(event.endsAt || event.startsAt).startOf('day').add(1, 'second')
+            start: moment(event.startsAt),
+            end: moment(event.endsAt || event.startsAt)
           }, event.recursOn, weekViewStart);
 
           eventPeriod.originalEvent = event;
@@ -271,7 +276,7 @@ angular
           return {
             event: event,
             top: dayEvent.top,
-            offset: calendarUtils.getDayOffset(
+            offset: calendarUtils.getWeekViewEventOffset(
               {start: event.startsAt, end: event.endsAt},
               moment(viewDate).startOf('week')
             )

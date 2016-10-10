@@ -67,4 +67,7 @@
 }, {
   "key": "all-day-events",
   "label": "All day events"
+}, {
+  "key": "day-view-all-times",
+  "label": "Show all times on day view"
 }]
