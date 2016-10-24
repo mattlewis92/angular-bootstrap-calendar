@@ -219,7 +219,7 @@ You can easily customise the date formats and i18n strings used throughout the c
 
 ```javascript
 angular.module('myModule')
-  .config(function(calendarConfig) {
+  .config(['calendarConfig', function(calendarConfig) {
 
     console.log(calendarConfig); //view all available config
 
@@ -237,7 +237,7 @@ angular.module('myModule')
 
     calendarConfig.showTimesOnWeekView = true; //Make the week view more like the day view, with the caveat that event end times are ignored.
 
-  });
+  }]);
 ```
 
 ## Custom directive templates
@@ -282,11 +282,11 @@ You can either use angular's date filter or moment.js to format dates. The defau
 
 ```javascript
 angular.module('myModule')
-  .config(function(calendarConfig) {
+  .config(['calendarConfig', function(calendarConfig) {
 
     calendarConfig.dateFormatter = 'moment'; // use moment to format dates
 
-  });
+  }]);
 ```
 
 Then you just need to include the appropriate locale files for your app.
