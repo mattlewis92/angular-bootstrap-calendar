@@ -27,7 +27,7 @@
     "conventional-changelog-cli": "~1.2.0",
     "css-loader": "~0.25.0",
     "cz-conventional-changelog": "~1.2.0",
-    "date-fns": "~1.6.0",
+    "date-fns": "~1.8.1",
     "eslint": "~3.8.0",
     "eslint-config-mwl": "~0.5.0",
     "eslint-loader": "~1.6.0",
