@@ -61,13 +61,18 @@
       mwl-resizable="dayEvent.event.resizable === true && dayEvent.event.endsAt"
       resize-edges="{top: true, bottom: true}"
       on-resize="vm.eventResized(dayEvent.event, edge, y / 30)"
-      on-resize-end="vm.eventResizeComplete(dayEvent.event, edge, y / 30)">
+      on-resize-end="vm.eventResizeComplete(dayEvent.event, edge, y / 30)"
+      uib-tooltip-html="vm.calendarEventTitle.dayViewTooltip(dayEvent.event) | calendarTrustAsHtml"
+      tooltip-append-to-body="true">
 
       <span class="cal-hours">
         <span ng-show="dayEvent.top == 0"><span ng-bind="(dayEvent.event.tempStartsAt || dayEvent.event.startsAt) | calendarDate:'day':true"></span>, </span>
         <span ng-bind="(dayEvent.event.tempStartsAt || dayEvent.event.startsAt) | calendarDate:'time':true"></span>
       </span>
-      <a href="javascript:;" class="event-item" ng-click="vm.onEventClick({calendarEvent: dayEvent.event})">
+      <a
+        href="javascript:;"
+        class="event-item"
+        ng-click="vm.onEventClick({calendarEvent: dayEvent.event})">
         <span ng-bind-html="vm.calendarEventTitle.dayView(dayEvent.event) | calendarTrustAsHtml"></span>
       </a>
 

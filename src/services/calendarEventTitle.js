@@ -30,13 +30,18 @@ angular
       return event.allDay ? event.title : calendarTruncateEventTitleFilter(event.title, 20, event.height);
     }
 
+    function dayViewTooltip(event) {
+      return event.title;
+    }
+
     return {
       yearView: yearView,
       monthView: monthView,
       monthViewTooltip: monthViewTooltip,
       weekView: weekView,
       weekViewTooltip: weekViewTooltip,
-      dayView: dayView
+      dayView: dayView,
+      dayViewTooltip: dayViewTooltip
     };
 
   });
