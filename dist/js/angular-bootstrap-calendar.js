@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-calendar - A pure AngularJS bootstrap themed responsive calendar that can display events and has views for year, month, week and day
- * @version v0.24.0
+ * @version v0.25.0
  * @link https://github.com/mattlewis92/angular-bootstrap-calendar
  * @license MIT
  */
@@ -603,7 +603,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		else if(typeof define === 'function' && define.amd)
 			define([, , , , , , , , , , , , , , , , , , ], factory);
 		else if(typeof exports === 'object')
-			exports["calendarUtils"] = factory(require("date-fns/add_days"), require("date-fns/add_hours"), require("date-fns/add_minutes"), require("date-fns/difference_in_days"), require("date-fns/difference_in_minutes"), require("date-fns/difference_in_seconds"), require("date-fns/end_of_day"), require("date-fns/end_of_month"), require("date-fns/end_of_week"), require("date-fns/get_day"), require("date-fns/is_same_day"), require("date-fns/is_same_month"), require("date-fns/is_same_second"), require("date-fns/set_hours"), require("date-fns/set_minutes"), require("date-fns/start_of_day"), require("date-fns/start_of_minute"), require("date-fns/start_of_month"), require("date-fns/start_of_week"));
+			exports["calendarUtils"] = factory(require("date-fns/add_days/index"), require("date-fns/add_hours/index"), require("date-fns/add_minutes/index"), require("date-fns/difference_in_days/index"), require("date-fns/difference_in_minutes/index"), require("date-fns/difference_in_seconds/index"), require("date-fns/end_of_day/index"), require("date-fns/end_of_month/index"), require("date-fns/end_of_week/index"), require("date-fns/get_day/index"), require("date-fns/is_same_day/index"), require("date-fns/is_same_month/index"), require("date-fns/is_same_second/index"), require("date-fns/set_hours/index"), require("date-fns/set_minutes/index"), require("date-fns/start_of_day/index"), require("date-fns/start_of_minute/index"), require("date-fns/start_of_month/index"), require("date-fns/start_of_week/index"));
 		else
 			root["calendarUtils"] = factory(root["dateFns"]["addDays"], root["dateFns"]["addHours"], root["dateFns"]["addMinutes"], root["dateFns"]["differenceInDays"], root["dateFns"]["differenceInMinutes"], root["dateFns"]["differenceInSeconds"], root["dateFns"]["endOfDay"], root["dateFns"]["endOfMonth"], root["dateFns"]["endOfWeek"], root["dateFns"]["getDay"], root["dateFns"]["isSameDay"], root["dateFns"]["isSameMonth"], root["dateFns"]["isSameSecond"], root["dateFns"]["setHours"], root["dateFns"]["setMinutes"], root["dateFns"]["startOfDay"], root["dateFns"]["startOfMinute"], root["dateFns"]["startOfMonth"], root["dateFns"]["startOfWeek"]);
 	})(this, function(__WEBPACK_EXTERNAL_MODULE_0__, __WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_3__, __WEBPACK_EXTERNAL_MODULE_4__, __WEBPACK_EXTERNAL_MODULE_5__, __WEBPACK_EXTERNAL_MODULE_6__, __WEBPACK_EXTERNAL_MODULE_7__, __WEBPACK_EXTERNAL_MODULE_8__, __WEBPACK_EXTERNAL_MODULE_9__, __WEBPACK_EXTERNAL_MODULE_10__, __WEBPACK_EXTERNAL_MODULE_11__, __WEBPACK_EXTERNAL_MODULE_12__, __WEBPACK_EXTERNAL_MODULE_13__, __WEBPACK_EXTERNAL_MODULE_14__, __WEBPACK_EXTERNAL_MODULE_15__, __WEBPACK_EXTERNAL_MODULE_16__, __WEBPACK_EXTERNAL_MODULE_17__, __WEBPACK_EXTERNAL_MODULE_18__) {
@@ -1049,12 +1049,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	            return false;
 	        });
+	        var left = 0;
+	        while (overlappingPreviousEvents.some(function (previousEvent) { return previousEvent.left === left; })) {
+	            left += eventWidth;
+	        }
 	        var dayEvent = {
 	            event: event,
 	            height: height,
 	            width: eventWidth,
 	            top: top,
-	            left: overlappingPreviousEvents.length * eventWidth,
+	            left: left,
 	            startsBeforeDay: startsBeforeDay,
 	            endsAfterDay: endsAfterDay
 	        };
@@ -1066,8 +1070,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var width = Math.max.apply(Math, dayViewEvents.map(function (event) { return event.left + event.width; }));
 	    var allDayEvents = getEventsInPeriod({
 	        events: events.filter(function (event) { return event.allDay; }),
-	        periodStart: startOfView,
-	        periodEnd: endOfView
+	        periodStart: __WEBPACK_IMPORTED_MODULE_3_date_fns_start_of_day___default()(startOfView),
+	        periodEnd: __WEBPACK_IMPORTED_MODULE_0_date_fns_end_of_day___default()(endOfView)
 	    });
 	    return {
 	        events: dayViewEvents,
@@ -1175,7 +1179,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * @description
 	 * Parse the date string representation.
-	 * It accepts the ISO 8601 format as well as a partial implementation.
+	 * It accepts complete ISO 8601 formats as well as partial implementations.
 	 *
 	 * ISO 8601: http://en.wikipedia.org/wiki/ISO_8601
 	 *
@@ -3533,13 +3537,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return event.allDay ? event.title : calendarTruncateEventTitleFilter(event.title, 20, event.height);
 	    }
 
+	    function dayViewTooltip(event) {
+	      return event.title;
+	    }
+
 	    return {
 	      yearView: yearView,
 	      monthView: monthView,
 	      monthViewTooltip: monthViewTooltip,
 	      weekView: weekView,
 	      weekViewTooltip: weekViewTooltip,
-	      dayView: dayView
+	      dayView: dayView,
+	      dayViewTooltip: dayViewTooltip
 	    };
 
 	  }]);

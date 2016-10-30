@@ -193,9 +193,9 @@ An optional expression that is evaluated when the view is changed by clicking on
 
 An optional expression that is evaluated on each cell generated for the year, month and day views. `calendarCell` can be used in the expression and is an object containing the current cell data which you can modify (see the `calendarHelper` service source code or just console.log it to see what data is available). If you add the `cssClass` property it will be applied to the cell.
 
-### slide-box-disabled
+### cell-auto-open-disabled
 
-If set it true it will disable the slidebox on the month and year views
+If set it true it will disable the auto opening and closing of the slidebox on the month and year views
 
 ### custom-template-urls
 
@@ -219,7 +219,7 @@ You can easily customise the date formats and i18n strings used throughout the c
 
 ```javascript
 angular.module('myModule')
-  .config(function(calendarConfig) {
+  .config(['calendarConfig', function(calendarConfig) {
 
     console.log(calendarConfig); //view all available config
 
@@ -237,7 +237,7 @@ angular.module('myModule')
 
     calendarConfig.showTimesOnWeekView = true; //Make the week view more like the day view, with the caveat that event end times are ignored.
 
-  });
+  }]);
 ```
 
 ## Custom directive templates
@@ -282,11 +282,11 @@ You can either use angular's date filter or moment.js to format dates. The defau
 
 ```javascript
 angular.module('myModule')
-  .config(function(calendarConfig) {
+  .config(['calendarConfig', function(calendarConfig) {
 
     calendarConfig.dateFormatter = 'moment'; // use moment to format dates
 
-  });
+  }]);
 ```
 
 Then you just need to include the appropriate locale files for your app.

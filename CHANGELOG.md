@@ -1,3 +1,27 @@
+<a name="0.25.0"></a>
+# [0.25.0](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.24.0...v0.25.0) (2016-10-30)
+
+
+### Bug Fixes
+
+* **dayView:** various day view fixes ([99ab592](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/99ab592))
+
+
+### Features
+
+* **dayView:** add tooltip to day view events ([ba859e2](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/ba859e2)), closes [#476](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/476)
+
+
+### BREAKING CHANGES
+
+* dayView: Tooltips are now added to all day view events by default. To disable them do:
+
+```
+calendarEventTitle.dayViewTooltip = angular.noop;
+```
+
+
+
 <a name="0.24.0"></a>
 # [0.24.0](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.23.0...v0.24.0) (2016-10-10)
 
