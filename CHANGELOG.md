@@ -1,3 +1,8 @@
+<a name="0.25.2"></a>
+## [0.25.2](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.25.1...v0.25.2) (2016-11-09)
+
+* This reverts a fix from the previous release that was accidentlly a breaking change
+
 <a name="0.25.1"></a>
 ## [0.25.1](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.25.0...v0.25.1) (2016-11-09)
 
