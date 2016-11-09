@@ -1,3 +1,13 @@
+<a name="0.26.0"></a>
+# [0.26.0](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.25.2...v0.26.0) (2016-11-09)
+
+* **styles:** scope all styles to the calendar component
+
+### BREAKING CHANGES
+
+All styles are now scoped to the `mwl-calendar` namespace. If using custom styles that ovveride the calendars defaults you will need to wrap them with the `mwl-calendar` selector so they will not be overridden.
+
+
 <a name="0.25.2"></a>
 ## [0.25.2](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.25.1...v0.25.2) (2016-11-09)
 
