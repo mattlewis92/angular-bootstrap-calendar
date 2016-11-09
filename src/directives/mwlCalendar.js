@@ -143,7 +143,8 @@ angular
         dayViewEnd: '@',
         dayViewSplit: '@',
         dayViewEventChunkSize: '@',
-        templateScope: '=?'
+        templateScope: '=?',
+        timePosition: '@?'
       },
       controller: 'MwlCalendarCtrl as vm',
       bindToController: true

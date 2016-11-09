@@ -69,6 +69,8 @@
     custom-template-urls="vm.customTemplateUrls"
     cell-modifier="vm.cellModifier"
     template-scope="vm.templateScope"
+    time-position="vm.timePosition"
+    ng-class="{'time-on-side' : vm.timePosition === 'side' }"
     ng-switch-when="day">
   </mwl-calendar-day>
 </div>

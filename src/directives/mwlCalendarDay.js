@@ -8,6 +8,10 @@ angular
 
     var vm = this;
 
+    console.log(vm.timePosition);
+    vm.timePositionSide = vm.timePosition === 'side';
+    vm.timePositionOffset = vm.timePositionSide ? 0 : 60;
+
     vm.calendarEventTitle = calendarEventTitle;
 
     function refreshView() {
@@ -103,7 +107,8 @@ angular
         dayViewEventChunkSize: '=',
         customTemplateUrls: '=?',
         cellModifier: '=',
-        templateScope: '='
+        templateScope: '=',
+        timePosition: '@?' 
       },
       controller: 'MwlCalendarDayCtrl as vm',
       bindToController: true
