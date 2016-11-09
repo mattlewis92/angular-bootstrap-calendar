@@ -1,28 +1,32 @@
-.event {
-  display: block;
-  background-color: @eventStandardColor;
-  width: @eventSize;
-  height: @eventSize;
-  margin-right: @eventMargin;
-  margin-bottom: @eventMargin;
-  -webkit-box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.4);
-  box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.4);
-  border-radius: @eventBorderRadius;
-  border: @eventBorderSize solid @eventBorderColor;
-}
+mwl-calendar {
 
-.event-block {
-  display: block;
-  background-color:  #c3c3c3;
-  width: 20px;
-  height: 100%;
-}
+  .event {
+    display: block;
+    background-color: @eventStandardColor;
+    width: @eventSize;
+    height: @eventSize;
+    margin-right: @eventMargin;
+    margin-bottom: @eventMargin;
+    -webkit-box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.4);
+    box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.4);
+    border-radius: @eventBorderRadius;
+    border: @eventBorderSize solid @eventBorderColor;
+  }
 
-.cal-event-list .event.pull-left {
-  margin-top: 3px;
-}
+  .event-block {
+    display: block;
+    background-color:  #c3c3c3;
+    width: 20px;
+    height: 100%;
+  }
 
-.day-highlight:hover,
-.day-highlight {
-  background-color: @eventHiliteStandart;
+  .cal-event-list .event.pull-left {
+    margin-top: 3px;
+  }
+
+  .day-highlight:hover,
+  .day-highlight {
+    background-color: @eventHiliteStandart;
+  }
+
 }
