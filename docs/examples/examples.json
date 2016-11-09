@@ -70,4 +70,7 @@
 }, {
   "key": "day-view-all-times",
   "label": "Show all times on day view"
+}, {
+  "key": "disable-tooltips",
+  "label": "Disable tooltips"
 }]
