@@ -8,7 +8,6 @@ angular
 
     var vm = this;
 
-    console.log(vm.timePosition);
     vm.timePositionSide = vm.timePosition === 'side';
     vm.timePositionOffset = vm.timePositionSide ? 0 : 60;
 

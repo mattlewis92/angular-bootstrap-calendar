@@ -321,7 +321,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        dayViewEnd: '@',
 	        dayViewSplit: '@',
 	        dayViewEventChunkSize: '@',
-	        templateScope: '=?'
+	        templateScope: '=?',
+	        timePosition: '@?'
 	      },
 	      controller: 'MwlCalendarCtrl as vm',
 	      bindToController: true
@@ -343,6 +344,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  .controller('MwlCalendarDayCtrl', ["$scope", "moment", "calendarHelper", "calendarEventTitle", function($scope, moment, calendarHelper, calendarEventTitle) {
 
 	    var vm = this;
+
+	    vm.timePositionSide = vm.timePosition === 'side';
+	    vm.timePositionOffset = vm.timePositionSide ? 0 : 60;
 
 	    vm.calendarEventTitle = calendarEventTitle;
 
@@ -439,7 +443,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        dayViewEventChunkSize: '=',
 	        customTemplateUrls: '=?',
 	        cellModifier: '=',
-	        templateScope: '='
+	        templateScope: '=',
+	        timePosition: '=' 
 	      },
 	      controller: 'MwlCalendarDayCtrl as vm',
 	      bindToController: true

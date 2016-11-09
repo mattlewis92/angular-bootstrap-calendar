@@ -331,6 +331,19 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+mwl-calendar-day.time-on-side .cal-day-box {
+  overflow: visible !important;
+  margin-left: 55px;
+}
+mwl-calendar-day.time-on-side .day-event {
+  width: initial !important;
+}
+mwl-calendar-day.time-on-side .cal-day-panel {
+  min-width: initial !important;
+}
+mwl-calendar-day.time-on-side .cal-day-hour-part-time {
+  margin-left: -55px;
+}
 .event {
   display: block;
   background-color: #c3c3c3;
