@@ -1,0 +1,10 @@
+<div ng-controller="DisableTooltipsCtrl as vm">
+  <h1 class="text-center">{{ vm.viewTitle }}</h1>
+  <ng-include src="'calendarControls.html'"></ng-include>
+  <mwl-calendar
+    events="vm.events"
+    view="vm.calendarView"
+    view-title="vm.viewTitle"
+    view-date="vm.viewDate">
+  </mwl-calendar>
+</div>

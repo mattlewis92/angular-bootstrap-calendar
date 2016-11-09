@@ -1,3 +1,13 @@
+<a name="0.25.1"></a>
+## [0.25.1](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.25.0...v0.25.1) (2016-11-09)
+
+
+### Bug Fixes
+
+* **styles:** scope all styles to the calendar component ([d793053](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/d793053)), closes [#488](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/488)
+
+
+
 <a name="0.25.0"></a>
 # [0.25.0](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.24.0...v0.25.0) (2016-10-30)
 

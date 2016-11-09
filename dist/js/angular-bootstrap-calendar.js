@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-calendar - A pure AngularJS bootstrap themed responsive calendar that can display events and has views for year, month, week and day
- * @version v0.25.0
+ * @version v0.25.1
  * @link https://github.com/mattlewis92/angular-bootstrap-calendar
  * @license MIT
  */
@@ -1149,13 +1149,27 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var MILLISECONDS_IN_HOUR = 3600000
 	var MILLISECONDS_IN_MINUTE = 60000
+	var DEFAULT_ADDITIONAL_DIGITS = 2
 
 	var parseTokenDateTimeDelimeter = /[T ]/
 	var parseTokenPlainTime = /:/
 
+	// year tokens
+	var parseTokenYY = /^(\d{2})$/
+	var parseTokensYYY = [
+	  /^([+-]\d{2})$/, // 0 additional digits
+	  /^([+-]\d{3})$/, // 1 additional digit
+	  /^([+-]\d{4})$/ // 2 additional digits
+	]
+
+	var parseTokenYYYY = /^(\d{4})/
+	var parseTokensYYYYY = [
+	  /^([+-]\d{4})/, // 0 additional digits
+	  /^([+-]\d{5})/, // 1 additional digit
+	  /^([+-]\d{6})/ // 2 additional digits
+	]
+
 	// date tokens
-	var parseTokenYYYY = /^(\d{4})-?/
-	var parseTokenYYYYY = /^([+-]\d{4,6})-/
 	var parseTokenMM = /^-(\d{2})$/
 	var parseTokenDDD = /^-?(\d{3})$/
 	var parseTokenMMDD = /^-?(\d{2})-?(\d{2})$/
@@ -1184,14 +1198,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * ISO 8601: http://en.wikipedia.org/wiki/ISO_8601
 	 *
 	 * @param {String} dateString - the ISO 8601 formatted string to parse
+	 * @param {Object} [options] - the object with options
+	 * @param {Number} [options.additionalDigits=2] - the additional number of digits in the extended year format: 0, 1, or 2
 	 * @returns {Date} the parsed date in the local time zone
 	 *
 	 * @example
 	 * // Parse string '2014-02-11T11:30:30':
 	 * var result = parse('2014-02-11T11:30:30')
 	 * //=> Tue Feb 11 2014 11:30:30
+	 *
+	 * @example
+	 * // Parse string '+02014101',
+	 * // if the additional number of digits in the extended year format is 1:
+	 * var result = parse('+02014101', {additionalDigits: 1})
+	 * //=> Fri Apr 11 2014 00:00:00
 	 */
-	function parse (dateString) {
+	function parse (dateString, options) {
 	  if (isDate(dateString)) {
 	    // Prevent the date to lose the milliseconds when passed to new Date() in IE10
 	    return new Date(dateString.getTime())
@@ -1199,9 +1221,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return new Date(dateString)
 	  }
 
+	  options = options || {}
+	  var additionalDigits = options.additionalDigits
+	  if (additionalDigits == null) {
+	    additionalDigits = DEFAULT_ADDITIONAL_DIGITS
+	  }
+
 	  var dateStrings = splitDateString(dateString)
 
-	  var date = parseDate(dateStrings.date)
+	  var parseYearResult = parseYear(dateStrings.date, additionalDigits)
+	  var year = parseYearResult.year
+	  var restDateString = parseYearResult.restDateString
+
+	  var date = parseDate(restDateString, year)
 
 	  if (date) {
 	    var timestamp = date.getTime()
@@ -1252,20 +1284,41 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return dateStrings
 	}
 
-	function parseDate (dateString) {
-	  var year
-	  var yearToken
+	function parseYear (dateString, additionalDigits) {
+	  var parseTokenYYY = parseTokensYYY[additionalDigits]
+	  var parseTokenYYYYY = parseTokensYYYYY[additionalDigits]
+
+	  var token
 
 	  // YYYY or ±YYYYY
-	  yearToken = parseTokenYYYY.exec(dateString) ||
-	    parseTokenYYYYY.exec(dateString)
-	  if (yearToken) {
-	    var yearString = yearToken[1]
-	    year = parseInt(yearString, 10)
-	    dateString = dateString.slice(yearString.length)
+	  token = parseTokenYYYY.exec(dateString) || parseTokenYYYYY.exec(dateString)
+	  if (token) {
+	    var yearString = token[1]
+	    return {
+	      year: parseInt(yearString, 10),
+	      restDateString: dateString.slice(yearString.length)
+	    }
+	  }
+
+	  // YY or ±YYY
+	  token = parseTokenYY.exec(dateString) || parseTokenYYY.exec(dateString)
+	  if (token) {
+	    var centuryString = token[1]
+	    return {
+	      year: parseInt(centuryString, 10) * 100,
+	      restDateString: dateString.slice(centuryString.length)
+	    }
+	  }
 
 	  // Invalid ISO-formatted year
-	  } else {
+	  return {
+	    year: null
+	  }
+	}
+
+	function parseDate (dateString, year) {
+	  // Invalid ISO-formatted year
+	  if (year === null) {
 	    return null
 	  }
 
