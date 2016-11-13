@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-calendar - A pure AngularJS bootstrap themed responsive calendar that can display events and has views for year, month, week and day
- * @version v0.26.0
+ * @version v0.26.1
  * @link https://github.com/mattlewis92/angular-bootstrap-calendar
  * @license MIT
  */
@@ -301,7 +301,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var previousDate = moment(vm.viewDate);
 	    var previousView = vm.view;
 
-	    function eventIsValid(event) {
+	    function checkEventIsValid(event) {
 	      if (!event.startsAt) {
 	        $log.warn(LOG_PREFIX, 'Event is missing the startsAt field', event);
 	      } else if (!angular.isDate(event.startsAt)) {
@@ -316,8 +316,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	          $log.warn(LOG_PREFIX, 'Event cannot start after it finishes', event);
 	        }
 	      }
-
-	      return true;
 	    }
 
 	    function refreshCalendar() {
@@ -326,9 +324,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        vm.viewTitle = calendarTitle[vm.view](vm.viewDate);
 	      }
 
-	      vm.events = vm.events.filter(eventIsValid).map(function(event, index) {
+	      vm.events.forEach(function(event, index) {
+	        checkEventIsValid(event);
 	        event.calendarEventId = index;
-	        return event;
 	      });
 
 	      //if on-timespan-click="calendarDay = calendarDate" is set then don't update the view as nothing needs to change

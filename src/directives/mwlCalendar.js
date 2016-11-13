@@ -40,7 +40,7 @@ angular
     var previousDate = moment(vm.viewDate);
     var previousView = vm.view;
 
-    function eventIsValid(event) {
+    function checkEventIsValid(event) {
       if (!event.startsAt) {
         $log.warn(LOG_PREFIX, 'Event is missing the startsAt field', event);
       } else if (!angular.isDate(event.startsAt)) {
@@ -55,8 +55,6 @@ angular
           $log.warn(LOG_PREFIX, 'Event cannot start after it finishes', event);
         }
       }
-
-      return true;
     }
 
     function refreshCalendar() {
@@ -65,9 +63,9 @@ angular
         vm.viewTitle = calendarTitle[vm.view](vm.viewDate);
       }
 
-      vm.events = vm.events.filter(eventIsValid).map(function(event, index) {
+      vm.events.forEach(function(event, index) {
+        checkEventIsValid(event);
         event.calendarEventId = index;
-        return event;
       });
 
       //if on-timespan-click="calendarDay = calendarDate" is set then don't update the view as nothing needs to change
