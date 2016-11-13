@@ -1,3 +1,13 @@
+<a name="0.26.1"></a>
+## [0.26.1](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.26.0...v0.26.1) (2016-11-13)
+
+
+### Bug Fixes
+
+* dont modify the events array ([8b39c31](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/8b39c31)), closes [#491](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/491)
+
+
+
 <a name="0.26.0"></a>
 # [0.26.0](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.25.2...v0.26.0) (2016-11-09)
 
