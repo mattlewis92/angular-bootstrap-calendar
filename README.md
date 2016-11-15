@@ -185,6 +185,10 @@ The number of chunks to split the day view hours up into. Can be either 10, 15 o
 
 The number of pixels to "snap" event drag and resizes to. Default: 30
 
+### day-view-event-width
+
+The width of day view events. Default: 150
+
 ### on-view-change-click
 
 An optional expression that is evaluated when the view is changed by clicking on a date. Return false from the expression function to disable the view change. `calendarDate` can be used in the expression and contains the date that was selected. `calendarNextView` is the view that the calendar will be changed to.

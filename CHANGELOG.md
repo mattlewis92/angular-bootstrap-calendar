@@ -1,3 +1,13 @@
+<a name="0.27.0"></a>
+# [0.27.0](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.26.1...v0.27.0) (2016-11-15)
+
+
+### Features
+
+* **dayView:** allow the event width to be customised ([c1d9cea](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/c1d9cea)), closes [#494](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/494)
+
+
+
 <a name="0.26.1"></a>
 ## [0.26.1](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.26.0...v0.26.1) (2016-11-13)
 

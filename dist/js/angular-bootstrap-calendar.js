@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-calendar - A pure AngularJS bootstrap themed responsive calendar that can display events and has views for year, month, week and day
- * @version v0.26.1
+ * @version v0.27.0
  * @link https://github.com/mattlewis92/angular-bootstrap-calendar
  * @license MIT
  */
@@ -319,6 +319,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        dayViewEnd: '@',
 	        dayViewSplit: '@',
 	        dayViewEventChunkSize: '@',
+	        dayViewEventWidth: '@',
 	        templateScope: '=?'
 	      },
 	      controller: 'MwlCalendarCtrl as vm',
@@ -357,7 +358,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        vm.viewDate,
 	        vm.dayViewStart,
 	        vm.dayViewEnd,
-	        vm.dayViewSplit
+	        vm.dayViewSplit,
+	        vm.dayViewEventWidth
 	      );
 
 	      vm.allDayEvents = view.allDayEvents;
@@ -435,6 +437,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        dayViewEnd: '=',
 	        dayViewSplit: '=',
 	        dayViewEventChunkSize: '=',
+	        dayViewEventWidth: '=',
 	        customTemplateUrls: '=?',
 	        cellModifier: '=',
 	        templateScope: '='
@@ -3824,7 +3827,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    }
 
-	    function getDayView(events, viewDate, dayViewStart, dayViewEnd, dayViewSplit) {
+	    function getDayView(events, viewDate, dayViewStart, dayViewEnd, dayViewSplit, dayViewEventWidth) {
 
 	      var dayStart = (dayViewStart || '00:00').split(':');
 	      var dayEnd = (dayViewEnd || '23:59').split(':');
@@ -3845,7 +3848,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          hour: dayEnd[0],
 	          minute: dayEnd[1]
 	        },
-	        eventWidth: 150,
+	        eventWidth: dayViewEventWidth ? +dayViewEventWidth : 150,
 	        segmentHeight: 30
 	      });
 

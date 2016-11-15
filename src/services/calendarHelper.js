@@ -213,7 +213,7 @@ angular
 
     }
 
-    function getDayView(events, viewDate, dayViewStart, dayViewEnd, dayViewSplit) {
+    function getDayView(events, viewDate, dayViewStart, dayViewEnd, dayViewSplit, dayViewEventWidth) {
 
       var dayStart = (dayViewStart || '00:00').split(':');
       var dayEnd = (dayViewEnd || '23:59').split(':');
@@ -234,7 +234,7 @@ angular
           hour: dayEnd[0],
           minute: dayEnd[1]
         },
-        eventWidth: 150,
+        eventWidth: dayViewEventWidth ? +dayViewEventWidth : 150,
         segmentHeight: 30
       });
 

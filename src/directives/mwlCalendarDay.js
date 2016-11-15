@@ -23,7 +23,8 @@ angular
         vm.viewDate,
         vm.dayViewStart,
         vm.dayViewEnd,
-        vm.dayViewSplit
+        vm.dayViewSplit,
+        vm.dayViewEventWidth
       );
 
       vm.allDayEvents = view.allDayEvents;
@@ -101,6 +102,7 @@ angular
         dayViewEnd: '=',
         dayViewSplit: '=',
         dayViewEventChunkSize: '=',
+        dayViewEventWidth: '=',
         customTemplateUrls: '=?',
         cellModifier: '=',
         templateScope: '='
