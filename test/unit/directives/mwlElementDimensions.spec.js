@@ -32,14 +32,14 @@ describe('mwlElementDimensions directive', function() {
   });
 
   it('should initialise scope properties', function() {
-    expect(scope.elementDimensions).to.eql({width: 100, height: 50});
+    expect(scope.elementDimensions).to.eql({width: 99, height: 50});
   });
 
   it('should update the element dimensions when the window is resized', function() {
     element[0].style.width = '150px';
     element[0].style.height = '20px';
     $window.dispatchEvent(new $window.Event('resize'));
-    expect(scope.elementDimensions).to.eql({width: 150, height: 20});
+    expect(scope.elementDimensions).to.eql({width: 149, height: 20});
   });
 
 });
