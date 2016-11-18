@@ -1,3 +1,13 @@
+<a name="0.27.1"></a>
+## [0.27.1](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.27.0...v0.27.1) (2016-11-18)
+
+
+### Bug Fixes
+
+* **weekViewWithTimes:** fix on timespan click on last column ([f8f62e8](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/f8f62e8)), closes [#496](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/496)
+
+
+
 <a name="0.27.0"></a>
 # [0.27.0](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.26.1...v0.27.0) (2016-11-15)
 

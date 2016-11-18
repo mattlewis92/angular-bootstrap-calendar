@@ -8,7 +8,7 @@ angular
 
     function setDimensions() {
       $parse($attrs.mwlElementDimensions).assign($scope, {
-        width: $element[0].offsetWidth,
+        width: $element[0].offsetWidth - 1,
         height: $element[0].offsetHeight
       });
       $scope.$applyAsync();
