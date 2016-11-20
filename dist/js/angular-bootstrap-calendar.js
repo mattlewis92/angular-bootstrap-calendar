@@ -322,7 +322,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        dayViewSplit: '@',
 	        dayViewEventChunkSize: '@',
 	        templateScope: '=?',
-	        timePosition: '@?'
+	        timePosition: '=?'
 	      },
 	      controller: 'MwlCalendarCtrl as vm',
 	      bindToController: true
@@ -345,8 +345,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    var vm = this;
 
-	    vm.timePositionSide = vm.timePosition === 'side';
-	    vm.timePositionOffset = vm.timePositionSide ? 0 : 60;
+	    vm.timePosition = vm.timePosition ? vm.timePosition : 'default';
+	    vm.timeHidden = vm.timePosition === 'hidden';
+	    vm.timePositionOffset = vm.timePosition !== 'default' ? 0 : 60;
 
 	    vm.calendarEventTitle = calendarEventTitle;
 
