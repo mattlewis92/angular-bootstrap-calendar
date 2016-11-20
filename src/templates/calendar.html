@@ -70,7 +70,10 @@
     cell-modifier="vm.cellModifier"
     template-scope="vm.templateScope"
     time-position="vm.timePosition"
-    ng-class="{'time-on-side' : vm.timePosition === 'side' }"
+    ng-class="{
+      'time-on-side' : vm.timePosition === 'side',
+      'time-hidden' : vm.timePosition === 'hidden'
+    }"
     ng-switch-when="day">
   </mwl-calendar-day>
 </div>
