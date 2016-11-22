@@ -289,15 +289,18 @@
 .cal-day-box .cal-day-hour-part-selected {
   background-color: #e1e1e1;
 }
+.cal-day-box .cal-day-hour {
+  background-color: #ffffff;
+}
 .cal-day-box .cal-day-hour .day-highlight {
   height: 30px;
+}
+.cal-day-box .cal-day-hour:nth-child(odd) {
+  background-color: #fafafa;
 }
 .cal-day-box .cal-hours {
   font-weight: bold;
   font-size: 12px;
-}
-.cal-day-box .cal-day-hour:nth-child(odd) {
-  background-color: #fafafa;
 }
 .cal-day-box .cal-day-panel {
   position: relative;

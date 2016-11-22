@@ -30,14 +30,17 @@
     .day-highlight {
       height: 30px;
     }
+
+    background-color: @eventBorderColor;
+    &:nth-child(odd) {
+      background-color: @rowHover;
+    }
   }
   .cal-hours {
     font-weight: bold;
     font-size: 12px;
   }
-  .cal-day-hour:nth-child(odd) {
-    background-color: @rowHover;
-  }
+
   .cal-day-panel {
     position: relative;
     padding-left: 60px;
