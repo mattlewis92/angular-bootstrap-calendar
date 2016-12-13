@@ -39,7 +39,7 @@ Looking for an angular 2.0+ version of this library? Check this out: https://git
 
 The calendar has a few dependencies, these are as follows, and must be included before this libraries files:
 
-* [AngularJS](https://angularjs.org/) 1.3.x, 1.4.x and 1.5.x are supported
+* [AngularJS](https://angularjs.org/) 1.3.x, 1.4.x, 1.5.x and 1.6.x are supported
 * [Bootstrap](http://getbootstrap.com/) 3+ (CSS only)
 * [Moment.js](http://momentjs.com/)
 
