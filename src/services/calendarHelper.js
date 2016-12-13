@@ -223,8 +223,11 @@ angular
 
       var view = calendarUtils.getDayView({
         events: events.map(function(event) { // hack required to work with event API
-          event.start = event.startsAt;
-          event.end = event.endsAt;
+          var eventPeriod = getRecurringEventPeriod({
+            start: moment(event.startsAt),
+            end: moment(event.endsAt || event.startsAt)
+          }, event.recursOn, moment(viewDate).startOf('day'));
+          angular.extend(event, eventPeriod);
           return event;
         }),
         viewDate: viewDate,
