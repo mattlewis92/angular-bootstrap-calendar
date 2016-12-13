@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-calendar - A pure AngularJS bootstrap themed responsive calendar that can display events and has views for year, month, week and day
- * @version v0.27.1
+ * @version v0.27.2
  * @link https://github.com/mattlewis92/angular-bootstrap-calendar
  * @license MIT
  */
@@ -1012,7 +1012,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return days;
 	};
 	var getWeekView = function (_a) {
-	    var events = _a.events, viewDate = _a.viewDate, weekStartsOn = _a.weekStartsOn;
+	    var _b = _a.events, events = _b === void 0 ? [] : _b, viewDate = _a.viewDate, weekStartsOn = _a.weekStartsOn;
 	    var startOfViewWeek = __WEBPACK_IMPORTED_MODULE_6_date_fns_start_of_week___default()(viewDate, { weekStartsOn: weekStartsOn });
 	    var endOfViewWeek = __WEBPACK_IMPORTED_MODULE_8_date_fns_end_of_week___default()(viewDate, { weekStartsOn: weekStartsOn });
 	    var eventsMapped = getEventsInPeriod({ events: events, periodStart: startOfViewWeek, periodEnd: endOfViewWeek }).map(function (event) {
@@ -1058,7 +1058,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return eventRows;
 	};
 	var getMonthView = function (_a) {
-	    var events = _a.events, viewDate = _a.viewDate, weekStartsOn = _a.weekStartsOn;
+	    var _b = _a.events, events = _b === void 0 ? [] : _b, viewDate = _a.viewDate, weekStartsOn = _a.weekStartsOn;
 	    var start = __WEBPACK_IMPORTED_MODULE_6_date_fns_start_of_week___default()(__WEBPACK_IMPORTED_MODULE_10_date_fns_start_of_month___default()(viewDate), { weekStartsOn: weekStartsOn });
 	    var end = __WEBPACK_IMPORTED_MODULE_8_date_fns_end_of_week___default()(__WEBPACK_IMPORTED_MODULE_11_date_fns_end_of_month___default()(viewDate), { weekStartsOn: weekStartsOn });
 	    var eventsInMonth = getEventsInPeriod({
@@ -1091,7 +1091,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 	};
 	var getDayView = function (_a) {
-	    var events = _a.events, viewDate = _a.viewDate, hourSegments = _a.hourSegments, dayStart = _a.dayStart, dayEnd = _a.dayEnd, eventWidth = _a.eventWidth, segmentHeight = _a.segmentHeight;
+	    var _b = _a.events, events = _b === void 0 ? [] : _b, viewDate = _a.viewDate, hourSegments = _a.hourSegments, dayStart = _a.dayStart, dayEnd = _a.dayEnd, eventWidth = _a.eventWidth, segmentHeight = _a.segmentHeight;
 	    var startOfView = __WEBPACK_IMPORTED_MODULE_15_date_fns_set_minutes___default()(__WEBPACK_IMPORTED_MODULE_14_date_fns_set_hours___default()(__WEBPACK_IMPORTED_MODULE_3_date_fns_start_of_day___default()(viewDate), dayStart.hour), dayStart.minute);
 	    var endOfView = __WEBPACK_IMPORTED_MODULE_15_date_fns_set_minutes___default()(__WEBPACK_IMPORTED_MODULE_14_date_fns_set_hours___default()(__WEBPACK_IMPORTED_MODULE_16_date_fns_start_of_minute___default()(__WEBPACK_IMPORTED_MODULE_0_date_fns_end_of_day___default()(viewDate)), dayEnd.hour), dayEnd.minute);
 	    var previousDayEvents = [];
@@ -1190,9 +1190,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 	/***/ }
-	/******/ ])
+	/******/ ]);
 	});
-	;
 
 /***/ },
 /* 28 */
@@ -1283,7 +1282,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * @param {String} dateString - the ISO 8601 formatted string to parse
 	 * @param {Object} [options] - the object with options
-	 * @param {Number} [options.additionalDigits=2] - the additional number of digits in the extended year format: 0, 1, or 2
+	 * @param {Number} [options.additionalDigits=2] - the additional number of digits in the extended year format. Options: 0, 1 or 2
 	 * @returns {Date} the parsed date in the local time zone
 	 *
 	 * @example
@@ -1533,7 +1532,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  day = day || 0
 	  var date = new Date(0)
 	  date.setUTCFullYear(isoYear, 0, 4)
-	  var diff = week * 7 + day + 1 - date.getUTCDay()
+	  var fourthOfJanuaryDay = date.getUTCDay() || 7
+	  var diff = week * 7 + day + 1 - fourthOfJanuaryDay
 	  date.setUTCDate(date.getUTCDate() + diff)
 	  return date
 	}
@@ -2002,7 +2002,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * //=> Sat Sep 06 2014 23:59:59.999
 	 *
 	 * @example
-	 * // If week starts at Monday, the end of a week for 2 September 2014 11:55:00:
+	 * // If the week starts on Monday, the end of the week for 2 September 2014 11:55:00:
 	 * var result = endOfWeek(new Date(2014, 8, 2, 11, 55, 0), {weekStartsOn: 1})
 	 * //=> Sun Sep 07 2014 23:59:59.999
 	 */
@@ -2338,7 +2338,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * //=> Sun Aug 31 2014 00:00:00
 	 *
 	 * @example
-	 * // If week starts at Monday, the start of a week for 2 September 2014 11:55:00:
+	 * // If the week starts on Monday, the start of the week for 2 September 2014 11:55:00:
 	 * var result = startOfWeek(new Date(2014, 8, 2, 11, 55, 0), {weekStartsOn: 1})
 	 * //=> Mon Sep 01 2014 00:00:00
 	 */
@@ -3832,8 +3832,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      // hack required to work with the calendar-utils api
 	      events.forEach(function(event) {
-	        event.start = event.startsAt;
-	        event.end = event.endsAt;
+	        var eventPeriod = getRecurringEventPeriod({
+	          start: moment(event.startsAt),
+	          end: moment(event.endsAt || event.startsAt)
+	        }, event.recursOn, moment(viewDate).startOf('month'));
+	        angular.extend(event, eventPeriod);
 	      });
 
 	      var view = calendarUtils.getMonthView({
@@ -3917,8 +3920,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var view = calendarUtils.getDayView({
 	        events: events.map(function(event) { // hack required to work with event API
-	          event.start = event.startsAt;
-	          event.end = event.endsAt;
+	          var eventPeriod = getRecurringEventPeriod({
+	            start: moment(event.startsAt),
+	            end: moment(event.endsAt || event.startsAt)
+	          }, event.recursOn, moment(viewDate).startOf('day'));
+	          angular.extend(event, eventPeriod);
 	          return event;
 	        }),
 	        viewDate: viewDate,
