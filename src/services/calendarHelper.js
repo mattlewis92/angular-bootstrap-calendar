@@ -135,8 +135,11 @@ angular
 
       // hack required to work with the calendar-utils api
       events.forEach(function(event) {
-        event.start = event.startsAt;
-        event.end = event.endsAt;
+        var eventPeriod = getRecurringEventPeriod({
+          start: moment(event.startsAt),
+          end: moment(event.endsAt || event.startsAt)
+        }, event.recursOn, moment(viewDate).startOf('month'));
+        angular.extend(event, eventPeriod);
       });
 
       var view = calendarUtils.getMonthView({
