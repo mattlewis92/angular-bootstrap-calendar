@@ -1,3 +1,14 @@
+<a name="0.27.2"></a>
+## [0.27.2](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.27.1...v0.27.2) (2016-12-13)
+
+
+### Bug Fixes
+
+* **dayView:** fix recurring events ([e5a18fc](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/e5a18fc)), closes [#504](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/504)
+* **monthView:** fix recurring events ([ccb97cd](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/ccb97cd)), closes [#504](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/504)
+
+
+
 <a name="0.27.1"></a>
 ## [0.27.1](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.27.0...v0.27.1) (2016-11-18)
 
