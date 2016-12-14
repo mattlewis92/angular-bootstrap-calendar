@@ -47,13 +47,6 @@ angular
 
     });
 
-    if (vm.cellAutoOpenDisabled) {
-      $scope.$watchGroup([
-        'vm.cellIsOpen',
-        'vm.viewDate'
-      ], toggleCell);
-    }
-
     vm.dayClicked = function(day, dayClickedFirstRun, $event) {
 
       if (!dayClickedFirstRun) {
@@ -149,6 +142,21 @@ angular
       }
       delete vm.dateRangeSelect;
     };
+
+    vm.$onInit = function() {
+
+      if (vm.cellAutoOpenDisabled) {
+        $scope.$watchGroup([
+          'vm.cellIsOpen',
+          'vm.viewDate'
+        ], toggleCell);
+      }
+
+    };
+
+    if (angular.version.minor < 5) {
+      vm.$onInit();
+    }
 
   })
   .directive('mwlCalendarMonth', function() {
