@@ -78,7 +78,7 @@
     "start": "concurrently --raw \"webpack-dev-server --open\" \"npm run test:watch\"",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "commit": "git-cz",
-    "release": "npm run build && npm run changelog"
+    "release": "npm test && npm run build && npm run changelog"
   },
   "config": {
     "ghooks": {
