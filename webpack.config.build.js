@@ -40,10 +40,10 @@ module.exports = {
   externals: {
     angular: 'angular',
     moment: 'moment',
-    'interact.js': {
+    'interactjs': {
       root: 'interact',
-      commonjs: 'interact.js',
-      commonjs2: 'interact.js',
+      commonjs: 'interactjs',
+      commonjs2: 'interactjs',
       amd: 'interact'
     }
   },
