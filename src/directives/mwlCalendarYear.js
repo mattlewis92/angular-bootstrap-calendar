@@ -40,13 +40,6 @@ angular
 
     });
 
-    if (vm.cellAutoOpenDisabled) {
-      $scope.$watchGroup([
-        'vm.cellIsOpen',
-        'vm.viewDate'
-      ], toggleCell);
-    }
-
     vm.monthClicked = function(month, monthClickedFirstRun, $event) {
 
       if (!monthClickedFirstRun) {
@@ -88,6 +81,21 @@ angular
         calendarNewEventEnd: newEnd ? newEnd.toDate() : null
       });
     };
+
+    vm.$onInit = function() {
+
+      if (vm.cellAutoOpenDisabled) {
+        $scope.$watchGroup([
+          'vm.cellIsOpen',
+          'vm.viewDate'
+        ], toggleCell);
+      }
+
+    };
+
+    if (angular.version.minor < 5) {
+      vm.$onInit();
+    }
 
   })
   .directive('mwlCalendarYear', function() {

@@ -3,7 +3,7 @@
 var angular = require('angular');
 var interact;
 try {
-  interact = require('interact.js');
+  interact = require('interactjs');
 } catch (e) {
   /* istanbul ignore next */
   interact = null;

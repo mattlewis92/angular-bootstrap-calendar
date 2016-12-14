@@ -1,13 +1,13 @@
 'use strict';
 
 var angular = require('angular');
-var interactLib = require('interact.js');
+var interactLib = require('interactjs');
 beforeEach(angular.mock.module('mwl.calendar'));
 
-describe('interact.js', function() {
+describe('interactjs', function() {
 
   describe('library exists', function() {
-    it('should be the interact.js library', inject(function(interact) {
+    it('should be the interactjs library', inject(function(interact) {
 
       expect(interact).to.eql(interactLib);
 

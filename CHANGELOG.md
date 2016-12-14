@@ -1,3 +1,14 @@
+<a name="0.27.3"></a>
+## [0.27.3](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.27.2...v0.27.3) (2016-12-14)
+
+
+### Bug Fixes
+
+* ensure angular 1.6 compatibility ([76a7fab](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/76a7fab))
+* **interact:** use new npm package ([f14d751](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/f14d751))
+
+
+
 <a name="0.27.2"></a>
 ## [0.27.2](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.27.1...v0.27.2) (2016-12-13)
 
