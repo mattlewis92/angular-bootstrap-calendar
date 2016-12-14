@@ -1,16 +1,16 @@
 /**
  * angular-bootstrap-calendar - A pure AngularJS bootstrap themed responsive calendar that can display events and has views for year, month, week and day
- * @version v0.27.2
+ * @version v0.27.3
  * @link https://github.com/mattlewis92/angular-bootstrap-calendar
  * @license MIT
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("angular"), (function webpackLoadOptionalExternalModule() { try { return require("interact.js"); } catch(e) {} }()), require("moment"));
+		module.exports = factory(require("angular"), (function webpackLoadOptionalExternalModule() { try { return require("interactjs"); } catch(e) {} }()), require("moment"));
 	else if(typeof define === 'function' && define.amd)
 		define(["angular", "interact", "moment"], factory);
 	else if(typeof exports === 'object')
-		exports["angularBootstrapCalendarModuleName"] = factory(require("angular"), (function webpackLoadOptionalExternalModule() { try { return require("interact.js"); } catch(e) {} }()), require("moment"));
+		exports["angularBootstrapCalendarModuleName"] = factory(require("angular"), (function webpackLoadOptionalExternalModule() { try { return require("interactjs"); } catch(e) {} }()), require("moment"));
 	else
 		root["angularBootstrapCalendarModuleName"] = factory(root["angular"], root["interact"], root["moment"]);
 })(this, function(__WEBPACK_EXTERNAL_MODULE_12__, __WEBPACK_EXTERNAL_MODULE_76__, __WEBPACK_EXTERNAL_MODULE_78__) {
@@ -270,13 +270,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    var vm = this;
 
-	    if (vm.slideBoxDisabled) {
-	      $log.warn(LOG_PREFIX, 'The `slide-box-disabled` option is deprecated and will be removed in the next release. ' +
-	        'Instead set `cell-auto-open-disabled` to true');
-	    }
-
-	    vm.events = vm.events || [];
-
 	    vm.changeView = function(view, newDay) {
 	      vm.view = view;
 	      vm.viewDate = newDay;
@@ -298,84 +291,99 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    };
 
-	    var previousDate = moment(vm.viewDate);
-	    var previousView = vm.view;
+	    vm.$onInit = function() {
 
-	    function checkEventIsValid(event) {
-	      if (!event.startsAt) {
-	        $log.warn(LOG_PREFIX, 'Event is missing the startsAt field', event);
-	      } else if (!angular.isDate(event.startsAt)) {
-	        $log.warn(LOG_PREFIX, 'Event startsAt should be a javascript date object. Do `new Date(event.startsAt)` to fix it.', event);
+	      if (vm.slideBoxDisabled) {
+	        $log.warn(LOG_PREFIX, 'The `slide-box-disabled` option is deprecated and will be removed in the next release. ' +
+	          'Instead set `cell-auto-open-disabled` to true');
 	      }
 
-	      if (event.endsAt) {
-	        if (!angular.isDate(event.endsAt)) {
-	          $log.warn(LOG_PREFIX, 'Event endsAt should be a javascript date object. Do `new Date(event.endsAt)` to fix it.', event);
+	      vm.events = vm.events || [];
+
+	      var previousDate = moment(vm.viewDate);
+	      var previousView = vm.view;
+
+	      function checkEventIsValid(event) {
+	        if (!event.startsAt) {
+	          $log.warn(LOG_PREFIX, 'Event is missing the startsAt field', event);
+	        } else if (!angular.isDate(event.startsAt)) {
+	          $log.warn(LOG_PREFIX, 'Event startsAt should be a javascript date object. Do `new Date(event.startsAt)` to fix it.', event);
 	        }
-	        if (moment(event.startsAt).isAfter(moment(event.endsAt))) {
-	          $log.warn(LOG_PREFIX, 'Event cannot start after it finishes', event);
+
+	        if (event.endsAt) {
+	          if (!angular.isDate(event.endsAt)) {
+	            $log.warn(LOG_PREFIX, 'Event endsAt should be a javascript date object. Do `new Date(event.endsAt)` to fix it.', event);
+	          }
+	          if (moment(event.startsAt).isAfter(moment(event.endsAt))) {
+	            $log.warn(LOG_PREFIX, 'Event cannot start after it finishes', event);
+	          }
 	        }
 	      }
-	    }
 
-	    function refreshCalendar() {
+	      function refreshCalendar() {
 
-	      if (calendarTitle[vm.view] && angular.isDefined($attrs.viewTitle)) {
-	        vm.viewTitle = calendarTitle[vm.view](vm.viewDate);
-	      }
+	        if (calendarTitle[vm.view] && angular.isDefined($attrs.viewTitle)) {
+	          vm.viewTitle = calendarTitle[vm.view](vm.viewDate);
+	        }
 
-	      vm.events.forEach(function(event, index) {
-	        checkEventIsValid(event);
-	        event.calendarEventId = index;
-	      });
-
-	      //if on-timespan-click="calendarDay = calendarDate" is set then don't update the view as nothing needs to change
-	      var currentDate = moment(vm.viewDate);
-	      var shouldUpdate = true;
-	      if (
-	        previousDate.clone().startOf(vm.view).isSame(currentDate.clone().startOf(vm.view)) &&
-	        !previousDate.isSame(currentDate) &&
-	        vm.view === previousView
-	      ) {
-	        shouldUpdate = false;
-	      }
-	      previousDate = currentDate;
-	      previousView = vm.view;
-
-	      if (shouldUpdate) {
-	        // a $timeout is required as $broadcast is synchronous so if a new events array is set the calendar won't update
-	        $timeout(function() {
-	          $scope.$broadcast('calendar.refreshView');
+	        vm.events.forEach(function(event, index) {
+	          checkEventIsValid(event);
+	          event.calendarEventId = index;
 	        });
+
+	        //if on-timespan-click="calendarDay = calendarDate" is set then don't update the view as nothing needs to change
+	        var currentDate = moment(vm.viewDate);
+	        var shouldUpdate = true;
+	        if (
+	          previousDate.clone().startOf(vm.view).isSame(currentDate.clone().startOf(vm.view)) &&
+	          !previousDate.isSame(currentDate) &&
+	          vm.view === previousView
+	        ) {
+	          shouldUpdate = false;
+	        }
+	        previousDate = currentDate;
+	        previousView = vm.view;
+
+	        if (shouldUpdate) {
+	          // a $timeout is required as $broadcast is synchronous so if a new events array is set the calendar won't update
+	          $timeout(function() {
+	            $scope.$broadcast('calendar.refreshView');
+	          });
+	        }
 	      }
-	    }
 
-	    calendarHelper.loadTemplates().then(function() {
-	      vm.templatesLoaded = true;
+	      calendarHelper.loadTemplates().then(function() {
+	        vm.templatesLoaded = true;
 
-	      var eventsWatched = false;
+	        var eventsWatched = false;
 
-	      //Refresh the calendar when any of these variables change.
-	      $scope.$watchGroup([
-	        'vm.viewDate',
-	        'vm.view',
-	        'vm.cellIsOpen',
-	        function() {
-	          return moment.locale() + $locale.id; //Auto update the calendar when the locale changes
-	        }
-	      ], function() {
-	        if (!eventsWatched) {
-	          eventsWatched = true;
-	          //need to deep watch events hence why it isn't included in the watch group
-	          $scope.$watch('vm.events', refreshCalendar, true); //this will call refreshCalendar when the watcher starts (i.e. now)
-	        } else {
-	          refreshCalendar();
-	        }
+	        //Refresh the calendar when any of these variables change.
+	        $scope.$watchGroup([
+	          'vm.viewDate',
+	          'vm.view',
+	          'vm.cellIsOpen',
+	          function() {
+	            return moment.locale() + $locale.id; //Auto update the calendar when the locale changes
+	          }
+	        ], function() {
+	          if (!eventsWatched) {
+	            eventsWatched = true;
+	            //need to deep watch events hence why it isn't included in the watch group
+	            $scope.$watch('vm.events', refreshCalendar, true); //this will call refreshCalendar when the watcher starts (i.e. now)
+	          } else {
+	            refreshCalendar();
+	          }
+	        });
+
+	      }).catch(function(err) {
+	        $log.error('Could not load all calendar templates', err);
 	      });
 
-	    }).catch(function(err) {
-	      $log.error('Could not load all calendar templates', err);
-	    });
+	    };
+
+	    if (angular.version.minor < 5) {
+	      vm.$onInit();
+	    }
 
 	  }])
 	  .directive('mwlCalendar', function() {
@@ -2410,13 +2418,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    });
 
-	    if (vm.cellAutoOpenDisabled) {
-	      $scope.$watchGroup([
-	        'vm.cellIsOpen',
-	        'vm.viewDate'
-	      ], toggleCell);
-	    }
-
 	    vm.dayClicked = function(day, dayClickedFirstRun, $event) {
 
 	      if (!dayClickedFirstRun) {
@@ -2512,6 +2513,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	      delete vm.dateRangeSelect;
 	    };
+
+	    vm.$onInit = function() {
+
+	      if (vm.cellAutoOpenDisabled) {
+	        $scope.$watchGroup([
+	          'vm.cellIsOpen',
+	          'vm.viewDate'
+	        ], toggleCell);
+	      }
+
+	    };
+
+	    if (angular.version.minor < 5) {
+	      vm.$onInit();
+	    }
 
 	  }])
 	  .directive('mwlCalendarMonth', function() {
@@ -2758,13 +2774,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    });
 
-	    if (vm.cellAutoOpenDisabled) {
-	      $scope.$watchGroup([
-	        'vm.cellIsOpen',
-	        'vm.viewDate'
-	      ], toggleCell);
-	    }
-
 	    vm.monthClicked = function(month, monthClickedFirstRun, $event) {
 
 	      if (!monthClickedFirstRun) {
@@ -2806,6 +2815,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	        calendarNewEventEnd: newEnd ? newEnd.toDate() : null
 	      });
 	    };
+
+	    vm.$onInit = function() {
+
+	      if (vm.cellAutoOpenDisabled) {
+	        $scope.$watchGroup([
+	          'vm.cellIsOpen',
+	          'vm.viewDate'
+	        ], toggleCell);
+	      }
+
+	    };
+
+	    if (angular.version.minor < 5) {
+	      vm.$onInit();
+	    }
 
 	  }])
 	  .directive('mwlCalendarYear', function() {
