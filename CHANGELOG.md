@@ -1,3 +1,13 @@
+<a name="0.27.4"></a>
+## [0.27.4](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.27.3...v0.27.4) (2016-12-19)
+
+
+### Bug Fixes
+
+* display events on the day view that dont have end dates ([e5c1660](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/e5c1660))
+
+
+
 <a name="0.27.3"></a>
 ## [0.27.3](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.27.2...v0.27.3) (2016-12-14)
 

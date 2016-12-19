@@ -131,6 +131,14 @@ angular
 
     }
 
+    function updateEventForCalendarUtils(event, eventPeriod) {
+      event.start = eventPeriod.start.toDate();
+      if (event.endsAt) {
+        event.end = eventPeriod.end.toDate();
+      }
+      return event;
+    }
+
     function getMonthView(events, viewDate, cellModifier) {
 
       // hack required to work with the calendar-utils api
@@ -139,7 +147,7 @@ angular
           start: moment(event.startsAt),
           end: moment(event.endsAt || event.startsAt)
         }, event.recursOn, moment(viewDate).startOf('month'));
-        angular.extend(event, eventPeriod);
+        updateEventForCalendarUtils(event, eventPeriod);
       });
 
       var view = calendarUtils.getMonthView({
@@ -196,10 +204,16 @@ angular
             end: moment(event.endsAt || event.startsAt)
           }, event.recursOn, weekViewStart);
 
-          eventPeriod.originalEvent = event;
+          var calendarUtilsEvent = {
+            originalEvent: event,
+            start: eventPeriod.start.toDate()
+          };
 
-          return eventPeriod;
+          if (event.endsAt) {
+            calendarUtilsEvent.end = eventPeriod.end.toDate();
+          }
 
+          return calendarUtilsEvent;
         })
       }).map(function(eventRow) {
 
@@ -227,8 +241,7 @@ angular
             start: moment(event.startsAt),
             end: moment(event.endsAt || event.startsAt)
           }, event.recursOn, moment(viewDate).startOf('day'));
-          angular.extend(event, eventPeriod);
-          return event;
+          return updateEventForCalendarUtils(event, eventPeriod);
         }),
         viewDate: viewDate,
         hourSegments: 60 / dayViewSplit,
