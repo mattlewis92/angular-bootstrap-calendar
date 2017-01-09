@@ -5,7 +5,9 @@
     "angular/deferred": 2,
     "angular/directive-name": [2, "mwl"],
     "angular/empty-controller": 2,
-    "angular/di-unused": 2
+    "angular/di-unused": 2,
+    "linebreak-style": 1,
+    "no-trailing-spaces": 1
   },
   "env": {
     "node": true
