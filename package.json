@@ -69,8 +69,8 @@
     "interactjs": "^1.2.0"
   },
   "scripts": {
-    "test": "karma start",
-    "test:watch": "karma start --watch",
+    "test": "karma start --single-run",
+    "test:watch": "karma start --auto-watch",
     "build:unmin": "webpack --config webpack.config.build.js",
     "build:min": "webpack -p --config webpack.config.build.js",
     "build:unmin:exclude-templates": "webpack --config webpack.config.build.js --exclude-templates",
