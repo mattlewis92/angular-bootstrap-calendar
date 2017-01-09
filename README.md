@@ -2,6 +2,7 @@
 
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/mattlewis92/angular-bootstrap-calendar?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 [![Build Status](https://travis-ci.org/mattlewis92/angular-bootstrap-calendar.svg?branch=master)](https://travis-ci.org/mattlewis92/angular-bootstrap-calendar)
+[![codecov](https://codecov.io/gh/mattlewis92/angular-bootstrap-calendar/branch/master/graph/badge.svg)](https://codecov.io/gh/mattlewis92/angular-bootstrap-calendar)
 [![Bower version](https://badge.fury.io/bo/angular-bootstrap-calendar.svg)](http://badge.fury.io/bo/angular-bootstrap-calendar)
 [![npm version](https://badge.fury.io/js/angular-bootstrap-calendar.svg)](http://badge.fury.io/js/angular-bootstrap-calendar)
 [![devDependency Status](https://david-dm.org/mattlewis92/angular-bootstrap-calendar/dev-status.svg)](https://david-dm.org/mattlewis92/angular-bootstrap-calendar?type=dev)
@@ -33,19 +34,19 @@ All credits for the UI/UX and the less files of the calendar go to the original 
 
 Pull requests are welcome.
 
-Looking for an angular2 version of this module? Development is underway here: https://github.com/mattlewis92/angular2-calendar
+Looking for an angular 2.0+ version of this library? Check this out: https://github.com/mattlewis92/angular-calendar
 
 ## Installation
 
 The calendar has a few dependencies, these are as follows, and must be included before this libraries files:
 
-* [AngularJS](https://angularjs.org/) 1.3.x, 1.4.x and 1.5.x are supported
+* [AngularJS](https://angularjs.org/) 1.3.x, 1.4.x, 1.5.x and 1.6.x are supported
 * [Bootstrap](http://getbootstrap.com/) 3+ (CSS only)
 * [Moment.js](http://momentjs.com/)
 
 **Optional dependencies:**
 * [ui-bootstrap](http://angular-ui.github.io/bootstrap/) (0.14.0+, optional, include for collapse animations and tooltips.
-* [interact.js](http://interactjs.io/) (optional, include to allow drag and drop on the calendar)
+* [interactjs](http://interactjs.io/) (optional, include to allow drag and drop on the calendar)
 * [ngTouch](https://docs.angularjs.org/api/ngTouch) (optional, include if using the calendar on mobile devices. You will also need to enable `$touchProvider.ngClickOverrideEnabled(true)` on angular 1.5.0+)
 
 You can install through bower:
@@ -155,7 +156,7 @@ This expression is called when an event is clicked on the calendar. `calendarEve
 
 ### on-event-times-changed
 
-This expression is called when an event is dragged and dropped or resized into a different date / time on the calendar. The available values that are passed to the expression are: `calendarEvent`, `calendarNewEventStart`, `calendarNewEventEnd` and `calendarDraggedFromDate` (month view only). The directive won't change the event object and leaves that up to you to implement. Please note drag and drop is only available by including the [interact.js](http://interactjs.io/) library.
+This expression is called when an event is dragged and dropped or resized into a different date / time on the calendar. The available values that are passed to the expression are: `calendarEvent`, `calendarNewEventStart`, `calendarNewEventEnd` and `calendarDraggedFromDate` (month view only). The directive won't change the event object and leaves that up to you to implement. Please note drag and drop is only available by including the [interactjs](http://interactjs.io/) library.
 
 ### on-timespan-click
 
@@ -184,6 +185,10 @@ The number of chunks to split the day view hours up into. Can be either 10, 15 o
 ### day-view-event-chunk-size
 
 The number of pixels to "snap" event drag and resizes to. Default: 30
+
+### day-view-event-width
+
+The width of day view events. Default: 150
 
 ### on-view-change-click
 

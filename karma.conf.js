@@ -1,50 +1,50 @@
 'use strict';
 
 var webpack = require('webpack');
-var WATCH = process.argv.indexOf('--watch') > -1;
-
-var webpackConfig = {
-  cache: true,
-  devtool: 'inline-source-map',
-  module: {
-    preLoaders: [{
-      test: /\.js$/,
-      loaders: ['eslint'],
-      exclude: /node_modules/
-    }, {
-      test: /\.html$/,
-      loader: 'htmlhint',
-      exclude: /node_modules/
-    }],
-    loaders: [{
-      test: /\.html$/,
-      loader: 'html',
-      exclude: /node_modules/
-    }, {
-      test: /\.less/,
-      loader: 'null',
-      exclude: /node_modules/
-    }],
-    postLoaders: [{
-      test: /\.js$/,
-      exclude: /(test|node_modules)/,
-      loader: 'istanbul-instrumenter'
-    }]
-  },
-  plugins: [
-    new webpack.optimize.DedupePlugin(),
-    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-    new webpack.DefinePlugin({
-      EXCLUDE_TEMPLATES: false
-    })
-  ]
-};
-
-if (!WATCH) {
-  webpackConfig.plugins.push(new webpack.NoErrorsPlugin());
-}
 
 module.exports = function(config) {
+
+  var webpackConfig = {
+    cache: true,
+    devtool: 'inline-source-map',
+    module: {
+      preLoaders: [{
+        test: /\.js$/,
+        loaders: ['eslint'],
+        exclude: /node_modules/
+      }, {
+        test: /\.html$/,
+        loader: 'htmlhint',
+        exclude: /node_modules/
+      }],
+      loaders: [{
+        test: /\.html$/,
+        loader: 'html',
+        exclude: /node_modules/
+      }, {
+        test: /\.less/,
+        loader: 'null',
+        exclude: /node_modules/
+      }],
+      postLoaders: [{
+        test: /\.js$/,
+        exclude: /(test|node_modules)/,
+        loader: 'istanbul-instrumenter'
+      }]
+    },
+    plugins: [
+      new webpack.optimize.DedupePlugin(),
+      new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+      new webpack.DefinePlugin({
+        EXCLUDE_TEMPLATES: false
+      })
+    ]
+  };
+
+  if (config.singleRun) {
+    webpackConfig.plugins.push(new webpack.NoErrorsPlugin());
+  }
+
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -59,10 +59,6 @@ module.exports = function(config) {
       'test/unit/entry.js'
     ],
 
-    // list of files to exclude
-    exclude: [
-    ],
-
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
@@ -70,10 +66,15 @@ module.exports = function(config) {
     },
 
     coverageReporter: {
+      dir: 'coverage',
       reporters: [{
         type: 'text-summary'
       }, {
-        type: 'html'
+        type: 'html',
+        subdir: 'html'
+      }, {
+        type: 'lcovonly',
+        subdir: '.'
       }]
     },
 
@@ -94,15 +95,8 @@ module.exports = function(config) {
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
     logLevel: config.LOG_INFO,
 
-    // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: WATCH,
-
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['PhantomJS'],
-
-    // Continuous Integration mode
-    // if true, Karma captures browsers, runs the tests and exits
-    singleRun: !WATCH
+    browsers: ['PhantomJS']
   });
 };

@@ -107,7 +107,10 @@ angular
       if (vm.dateRangeSelect) {
         vm.dateRangeSelect.endDate = date;
         if (vm.dateRangeSelect.endDate > vm.dateRangeSelect.startDate) {
-          vm.onDateRangeSelect({calendarRangeStartDate: vm.dateRangeSelect.startDate, calendarRangeEndDate: vm.dateRangeSelect.endDate});
+          vm.onDateRangeSelect({
+            calendarRangeStartDate: vm.dateRangeSelect.startDate.toDate(),
+            calendarRangeEndDate: vm.dateRangeSelect.endDate.toDate()
+          });
         }
         delete vm.dateRangeSelect;
       }

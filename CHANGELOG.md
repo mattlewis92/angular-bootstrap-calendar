@@ -1,3 +1,100 @@
+<a name="0.27.5"></a>
+## [0.27.5](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.27.4...v0.27.5) (2017-01-09)
+
+
+### Bug Fixes
+
+* onDateRangeSelect callback dates should be dates and not moment objects ([65710b4](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/65710b4)), closes [#518](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/518)
+
+
+
+<a name="0.27.4"></a>
+## [0.27.4](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.27.3...v0.27.4) (2016-12-19)
+
+
+### Bug Fixes
+
+* display events on the day view that dont have end dates ([e5c1660](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/e5c1660))
+
+
+
+<a name="0.27.3"></a>
+## [0.27.3](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.27.2...v0.27.3) (2016-12-14)
+
+
+### Bug Fixes
+
+* ensure angular 1.6 compatibility ([76a7fab](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/76a7fab))
+* **interact:** use new npm package ([f14d751](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/f14d751))
+
+
+
+<a name="0.27.2"></a>
+## [0.27.2](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.27.1...v0.27.2) (2016-12-13)
+
+
+### Bug Fixes
+
+* **dayView:** fix recurring events ([e5a18fc](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/e5a18fc)), closes [#504](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/504)
+* **monthView:** fix recurring events ([ccb97cd](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/ccb97cd)), closes [#504](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/504)
+
+
+
+<a name="0.27.1"></a>
+## [0.27.1](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.27.0...v0.27.1) (2016-11-18)
+
+
+### Bug Fixes
+
+* **weekViewWithTimes:** fix on timespan click on last column ([f8f62e8](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/f8f62e8)), closes [#496](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/496)
+
+
+
+<a name="0.27.0"></a>
+# [0.27.0](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.26.1...v0.27.0) (2016-11-15)
+
+
+### Features
+
+* **dayView:** allow the event width to be customised ([c1d9cea](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/c1d9cea)), closes [#494](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/494)
+
+
+
+<a name="0.26.1"></a>
+## [0.26.1](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.26.0...v0.26.1) (2016-11-13)
+
+
+### Bug Fixes
+
+* dont modify the events array ([8b39c31](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/8b39c31)), closes [#491](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/491)
+
+
+
+<a name="0.26.0"></a>
+# [0.26.0](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.25.2...v0.26.0) (2016-11-09)
+
+* **styles:** scope all styles to the calendar component
+
+### BREAKING CHANGES
+
+All styles are now scoped to the `mwl-calendar` namespace. If using custom styles that ovveride the calendars defaults you will need to wrap them with the `mwl-calendar` selector so they will not be overridden.
+
+
+<a name="0.25.2"></a>
+## [0.25.2](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.25.1...v0.25.2) (2016-11-09)
+
+* This reverts a fix from the previous release that was accidentlly a breaking change
+
+<a name="0.25.1"></a>
+## [0.25.1](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.25.0...v0.25.1) (2016-11-09)
+
+
+### Bug Fixes
+
+* **styles:** scope all styles to the calendar component ([d793053](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/d793053)), closes [#488](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/488)
+
+
+
 <a name="0.25.0"></a>
 # [0.25.0](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.24.0...v0.25.0) (2016-10-30)
 

@@ -131,12 +131,23 @@ angular
 
     }
 
+    function updateEventForCalendarUtils(event, eventPeriod) {
+      event.start = eventPeriod.start.toDate();
+      if (event.endsAt) {
+        event.end = eventPeriod.end.toDate();
+      }
+      return event;
+    }
+
     function getMonthView(events, viewDate, cellModifier) {
 
       // hack required to work with the calendar-utils api
       events.forEach(function(event) {
-        event.start = event.startsAt;
-        event.end = event.endsAt;
+        var eventPeriod = getRecurringEventPeriod({
+          start: moment(event.startsAt),
+          end: moment(event.endsAt || event.startsAt)
+        }, event.recursOn, moment(viewDate).startOf('month'));
+        updateEventForCalendarUtils(event, eventPeriod);
       });
 
       var view = calendarUtils.getMonthView({
@@ -193,10 +204,16 @@ angular
             end: moment(event.endsAt || event.startsAt)
           }, event.recursOn, weekViewStart);
 
-          eventPeriod.originalEvent = event;
+          var calendarUtilsEvent = {
+            originalEvent: event,
+            start: eventPeriod.start.toDate()
+          };
 
-          return eventPeriod;
+          if (event.endsAt) {
+            calendarUtilsEvent.end = eventPeriod.end.toDate();
+          }
 
+          return calendarUtilsEvent;
         })
       }).map(function(eventRow) {
 
@@ -213,16 +230,18 @@ angular
 
     }
 
-    function getDayView(events, viewDate, dayViewStart, dayViewEnd, dayViewSplit) {
+    function getDayView(events, viewDate, dayViewStart, dayViewEnd, dayViewSplit, dayViewEventWidth) {
 
       var dayStart = (dayViewStart || '00:00').split(':');
       var dayEnd = (dayViewEnd || '23:59').split(':');
 
       var view = calendarUtils.getDayView({
         events: events.map(function(event) { // hack required to work with event API
-          event.start = event.startsAt;
-          event.end = event.endsAt;
-          return event;
+          var eventPeriod = getRecurringEventPeriod({
+            start: moment(event.startsAt),
+            end: moment(event.endsAt || event.startsAt)
+          }, event.recursOn, moment(viewDate).startOf('day'));
+          return updateEventForCalendarUtils(event, eventPeriod);
         }),
         viewDate: viewDate,
         hourSegments: 60 / dayViewSplit,
@@ -234,7 +253,7 @@ angular
           hour: dayEnd[0],
           minute: dayEnd[1]
         },
-        eventWidth: 150,
+        eventWidth: dayViewEventWidth ? +dayViewEventWidth : 150,
         segmentHeight: 30
       });
 

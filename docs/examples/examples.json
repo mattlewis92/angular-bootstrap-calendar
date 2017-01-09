@@ -73,4 +73,7 @@
 }, {
   "key": "side-time-position",
   "label": "Show time on the side of calendar"
+}, {
+  "key": "disable-tooltips",
+  "label": "Disable tooltips"
 }]
