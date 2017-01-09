@@ -21,6 +21,7 @@
     "angular-mocks": "~1.6.0",
     "bootstrap": "^3.3.6",
     "calendar-utils": "0.0.39",
+    "codecov": "~1.0.1",
     "commitizen": "~2.9.2",
     "concurrently": "~3.1.0",
     "conventional-changelog": "~1.1.0",
@@ -79,7 +80,8 @@
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "commit": "git-cz",
     "release": "npm test && npm run build && npm run changelog",
-    "commitmsg": "validate-commit-msg"
+    "commitmsg": "validate-commit-msg",
+    "codecov": "cat coverage/lcov.info | codecov"
   },
   "config": {
     "commitizen": {

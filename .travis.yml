@@ -10,3 +10,6 @@ notifications:
 
 env:
   - CI=true
+
+after_success:
+- npm run codecov
