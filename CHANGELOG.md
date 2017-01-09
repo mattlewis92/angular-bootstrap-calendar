@@ -1,3 +1,13 @@
+<a name="0.27.5"></a>
+## [0.27.5](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.27.4...v0.27.5) (2017-01-09)
+
+
+### Bug Fixes
+
+* onDateRangeSelect callback dates should be dates and not moment objects ([65710b4](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/65710b4)), closes [#518](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/518)
+
+
+
 <a name="0.27.4"></a>
 ## [0.27.4](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.27.3...v0.27.4) (2016-12-19)
 

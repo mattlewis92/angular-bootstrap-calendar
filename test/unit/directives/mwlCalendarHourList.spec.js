@@ -123,27 +123,27 @@ describe('mwlCalendarHourList directive', function() {
 
   it('should call the onDateRangeSelect callback if there is a valid date range', function() {
     MwlCalendarCtrl.onDateRangeSelect = sinon.spy();
-    var date1 = new Date();
-    var date2 = new Date(Date.now() + 100000);
+    var date1 = moment();
+    var date2 = moment(Date.now() + 100000);
     MwlCalendarCtrl.dateRangeSelect = {
       startDate: date1,
-      endDate: new Date(Date.now() + 10)
+      endDate: moment(Date.now() + 10)
     };
     MwlCalendarCtrl.onDragSelectEnd(date2);
     expect(MwlCalendarCtrl.onDateRangeSelect).to.have.been.calledWith({
-      calendarRangeStartDate: date1,
-      calendarRangeEndDate: date2
+      calendarRangeStartDate: date1.toDate(),
+      calendarRangeEndDate: date2.toDate()
     });
     expect(MwlCalendarCtrl.dateRangeSelect).to.be.undefined;
   });
 
   it('should not call the onDateRangeSelect callback if there is an invalid date range', function() {
     MwlCalendarCtrl.onDateRangeSelect = sinon.spy();
-    var date1 = new Date();
-    var date2 = new Date(Date.now() - 100000);
+    var date1 = moment();
+    var date2 = moment(Date.now() - 100000);
     MwlCalendarCtrl.dateRangeSelect = {
       startDate: date1,
-      endDate: new Date(Date.now() - 10)
+      endDate: moment(Date.now() - 10)
     };
     MwlCalendarCtrl.onDragSelectEnd(date2);
     expect(MwlCalendarCtrl.onDateRangeSelect).not.to.have.been.called;

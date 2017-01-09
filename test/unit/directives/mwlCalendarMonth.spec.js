@@ -13,6 +13,7 @@ describe('mwlCalendarMonth directive', function() {
     calendarHelper,
     calendarConfig,
     $templateCache,
+    clock,
     template =
       '<mwl-calendar-month ' +
       'events="events" ' +
@@ -86,6 +87,7 @@ describe('mwlCalendarMonth directive', function() {
   beforeEach(angular.mock.module('mwl.calendar'));
 
   beforeEach(angular.mock.inject(function($compile, _$rootScope_, _calendarHelper_, _calendarConfig_, _$templateCache_) {
+    clock = sinon.useFakeTimers(new Date('October 20, 2016 11:10:00').getTime());
     $rootScope = _$rootScope_;
     calendarHelper = _calendarHelper_;
     calendarConfig = _calendarConfig_;
@@ -99,6 +101,10 @@ describe('mwlCalendarMonth directive', function() {
     directiveScope = element.isolateScope();
     MwlCalendarCtrl = directiveScope.vm;
   }));
+
+  afterEach(function() {
+    clock.restore();
+  });
 
   it('should get the new month view when calendar refreshes and show the list of events for the current day if required', function() {
     var monthView = {days: [{date: moment(calendarDay), inMonth: true}], rowOffsets: []};
