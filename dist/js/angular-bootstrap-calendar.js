@@ -1,16 +1,16 @@
 /**
  * angular-bootstrap-calendar - A pure AngularJS bootstrap themed responsive calendar that can display events and has views for year, month, week and day
- * @version v0.27.5
+ * @version v0.25.0
  * @link https://github.com/mattlewis92/angular-bootstrap-calendar
  * @license MIT
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("angular"), (function webpackLoadOptionalExternalModule() { try { return require("interactjs"); } catch(e) {} }()), require("moment"));
+		module.exports = factory(require("angular"), (function webpackLoadOptionalExternalModule() { try { return require("interact.js"); } catch(e) {} }()), require("moment"));
 	else if(typeof define === 'function' && define.amd)
 		define(["angular", "interact", "moment"], factory);
 	else if(typeof exports === 'object')
-		exports["angularBootstrapCalendarModuleName"] = factory(require("angular"), (function webpackLoadOptionalExternalModule() { try { return require("interactjs"); } catch(e) {} }()), require("moment"));
+		exports["angularBootstrapCalendarModuleName"] = factory(require("angular"), (function webpackLoadOptionalExternalModule() { try { return require("interact.js"); } catch(e) {} }()), require("moment"));
 	else
 		root["angularBootstrapCalendarModuleName"] = factory(root["angular"], root["interact"], root["moment"]);
 })(this, function(__WEBPACK_EXTERNAL_MODULE_12__, __WEBPACK_EXTERNAL_MODULE_66__, __WEBPACK_EXTERNAL_MODULE_68__) {
@@ -187,6 +187,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    var vm = this;
 
+	    if (vm.slideBoxDisabled) {
+	      $log.warn(LOG_PREFIX, 'The `slide-box-disabled` option is deprecated and will be removed in the next release. ' +
+	        'Instead set `cell-auto-open-disabled` to true');
+	    }
+
+	    vm.events = vm.events || [];
+
 	    vm.changeView = function(view, newDay) {
 	      vm.view = view;
 	      vm.viewDate = newDay;
@@ -208,99 +215,86 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    };
 
-	    vm.$onInit = function() {
+	    var previousDate = moment(vm.viewDate);
+	    var previousView = vm.view;
 
-	      if (vm.slideBoxDisabled) {
-	        $log.warn(LOG_PREFIX, 'The `slide-box-disabled` option is deprecated and will be removed in the next release. ' +
-	          'Instead set `cell-auto-open-disabled` to true');
+	    function eventIsValid(event) {
+	      if (!event.startsAt) {
+	        $log.warn(LOG_PREFIX, 'Event is missing the startsAt field', event);
+	      } else if (!angular.isDate(event.startsAt)) {
+	        $log.warn(LOG_PREFIX, 'Event startsAt should be a javascript date object. Do `new Date(event.startsAt)` to fix it.', event);
 	      }
 
-	      vm.events = vm.events || [];
-
-	      var previousDate = moment(vm.viewDate);
-	      var previousView = vm.view;
-
-	      function checkEventIsValid(event) {
-	        if (!event.startsAt) {
-	          $log.warn(LOG_PREFIX, 'Event is missing the startsAt field', event);
-	        } else if (!angular.isDate(event.startsAt)) {
-	          $log.warn(LOG_PREFIX, 'Event startsAt should be a javascript date object. Do `new Date(event.startsAt)` to fix it.', event);
+	      if (event.endsAt) {
+	        if (!angular.isDate(event.endsAt)) {
+	          $log.warn(LOG_PREFIX, 'Event endsAt should be a javascript date object. Do `new Date(event.endsAt)` to fix it.', event);
 	        }
-
-	        if (event.endsAt) {
-	          if (!angular.isDate(event.endsAt)) {
-	            $log.warn(LOG_PREFIX, 'Event endsAt should be a javascript date object. Do `new Date(event.endsAt)` to fix it.', event);
-	          }
-	          if (moment(event.startsAt).isAfter(moment(event.endsAt))) {
-	            $log.warn(LOG_PREFIX, 'Event cannot start after it finishes', event);
-	          }
+	        if (moment(event.startsAt).isAfter(moment(event.endsAt))) {
+	          $log.warn(LOG_PREFIX, 'Event cannot start after it finishes', event);
 	        }
 	      }
 
-	      function refreshCalendar() {
+	      return true;
+	    }
 
-	        if (calendarTitle[vm.view] && angular.isDefined($attrs.viewTitle)) {
-	          vm.viewTitle = calendarTitle[vm.view](vm.viewDate);
-	        }
+	    function refreshCalendar() {
 
-	        vm.events.forEach(function(event, index) {
-	          checkEventIsValid(event);
-	          event.calendarEventId = index;
-	        });
-
-	        //if on-timespan-click="calendarDay = calendarDate" is set then don't update the view as nothing needs to change
-	        var currentDate = moment(vm.viewDate);
-	        var shouldUpdate = true;
-	        if (
-	          previousDate.clone().startOf(vm.view).isSame(currentDate.clone().startOf(vm.view)) &&
-	          !previousDate.isSame(currentDate) &&
-	          vm.view === previousView
-	        ) {
-	          shouldUpdate = false;
-	        }
-	        previousDate = currentDate;
-	        previousView = vm.view;
-
-	        if (shouldUpdate) {
-	          // a $timeout is required as $broadcast is synchronous so if a new events array is set the calendar won't update
-	          $timeout(function() {
-	            $scope.$broadcast('calendar.refreshView');
-	          });
-	        }
+	      if (calendarTitle[vm.view] && angular.isDefined($attrs.viewTitle)) {
+	        vm.viewTitle = calendarTitle[vm.view](vm.viewDate);
 	      }
 
-	      calendarHelper.loadTemplates().then(function() {
-	        vm.templatesLoaded = true;
-
-	        var eventsWatched = false;
-
-	        //Refresh the calendar when any of these variables change.
-	        $scope.$watchGroup([
-	          'vm.viewDate',
-	          'vm.view',
-	          'vm.cellIsOpen',
-	          function() {
-	            return moment.locale() + $locale.id; //Auto update the calendar when the locale changes
-	          }
-	        ], function() {
-	          if (!eventsWatched) {
-	            eventsWatched = true;
-	            //need to deep watch events hence why it isn't included in the watch group
-	            $scope.$watch('vm.events', refreshCalendar, true); //this will call refreshCalendar when the watcher starts (i.e. now)
-	          } else {
-	            refreshCalendar();
-	          }
-	        });
-
-	      }).catch(function(err) {
-	        $log.error('Could not load all calendar templates', err);
+	      vm.events = vm.events.filter(eventIsValid).map(function(event, index) {
+	        event.calendarEventId = index;
+	        return event;
 	      });
 
-	    };
+	      //if on-timespan-click="calendarDay = calendarDate" is set then don't update the view as nothing needs to change
+	      var currentDate = moment(vm.viewDate);
+	      var shouldUpdate = true;
+	      if (
+	        previousDate.clone().startOf(vm.view).isSame(currentDate.clone().startOf(vm.view)) &&
+	        !previousDate.isSame(currentDate) &&
+	        vm.view === previousView
+	      ) {
+	        shouldUpdate = false;
+	      }
+	      previousDate = currentDate;
+	      previousView = vm.view;
 
-	    if (angular.version.minor < 5) {
-	      vm.$onInit();
+	      if (shouldUpdate) {
+	        // a $timeout is required as $broadcast is synchronous so if a new events array is set the calendar won't update
+	        $timeout(function() {
+	          $scope.$broadcast('calendar.refreshView');
+	        });
+	      }
 	    }
+
+	    calendarHelper.loadTemplates().then(function() {
+	      vm.templatesLoaded = true;
+
+	      var eventsWatched = false;
+
+	      //Refresh the calendar when any of these variables change.
+	      $scope.$watchGroup([
+	        'vm.viewDate',
+	        'vm.view',
+	        'vm.cellIsOpen',
+	        function() {
+	          return moment.locale() + $locale.id; //Auto update the calendar when the locale changes
+	        }
+	      ], function() {
+	        if (!eventsWatched) {
+	          eventsWatched = true;
+	          //need to deep watch events hence why it isn't included in the watch group
+	          $scope.$watch('vm.events', refreshCalendar, true); //this will call refreshCalendar when the watcher starts (i.e. now)
+	        } else {
+	          refreshCalendar();
+	        }
+	      });
+
+	    }).catch(function(err) {
+	      $log.error('Could not load all calendar templates', err);
+	    });
 
 	  }])
 	  .directive('mwlCalendar', function() {
@@ -327,9 +321,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        dayViewEnd: '@',
 	        dayViewSplit: '@',
 	        dayViewEventChunkSize: '@',
-	        dayViewEventWidth: '@',
-	        templateScope: '=?',
-	        timePosition: '=?'
+	        templateScope: '=?'
 	      },
 	      controller: 'MwlCalendarCtrl as vm',
 	      bindToController: true
@@ -352,10 +344,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    var vm = this;
 
-	    vm.timePosition = vm.timePosition ? vm.timePosition : 'default';
-	    vm.timeHidden = vm.timePosition === 'hidden';
-	    vm.timePositionOffset = vm.timePosition !== 'default' ? 0 : 60;
-
 	    vm.calendarEventTitle = calendarEventTitle;
 
 	    function refreshView() {
@@ -371,8 +359,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        vm.viewDate,
 	        vm.dayViewStart,
 	        vm.dayViewEnd,
-	        vm.dayViewSplit,
-	        vm.dayViewEventWidth
+	        vm.dayViewSplit
 	      );
 
 	      vm.allDayEvents = view.allDayEvents;
@@ -450,11 +437,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        dayViewEnd: '=',
 	        dayViewSplit: '=',
 	        dayViewEventChunkSize: '=',
-	        dayViewEventWidth: '=',
 	        customTemplateUrls: '=?',
 	        cellModifier: '=',
-	        templateScope: '=',
-	        timePosition: '=' 
+	        templateScope: '='
 	      },
 	      controller: 'MwlCalendarDayCtrl as vm',
 	      bindToController: true
@@ -576,10 +561,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (vm.dateRangeSelect) {
 	        vm.dateRangeSelect.endDate = date;
 	        if (vm.dateRangeSelect.endDate > vm.dateRangeSelect.startDate) {
-	          vm.onDateRangeSelect({
-	            calendarRangeStartDate: vm.dateRangeSelect.startDate.toDate(),
-	            calendarRangeEndDate: vm.dateRangeSelect.endDate.toDate()
-	          });
+	          vm.onDateRangeSelect({calendarRangeStartDate: vm.dateRangeSelect.startDate, calendarRangeEndDate: vm.dateRangeSelect.endDate});
 	        }
 	        delete vm.dateRangeSelect;
 	      }
@@ -946,7 +928,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return days;
 	};
 	var getWeekView = function (_a) {
-	    var _b = _a.events, events = _b === void 0 ? [] : _b, viewDate = _a.viewDate, weekStartsOn = _a.weekStartsOn;
+	    var events = _a.events, viewDate = _a.viewDate, weekStartsOn = _a.weekStartsOn;
 	    var startOfViewWeek = __WEBPACK_IMPORTED_MODULE_6_date_fns_start_of_week___default()(viewDate, { weekStartsOn: weekStartsOn });
 	    var endOfViewWeek = __WEBPACK_IMPORTED_MODULE_8_date_fns_end_of_week___default()(viewDate, { weekStartsOn: weekStartsOn });
 	    var eventsMapped = getEventsInPeriod({ events: events, periodStart: startOfViewWeek, periodEnd: endOfViewWeek }).map(function (event) {
@@ -992,7 +974,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return eventRows;
 	};
 	var getMonthView = function (_a) {
-	    var _b = _a.events, events = _b === void 0 ? [] : _b, viewDate = _a.viewDate, weekStartsOn = _a.weekStartsOn;
+	    var events = _a.events, viewDate = _a.viewDate, weekStartsOn = _a.weekStartsOn;
 	    var start = __WEBPACK_IMPORTED_MODULE_6_date_fns_start_of_week___default()(__WEBPACK_IMPORTED_MODULE_10_date_fns_start_of_month___default()(viewDate), { weekStartsOn: weekStartsOn });
 	    var end = __WEBPACK_IMPORTED_MODULE_8_date_fns_end_of_week___default()(__WEBPACK_IMPORTED_MODULE_11_date_fns_end_of_month___default()(viewDate), { weekStartsOn: weekStartsOn });
 	    var eventsInMonth = getEventsInPeriod({
@@ -1025,7 +1007,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 	};
 	var getDayView = function (_a) {
-	    var _b = _a.events, events = _b === void 0 ? [] : _b, viewDate = _a.viewDate, hourSegments = _a.hourSegments, dayStart = _a.dayStart, dayEnd = _a.dayEnd, eventWidth = _a.eventWidth, segmentHeight = _a.segmentHeight;
+	    var events = _a.events, viewDate = _a.viewDate, hourSegments = _a.hourSegments, dayStart = _a.dayStart, dayEnd = _a.dayEnd, eventWidth = _a.eventWidth, segmentHeight = _a.segmentHeight;
 	    var startOfView = __WEBPACK_IMPORTED_MODULE_15_date_fns_set_minutes___default()(__WEBPACK_IMPORTED_MODULE_14_date_fns_set_hours___default()(__WEBPACK_IMPORTED_MODULE_3_date_fns_start_of_day___default()(viewDate), dayStart.hour), dayStart.minute);
 	    var endOfView = __WEBPACK_IMPORTED_MODULE_15_date_fns_set_minutes___default()(__WEBPACK_IMPORTED_MODULE_14_date_fns_set_hours___default()(__WEBPACK_IMPORTED_MODULE_16_date_fns_start_of_minute___default()(__WEBPACK_IMPORTED_MODULE_0_date_fns_end_of_day___default()(viewDate)), dayEnd.hour), dayEnd.minute);
 	    var previousDayEvents = [];
@@ -1124,8 +1106,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 	/***/ }
-	/******/ ]);
+	/******/ ])
 	});
+	;
 
 /***/ },
 /* 18 */
@@ -1166,27 +1149,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var MILLISECONDS_IN_HOUR = 3600000
 	var MILLISECONDS_IN_MINUTE = 60000
-	var DEFAULT_ADDITIONAL_DIGITS = 2
 
 	var parseTokenDateTimeDelimeter = /[T ]/
 	var parseTokenPlainTime = /:/
 
-	// year tokens
-	var parseTokenYY = /^(\d{2})$/
-	var parseTokensYYY = [
-	  /^([+-]\d{2})$/, // 0 additional digits
-	  /^([+-]\d{3})$/, // 1 additional digit
-	  /^([+-]\d{4})$/ // 2 additional digits
-	]
-
-	var parseTokenYYYY = /^(\d{4})/
-	var parseTokensYYYYY = [
-	  /^([+-]\d{4})/, // 0 additional digits
-	  /^([+-]\d{5})/, // 1 additional digit
-	  /^([+-]\d{6})/ // 2 additional digits
-	]
-
 	// date tokens
+	var parseTokenYYYY = /^(\d{4})-?/
+	var parseTokenYYYYY = /^([+-]\d{4,6})-/
 	var parseTokenMM = /^-(\d{2})$/
 	var parseTokenDDD = /^-?(\d{3})$/
 	var parseTokenMMDD = /^-?(\d{2})-?(\d{2})$/
@@ -1206,58 +1175,33 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * @category Common Helpers
-	 * @summary Convert the given argument to an instance of Date.
+	 * @summary Parse the ISO-8601-formatted date.
 	 *
 	 * @description
-	 * Convert the given argument to an instance of Date.
+	 * Parse the date string representation.
+	 * It accepts complete ISO 8601 formats as well as partial implementations.
 	 *
-	 * If the argument is an instance of Date, the function returns its clone.
-	 *
-	 * If the argument is a number, it is treated as a timestamp.
-	 *
-	 * If an argument is a string, the function tries to parse it.
-	 * Function accepts complete ISO 8601 formats as well as partial implementations.
 	 * ISO 8601: http://en.wikipedia.org/wiki/ISO_8601
 	 *
-	 * If all above fails, the function passes the given argument to Date constructor.
-	 *
-	 * @param {Date|String|Number} argument - the value to convert
-	 * @param {Object} [options] - the object with options
-	 * @param {0 | 1 | 2} [options.additionalDigits=2] - the additional number of digits in the extended year format
+	 * @param {String} dateString - the ISO 8601 formatted string to parse
 	 * @returns {Date} the parsed date in the local time zone
 	 *
 	 * @example
-	 * // Convert string '2014-02-11T11:30:30' to date:
+	 * // Parse string '2014-02-11T11:30:30':
 	 * var result = parse('2014-02-11T11:30:30')
 	 * //=> Tue Feb 11 2014 11:30:30
-	 *
-	 * @example
-	 * // Parse string '+02014101',
-	 * // if the additional number of digits in the extended year format is 1:
-	 * var result = parse('+02014101', {additionalDigits: 1})
-	 * //=> Fri Apr 11 2014 00:00:00
 	 */
-	function parse (argument, options) {
-	  if (isDate(argument)) {
+	function parse (dateString) {
+	  if (isDate(dateString)) {
 	    // Prevent the date to lose the milliseconds when passed to new Date() in IE10
-	    return new Date(argument.getTime())
-	  } else if (typeof argument !== 'string') {
-	    return new Date(argument)
+	    return new Date(dateString.getTime())
+	  } else if (typeof dateString !== 'string') {
+	    return new Date(dateString)
 	  }
 
-	  options = options || {}
-	  var additionalDigits = options.additionalDigits
-	  if (additionalDigits == null) {
-	    additionalDigits = DEFAULT_ADDITIONAL_DIGITS
-	  }
+	  var dateStrings = splitDateString(dateString)
 
-	  var dateStrings = splitDateString(argument)
-
-	  var parseYearResult = parseYear(dateStrings.date, additionalDigits)
-	  var year = parseYearResult.year
-	  var restDateString = parseYearResult.restDateString
-
-	  var date = parseDate(restDateString, year)
+	  var date = parseDate(dateStrings.date)
 
 	  if (date) {
 	    var timestamp = date.getTime()
@@ -1278,7 +1222,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    return new Date(timestamp + time + offset * MILLISECONDS_IN_MINUTE)
 	  } else {
-	    return new Date(argument)
+	    return new Date(dateString)
 	  }
 	}
 
@@ -1308,41 +1252,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return dateStrings
 	}
 
-	function parseYear (dateString, additionalDigits) {
-	  var parseTokenYYY = parseTokensYYY[additionalDigits]
-	  var parseTokenYYYYY = parseTokensYYYYY[additionalDigits]
-
-	  var token
+	function parseDate (dateString) {
+	  var year
+	  var yearToken
 
 	  // YYYY or ±YYYYY
-	  token = parseTokenYYYY.exec(dateString) || parseTokenYYYYY.exec(dateString)
-	  if (token) {
-	    var yearString = token[1]
-	    return {
-	      year: parseInt(yearString, 10),
-	      restDateString: dateString.slice(yearString.length)
-	    }
-	  }
-
-	  // YY or ±YYY
-	  token = parseTokenYY.exec(dateString) || parseTokenYYY.exec(dateString)
-	  if (token) {
-	    var centuryString = token[1]
-	    return {
-	      year: parseInt(centuryString, 10) * 100,
-	      restDateString: dateString.slice(centuryString.length)
-	    }
-	  }
+	  yearToken = parseTokenYYYY.exec(dateString) ||
+	    parseTokenYYYYY.exec(dateString)
+	  if (yearToken) {
+	    var yearString = yearToken[1]
+	    year = parseInt(yearString, 10)
+	    dateString = dateString.slice(yearString.length)
 
 	  // Invalid ISO-formatted year
-	  return {
-	    year: null
-	  }
-	}
-
-	function parseDate (dateString, year) {
-	  // Invalid ISO-formatted year
-	  if (year === null) {
+	  } else {
 	    return null
 	  }
 
@@ -1473,8 +1396,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  day = day || 0
 	  var date = new Date(0)
 	  date.setUTCFullYear(isoYear, 0, 4)
-	  var fourthOfJanuaryDay = date.getUTCDay() || 7
-	  var diff = week * 7 + day + 1 - fourthOfJanuaryDay
+	  var diff = week * 7 + day + 1 - date.getUTCDay()
 	  date.setUTCDate(date.getUTCDate() + diff)
 	  return date
 	}
@@ -1943,7 +1865,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * //=> Sat Sep 06 2014 23:59:59.999
 	 *
 	 * @example
-	 * // If the week starts on Monday, the end of the week for 2 September 2014 11:55:00:
+	 * // If week starts at Monday, the end of a week for 2 September 2014 11:55:00:
 	 * var result = endOfWeek(new Date(2014, 8, 2, 11, 55, 0), {weekStartsOn: 1})
 	 * //=> Sun Sep 07 2014 23:59:59.999
 	 */
@@ -2279,7 +2201,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * //=> Sun Aug 31 2014 00:00:00
 	 *
 	 * @example
-	 * // If the week starts on Monday, the start of the week for 2 September 2014 11:55:00:
+	 * // If week starts at Monday, the start of a week for 2 September 2014 11:55:00:
 	 * var result = startOfWeek(new Date(2014, 8, 2, 11, 55, 0), {weekStartsOn: 1})
 	 * //=> Mon Sep 01 2014 00:00:00
 	 */
@@ -2350,6 +2272,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 
 	    });
+
+	    if (vm.cellAutoOpenDisabled) {
+	      $scope.$watchGroup([
+	        'vm.cellIsOpen',
+	        'vm.viewDate'
+	      ], toggleCell);
+	    }
 
 	    vm.dayClicked = function(day, dayClickedFirstRun, $event) {
 
@@ -2446,21 +2375,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	      delete vm.dateRangeSelect;
 	    };
-
-	    vm.$onInit = function() {
-
-	      if (vm.cellAutoOpenDisabled) {
-	        $scope.$watchGroup([
-	          'vm.cellIsOpen',
-	          'vm.viewDate'
-	        ], toggleCell);
-	      }
-
-	    };
-
-	    if (angular.version.minor < 5) {
-	      vm.$onInit();
-	    }
 
 	  }])
 	  .directive('mwlCalendarMonth', function() {
@@ -2707,6 +2621,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    });
 
+	    if (vm.cellAutoOpenDisabled) {
+	      $scope.$watchGroup([
+	        'vm.cellIsOpen',
+	        'vm.viewDate'
+	      ], toggleCell);
+	    }
+
 	    vm.monthClicked = function(month, monthClickedFirstRun, $event) {
 
 	      if (!monthClickedFirstRun) {
@@ -2748,21 +2669,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        calendarNewEventEnd: newEnd ? newEnd.toDate() : null
 	      });
 	    };
-
-	    vm.$onInit = function() {
-
-	      if (vm.cellAutoOpenDisabled) {
-	        $scope.$watchGroup([
-	          'vm.cellIsOpen',
-	          'vm.viewDate'
-	        ], toggleCell);
-	      }
-
-	    };
-
-	    if (angular.version.minor < 5) {
-	      vm.$onInit();
-	    }
 
 	  }])
 	  .directive('mwlCalendarYear', function() {
@@ -3170,7 +3076,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function setDimensions() {
 	      $parse($attrs.mwlElementDimensions).assign($scope, {
-	        width: $element[0].offsetWidth - 1,
+	        width: $element[0].offsetWidth,
 	        height: $element[0].offsetHeight
 	      });
 	      $scope.$applyAsync();
@@ -3785,23 +3691,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    }
 
-	    function updateEventForCalendarUtils(event, eventPeriod) {
-	      event.start = eventPeriod.start.toDate();
-	      if (event.endsAt) {
-	        event.end = eventPeriod.end.toDate();
-	      }
-	      return event;
-	    }
-
 	    function getMonthView(events, viewDate, cellModifier) {
 
 	      // hack required to work with the calendar-utils api
 	      events.forEach(function(event) {
-	        var eventPeriod = getRecurringEventPeriod({
-	          start: moment(event.startsAt),
-	          end: moment(event.endsAt || event.startsAt)
-	        }, event.recursOn, moment(viewDate).startOf('month'));
-	        updateEventForCalendarUtils(event, eventPeriod);
+	        event.start = event.startsAt;
+	        event.end = event.endsAt;
 	      });
 
 	      var view = calendarUtils.getMonthView({
@@ -3858,16 +3753,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	            end: moment(event.endsAt || event.startsAt)
 	          }, event.recursOn, weekViewStart);
 
-	          var calendarUtilsEvent = {
-	            originalEvent: event,
-	            start: eventPeriod.start.toDate()
-	          };
+	          eventPeriod.originalEvent = event;
 
-	          if (event.endsAt) {
-	            calendarUtilsEvent.end = eventPeriod.end.toDate();
-	          }
+	          return eventPeriod;
 
-	          return calendarUtilsEvent;
 	        })
 	      }).map(function(eventRow) {
 
@@ -3884,18 +3773,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    }
 
-	    function getDayView(events, viewDate, dayViewStart, dayViewEnd, dayViewSplit, dayViewEventWidth) {
+	    function getDayView(events, viewDate, dayViewStart, dayViewEnd, dayViewSplit) {
 
 	      var dayStart = (dayViewStart || '00:00').split(':');
 	      var dayEnd = (dayViewEnd || '23:59').split(':');
 
 	      var view = calendarUtils.getDayView({
 	        events: events.map(function(event) { // hack required to work with event API
-	          var eventPeriod = getRecurringEventPeriod({
-	            start: moment(event.startsAt),
-	            end: moment(event.endsAt || event.startsAt)
-	          }, event.recursOn, moment(viewDate).startOf('day'));
-	          return updateEventForCalendarUtils(event, eventPeriod);
+	          event.start = event.startsAt;
+	          event.end = event.endsAt;
+	          return event;
 	        }),
 	        viewDate: viewDate,
 	        hourSegments: 60 / dayViewSplit,
@@ -3907,7 +3794,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          hour: dayEnd[0],
 	          minute: dayEnd[1]
 	        },
-	        eventWidth: dayViewEventWidth ? +dayViewEventWidth : 150,
+	        eventWidth: 150,
 	        segmentHeight: 30
 	      });
 
