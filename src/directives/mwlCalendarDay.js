@@ -110,7 +110,7 @@ angular
         customTemplateUrls: '=?',
         cellModifier: '=',
         templateScope: '=',
-        timePosition: '=' 
+        timePosition: '='
       },
       controller: 'MwlCalendarDayCtrl as vm',
       bindToController: true
