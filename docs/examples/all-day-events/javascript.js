@@ -12,7 +12,7 @@ angular
         endsAt: moment().startOf('week').add(1, 'week').add(9, 'hours').toDate(),
         allDay: true
       }, {
-        title: 'A non all day egent',
+        title: 'A non all day event',
         color: calendarConfig.colorTypes.important,
         startsAt: moment().startOf('day').add(7, 'hours').toDate(),
         endsAt: moment().startOf('day').add(19, 'hours').toDate(),
