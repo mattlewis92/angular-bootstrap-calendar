@@ -70,7 +70,7 @@
     custom-template-urls="vm.customTemplateUrls"
     cell-modifier="vm.cellModifier"
     template-scope="vm.templateScope"
-    time-position="vm.timePosition"
+    time-position="vm.timePosition || 'default'"
     ng-class="{
       'time-on-side' : vm.timePosition === 'side',
       'time-hidden' : vm.timePosition === 'hidden'

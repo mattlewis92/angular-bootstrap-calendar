@@ -8,13 +8,13 @@ angular
 
     var vm = this;
 
-    vm.timePosition = vm.timePosition ? vm.timePosition : 'default';
-    vm.timeHidden = vm.timePosition === 'hidden';
-    vm.timePositionOffset = vm.timePosition !== 'default' ? 0 : 60;
-
     vm.calendarEventTitle = calendarEventTitle;
 
     function refreshView() {
+
+      vm.timeHidden = vm.timePosition === 'hidden';
+      vm.timePositionOffset = vm.timePosition !== 'default' ? 0 : 60;
+
       vm.dayViewSplit = vm.dayViewSplit || 30;
       vm.dayViewHeight = calendarHelper.getDayViewHeight(
         vm.dayViewStart,
