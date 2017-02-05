@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-calendar - A pure AngularJS bootstrap themed responsive calendar that can display events and has views for year, month, week and day
- * @version v0.27.5
+ * @version v0.28.0
  * @link https://github.com/mattlewis92/angular-bootstrap-calendar
  * @license MIT
  */
@@ -289,15 +289,18 @@ mwl-calendar .cal-day-selected {
 .cal-day-box .cal-day-hour-part-selected {
   background-color: #e1e1e1;
 }
+.cal-day-box .cal-day-hour {
+  background-color: #ffffff;
+}
 .cal-day-box .cal-day-hour .day-highlight {
   height: 30px;
+}
+.cal-day-box .cal-day-hour:nth-child(odd) {
+  background-color: #fafafa;
 }
 .cal-day-box .cal-hours {
   font-weight: bold;
   font-size: 12px;
-}
-.cal-day-box .cal-day-hour:nth-child(odd) {
-  background-color: #fafafa;
 }
 .cal-day-box .cal-day-panel {
   position: relative;
@@ -330,6 +333,19 @@ mwl-calendar .cal-day-selected {
   margin: 1px 1px;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+mwl-calendar-day.time-hidden .cal-day-hour-part-time {
+  display: none;
+}
+mwl-calendar-day.time-on-side .cal-day-box {
+  overflow: visible !important;
+  margin-left: 55px;
+}
+mwl-calendar-day.time-on-side .cal-day-panel {
+  min-width: initial !important;
+}
+mwl-calendar-day.time-on-side .cal-day-hour-part-time {
+  margin-left: -55px;
 }
 mwl-calendar .event {
   display: block;

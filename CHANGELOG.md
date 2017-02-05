@@ -1,3 +1,13 @@
+<a name="0.28.0"></a>
+# [0.28.0](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.27.5...v0.28.0) (2017-02-05)
+
+
+### Features
+
+* **dayView:** add dayViewSidePosition option ([5940de5](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/5940de5)), closes [#519](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/519)
+
+
+
 <a name="0.27.5"></a>
 ## [0.27.5](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.27.4...v0.27.5) (2017-01-09)
 
