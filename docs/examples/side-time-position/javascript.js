@@ -7,7 +7,7 @@ angular
     var actions = [{
       label: '<i class=\'fa fa-pencil\'></i>'
     }, {
-      label: '<i class=\'fa fa-remove\'></i>'
+      label: '<i class=\'fa fa-times\'></i>'
     }];
 
     vm.events = [{
