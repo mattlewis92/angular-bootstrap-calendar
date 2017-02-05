@@ -12,8 +12,8 @@ angular
 
     function refreshView() {
 
-      vm.timeHidden = vm.timePosition === 'hidden';
-      vm.timePositionOffset = vm.timePosition !== 'default' ? 0 : 60;
+      vm.timeHidden = vm.dayViewTimePosition === 'hidden';
+      vm.dayViewTimePositionOffset = vm.dayViewTimePosition !== 'default' ? 0 : 60;
 
       vm.dayViewSplit = vm.dayViewSplit || 30;
       vm.dayViewHeight = calendarHelper.getDayViewHeight(
@@ -110,7 +110,7 @@ angular
         customTemplateUrls: '=?',
         cellModifier: '=',
         templateScope: '=',
-        timePosition: '='
+        dayViewTimePosition: '='
       },
       controller: 'MwlCalendarDayCtrl as vm',
       bindToController: true

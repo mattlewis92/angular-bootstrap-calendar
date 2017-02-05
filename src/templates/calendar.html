@@ -70,10 +70,10 @@
     custom-template-urls="vm.customTemplateUrls"
     cell-modifier="vm.cellModifier"
     template-scope="vm.templateScope"
-    time-position="vm.timePosition || 'default'"
+    day-view-time-position="vm.dayViewTimePosition || 'default'"
     ng-class="{
-      'time-on-side' : vm.timePosition === 'side',
-      'time-hidden' : vm.timePosition === 'hidden'
+      'time-on-side' : vm.dayViewTimePosition === 'side',
+      'time-hidden' : vm.dayViewTimePosition === 'hidden'
     }"
     ng-switch-when="day">
   </mwl-calendar-day>
