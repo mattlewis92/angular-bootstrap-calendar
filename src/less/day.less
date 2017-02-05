@@ -30,14 +30,17 @@
     .day-highlight {
       height: 30px;
     }
+
+    background-color: @eventBorderColor;
+    &:nth-child(odd) {
+      background-color: @rowHover;
+    }
   }
   .cal-hours {
     font-weight: bold;
     font-size: 12px;
   }
-  .cal-day-hour:nth-child(odd) {
-    background-color: @rowHover;
-  }
+
   .cal-day-panel {
     position: relative;
     padding-left: 60px;
@@ -71,5 +74,24 @@
     margin: 1px 1px;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+}
+
+mwl-calendar-day.time-hidden {
+  .cal-day-hour-part-time {
+    display: none;
+  }
+}
+
+mwl-calendar-day.time-on-side {
+  .cal-day-box {
+    overflow: visible !important;
+    margin-left: @sideMargin;
+  }
+  .cal-day-panel {
+    min-width: initial !important;
+  }
+  .cal-day-hour-part-time {
+    margin-left: -@sideMargin;
   }
 }

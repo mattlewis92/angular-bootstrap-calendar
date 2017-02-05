@@ -1,0 +1,32 @@
+<div ng-controller="SideTimePositionCtrl as vm">
+
+  <div class="col-md-4">
+    <h3>Side</h3>
+    <mwl-calendar
+      events="vm.events"
+      view="vm.calendarView"
+      view-date="vm.viewDate"
+      day-view-time-position="side">
+    </mwl-calendar>
+  </div>
+
+  <div class="col-md-4">
+    <h3>Default</h3>
+    <mwl-calendar
+      events="vm.events"
+      view="vm.calendarView"
+      view-date="vm.viewDate">
+    </mwl-calendar>
+  </div>
+
+  <div class="col-md-4">
+    <h3>Hidden</h3>
+    <mwl-calendar
+      events="vm.events"
+      view="vm.calendarView"
+      view-date="vm.viewDate"
+      day-view-time-position="hidden">
+    </mwl-calendar>
+  </div>
+
+</div>
