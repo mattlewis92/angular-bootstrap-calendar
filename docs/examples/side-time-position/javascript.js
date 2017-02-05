@@ -5,9 +5,9 @@ angular
     var vm = this;
 
     var actions = [{
-      label: '<i class=\'glyphicon glyphicon-pencil\'></i>'
+      label: '<i class=\'fa fa-pencil\'></i>'
     }, {
-      label: '<i class=\'glyphicon glyphicon-remove\'></i>'
+      label: '<i class=\'fa fa-remove\'></i>'
     }];
 
     vm.events = [{
