@@ -5,7 +5,7 @@ var calendarUtils = require('calendar-utils');
 
 angular
   .module('mwl.calendar')
-  .controller('MwlCalendarHourListCtrl', function($scope, moment, calendarHelper, calendarConfig) {
+  .controller('MwlCalendarHourListCtrl', function($scope, moment, calendarHelper) {
     var vm = this;
 
     function updateDays() {
@@ -14,7 +14,7 @@ angular
       var dayStart = (vm.dayViewStart || '00:00').split(':');
       var dayEnd = (vm.dayViewEnd || '23:59').split(':');
       vm.hourGrid = calendarUtils.getDayViewHourGrid({
-        viewDate: calendarConfig.showTimesOnWeekView ? moment(vm.viewDate).startOf('week').toDate() : moment(vm.viewDate).toDate(),
+        viewDate: vm.view === 'week' ? moment(vm.viewDate).startOf('week').toDate() : moment(vm.viewDate).toDate(),
         hourSegments: 60 / vm.dayViewSplit,
         dayStart: {
           hour: dayStart[0],
@@ -32,7 +32,7 @@ angular
           segment.date = moment(segment.date);
           segment.nextSegmentDate = segment.date.clone().add(vm.dayViewSplit, 'minutes');
 
-          if (calendarConfig.showTimesOnWeekView) {
+          if (vm.view === 'week') {
 
             segment.days = [];
 
@@ -134,7 +134,8 @@ angular
         onEventTimesChanged: '=',
         customTemplateUrls: '=?',
         cellModifier: '=',
-        templateScope: '='
+        templateScope: '=',
+        view: '@'
       },
       bindToController: true
     };

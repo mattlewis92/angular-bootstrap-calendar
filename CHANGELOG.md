@@ -1,3 +1,14 @@
+<a name="0.28.1"></a>
+## [0.28.1](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.28.0...v0.28.1) (2017-03-04)
+
+
+### Bug Fixes
+
+* **dayView:** fix drag and select when using the week view with times ([a4b6213](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/a4b6213)), closes [#536](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/536)
+* **monthView:** hide badge cell total on days not in the current month ([ed34832](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/ed34832)), closes [#545](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/545)
+
+
+
 <a name="0.28.0"></a>
 # [0.28.0](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.27.5...v0.28.0) (2017-02-05)
 

@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-calendar - A pure AngularJS bootstrap themed responsive calendar that can display events and has views for year, month, week and day
- * @version v0.28.0
+ * @version v0.28.1
  * @link https://github.com/mattlewis92/angular-bootstrap-calendar
  * @license MIT
  */
@@ -474,7 +474,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	angular
 	  .module('mwl.calendar')
-	  .controller('MwlCalendarHourListCtrl', ["$scope", "moment", "calendarHelper", "calendarConfig", function($scope, moment, calendarHelper, calendarConfig) {
+	  .controller('MwlCalendarHourListCtrl', ["$scope", "moment", "calendarHelper", function($scope, moment, calendarHelper) {
 	    var vm = this;
 
 	    function updateDays() {
@@ -483,7 +483,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var dayStart = (vm.dayViewStart || '00:00').split(':');
 	      var dayEnd = (vm.dayViewEnd || '23:59').split(':');
 	      vm.hourGrid = calendarUtils.getDayViewHourGrid({
-	        viewDate: calendarConfig.showTimesOnWeekView ? moment(vm.viewDate).startOf('week').toDate() : moment(vm.viewDate).toDate(),
+	        viewDate: vm.view === 'week' ? moment(vm.viewDate).startOf('week').toDate() : moment(vm.viewDate).toDate(),
 	        hourSegments: 60 / vm.dayViewSplit,
 	        dayStart: {
 	          hour: dayStart[0],
@@ -501,7 +501,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          segment.date = moment(segment.date);
 	          segment.nextSegmentDate = segment.date.clone().add(vm.dayViewSplit, 'minutes');
 
-	          if (calendarConfig.showTimesOnWeekView) {
+	          if (vm.view === 'week') {
 
 	            segment.days = [];
 
@@ -603,7 +603,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        onEventTimesChanged: '=',
 	        customTemplateUrls: '=?',
 	        cellModifier: '=',
-	        templateScope: '='
+	        templateScope: '=',
+	        view: '@'
 	      },
 	      bindToController: true
 	    };
@@ -1149,8 +1150,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var result = addDays(new Date(2014, 8, 1), 10)
 	 * //=> Thu Sep 11 2014 00:00:00
 	 */
-	function addDays (dirtyDate, amount) {
+	function addDays (dirtyDate, dirtyAmount) {
 	  var date = parse(dirtyDate)
+	  var amount = Number(dirtyAmount)
 	  date.setDate(date.getDate() + amount)
 	  return date
 	}
@@ -1237,7 +1239,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var result = parse('+02014101', {additionalDigits: 1})
 	 * //=> Fri Apr 11 2014 00:00:00
 	 */
-	function parse (argument, options) {
+	function parse (argument, dirtyOptions) {
 	  if (isDate(argument)) {
 	    // Prevent the date to lose the milliseconds when passed to new Date() in IE10
 	    return new Date(argument.getTime())
@@ -1245,10 +1247,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return new Date(argument)
 	  }
 
-	  options = options || {}
+	  var options = dirtyOptions || {}
 	  var additionalDigits = options.additionalDigits
 	  if (additionalDigits == null) {
 	    additionalDigits = DEFAULT_ADDITIONAL_DIGITS
+	  } else {
+	    additionalDigits = Number(additionalDigits)
 	  }
 
 	  var dateStrings = splitDateString(argument)
@@ -1530,8 +1534,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var result = addHours(new Date(2014, 6, 10, 23, 0), 2)
 	 * //=> Fri Jul 11 2014 01:00:00
 	 */
-	function addHours (dirtyDate, amount) {
+	function addHours (dirtyDate, dirtyAmount) {
 	  var date = parse(dirtyDate)
+	  var amount = Number(dirtyAmount)
 	  date.setHours(date.getHours() + amount)
 	  return date
 	}
@@ -1561,8 +1566,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var result = addMinutes(new Date(2014, 6, 10, 12, 0), 30)
 	 * //=> Thu Jul 10 2014 12:30:00
 	 */
-	function addMinutes (dirtyDate, amount) {
+	function addMinutes (dirtyDate, dirtyAmount) {
 	  var date = parse(dirtyDate)
+	  var amount = Number(dirtyAmount)
 	  date.setMinutes(date.getMinutes() + amount)
 	  return date
 	}
@@ -1947,8 +1953,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var result = endOfWeek(new Date(2014, 8, 2, 11, 55, 0), {weekStartsOn: 1})
 	 * //=> Sun Sep 07 2014 23:59:59.999
 	 */
-	function endOfWeek (dirtyDate, options) {
-	  var weekStartsOn = options ? (options.weekStartsOn || 0) : 0
+	function endOfWeek (dirtyDate, dirtyOptions) {
+	  var weekStartsOn = dirtyOptions ? (Number(dirtyOptions.weekStartsOn) || 0) : 0
 
 	  var date = parse(dirtyDate)
 	  var day = date.getDay()
@@ -2151,8 +2157,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var result = setHours(new Date(2014, 8, 1, 11, 30), 4)
 	 * //=> Mon Sep 01 2014 04:30:00
 	 */
-	function setHours (dirtyDate, hours) {
+	function setHours (dirtyDate, dirtyHours) {
 	  var date = parse(dirtyDate)
+	  var hours = Number(dirtyHours)
 	  date.setHours(hours)
 	  return date
 	}
@@ -2182,8 +2189,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var result = setMinutes(new Date(2014, 8, 1, 11, 30, 40), 45)
 	 * //=> Mon Sep 01 2014 11:45:40
 	 */
-	function setMinutes (dirtyDate, minutes) {
+	function setMinutes (dirtyDate, dirtyMinutes) {
 	  var date = parse(dirtyDate)
+	  var minutes = Number(dirtyMinutes)
 	  date.setMinutes(minutes)
 	  return date
 	}
@@ -2283,8 +2291,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var result = startOfWeek(new Date(2014, 8, 2, 11, 55, 0), {weekStartsOn: 1})
 	 * //=> Mon Sep 01 2014 00:00:00
 	 */
-	function startOfWeek (dirtyDate, options) {
-	  var weekStartsOn = options ? (options.weekStartsOn || 0) : 0
+	function startOfWeek (dirtyDate, dirtyOptions) {
+	  var weekStartsOn = dirtyOptions ? (Number(dirtyOptions.weekStartsOn) || 0) : 0
 
 	  var date = parse(dirtyDate)
 	  var day = date.getDay()

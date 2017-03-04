@@ -226,21 +226,29 @@ You can easily customise the date formats and i18n strings used throughout the c
 angular.module('myModule')
   .config(['calendarConfig', function(calendarConfig) {
 
-    console.log(calendarConfig); //view all available config
+    // View all available config
+    console.log(calendarConfig);
 
-    calendarConfig.templates.calendarMonthView = 'path/to/custom/template.html'; //change the month view template globally to a custom template
+    // Change the month view template globally to a custom template
+    calendarConfig.templates.calendarMonthView = 'path/to/custom/template.html'; 
 
-    calendarConfig.dateFormatter = 'moment'; //use either moment or angular to format dates on the calendar. Default angular. Setting this will override any date formats you have already set.
+    // Use either moment or angular to format dates on the calendar. Default angular. Setting this will override any date formats you have already set.
+    calendarConfig.dateFormatter = 'moment';
 
-    calendarConfig.allDateFormats.moment.date.hour = 'HH:mm'; //this will configure times on the day view to display in 24 hour format rather than the default of 12 hour
+    // This will configure times on the day view to display in 24 hour format rather than the default of 12 hour
+    calendarConfig.allDateFormats.moment.date.hour = 'HH:mm';
 
-    calendarConfig.allDateFormats.moment.title.day = 'ddd D MMM'; //this will configure the day view title to be shorter
+    // This will configure the day view title to be shorter
+    calendarConfig.allDateFormats.moment.title.day = 'ddd D MMM';
 
-    calendarConfig.i18nStrings.weekNumber = 'Week {week}'; //This will set the week number hover label on the month view
+    // This will set the week number hover label on the month view
+    calendarConfig.i18nStrings.weekNumber = 'Week {week}';
 
-    calendarConfig.displayAllMonthEvents = true; //This will display all events on a month view even if they're not in the current month. Default false.
+    // This will display all events on a month view even if they're not in the current month. Default false.
+    calendarConfig.displayAllMonthEvents = true;
 
-    calendarConfig.showTimesOnWeekView = true; //Make the week view more like the day view, with the caveat that event end times are ignored.
+    // Make the week view more like the day view, ***with the caveat that event end times are ignored***.
+    calendarConfig.showTimesOnWeekView = true;
 
   }]);
 ```
