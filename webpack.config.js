@@ -10,22 +10,23 @@ module.exports = {
     filename: 'angular-bootstrap-calendar.js'
   },
   module: {
-    preLoaders: [{
+    rules: [{
       test: /.*\.js$/,
-      loaders: ['eslint'],
-      exclude: /node_modules/
+      loader: 'eslint-loader',
+      exclude: /node_modules/,
+      enforce: 'pre'
     }, {
       test: /\.html$/,
-      loader: 'htmlhint',
-      exclude: /node_modules/
-    }],
-    loaders: [{
+      loader: 'htmlhint-loader',
+      exclude: /node_modules/,
+      enforce: 'pre'
+    }, {
       test: /\.less$/,
-      loader: 'style!css!less',
+      loader: 'style-loader!css-loader!less-loader',
       exclude: /node_modules/
     }, {
       test: /\.html$/,
-      loader: 'html',
+      loader: 'html-loader',
       exclude: /node_modules/
     }]
   },

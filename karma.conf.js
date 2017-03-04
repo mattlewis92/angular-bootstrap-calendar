@@ -8,32 +8,32 @@ module.exports = function(config) {
     cache: true,
     devtool: 'inline-source-map',
     module: {
-      preLoaders: [{
+      rules: [{
         test: /\.js$/,
-        loaders: ['eslint'],
-        exclude: /node_modules/
+        loader: 'eslint-loader',
+        exclude: /node_modules/,
+        enforce: 'pre'
       }, {
         test: /\.html$/,
-        loader: 'htmlhint',
-        exclude: /node_modules/
-      }],
-      loaders: [{
+        loader: 'htmlhint-loader',
+        exclude: /node_modules/,
+        enforce: 'pre'
+      }, {
         test: /\.html$/,
-        loader: 'html',
+        loader: 'html-loader',
         exclude: /node_modules/
       }, {
         test: /\.less/,
-        loader: 'null',
+        loader: 'null-loader',
         exclude: /node_modules/
-      }],
-      postLoaders: [{
+      }, {
         test: /\.js$/,
         exclude: /(test|node_modules)/,
-        loader: 'istanbul-instrumenter'
+        loader: 'istanbul-instrumenter-loader',
+        enforce: 'post'
       }]
     },
     plugins: [
-      new webpack.optimize.DedupePlugin(),
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       new webpack.DefinePlugin({
         EXCLUDE_TEMPLATES: false
@@ -42,7 +42,7 @@ module.exports = function(config) {
   };
 
   if (config.singleRun) {
-    webpackConfig.plugins.push(new webpack.NoErrorsPlugin());
+    webpackConfig.plugins.push(new webpack.NoEmitOnErrorsPlugin());
   }
 
   config.set({
