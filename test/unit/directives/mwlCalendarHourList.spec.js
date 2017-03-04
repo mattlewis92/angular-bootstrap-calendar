@@ -9,7 +9,6 @@ describe('mwlCalendarHourList directive', function() {
     scope,
     $rootScope,
     directiveScope,
-    calendarConfig,
     showModal,
     clock,
     template =
@@ -44,8 +43,7 @@ describe('mwlCalendarHourList directive', function() {
 
   beforeEach(angular.mock.module('mwl.calendar'));
 
-  beforeEach(angular.mock.inject(function($compile, _$rootScope_, _calendarConfig_) {
-    calendarConfig = _calendarConfig_;
+  beforeEach(angular.mock.inject(function($compile, _$rootScope_) {
     clock = sinon.useFakeTimers(new Date('October 20, 2015 11:10:00').getTime());
     $rootScope = _$rootScope_;
     scope = $rootScope.$new();
