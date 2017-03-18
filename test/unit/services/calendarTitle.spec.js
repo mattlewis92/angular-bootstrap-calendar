@@ -24,6 +24,10 @@ describe('calendarTitle', function() {
     expect(calendarTitle.week(new Date('2016-01-01'))).to.equal('Week 53 of 2015');
   });
 
+  it('should use the start of the iso week for the year number', function() {
+    expect(calendarTitle.week(new Date('2018-01-01'))).to.equal('Week 1 of 2018');
+  });
+
   it('should give the correct month title', function() {
     expect(calendarTitle.month(calendarDay)).to.equal('May 2015');
   });

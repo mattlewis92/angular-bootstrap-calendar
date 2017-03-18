@@ -1,3 +1,13 @@
+<a name="0.28.2"></a>
+## [0.28.2](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.28.1...v0.28.2) (2017-03-18)
+
+
+### Bug Fixes
+
+* **calendarTitle:** use start of iso week instead of week for the week view title ([357cd28](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/357cd28)), closes [#557](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/557)
+
+
+
 <a name="0.28.1"></a>
 ## [0.28.1](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.28.0...v0.28.1) (2017-03-04)
 
