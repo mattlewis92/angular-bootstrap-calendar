@@ -88,7 +88,7 @@ module.exports = env => {
       }),
       new ExtractTextPlugin('../css/' + cssFilename),
       new webpack.DefinePlugin({
-        EXCLUDE_TEMPLATES: env.excludeTemplates
+        EXCLUDE_TEMPLATES: !!env.excludeTemplates
       })
     ]
   };
