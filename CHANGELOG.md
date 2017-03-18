@@ -1,3 +1,13 @@
+<a name="0.28.3"></a>
+## [0.28.3](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.28.2...v0.28.3) (2017-03-18)
+
+
+### Bug Fixes
+
+* **templates:** re-include html template files ([c8d4240](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/c8d4240))
+
+
+
 <a name="0.28.2"></a>
 ## [0.28.2](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.28.1...v0.28.2) (2017-03-18)
 
