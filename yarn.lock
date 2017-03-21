@@ -1371,9 +1371,13 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
-date-fns@^1.23.0, date-fns@^1.26.0:
+date-fns@^1.23.0:
   version "1.28.0"
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-1.28.0.tgz#3b12f54b66467807bb95e5930caf7bfb4170bc1a"
+
+date-fns@^1.28.1:
+  version "1.28.1"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-1.28.1.tgz#9e2325c77b1cb7da3a9fd9822ba52c188a4ce91b"
 
 date-now@^0.1.4:
   version "0.1.4"
@@ -1767,9 +1771,9 @@ eslint-loader@^1.6.0:
     object-assign "^4.0.1"
     object-hash "^1.1.4"
 
-eslint-plugin-angular@^1.6.2:
-  version "1.6.4"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-angular/-/eslint-plugin-angular-1.6.4.tgz#f495b351e2a49907a020f1c4fbdfbf81011a32a2"
+eslint-plugin-angular@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-angular/-/eslint-plugin-angular-2.0.0.tgz#6a0bdeb2910e27ee89a0b4d9b8250a7989234f88"
 
 eslint@^3.17.1:
   version "3.18.0"
@@ -3240,12 +3244,13 @@ lcid@^1.0.0:
   dependencies:
     invert-kv "^1.0.0"
 
-less-loader@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/less-loader/-/less-loader-3.0.0.tgz#199f7f4a79ff8a195ab47649d71c6d7109da32b9"
+less-loader@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/less-loader/-/less-loader-4.0.1.tgz#bf0a5d6c5f61f272de592421d0ea87a168d1edf7"
   dependencies:
     clone-deep "^0.2.4"
     loader-utils "^1.0.2"
+    pify "^2.3.0"
 
 less@^2.7.1:
   version "2.7.2"
@@ -5264,9 +5269,9 @@ strip-json-comments@2.0.1, strip-json-comments@~2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
 
-style-loader@^0.14.1:
-  version "0.14.1"
-  resolved "https://registry.yarnpkg.com/style-loader/-/style-loader-0.14.1.tgz#27b9b6c9822adf8c4748e02a1efae229405d79a5"
+style-loader@^0.15.0:
+  version "0.15.0"
+  resolved "https://registry.yarnpkg.com/style-loader/-/style-loader-0.15.0.tgz#17ff9527ae109b94d8c53d253dc9333041438a2d"
   dependencies:
     loader-utils "^1.0.2"
 
