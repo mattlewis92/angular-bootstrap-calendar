@@ -28,6 +28,7 @@ angular
     }
 
     interact($element[0]).draggable({
+      autoScroll: true,
       snap: snap,
       onstart: function(event) {
         angular.element(event.target).addClass('dragging-active');
