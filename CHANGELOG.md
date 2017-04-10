@@ -1,3 +1,13 @@
+<a name="0.28.4"></a>
+## [0.28.4](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.28.3...v0.28.4) (2017-04-10)
+
+
+### Bug Fixes
+
+* **draggable:** auto scroll the page when dragging events ([c8da9bb](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/c8da9bb)), closes [#568](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/568)
+
+
+
 <a name="0.28.3"></a>
 ## [0.28.3](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.28.2...v0.28.3) (2017-03-18)
 

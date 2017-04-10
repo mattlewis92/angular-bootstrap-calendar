@@ -295,10 +295,13 @@ angular
           return {
             event: event,
             top: dayEvent.top,
-            offset: calendarUtils.getWeekViewEventOffset(
-              {start: event.startsAt, end: event.endsAt},
-              moment(viewDate).startOf('week')
-            )
+            offset: calendarUtils.getWeekViewEventOffset({
+              event: {
+                start: event.startsAt,
+                end: event.endsAt
+              },
+              startOfWeek: moment(viewDate).startOf('week').toDate()
+            })
           };
         })
       }];
