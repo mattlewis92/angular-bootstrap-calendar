@@ -319,6 +319,9 @@ moment.locale('en_gb', {
 
 For a full list of all available formats and their defaults see [calendarConfig.js](https://github.com/mattlewis92/angular-bootstrap-calendar/blob/master/src/services/calendarConfig.js)
 
+## Hiding the calendar
+When hiding the calendar it is recommended to use ng-if instead of ng-show/hide otherwise drag, drop, resize and date range selection will not work properly.
+
 ## Development
 
 ### Prepare your environment
