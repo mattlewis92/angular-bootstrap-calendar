@@ -37,7 +37,8 @@ angular
         onEventClick: '=',
         cell: '=',
         customTemplateUrls: '=?',
-        templateScope: '='
+        templateScope: '=',
+        draggableAutoScroll: '='
       },
       bindToController: true
     };

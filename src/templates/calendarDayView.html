@@ -60,6 +60,7 @@
       snap-grid="{y: vm.dayViewEventChunkSize || 30, x: 50}"
       on-drag="vm.eventDragged(dayEvent.event, y / 30)"
       on-drag-end="vm.eventDragComplete(dayEvent.event, y / 30)"
+      auto-scroll="vm.draggableAutoScroll"
       mwl-resizable="dayEvent.event.resizable === true && dayEvent.event.endsAt"
       resize-edges="{top: true, bottom: true}"
       on-resize="vm.eventResized(dayEvent.event, edge, y / 30)"

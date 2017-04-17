@@ -218,6 +218,9 @@ $templateCache.put('my-custom-template.html', 'Custom month view template here')
 ### template-scope
 An object containing a set of variables that will be available in a custom template as `vm.templateScope`
 
+### draggable-auto-scroll
+Passed to the [autoScroll](http://interactjs.io/docs/#autoscroll) option of interactjs. Unlike interact this defaults to `true` if not set.
+
 ## Configuring the calendar default config
 
 You can easily customise the date formats and i18n strings used throughout the calendar by using the `calendarConfig` value. Please note that these example formats are those used by moment.js and these won't work if using angular as the date formatter. Example usage:
@@ -318,6 +321,9 @@ moment.locale('en_gb', {
 ```
 
 For a full list of all available formats and their defaults see [calendarConfig.js](https://github.com/mattlewis92/angular-bootstrap-calendar/blob/master/src/services/calendarConfig.js)
+
+## Hiding the calendar
+When hiding the calendar it is recommended to use ng-if instead of ng-show/hide otherwise drag, drop, resize and date range selection will not work properly.
 
 ## Development
 

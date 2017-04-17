@@ -6,7 +6,8 @@
         ng-repeat="event in vm.events | orderBy:'startsAt' track by event.calendarEventId"
         ng-class="event.cssClass"
         mwl-draggable="event.draggable === true"
-        drop-data="{event: event}">
+        drop-data="{event: event}"
+        auto-scroll="vm.draggableAutoScroll">
         <span class="pull-left event" ng-style="{backgroundColor: event.color.primary}"></span>
         &nbsp;
         <a

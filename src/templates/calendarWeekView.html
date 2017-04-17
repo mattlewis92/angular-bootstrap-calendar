@@ -65,6 +65,7 @@
               mwl-draggable="eventRow.event.draggable === true"
               axis="vm.showTimes ? 'xy' : 'x'"
               snap-grid="vm.showTimes ? {x: vm.dayColumnDimensions.width, y: vm.dayViewEventChunkSize || 30} : {x: vm.dayColumnDimensions.width}"
+              auto-scroll="vm.draggableAutoScroll"
               on-drag="vm.tempTimeChanged(eventRow.event, y / 30)"
               on-drag-end="vm.weekDragged(eventRow.event, x / vm.dayColumnDimensions.width, y / 30)"
               mwl-resizable="eventRow.event.resizable === true && eventRow.event.endsAt && !vm.showTimes"
