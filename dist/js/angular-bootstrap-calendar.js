@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-calendar - A pure AngularJS bootstrap themed responsive calendar that can display events and has views for year, month, week and day
- * @version v0.28.4
+ * @version v0.29.0
  * @link https://github.com/mattlewis92/angular-bootstrap-calendar
  * @license MIT
  */
@@ -13,7 +13,7 @@
 		exports["angularBootstrapCalendarModuleName"] = factory(require("angular"), require("moment"), (function webpackLoadOptionalExternalModule() { try { return require("interactjs"); } catch(e) {} }()));
 	else
 		root["angularBootstrapCalendarModuleName"] = factory(root["angular"], root["moment"], root["interact"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_0__, __WEBPACK_EXTERNAL_MODULE_57__, __WEBPACK_EXTERNAL_MODULE_58__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE_0__, __WEBPACK_EXTERNAL_MODULE_58__, __WEBPACK_EXTERNAL_MODULE_59__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -22,9 +22,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	function __webpack_require__(moduleId) {
 /******/
 /******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId])
+/******/ 		if(installedModules[moduleId]) {
 /******/ 			return installedModules[moduleId].exports;
-/******/
+/******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
@@ -79,7 +79,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 59);
+/******/ 	return __webpack_require__(__webpack_require__.s = 47);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -913,7 +913,7 @@ function webpackContext(req) {
 };
 function webpackContextResolve(req) {
 	var id = map[req];
-	if(!(id + 1)) // check for number
+	if(!(id + 1)) // check for number or string
 		throw new Error("Cannot find module '" + req + "'.");
 	return id;
 };
@@ -924,23 +924,22 @@ webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
 webpackContext.id = 7;
 
-
 /***/ }),
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./calendarDate.js": 47,
-	"./calendarLimitTo.js": 48,
-	"./calendarTruncateEventTitle.js": 49,
-	"./calendarTrustAsHtml.js": 50
+	"./calendarDate.js": 48,
+	"./calendarLimitTo.js": 49,
+	"./calendarTruncateEventTitle.js": 50,
+	"./calendarTrustAsHtml.js": 51
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
 };
 function webpackContextResolve(req) {
 	var id = map[req];
-	if(!(id + 1)) // check for number
+	if(!(id + 1)) // check for number or string
 		throw new Error("Cannot find module '" + req + "'.");
 	return id;
 };
@@ -951,25 +950,24 @@ webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
 webpackContext.id = 8;
 
-
 /***/ }),
 /* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./calendarConfig.js": 51,
-	"./calendarEventTitle.js": 52,
-	"./calendarHelper.js": 53,
-	"./calendarTitle.js": 54,
-	"./interact.js": 55,
-	"./moment.js": 56
+	"./calendarConfig.js": 52,
+	"./calendarEventTitle.js": 53,
+	"./calendarHelper.js": 54,
+	"./calendarTitle.js": 55,
+	"./interact.js": 56,
+	"./moment.js": 57
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
 };
 function webpackContextResolve(req) {
 	var id = map[req];
-	if(!(id + 1)) // check for number
+	if(!(id + 1)) // check for number or string
 		throw new Error("Cannot find module '" + req + "'.");
 	return id;
 };
@@ -979,7 +977,6 @@ webpackContext.keys = function webpackContextKeys() {
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
 webpackContext.id = 9;
-
 
 /***/ }),
 /* 10 */
@@ -1913,6 +1910,7 @@ angular
         cellAutoOpenDisabled: '=?',
         slideBoxDisabled: '=?',
         customTemplateUrls: '=?',
+        draggableAutoScroll: '=?',
         onEventClick: '&',
         onEventTimesChanged: '&',
         onTimespanClick: '&',
@@ -2051,7 +2049,8 @@ angular
         customTemplateUrls: '=?',
         cellModifier: '=',
         templateScope: '=',
-        dayViewTimePosition: '='
+        dayViewTimePosition: '=',
+        draggableAutoScroll: '='
       },
       controller: 'MwlCalendarDayCtrl as vm',
       bindToController: true
@@ -2072,8 +2071,36 @@ var calendarUtils = __webpack_require__(3);
 
 angular
   .module('mwl.calendar')
-  .controller('MwlCalendarHourListCtrl', ["$scope", "moment", "calendarHelper", function($scope, moment, calendarHelper) {
+  .controller('MwlCalendarHourListCtrl', ["$scope", "$document", "moment", "calendarHelper", function($scope, $document, moment, calendarHelper) {
     var vm = this;
+
+    // source: http://stackoverflow.com/questions/13382516/getting-scroll-bar-width-using-javascript
+    function getScrollbarWidth() {
+      var outer = $document[0].createElement('div');
+      outer.style.visibility = 'hidden';
+      outer.style.width = '100px';
+      outer.style.msOverflowStyle = 'scrollbar'; // needed for WinJS apps
+
+      $document[0].body.appendChild(outer);
+
+      var widthNoScroll = outer.offsetWidth;
+      // force scrollbars
+      outer.style.overflow = 'scroll';
+
+      // add innerdiv
+      var inner = $document[0].createElement('div');
+      inner.style.width = '100%';
+      outer.appendChild(inner);
+
+      var widthWithScroll = inner.offsetWidth;
+
+      // remove divs
+      outer.parentNode.removeChild(outer);
+
+      return widthNoScroll - widthWithScroll;
+    }
+
+    vm.scrollBarWidth = getScrollbarWidth();
 
     function updateDays() {
 
@@ -2395,6 +2422,7 @@ angular
         slideBoxDisabled: '=',
         customTemplateUrls: '=?',
         templateScope: '=',
+        draggableAutoScroll: '='
       },
       controller: 'MwlCalendarMonthCtrl as vm',
       link: function(scope, element, attrs, calendarCtrl) {
@@ -2450,7 +2478,8 @@ angular
         onEventClick: '=',
         cell: '=',
         customTemplateUrls: '=?',
-        templateScope: '='
+        templateScope: '=',
+        draggableAutoScroll: '='
       },
       bindToController: true
     };
@@ -2564,7 +2593,8 @@ angular
         onDateRangeSelect: '=',
         customTemplateUrls: '=?',
         cellModifier: '=',
-        templateScope: '='
+        templateScope: '=',
+        draggableAutoScroll: '='
       },
       controller: 'MwlCalendarWeekCtrl as vm',
       link: function(scope, element, attrs, calendarCtrl) {
@@ -2891,8 +2921,13 @@ angular
         .css('transform', transformValue);
     }
 
+    var autoScroll = $parse($attrs.autoScroll)($scope);
+    if (typeof autoScroll === 'undefined') {
+      autoScroll = true;
+    }
+
     interact($element[0]).draggable({
-      autoScroll: true,
+      autoScroll: autoScroll,
       snap: snap,
       onstart: function(event) {
         angular.element(event.target).addClass('dragging-active');
@@ -3263,6 +3298,66 @@ angular
 "use strict";
 
 
+__webpack_require__(6);
+
+var angular = __webpack_require__(0);
+
+function requireAll(r) {
+  r.keys().forEach(r);
+}
+
+var templates = {};
+
+if (false) {
+
+  var templatesContext = require.context('./templates', false, /\.html/);
+
+  templatesContext.keys().forEach(function(templateName) {
+    var templateNameWithoutPrefix = templateName.replace('./', '');
+    var cacheTemplateName = 'mwl/' + templateNameWithoutPrefix;
+    var configTemplateName = templateNameWithoutPrefix.replace('.html', '');
+    templates[configTemplateName] = {
+      cacheTemplateName: cacheTemplateName,
+      template: templatesContext(templateName)
+    };
+  });
+
+}
+
+module.exports = angular
+  .module('mwl.calendar', [])
+  .config(["calendarConfig", function(calendarConfig) {
+    angular.forEach(templates, function(template, templateName) {
+      if (!calendarConfig.templates[templateName]) {
+        calendarConfig.templates[templateName] = template.cacheTemplateName;
+      }
+    });
+  }])
+  .run(["$templateCache", "$interpolate", function($templateCache, $interpolate) {
+
+    angular.forEach(templates, function(template) {
+      if (!$templateCache.get(template.cacheTemplateName)) {
+        var templateContents = template.template
+          .replace('{{', $interpolate.startSymbol())
+          .replace('}}', $interpolate.endSymbol());
+        $templateCache.put(template.cacheTemplateName, templateContents);
+      }
+    });
+
+  }]).name;
+
+requireAll(__webpack_require__(7));
+requireAll(__webpack_require__(8));
+requireAll(__webpack_require__(9));
+
+
+/***/ }),
+/* 48 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 var angular = __webpack_require__(0);
 
 angular
@@ -3289,7 +3384,7 @@ angular
 
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3339,7 +3434,7 @@ angular
 
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3368,7 +3463,7 @@ angular
 
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3388,7 +3483,7 @@ angular
 
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3476,7 +3571,7 @@ angular
 
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3530,7 +3625,7 @@ angular
 
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3880,7 +3975,7 @@ angular
 
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3921,7 +4016,7 @@ angular
 
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3930,7 +4025,7 @@ angular
 var angular = __webpack_require__(0);
 var interact;
 try {
-  interact = __webpack_require__(58);
+  interact = __webpack_require__(59);
 } catch (e) {
   /* istanbul ignore next */
   interact = null;
@@ -3942,14 +4037,14 @@ angular
 
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var angular = __webpack_require__(0);
-var moment = __webpack_require__(57);
+var moment = __webpack_require__(58);
 
 angular
   .module('mwl.calendar')
@@ -3957,77 +4052,17 @@ angular
 
 
 /***/ }),
-/* 57 */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_57__;
-
-/***/ }),
 /* 58 */
 /***/ (function(module, exports) {
 
-if(typeof __WEBPACK_EXTERNAL_MODULE_58__ === 'undefined') {var e = new Error("Cannot find module \"undefined\""); e.code = 'MODULE_NOT_FOUND';; throw e;}
 module.exports = __WEBPACK_EXTERNAL_MODULE_58__;
 
 /***/ }),
 /* 59 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-
-
-__webpack_require__(6);
-
-var angular = __webpack_require__(0);
-
-function requireAll(r) {
-  r.keys().forEach(r);
-}
-
-var templates = {};
-
-if (false) {
-
-  var templatesContext = require.context('./templates', false, /\.html/);
-
-  templatesContext.keys().forEach(function(templateName) {
-    var templateNameWithoutPrefix = templateName.replace('./', '');
-    var cacheTemplateName = 'mwl/' + templateNameWithoutPrefix;
-    var configTemplateName = templateNameWithoutPrefix.replace('.html', '');
-    templates[configTemplateName] = {
-      cacheTemplateName: cacheTemplateName,
-      template: templatesContext(templateName)
-    };
-  });
-
-}
-
-module.exports = angular
-  .module('mwl.calendar', [])
-  .config(["calendarConfig", function(calendarConfig) {
-    angular.forEach(templates, function(template, templateName) {
-      if (!calendarConfig.templates[templateName]) {
-        calendarConfig.templates[templateName] = template.cacheTemplateName;
-      }
-    });
-  }])
-  .run(["$templateCache", "$interpolate", function($templateCache, $interpolate) {
-
-    angular.forEach(templates, function(template) {
-      if (!$templateCache.get(template.cacheTemplateName)) {
-        var templateContents = template.template
-          .replace('{{', $interpolate.startSymbol())
-          .replace('}}', $interpolate.endSymbol());
-        $templateCache.put(template.cacheTemplateName, templateContents);
-      }
-    });
-
-  }]).name;
-
-requireAll(__webpack_require__(7));
-requireAll(__webpack_require__(8));
-requireAll(__webpack_require__(9));
-
+if(typeof __WEBPACK_EXTERNAL_MODULE_59__ === 'undefined') {var e = new Error("Cannot find module \"undefined\""); e.code = 'MODULE_NOT_FOUND'; throw e;}
+module.exports = __WEBPACK_EXTERNAL_MODULE_59__;
 
 /***/ })
 /******/ ]);

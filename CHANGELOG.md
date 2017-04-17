@@ -1,3 +1,18 @@
+<a name="0.29.0"></a>
+# [0.29.0](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.28.4...0.29.0) (2017-04-17)
+
+
+### Bug Fixes
+
+* **weekView:** account for scrollbars when doing the drag select on the week view with times ([0e56ac9](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/0e56ac9)), closes [#571](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/571)
+
+
+### Features
+
+* **draggableAutoScroll:** allow the auto scroll value thats passed to interact to be customised ([dec7f77](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/dec7f77)), closes [#578](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/578)
+
+
+
 <a name="0.28.4"></a>
 ## [0.28.4](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.28.3...v0.28.4) (2017-04-10)
 
