@@ -5,8 +5,36 @@ var calendarUtils = require('calendar-utils');
 
 angular
   .module('mwl.calendar')
-  .controller('MwlCalendarHourListCtrl', function($scope, moment, calendarHelper) {
+  .controller('MwlCalendarHourListCtrl', function($scope, $document, moment, calendarHelper) {
     var vm = this;
+
+    // source: http://stackoverflow.com/questions/13382516/getting-scroll-bar-width-using-javascript
+    function getScrollbarWidth() {
+      var outer = $document[0].createElement('div');
+      outer.style.visibility = 'hidden';
+      outer.style.width = '100px';
+      outer.style.msOverflowStyle = 'scrollbar'; // needed for WinJS apps
+
+      $document[0].body.appendChild(outer);
+
+      var widthNoScroll = outer.offsetWidth;
+      // force scrollbars
+      outer.style.overflow = 'scroll';
+
+      // add innerdiv
+      var inner = $document[0].createElement('div');
+      inner.style.width = '100%';
+      outer.appendChild(inner);
+
+      var widthWithScroll = inner.offsetWidth;
+
+      // remove divs
+      outer.parentNode.removeChild(outer);
+
+      return widthNoScroll - widthWithScroll;
+    }
+
+    vm.scrollBarWidth = getScrollbarWidth();
 
     function updateDays() {
 

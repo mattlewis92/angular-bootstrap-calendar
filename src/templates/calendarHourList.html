@@ -32,7 +32,7 @@
       <div
         class="cal-day-hour-part-spacer"
         ng-repeat="day in segment.days track by $index"
-        ng-style="{width: vm.dayWidth + 'px'}"
+        ng-style="{width: (vm.dayWidth - ($last ? vm.scrollBarWidth : 0)) + 'px'}"
         ng-class="[{ 'cal-day-hour-part-selected': vm.dateRangeSelect &&
                 vm.dateRangeSelect.startDate <= day.date &&
                 day.date < vm.dateRangeSelect.endDate }, day.cssClass]"
