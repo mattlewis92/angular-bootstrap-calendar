@@ -139,6 +139,7 @@ angular
         cellAutoOpenDisabled: '=?',
         slideBoxDisabled: '=?',
         customTemplateUrls: '=?',
+        draggableAutoScroll: '=?',
         onEventClick: '&',
         onEventTimesChanged: '&',
         onTimespanClick: '&',

@@ -110,7 +110,8 @@ angular
         customTemplateUrls: '=?',
         cellModifier: '=',
         templateScope: '=',
-        dayViewTimePosition: '='
+        dayViewTimePosition: '=',
+        draggableAutoScroll: '='
       },
       controller: 'MwlCalendarDayCtrl as vm',
       bindToController: true

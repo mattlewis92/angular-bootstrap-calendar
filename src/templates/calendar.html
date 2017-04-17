@@ -35,6 +35,7 @@
     custom-template-urls="vm.customTemplateUrls"
     template-scope="vm.templateScope"
     cell-auto-open-disabled="vm.cellAutoOpenDisabled"
+    draggable-auto-scroll="vm.draggableAutoScroll"
     ng-switch-when="month">
   </mwl-calendar-month>
 
@@ -52,6 +53,7 @@
     custom-template-urls="vm.customTemplateUrls"
     cell-modifier="vm.cellModifier"
     template-scope="vm.templateScope"
+    draggable-auto-scroll="vm.draggableAutoScroll"
     ng-switch-when="week">
   </mwl-calendar-week>
 
@@ -71,6 +73,7 @@
     cell-modifier="vm.cellModifier"
     template-scope="vm.templateScope"
     day-view-time-position="vm.dayViewTimePosition || 'default'"
+    draggable-auto-scroll="vm.draggableAutoScroll"
     ng-class="{
       'time-on-side' : vm.dayViewTimePosition === 'side',
       'time-hidden' : vm.dayViewTimePosition === 'hidden'

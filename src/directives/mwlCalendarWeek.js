@@ -99,7 +99,8 @@ angular
         onDateRangeSelect: '=',
         customTemplateUrls: '=?',
         cellModifier: '=',
-        templateScope: '='
+        templateScope: '=',
+        draggableAutoScroll: '='
       },
       controller: 'MwlCalendarWeekCtrl as vm',
       link: function(scope, element, attrs, calendarCtrl) {

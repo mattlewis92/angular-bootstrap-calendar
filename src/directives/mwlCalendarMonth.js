@@ -178,6 +178,7 @@ angular
         slideBoxDisabled: '=',
         customTemplateUrls: '=?',
         templateScope: '=',
+        draggableAutoScroll: '='
       },
       controller: 'MwlCalendarMonthCtrl as vm',
       link: function(scope, element, attrs, calendarCtrl) {
