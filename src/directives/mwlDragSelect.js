@@ -8,7 +8,7 @@ angular
 
     function handleMouseEvent(callbackName) {
       return function(event) {
-        if (callbackName) {
+        if (callbackName && event.button !== 2) {
           $parse(callbackName)($scope);
           $scope.$apply();
         }
