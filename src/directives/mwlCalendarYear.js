@@ -70,8 +70,8 @@ angular
 
     vm.handleEventDrop = function(event, newMonthDate) {
       var newStart = moment(event.startsAt)
-        .month(moment(newMonthDate).month())
-        .year(moment(newMonthDate).year());
+        .year(moment(newMonthDate).year())
+        .month(moment(newMonthDate).month());
       var newEnd = calendarHelper.adjustEndDateFromStartDiff(event.startsAt, newStart, event.endsAt);
 
       vm.onEventTimesChanged({

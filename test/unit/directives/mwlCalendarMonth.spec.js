@@ -197,6 +197,27 @@ describe('mwlCalendarMonth directive', function() {
     });
   });
 
+  it('should apply the year, month and date modifications in the right order', function() {
+    scope.viewDate = new Date('2017-01-05');
+    scope.events = [{
+      title: 'An event',
+      type: 'warning',
+      startsAt: new Date('2017-02-01'),
+      draggable: true,
+      resizable: true
+    }];
+    scope.$apply();
+    var draggedFromDate = new Date('2017-02-01');
+    MwlCalendarCtrl.handleEventDrop(scope.events[0], new Date('2017-01-31'), draggedFromDate);
+    expect(showModal).to.have.been.calledWith('Dropped or resized', {
+      calendarEvent: scope.events[0],
+      calendarDate: new Date('2017-01-31'),
+      calendarNewEventStart: new Date('2017-01-31'),
+      calendarNewEventEnd: null,
+      calendarDraggedFromDate: draggedFromDate
+    });
+  });
+
   it('should get the week label', function() {
     expect(MwlCalendarCtrl.getWeekNumberLabel({date: moment().startOf('year').endOf('week').add(1, 'day')})).to.equal('Week 1');
   });

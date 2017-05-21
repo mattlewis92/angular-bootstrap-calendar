@@ -1,3 +1,15 @@
+<a name="0.29.1"></a>
+## [0.29.1](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.29.0...0.29.1) (2017-05-21)
+
+
+### Bug Fixes
+
+* **dragSelect:** ignore right-clicks for drag/drop ([#585](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/585)) ([e0a51b6](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/e0a51b6))
+* **monthView:** generate correct new start date when dropping an event ([e92d647](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/e92d647)), closes [#588](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/588)
+* **yearView:** generate correct new start date when dropping an event ([5da7d4b](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/5da7d4b))
+
+
+
 <a name="0.29.0"></a>
 # [0.29.0](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.28.4...0.29.0) (2017-04-17)
 

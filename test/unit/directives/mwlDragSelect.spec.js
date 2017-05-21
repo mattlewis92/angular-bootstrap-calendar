@@ -54,6 +54,15 @@ describe('mwlDragSelect directive', function() {
       expect(scope.onEnd).to.have.been.calledOnce;
     });
 
+    it('should not fire drag events when the right mouse button is pressed', function() {
+      var event = document.createEvent('Event');
+      event.initEvent('mousedown', true, true);
+      event.button = 2;
+      elm[0].dispatchEvent(event);
+
+      expect(scope.onStart).not.to.have.been.called;
+    });
+
   });
 
   describe('isEnabled = false', function() {
