@@ -1,5 +1,5 @@
 <script id="customMonthCell.html" type="text/ng-template">
-  <div class="cal-month-day">
+  <div class="cal-month-day {{day.cssClass}}">
 
     <span
       class="pull-right"
@@ -15,12 +15,19 @@
   </div>
 </script>
 
+<style type="text/css">
+  .custom-template-cell {
+    color: purple;
+  }
+</style>
+
 <div ng-controller="CustomTemplatesCtrl as vm">
   <ng-include src="'calendarControls.html'"></ng-include>
   <mwl-calendar
     events="vm.events"
     view="vm.calendarView"
     view-date="vm.viewDate"
-    custom-template-urls="{calendarMonthCell: 'customMonthCell.html'}">
+    custom-template-urls="{calendarMonthCell: 'customMonthCell.html'}"
+    cell-modifier="vm.cellModifier(calendarCell)">
   </mwl-calendar>
 </div>
