@@ -6,5 +6,7 @@ angular
     vm.events = [];
     vm.calendarView = 'month';
     vm.viewDate = moment().startOf('month').toDate();
-
+    vm.cellModifier = function(cell) {
+        cell.cssClass = 'custom-template-cell';      
+    };
   });
