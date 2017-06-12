@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-calendar - A pure AngularJS bootstrap themed responsive calendar that can display events and has views for year, month, week and day
- * @version v0.29.1
+ * @version v0.29.2
  * @link https://github.com/mattlewis92/angular-bootstrap-calendar
  * @license MIT
  */
@@ -596,11 +596,11 @@ function getExcludedSeconds(_a) {
     return result;
 }
 function getWeekViewEventSpan(_a) {
-    var event = _a.event, offset = _a.offset, startOfWeekDate = _a.startOfWeekDate, excluded = _a.excluded, _b = _a.precision, precision = _b === void 0 ? 'days' : _b;
+    var event = _a.event, offset = _a.offset, startOfWeekDate = _a.startOfWeekDate, excluded = _a.excluded, _b = _a.precision, precision = _b === void 0 ? 'days' : _b, weekStartsOn = _a.weekStartsOn;
     offset = Math.round(offset * SECONDS_IN_DAY);
     var span = SECONDS_IN_DAY;
     var begin = __WEBPACK_IMPORTED_MODULE_21_date_fns_max___default()(event.start, startOfWeekDate);
-    var endOfWeekDate = __WEBPACK_IMPORTED_MODULE_8_date_fns_end_of_week___default()(startOfWeekDate);
+    var endOfWeekDate = __WEBPACK_IMPORTED_MODULE_8_date_fns_end_of_week___default()(startOfWeekDate, { weekStartsOn: weekStartsOn });
     if (event.end) {
         switch (precision) {
             case 'days':
@@ -683,7 +683,7 @@ function getWeekViewHeader(_a) {
     return days;
 }
 function getWeekView(_a) {
-    var _b = _a.events, events = _b === void 0 ? [] : _b, viewDate = _a.viewDate, weekStartsOn = _a.weekStartsOn, _c = _a.excluded, excluded = _c === void 0 ? [] : _c, _d = _a.precision, precision = _d === void 0 ? 'days' : _d;
+    var _b = _a.events, events = _b === void 0 ? [] : _b, viewDate = _a.viewDate, weekStartsOn = _a.weekStartsOn, _c = _a.excluded, excluded = _c === void 0 ? [] : _c, _d = _a.precision, precision = _d === void 0 ? 'days' : _d, _e = _a.absolutePositionedEvents, absolutePositionedEvents = _e === void 0 ? false : _e;
     if (!events) {
         events = [];
     }
@@ -692,7 +692,7 @@ function getWeekView(_a) {
     var maxRange = DAYS_IN_WEEK - excluded.length;
     var eventsMapped = getEventsInPeriod({ events: events, periodStart: startOfViewWeek, periodEnd: endOfViewWeek }).map(function (event) {
         var offset = getWeekViewEventOffset({ event: event, startOfWeek: startOfViewWeek, excluded: excluded, precision: precision });
-        var span = getWeekViewEventSpan({ event: event, offset: offset, startOfWeekDate: startOfViewWeek, excluded: excluded, precision: precision });
+        var span = getWeekViewEventSpan({ event: event, offset: offset, startOfWeekDate: startOfViewWeek, excluded: excluded, precision: precision, weekStartsOn: weekStartsOn });
         return { event: event, offset: offset, span: span };
     }).filter(function (e) { return e.offset < maxRange; }).filter(function (e) { return e.span > 0; }).map(function (entry) { return ({
         event: entry.event,
@@ -717,8 +717,11 @@ function getWeekView(_a) {
                 if (nextEvent.offset >= rowSpan_1 &&
                     rowSpan_1 + nextEvent.span <= DAYS_IN_WEEK &&
                     allocatedEvents.indexOf(nextEvent) === -1) {
-                    nextEvent.offset -= rowSpan_1;
-                    rowSpan_1 += nextEvent.span + nextEvent.offset;
+                    var nextEventOffset = nextEvent.offset - rowSpan_1;
+                    if (!absolutePositionedEvents) {
+                        nextEvent.offset = nextEventOffset;
+                    }
+                    rowSpan_1 += nextEvent.span + nextEventOffset;
                     allocatedEvents.push(nextEvent);
                     return true;
                 }

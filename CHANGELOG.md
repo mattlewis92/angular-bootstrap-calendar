@@ -1,3 +1,13 @@
+<a name="0.29.2"></a>
+## [0.29.2](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.29.1...0.29.2) (2017-06-12)
+
+
+### Bug Fixes
+
+* **weekView:** use correct event span when the week doesn't start on a sunday ([a70310b](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/a70310b))
+
+
+
 <a name="0.29.1"></a>
 ## [0.29.1](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.29.0...0.29.1) (2017-05-21)
 
