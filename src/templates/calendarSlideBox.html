@@ -5,6 +5,7 @@
       <li
         ng-repeat="event in vm.events | orderBy:'startsAt' track by event.calendarEventId"
         ng-class="event.cssClass"
+        ng-mousedown="$event.stopPropagation()"
         mwl-draggable="event.draggable === true"
         drop-data="{event: event}"
         auto-scroll="vm.draggableAutoScroll">

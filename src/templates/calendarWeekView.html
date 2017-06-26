@@ -81,6 +81,14 @@
                 tooltip-placement="left"
                 tooltip-append-to-body="true">
               </a>
+              <a
+                href="javascript:;"
+                class="event-item-action"
+                ng-class="action.cssClass"
+                ng-repeat="action in eventRow.event.actions track by $index"
+                ng-bind-html="action.label | calendarTrustAsHtml"
+                ng-click="action.onClick({calendarEvent: eventRow.event})">
+              </a>
             </div>
           </div>
         </div>

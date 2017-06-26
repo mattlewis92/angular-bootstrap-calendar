@@ -1,3 +1,14 @@
+<a name="0.29.3"></a>
+## [0.29.3](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.29.2...0.29.3) (2017-06-26)
+
+
+### Bug Fixes
+
+* **monthView:** dont fire on-date-range-sekect when dragging an event ([628321c](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/628321c)), closes [#614](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/614)
+* **weekView:** display event actions ([d14d8f2](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/d14d8f2)), closes [#594](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/594)
+
+
+
 <a name="0.29.2"></a>
 ## [0.29.2](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.29.1...0.29.2) (2017-06-12)
 

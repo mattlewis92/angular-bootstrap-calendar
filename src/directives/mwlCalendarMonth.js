@@ -133,14 +133,16 @@ angular
     };
 
     vm.onDragSelectEnd = function(day) {
-      vm.dateRangeSelect.endDate = day.date;
-      if (vm.dateRangeSelect.endDate > vm.dateRangeSelect.startDate) {
-        vm.onDateRangeSelect({
-          calendarRangeStartDate: vm.dateRangeSelect.startDate.clone().startOf('day').toDate(),
-          calendarRangeEndDate: vm.dateRangeSelect.endDate.clone().endOf('day').toDate()
-        });
+      if (vm.dateRangeSelect) {
+        vm.dateRangeSelect.endDate = day.date;
+        if (vm.dateRangeSelect.endDate > vm.dateRangeSelect.startDate) {
+          vm.onDateRangeSelect({
+            calendarRangeStartDate: vm.dateRangeSelect.startDate.clone().startOf('day').toDate(),
+            calendarRangeEndDate: vm.dateRangeSelect.endDate.clone().endOf('day').toDate()
+          });
+        }
+        delete vm.dateRangeSelect;
       }
-      delete vm.dateRangeSelect;
     };
 
     vm.$onInit = function() {
