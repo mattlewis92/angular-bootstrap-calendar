@@ -27,7 +27,7 @@ angular
           vm.dayViewSplit
         );
       } else {
-        vm.view = calendarHelper.getWeekView(vm.events, vm.viewDate);
+        vm.view = calendarHelper.getWeekView(vm.events, vm.viewDate, vm.excludedDays);
       }
     });
 
@@ -89,6 +89,7 @@ angular
       scope: {
         events: '=',
         viewDate: '=',
+        excludedDays: '=',
         onEventClick: '=',
         onEventTimesChanged: '=',
         dayViewStart: '=',

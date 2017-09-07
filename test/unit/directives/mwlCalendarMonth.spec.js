@@ -132,6 +132,7 @@ describe('mwlCalendarMonth directive', function() {
   it('should toggle the event list for the selected day ', function() {
 
     MwlCalendarCtrl.view = [{date: moment(calendarDay), inMonth: true}];
+    MwlCalendarCtrl.weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     //Open event list
     MwlCalendarCtrl.cellIsOpen = true;
     scope.$apply();

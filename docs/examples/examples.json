@@ -38,6 +38,9 @@
   "key": "day-view-start-end",
   "label": "Day view start / end time"
 }, {
+  "key": "exclude-weekdays",
+  "label": "Exclude days"
+}, {
   "key": "day-view-split",
   "label": "Day view minute split"
 }, {

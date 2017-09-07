@@ -1,47 +1,37 @@
-mwl-calendar {
+mwl-calendar .cal-month-box {
+  .cal-row-fluid {
+    border-right: @borderSizevert @borderStyle @borderColor;
+    border-left: @borderSizevert @borderStyle @borderColor;
+  }
 
-  .cal-row-head [class*="cal-cell"]:first-child,
-  .cal-row-head [class*="cal-cell"] {
-    min-height: auto;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  .cal-row-head {
+    border-left: none;
+    border-right: none;
+    [class*="cal-cell"] {
+      border: none;
+      overflow: hidden;
+      min-height: unset;
+      text-overflow: ellipsis;
+    }
   }
-  .cal-events-num {
-    margin-top: 20px;
-  }
+
   .cal-month-day {
     position: relative;
     display: block;
     width: 100%;
+    .cal-events-num {
+      margin-left: 10px;
+      margin-top: 18px;
+    }
   }
 
-  .cal-month-day .cal-events-num {
-    margin-left: 10px;
-    margin-top: 18px;
-  }
-
-  #cal-week-box {
+  .cal-week-box-cell {
     position: absolute;
     width: 70px;
     left: -71px;
     top: -1px;
     padding: 8px 5px;
     cursor: pointer;
-  }
-
-  .cal-day-tick {
-    position: absolute;
-    right: 50%;
-    bottom: -21px;
-    padding: 0px 5px;
-    cursor: pointer;
-    z-index: 5;
-    text-align: center;
-    width: 26px;
-    margin-right: -17px;
-  }
-  .cal-year-box #cal-day-tick {
-    margin-right: -7px;
   }
 
   .cal-slide-box {
