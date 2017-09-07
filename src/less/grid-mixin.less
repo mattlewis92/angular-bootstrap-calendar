@@ -1,0 +1,35 @@
+.gridForWeekOf(@days) {
+  @oneDay: 100% / @days;
+  @oneDayIE: 0.9993781095 * @oneDay;
+  //magic constant, have no idea from where it comes from
+
+  .generate-day();
+
+  .generate-day(@i:1) when (@i =< @days) {
+    .cal-row-fluid .cal-cell@{i} {
+      width:  (@i * @oneDay);
+      *width: (@i * @oneDayIE);
+    }
+
+    .cal-row-fluid .cal-offset@{i},
+    .cal-row-fluid .cal-offset@{i}:first-child,
+    .cal-week-box .cal-offset@{i} {
+      margin-left: (@i * @oneDay);
+      *margin-left: (@i * @oneDayIE);
+    }
+    .generate-day(@i + 1);
+  }
+
+}
+
+.gridForWeeks(@i:1) when (@i =< 7) {
+  .cal-week-box,
+  .cal-month-box
+   {
+    &.cal-grid-@{i} {
+      .gridForWeekOf(@i);
+    }
+  }
+
+  .gridForWeeks(@i + 1);
+}

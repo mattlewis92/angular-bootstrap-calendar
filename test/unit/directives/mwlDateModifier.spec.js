@@ -12,6 +12,7 @@ describe('mwlDateModifier directive', function() {
         'mwl-date-modifier ' +
         'date="date" ' +
         'set-to-today ' +
+        'excluded-days="excludedDays" ' +
         'increment="increment" ' +
         'decrement="decrement" ' +
       '></button>';
@@ -30,7 +31,6 @@ describe('mwlDateModifier directive', function() {
     $rootScope = _$rootScope_;
     scope = $rootScope.$new();
     prepareScope(scope);
-
   }));
 
   it('should increment the date by one unit of the provided attribute value', function() {
@@ -54,6 +54,26 @@ describe('mwlDateModifier directive', function() {
     scope.$apply();
     element.triggerHandler('click');
     expect(scope.date.toString()).to.equal((new Date()).toString());
+  });
+
+  it('should skip the excluded days when incrementing days', function() {
+    element = angular.element(template).removeAttr('set-to-today');
+    scope.date = new Date(2015, 0, 2);
+    scope.excludedDays = [0, 6];
+    element = $compile(element)(scope);
+    scope.$apply();
+    element.triggerHandler('click');
+    expect(scope.date.toString()).to.equal((new Date(2015, 0, 5)).toString());
+  });
+
+  it('should skip the excluded days when decrementing days', function() {
+    element = angular.element(template).removeAttr('set-to-today').removeAttr('increment');
+    scope.excludedDays = [0, 6];
+    scope.decrement = 'days';
+    element = $compile(element)(scope);
+    scope.$apply();
+    element.triggerHandler('click');
+    expect(scope.date.toString()).to.equal((new Date(2015, 0, 2)).toString());
   });
 
 });

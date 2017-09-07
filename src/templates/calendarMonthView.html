@@ -1,17 +1,14 @@
-<div class="cal-row-fluid cal-row-head">
-
-  <div class="cal-cell1" ng-repeat="day in vm.weekDays track by $index" ng-bind="day"></div>
-
-</div>
-<div class="cal-month-box">
-
+<div class="cal-month-box" ng-class="['cal-grid-' + vm.weekDays.length]">
+  <div class="cal-row-fluid cal-row-head">
+    <div class="cal-cell1" ng-repeat="day in vm.weekDays track by $index" ng-bind="day"></div>
+  </div>
   <div
     ng-repeat="rowOffset in vm.monthOffsets track by rowOffset"
     ng-mouseenter="rowHovered = true"
     ng-mouseleave="rowHovered = false">
     <div class="cal-row-fluid cal-before-eventlist">
       <div
-        ng-repeat="day in vm.view | calendarLimitTo:7:rowOffset track by $index"
+        ng-repeat="day in vm.view | calendarLimitTo:vm.weekDays.length:rowOffset track by $index"
         ng-init="dayIndex = vm.view.indexOf(day)"
         class="cal-cell1 cal-cell {{ day.highlightClass }}"
         ng-style="{backgroundColor: day.backgroundColor}"

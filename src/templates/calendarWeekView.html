@@ -1,6 +1,6 @@
-<div class="cal-week-box" ng-class="{'cal-day-box': vm.showTimes}">
-  <div class="cal-row-fluid cal-row-head">
-
+<div class="cal-week-box" ng-class="[{'cal-day-box': vm.showTimes}, 'cal-grid-' + vm.view.days.length]">
+  <div class="cal-row-fluid cal-row-head"
+       mwl-element-dimensions="vm.dayColumnDimensions">
     <div
       class="cal-cell1"
       ng-repeat="day in vm.view.days track by $index"
@@ -9,7 +9,6 @@
         'cal-day-past': day.isPast,
         'cal-day-today': day.isToday,
         'cal-day-future': day.isFuture}"
-      mwl-element-dimensions="vm.dayColumnDimensions"
       mwl-droppable
       on-drop="vm.eventDropped(dropData.event, day.date)">
 
@@ -34,7 +33,7 @@
       day-view-start="vm.dayViewStart"
       day-view-end="vm.dayViewEnd"
       day-view-split="vm.dayViewSplit"
-      day-width="vm.dayColumnDimensions.width"
+      day-width="(vm.dayColumnDimensions.width - 60) / vm.view.days.length"
       view-date="vm.viewDate"
       on-timespan-click="vm.onTimespanClick"
       on-date-range-select="vm.onDateRangeSelect"
@@ -54,8 +53,8 @@
             ng-style="{
               top: vm.showTimes ? ((eventRow.top) + 'px') : 'auto',
               position: vm.showTimes ? 'absolute' : 'inherit',
-              width: vm.showTimes ? (vm.dayColumnDimensions.width + 'px') : '',
-              left: vm.showTimes ? (vm.dayColumnDimensions.width * eventRow.offset) + 15 + 'px' : ''
+              width: vm.showTimes ? ((vm.dayColumnDimensions.width - 60) / vm.view.days.length + 'px') : '',
+              left: vm.showTimes ? (((vm.dayColumnDimensions.width - 60) / vm.view.days.length) * eventRow.offset) + 15 + 'px' : ''
             }">
             <div
               class="day-highlight"
@@ -64,13 +63,13 @@
               data-event-class
               mwl-draggable="eventRow.event.draggable === true"
               axis="vm.showTimes ? 'xy' : 'x'"
-              snap-grid="vm.showTimes ? {x: vm.dayColumnDimensions.width, y: vm.dayViewEventChunkSize || 30} : {x: vm.dayColumnDimensions.width}"
+              snap-grid="vm.showTimes ? {x: (vm.dayColumnDimensions.width - 60) / vm.view.days.length, y: vm.dayViewEventChunkSize || 30} : {x: vm.dayColumnDimensions.width / vm.view.days.length}"
               auto-scroll="vm.draggableAutoScroll"
               on-drag="vm.tempTimeChanged(eventRow.event, y / 30)"
-              on-drag-end="vm.weekDragged(eventRow.event, x / vm.dayColumnDimensions.width, y / 30)"
+              on-drag-end="vm.weekDragged(eventRow.event, x / ((vm.dayColumnDimensions.width - (vm.showTimes ? 60 : 0)) / vm.view.days.length), y / 30)"
               mwl-resizable="eventRow.event.resizable === true && eventRow.event.endsAt && !vm.showTimes"
               resize-edges="{left: true, right: true}"
-              on-resize-end="vm.weekResized(eventRow.event, edge, x / vm.dayColumnDimensions.width)">
+              on-resize-end="vm.weekResized(eventRow.event, edge, x / ((vm.dayColumnDimensions.width - (vm.showTimes ? 60 : 0)) / vm.view.days.length))">
               <strong ng-bind="(eventRow.event.tempStartsAt || eventRow.event.startsAt) | calendarDate:'time':true" ng-show="vm.showTimes"></strong>
               <a
                 href="javascript:;"

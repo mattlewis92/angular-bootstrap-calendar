@@ -15,11 +15,11 @@ angular
       vm.openRowIndex = null;
       vm.openDayIndex = null;
 
-      if (vm.cellIsOpen && vm.view) {
+      if (vm.cellIsOpen && vm.view && vm.weekDays) {
         vm.view.forEach(function(day, dayIndex) {
           if (moment(vm.viewDate).startOf('day').isSame(day.date)) {
             vm.openDayIndex = dayIndex;
-            vm.openRowIndex = Math.floor(dayIndex / 7);
+            vm.openRowIndex = Math.floor(dayIndex / vm.weekDays.length);
           }
         });
       }
@@ -27,9 +27,9 @@ angular
 
     $scope.$on('calendar.refreshView', function() {
 
-      vm.weekDays = calendarHelper.getWeekDayNames();
+      vm.weekDays = calendarHelper.getWeekDayNames(vm.excludedDays);
 
-      var monthView = calendarHelper.getMonthView(vm.events, vm.viewDate, vm.cellModifier);
+      var monthView = calendarHelper.getMonthView(vm.events, vm.viewDate, vm.cellModifier, vm.excludedDays);
       vm.view = monthView.days;
       vm.monthOffsets = monthView.rowOffsets;
 
@@ -68,7 +68,7 @@ angular
           vm.cellIsOpen = false;
         } else {
           vm.openDayIndex = dayIndex;
-          vm.openRowIndex = Math.floor(dayIndex / 7);
+          vm.openRowIndex = Math.floor(dayIndex / vm.weekDays.length);
           vm.cellIsOpen = true;
         }
       }
@@ -170,6 +170,7 @@ angular
       scope: {
         events: '=',
         viewDate: '=',
+        excludedDays: '=',
         onEventClick: '=',
         onEventTimesChanged: '=',
         onDateRangeSelect: '=',

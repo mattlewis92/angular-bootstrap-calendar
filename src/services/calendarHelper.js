@@ -94,12 +94,17 @@ angular
       }).length;
     }
 
-    function getWeekDayNames() {
-      var weekdays = [];
-      var count = 0;
-      while (count < 7) {
-        weekdays.push(formatDate(moment().weekday(count++), calendarConfig.dateFormats.weekDay));
-      }
+    function getWeekDayNames(excluded) {
+      var weekdays = [0, 1, 2, 3, 4, 5, 6]
+      .filter(function(wd) {
+        return !(excluded || []).some(function(ex) {
+          return ex === wd;
+        });
+      })
+      .map(function(i) {
+        return formatDate(moment().weekday(i), calendarConfig.dateFormats.weekDay);
+      });
+
       return weekdays;
     }
 
@@ -139,7 +144,7 @@ angular
       return event;
     }
 
-    function getMonthView(events, viewDate, cellModifier) {
+    function getMonthView(events, viewDate, cellModifier, excluded) {
 
       // hack required to work with the calendar-utils api
       events.forEach(function(event) {
@@ -153,6 +158,7 @@ angular
       var view = calendarUtils.getMonthView({
         events: events,
         viewDate: viewDate,
+        excluded: excluded,
         weekStartsOn: moment().startOf('week').day()
       });
 
@@ -177,10 +183,11 @@ angular
 
     }
 
-    function getWeekView(events, viewDate) {
+    function getWeekView(events, viewDate, excluded) {
 
       var days = calendarUtils.getWeekViewHeader({
         viewDate: viewDate,
+        excluded: excluded,
         weekStartsOn: moment().startOf('week').day()
       }).map(function(day) {
         day.date = moment(day.date);
@@ -195,6 +202,7 @@ angular
       var eventRows = calendarUtils.getWeekView({
         viewDate: viewDate,
         weekStartsOn: moment().startOf('week').day(),
+        excluded: excluded,
         events: filterEventsInPeriod(events, startOfWeek, endOfWeek).map(function(event) {
 
           var weekViewStart = moment(startOfWeek).startOf('day');

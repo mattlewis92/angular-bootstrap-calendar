@@ -1,0 +1,57 @@
+<div ng-controller="ExcludeWeekdays as vm">
+  <h2 class="text-center">{{ vm.calendarTitle }}</h2>
+
+  <div class="row">
+    <div class="col-md-6 text-center">
+      <div class="btn-group">
+
+        <button
+          class="btn btn-primary"
+          mwl-date-modifier
+          date="vm.viewDate"
+          decrement="vm.calendarView"
+          ng-click="vm.cellIsOpen = false"
+          excluded-days="vm.excludedDays">
+          Previous
+        </button>
+        <button
+          class="btn btn-default"
+          mwl-date-modifier
+          date="vm.viewDate"
+          set-to-today
+          ng-click="vm.cellIsOpen = false">
+          Today
+        </button>
+        <button
+          class="btn btn-primary"
+          mwl-date-modifier
+          date="vm.viewDate"
+          increment="vm.calendarView"
+          ng-click="vm.cellIsOpen = false"
+          excluded-days="vm.excludedDays">
+          Next
+        </button>
+      </div>
+    </div>
+
+    <br class="visible-xs visible-sm">
+
+    <div class="col-md-6 text-center">
+      <div class="btn-group">
+        <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'month'" ng-click="vm.cellIsOpen = false">Month</label>
+        <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'week'" ng-click="vm.cellIsOpen = false">Week</label>
+        <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'day'" ng-click="vm.cellIsOpen = false">Day</label>
+      </div>
+    </div>
+  </div>
+
+  <br>
+
+  <mwl-calendar
+    events="vm.events"
+    view="vm.calendarView"
+    view-title="vm.calendarTitle"
+    view-date="vm.viewDate"
+    excluded-days="vm.excludedDays">
+  </mwl-calendar>
+</div>
