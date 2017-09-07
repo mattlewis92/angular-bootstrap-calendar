@@ -1,3 +1,13 @@
+<a name="0.30.0"></a>
+# [0.30.0](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.29.3...0.30.0) (2017-09-07)
+
+
+### Features
+
+* **excluded-days:** allow specifying a set of days to be excluded from the month and week views ([f1f73ec](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/f1f73ec)), closes [#570](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/570)
+
+
+
 <a name="0.29.3"></a>
 ## [0.29.3](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.29.2...0.29.3) (2017-06-26)
 
