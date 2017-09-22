@@ -17,6 +17,7 @@
             <a
               href="javascript:;"
               class="event-item"
+              ng-click="vm.onEventClick({calendarEvent: event})"
               ng-bind-html="vm.calendarEventTitle.dayView(event) | calendarTrustAsHtml">
             </a>
           </div>
