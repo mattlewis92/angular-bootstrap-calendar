@@ -503,7 +503,7 @@ describe('calendarHelper', function() {
 
     });
 
-    describe('recurring events', function() {
+    xdescribe('recurring events', function() {
 
       it('should display recuring events', function() {
         weekView = calendarHelper.getWeekView([{
