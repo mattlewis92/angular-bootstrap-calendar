@@ -10,10 +10,6 @@
 [![GitHub stars](https://img.shields.io/github/stars/mattlewis92/angular-bootstrap-calendar.svg)](https://github.com/mattlewis92/angular-bootstrap-calendar/stargazers)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/mattlewis92/angular-bootstrap-calendar/master/LICENSE)
 
-<a target='_blank' rel='nofollow' href='https://app.codesponsor.io/link/uSyax6FrP6eVdiUSuyThrNTG/mattlewis92/angular-bootstrap-calendar'>
-  <img alt='Sponsor' width='888' height='68' src='https://app.codesponsor.io/embed/uSyax6FrP6eVdiUSuyThrNTG/mattlewis92/angular-bootstrap-calendar.svg' />
-</a>
-
 ## Table of contents
 
 - [Demo](#demo)
