@@ -149,6 +149,7 @@ angular
         onViewChangeClick: '&',
         cellModifier: '&',
         dayViewStart: '@',
+        dayViewSegmentSize: '@',
         dayViewEnd: '@',
         dayViewSplit: '@',
         dayViewEventChunkSize: '@',

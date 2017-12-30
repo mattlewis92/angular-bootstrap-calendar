@@ -611,6 +611,11 @@ describe('calendarHelper', function() {
       expect(dayViewHeight).to.equal(3870);
     });
 
+    it('should calculate the height when the hour parts have a custom value', function() {
+      var dayViewHeight = calendarHelper.getDayViewHeight('01:00', '22:29', 10, 17);
+      expect(dayViewHeight).to.equal(2194.3);
+    });
+
   });
 
   describe('getWeekViewWithTimes', function() {
