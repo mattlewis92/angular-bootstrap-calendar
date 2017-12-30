@@ -20,8 +20,8 @@
 - [Development](#development)
 - [License](#license)
 
-## Project status
-Due to the growing popularity of angular 2 and beyond, this project is considered feature complete and no further work will be done on it. All dev time is now being devoted to the projects successor [`angular-calendar`](https://github.com/mattlewis92/angular-calendar). However, you are welcome to fork and modify this repo as you please.
+## 🚨🚨🚨 Project status 🚨🚨🚨
+Due to the growing popularity of angular 2 and beyond, this project is considered feature complete and no further work will be done on it. All dev time is now being devoted to the projects successor [`angular-calendar`](https://github.com/mattlewis92/angular-calendar). However, you are welcome to fork and modify this repo as you please. 
 
 ## Demo
 
