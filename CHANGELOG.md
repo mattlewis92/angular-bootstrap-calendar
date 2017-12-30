@@ -1,3 +1,20 @@
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.30.0...1.0.0) (2017-12-30)
+
+
+### Bug Fixes
+
+* **bower:** use valid moment version ([a9ffea3](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/a9ffea3))
+* **dayView:** fix on event click for all day events ([f1cd4cc](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/f1cd4cc)), closes [#644](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/644)
+
+
+### Features
+
+* **day-view:** add the day-view-segment-size option ([588bcf6](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/588bcf6))
+* **droppable:** allow the drop overlap option to be configured ([2df8e87](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/2df8e87))
+
+
+
 <a name="0.30.0"></a>
 # [0.30.0](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.29.3...0.30.0) (2017-09-07)
 
