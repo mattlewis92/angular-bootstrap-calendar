@@ -1,0 +1,19 @@
+<style type="text/css">
+
+  .my-custom-class {
+    height: 17px !important;
+  }
+
+</style>
+
+<div ng-controller="DayViewStartEndCtrl as vm">
+  <mwl-calendar
+    events="vm.events"
+    view="vm.calendarView"
+    view-date="vm.viewDate"
+    day-view-start="09:00"
+    day-view-end="17:59"
+    cell-modifier="vm.cellModifier(calendarCell)"
+    day-view-segment-size="17">
+  </mwl-calendar>
+</div>

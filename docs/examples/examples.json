@@ -79,4 +79,7 @@
 }, {
   "key": "disable-tooltips",
   "label": "Disable tooltips"
+}, {
+  "key": "day-view-segment-size",
+  "label": "Custom hour segment size in day view"
 }]

@@ -186,6 +186,10 @@ The number of chunks to split the day view hours up into. Can be either 10, 15 o
 
 The number of pixels to "snap" event drag and resizes to. Default: 30
 
+### day-view-segment-size
+
+The size of each hour segment in the day view in pixels.  A custom css class is also required to set the height with the same value.  See the example for details.  Default: 30
+
 ### day-view-event-width
 
 The width of day view events. Default: 150
