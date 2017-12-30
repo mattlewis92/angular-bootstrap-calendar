@@ -1,6 +1,6 @@
 {
   "name": "angular-bootstrap-calendar",
-  "version": "0.29.3",
+  "version": "1.0.0",
   "homepage": "https://github.com/mattlewis92/angular-bootstrap-calendar",
   "authors": [
     "Matt Lewis"
@@ -32,7 +32,7 @@
   ],
   "dependencies": {
     "angular": ">=1.3.0",
-    "moment": "^2.10.0",
+    "moment": "^2.10.2",
     "bootstrap": "^3.3.4"
   }
 }

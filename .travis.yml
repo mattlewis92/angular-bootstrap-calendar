@@ -1,7 +1,7 @@
 language: node_js
 
 node_js:
-- '6'
+- '8'
 
 script: npm test
 
@@ -14,4 +14,6 @@ env:
 after_success:
 - npm run codecov
 
-cache: yarn
+cache:
+  directories:
+  - node_modules

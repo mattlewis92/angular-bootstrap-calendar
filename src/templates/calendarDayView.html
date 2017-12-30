@@ -17,6 +17,7 @@
             <a
               href="javascript:;"
               class="event-item"
+              ng-click="vm.onEventClick({calendarEvent: event})"
               ng-bind-html="vm.calendarEventTitle.dayView(event) | calendarTrustAsHtml">
             </a>
           </div>
@@ -58,13 +59,13 @@
       mwl-draggable="dayEvent.event.draggable === true"
       axis="'xy'"
       snap-grid="{y: vm.dayViewEventChunkSize || 30, x: 50}"
-      on-drag="vm.eventDragged(dayEvent.event, y / 30)"
-      on-drag-end="vm.eventDragComplete(dayEvent.event, y / 30)"
+      on-drag="vm.eventDragged(dayEvent.event, y / (vm.dayViewSegmentSize || 30))"
+      on-drag-end="vm.eventDragComplete(dayEvent.event, y / (vm.dayViewSegmentSize ||  30))"
       auto-scroll="vm.draggableAutoScroll"
       mwl-resizable="dayEvent.event.resizable === true && dayEvent.event.endsAt"
       resize-edges="{top: true, bottom: true}"
-      on-resize="vm.eventResized(dayEvent.event, edge, y / 30)"
-      on-resize-end="vm.eventResizeComplete(dayEvent.event, edge, y / 30)"
+      on-resize="vm.eventResized(dayEvent.event, edge, y / (vm.dayViewSegmentSize || 30))"
+      on-resize-end="vm.eventResizeComplete(dayEvent.event, edge, y / (vm.dayViewSegmentSize || 30))"
       uib-tooltip-html="vm.calendarEventTitle.dayViewTooltip(dayEvent.event) | calendarTrustAsHtml"
       tooltip-append-to-body="true">
 

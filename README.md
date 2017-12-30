@@ -10,6 +10,9 @@
 [![GitHub stars](https://img.shields.io/github/stars/mattlewis92/angular-bootstrap-calendar.svg)](https://github.com/mattlewis92/angular-bootstrap-calendar/stargazers)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/mattlewis92/angular-bootstrap-calendar/master/LICENSE)
 
+## 🚨🚨🚨 Project status 🚨🚨🚨
+Due to the growing popularity of angular 2 and beyond, this project is considered feature complete and no further work will be done on it. All dev time is now being devoted to the projects successor [`angular-calendar`](https://github.com/mattlewis92/angular-calendar). However, you are welcome to fork and modify this repo as you please. 
+
 ## Table of contents
 
 - [Demo](#demo)
@@ -17,7 +20,7 @@
 - [Installation](#installation)
 - [Documentation](#documentation)
 - [Development](#development)
-- [License](#licence)
+- [License](#license)
 
 ## Demo
 
@@ -185,6 +188,10 @@ The number of chunks to split the day view hours up into. Can be either 10, 15 o
 ### day-view-event-chunk-size
 
 The number of pixels to "snap" event drag and resizes to. Default: 30
+
+### day-view-segment-size
+
+The size of each hour segment in the day view in pixels.  A custom css class is also required to set the height with the same value.  See the example for details.  Default: 30
 
 ### day-view-event-width
 
