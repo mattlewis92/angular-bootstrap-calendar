@@ -89,13 +89,13 @@ describe('mwlCalendarWeek directive', function() {
 
   it('should get the new week view when calendar refreshes', function() {
     sinon.stub(calendarHelper, 'getDayViewHeight').returns(1000);
-    sinon.stub(calendarHelper, 'getWeekView').returns({event: 'event1'});
+    sinon.stub(calendarHelper, 'getWeekView').returns({eventRows: [{event: 'event1'}]});
     sinon.stub(calendarHelper, 'getWeekViewWithTimes').returns({event: 'event2'});
     scope.$broadcast('calendar.refreshView');
     expect(calendarHelper.getDayViewHeight).to.have.been.calledWith('06:00', '22:59', 30);
     expect(MwlCalendarCtrl.dayViewHeight).to.equal(1000);
     expect(calendarHelper.getWeekView).to.have.been.calledWith(scope.events, scope.viewDate);
-    expect(MwlCalendarCtrl.view).to.eql({event: 'event1'});
+    expect(MwlCalendarCtrl.view).to.eql({eventRows: [{event: 'event1'}]});
 
     MwlCalendarCtrl.showTimes = true;
     scope.$broadcast('calendar.refreshView');
