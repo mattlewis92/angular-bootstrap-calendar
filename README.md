@@ -1,5 +1,6 @@
 # Angular Bootstrap Calendar
 
+[![project unmaintained](https://img.shields.io/badge/project-unmaintained-red.svg)](https://img.shields.io/badge/project-unmaintained-red.svg)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/mattlewis92/angular-bootstrap-calendar?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 [![Build Status](https://travis-ci.org/mattlewis92/angular-bootstrap-calendar.svg?branch=master)](https://travis-ci.org/mattlewis92/angular-bootstrap-calendar)
 [![codecov](https://codecov.io/gh/mattlewis92/angular-bootstrap-calendar/branch/master/graph/badge.svg)](https://codecov.io/gh/mattlewis92/angular-bootstrap-calendar)
